@@ -399,8 +399,7 @@ Editor Play Mode uses an in-memory save that resets each session; a player build
 ## Credits
 
 - **Color Block Jam** is a game by Rollic. This project is an independent, non-commercial recreation made for
-  learning and as a portfolio piece; it is not affiliated with or endorsed by Rollic. The game's UI and 3D art
-  in this project were supplied by Rollic for a developer case and remain their property.
+  learning and as a portfolio piece; it is not affiliated with or endorsed by Rollic.
 - Third-party assets keep their own licenses: Highlight Plus 2 (Kronnect) and Epic Toon FX (Archanor VFX) under
   the Unity Asset Store EULA, booster particle effects adapted from a Block Jam template (Watermelon Games), some
   Level Editor icons from [Flaticon](https://www.flaticon.com/), and LiberationSans under the SIL Open Font
