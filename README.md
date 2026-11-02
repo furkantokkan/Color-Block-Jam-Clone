@@ -272,7 +272,7 @@ definition, its command routing and its visuals; purchasing and save-before-use 
 ### Board construction
 
 - **Modular blocks.** A [composer](Assets/ColorBlockJam/Runtime/Core/Board/BlockPieceComposer.cs) builds every
-  block from four supplied meshes (center, edge, inner and outer corner), so any footprint and every Rocket
+  block from four modular meshes (center, edge, inner and outer corner), so any footprint and every Rocket
   fragment needs no dedicated prefab.
 - **Rule-based environment.** A RuleTile-style matcher picks wall and corner pieces on a half-cell grid from the
   board's shape. Rules have Floor/Void/Any neighbor patterns and optional rotation, edited in a custom Inspector.
@@ -398,8 +398,6 @@ Editor Play Mode uses an in-memory save that resets each session; a player build
 
 ## Credits
 
-- **Color Block Jam** is a game by Rollic. This project is an independent, non-commercial recreation made for
-  learning and as a portfolio piece; it is not affiliated with or endorsed by Rollic.
 - Third-party assets keep their own licenses: Highlight Plus 2 (Kronnect) and Epic Toon FX (Archanor VFX) under
   the Unity Asset Store EULA, booster particle effects adapted from a Block Jam template (Watermelon Games), some
   Level Editor icons from [Flaticon](https://www.flaticon.com/), and LiberationSans under the SIL Open Font
