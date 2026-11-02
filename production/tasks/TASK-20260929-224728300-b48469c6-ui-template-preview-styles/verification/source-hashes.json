@@ -1,0 +1,146 @@
+[
+  {
+    "path": "Assets/ColorBlockJam/Runtime/Core/SceneFlow/ScreenFadeView.cs",
+    "sha256": "b664c4479b7afb29d50fb80486c6862a9036d458bbe4ec4a875f96af66dddaa8"
+  },
+  {
+    "path": "Assets/ColorBlockJam/Runtime/Hub/PreLevel/PreLevelView.cs",
+    "sha256": "aa49f4f8646402d557b289aa5ecd385fe4687d68bb56534de50f0af4052cf3d4"
+  },
+  {
+    "path": "Assets/ColorBlockJam/Runtime/UI/ColorBlockJam.UI.asmdef",
+    "sha256": "d3ba1f35e9247cac814c7c82fbdb564bb101bf70436abbc6dc9102b0247fe8be"
+  },
+  {
+    "path": "Assets/ColorBlockJam/Tests/Hub/EditMode/PreLevelAssetTests.cs",
+    "sha256": "5f35cabb3f3c4132e4d09c14f3e4a074e89388782a4a5cb77ea89ac0943f0f2c"
+  },
+  {
+    "path": "Assets/ColorBlockJam/Tests/UI/EditMode/SettingsPopupAssetTests.cs",
+    "sha256": "922a4e61b3fdc4208e8e80c737f6a547d0cb765b41a1bc5a40d64b5fafaa3acc"
+  },
+  {
+    "path": "Assets/ColorBlockJam/Tests/UI/EditMode/UiTemplateAuthoringTests.cs",
+    "sha256": "1f7f8fef9e3a750d4884ce815a62313159202c3944abdd19b0a7e48729b09462"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Common/Common.uss",
+    "sha256": "c124f595f326c5dccd7d3f1c9215f0df271563679119bbca951b010bf94f0911"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Common/Document.uss",
+    "sha256": "0bb3beed189e10db6457d401cb117a9c0e575c79f2f1c3d1819cace2b84d1c43"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Common/ScreenFade.uss",
+    "sha256": "6749ae4e4ab46a2f0c0ea493751a7597fdea29ebfb39324f6f87a556b2e43749"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Common/ScreenFade.uxml",
+    "sha256": "4fbfba09688c36242e31f9332934069ae636daf8e730ecda19d014ca6225f457"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/GameplayHud.uss",
+    "sha256": "abdae6db56008ff0c7da93d890d03ad63fa5c406f0c0a572ea7c2ea104d85cef"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/GameplayHud.uxml",
+    "sha256": "c8cc2c470303428aa3d8403bbfb2a985146bc25a3326277aff86f8d58e511922"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/Overlays/GameOverlays.uss",
+    "sha256": "6170082eebf46021829a3be3c0edb1dbdfb40adbd0c563ed69806f3f9546fb29"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/Overlays/GameOverlays.uxml",
+    "sha256": "3f2a2525a735bf516ca4b98e0e8608b4419191159d2bea80f5ea5cc85f125ca4"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/Overlays/LevelCompletePopup.uss",
+    "sha256": "08cfe1a684a95657e9bf7fc461b9ad58d249ff5e46eb96b04da8d6dc6b42556d"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/Overlays/LevelCompletePopup.uxml",
+    "sha256": "1dbfa9195ea566d8d469529db3f73ba26297c4ae8722fa6b2a3df9cce7010b25"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/Overlays/RestartConfirmPopup.uss",
+    "sha256": "b4b94591d4fe8d48f90c43211f9b39926e4ddd1a018cc47903e73117dca97bcb"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/Overlays/RestartConfirmPopup.uxml",
+    "sha256": "dbf6f5f8c4e9b7378e97cde1b0a17087cce7cef1a4de584ae5d2bb2ecba5c813"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/TopBar/GameTopBar.uss",
+    "sha256": "635908368229cc181d763850944ba4b3d5ad9f47c1aff438b43e33ac3ae06c37"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Game/TopBar/GameTopBar.uxml",
+    "sha256": "3d76e649609c0dccde1606d6546f4a5c7f79b0e048e3ab53dbd6a419c5924353"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/BoosterSelector.uxml",
+    "sha256": "a5e26e407d8302e76645365f64c4abf600482f15291189b5ec65da3c6e0700c0"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/CurrencyHolder.uss",
+    "sha256": "27cf744e0105ad6d2340a93422eaacac8c77ffb02eca80504083c0394a3ecd4e"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/CurrencyHolder.uxml",
+    "sha256": "d40ca3cec6c25bbeff51cd967f0a2a667d965a6701d8d388281a499c9257a913"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/Home.uss",
+    "sha256": "174720c9dd32fe82078af0bd5e57c79a7d179dbbe94a774b3883d95881ec9205"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/Home.uxml",
+    "sha256": "8dc3cb96059e4d19496de50dde384cde7f4833c0fd79ee10743f5f42d39551dc"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/Hub.uss",
+    "sha256": "e79f048e4a358cc09ddabd365e3952507139e1ea5148f492d1e1f4f2e4cd42cb"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/Hub.uxml",
+    "sha256": "bc05a3e297061c2e4fc6cf07b5a06ee7a3bb988b39c9dd4a93cb7768341ead01"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/PreLevel.uss",
+    "sha256": "b77b36d1ca04bbf0a7a53eacddb00780fb30c509e9e6d6089e4d2e9a4b7dd133"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Hub/PreLevel.uxml",
+    "sha256": "4524b5ae6545b4c9e6e31269a98b774b731440e835cb1b689f529821c411287e"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uss",
+    "sha256": "39193caab8010a37101d6ed6881976ef1db13d1c1d2909fa7527a4ef88809b55"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uxml",
+    "sha256": "0a9ad6d54aaecf95b61c7184a22a13d212e4f1c7acb0ae025bb7048bc6eeda63"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Settings/SettingsPopup.uss",
+    "sha256": "b7b6deec5f8476b15b829e1c71965aadc55b478b3089cefe2386768e0f5232c4"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Settings/SettingsPopup.uxml",
+    "sha256": "a2fca79b82ea459397d8e766616e3748666e180789555fba93c7ddfc27cf6a07"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Startup/StartupLoading.uss",
+    "sha256": "46339df7eae8fc94453556a3fbf6b125be6c00559ae2a4293a93137c5f4e0ae3"
+  },
+  {
+    "path": "Assets/ColorBlockJam/UI/Startup/StartupLoading.uxml",
+    "sha256": "d2b98bccc7b204067535988258602bec98b1d13639976af97022c517b770dee9"
+  },
+  {
+    "path": "docs/UI-Authoring.md",
+    "sha256": "de90749852fb451466859e7d6430c9a96af5b5d620de3d436fcdd6acf9c85572"
+  }
+]

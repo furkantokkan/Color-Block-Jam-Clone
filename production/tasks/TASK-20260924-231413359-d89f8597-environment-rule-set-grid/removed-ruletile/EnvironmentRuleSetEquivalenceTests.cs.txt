@@ -1,0 +1,120 @@
+using System.Collections.Generic;
+using System.Text;
+using ColorBlockJam.Environment;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
+
+namespace ColorBlockJam.Tests.Environment
+{
+    /// <summary>
+    /// Temporary proof, run before the RuleTile is removed: the migrated rule set
+    /// and matcher give the same rule and angle as the old WallRuleTile for all 256
+    /// neighbour patterns at all four angles.
+    /// </summary>
+    public sealed class EnvironmentRuleSetEquivalenceTests
+    {
+        private const string k_ruleTilePath = "Assets/ColorBlockJam/Data/Environment/WallRuleTile.asset";
+
+        [Test]
+        public void RuleSetMatchesTheWallRuleTileForEveryPatternAndAngle()
+        {
+            EnvironmentRuleTile ruleTile = AssetDatabase.LoadAssetAtPath<EnvironmentRuleTile>(k_ruleTilePath);
+            EnvironmentRuleSet ruleSet = AssetDatabase.LoadAssetAtPath<EnvironmentRuleSet>(EnvironmentRuleSetTests.RuleSetPath);
+            Assert.That(ruleTile, Is.Not.Null);
+            Assert.That(ruleSet, Is.Not.Null);
+            List<RuleTile.TilingRule> tilingRules = ruleTile.m_TilingRules;
+            Assert.That(ruleSet.RuleCount, Is.EqualTo(tilingRules.Count));
+            for (int index = 0; index < tilingRules.Count; index++)
+            {
+                Assert.That(ruleSet.GetRule(index).Output.gameObject, Is.SameAs(tilingRules[index].m_GameObject));
+                Assert.That(ruleSet.GetRule(index).IsRotated,
+                    Is.EqualTo(tilingRules[index].m_RuleTransform == RuleTile.TilingRuleOutput.Transform.Rotated));
+            }
+
+            GameObject root = new GameObject("RuleTileEquivalence", typeof(Grid));
+            try
+            {
+                GameObject mask = new GameObject("Mask", typeof(Tilemap));
+                mask.transform.SetParent(root.transform, false);
+                Tilemap tilemap = mask.GetComponent<Tilemap>();
+                ITilemap reader = new ITilemap(tilemap);
+                EnvironmentRuleMatcher matcher = new EnvironmentRuleMatcher(ruleSet);
+                RectInt bounds = new RectInt(-1, -1, 3, 3);
+                StringBuilder table = new StringBuilder();
+                int comparisons = 0;
+                int mismatches = 0;
+
+                for (int pattern = 0; pattern < 256; pattern++)
+                {
+                    tilemap.ClearAllTiles();
+                    matcher.Reset(bounds);
+                    for (int neighbor = 0; neighbor < EnvironmentRuleSet.NeighborCount; neighbor++)
+                    {
+                        if ((pattern & (1 << neighbor)) != 0)
+                        {
+                            Vector2Int offset = EnvironmentRuleSet.GetNeighborOffset(neighbor);
+                            tilemap.SetTile(new Vector3Int(offset.x, offset.y, 0), ruleTile.FloorMarker);
+                            matcher.SetFloor(offset.x, offset.y);
+                        }
+                    }
+
+                    int oldMask = 0;
+                    int newMask = 0;
+                    for (int rule = 0; rule < tilingRules.Count; rule++)
+                    {
+                        for (int angle = 0; angle < 360; angle += EnvironmentRuleMatcher.RotationStep)
+                        {
+                            int bit = 1 << (rule * 4 + angle / EnvironmentRuleMatcher.RotationStep);
+                            if (ruleTile.RuleMatches(tilingRules[rule], Vector3Int.zero, reader, angle)) oldMask |= bit;
+                            if (matcher.IsMatch(rule, 0, 0, angle)) newMask |= bit;
+                            comparisons++;
+                        }
+                    }
+
+                    bool oldFound = TryMatchOld(ruleTile, reader, out int oldRule, out int oldAngle);
+                    bool newFound = matcher.TryMatch(0, 0, out int newRule, out int newAngle);
+                    comparisons++;
+                    if (oldMask != newMask || oldFound != newFound || oldRule != newRule || oldAngle != newAngle)
+                    {
+                        mismatches++;
+                        TestContext.WriteLine($"pattern {pattern}: RuleTile {oldMask} ({oldRule}@{oldAngle}), "
+                            + $"rule set {newMask} ({newRule}@{newAngle})");
+                    }
+
+                    table.Append(oldMask).Append(pattern % 16 == 15 ? ",\n" : ", ");
+                }
+
+                TestContext.WriteLine($"comparisons={comparisons} mismatches={mismatches}");
+                TestContext.WriteLine(table.ToString());
+                Assert.That(mismatches, Is.Zero);
+                Assert.That(comparisons, Is.EqualTo(256 * (tilingRules.Count * 4 + 1)));
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+            }
+        }
+
+        // The old EnvironmentComposer loop: rules in order, then angles in order.
+        private static bool TryMatchOld(EnvironmentRuleTile ruleTile, ITilemap reader, out int ruleIndex, out int angle)
+        {
+            for (ruleIndex = 0; ruleIndex < ruleTile.m_TilingRules.Count; ruleIndex++)
+            {
+                for (angle = 0; angle < 360; angle += ruleTile.m_RotationAngle)
+                {
+                    if (ruleTile.RuleMatches(ruleTile.m_TilingRules[ruleIndex], Vector3Int.zero, reader, angle))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            ruleIndex = -1;
+            angle = 0;
+            return false;
+        }
+    }
+}

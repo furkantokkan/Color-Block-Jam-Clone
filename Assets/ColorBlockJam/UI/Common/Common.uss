@@ -1,0 +1,142 @@
+/*
+ * Shared runtime UI styles (design 6.6). Imported by UI/Themes/ColorBlockJamRuntime.tss after the
+ * Unity default runtime theme, so every Hub and Game panel gets them.
+ *
+ * Tokens (UI Toolkit 2022.3 supports custom properties with var()).
+ */
+:root {
+    --cbj-title-color: rgb(255, 255, 255);
+    --cbj-title-outline-color: rgb(24, 42, 110);
+    --cbj-pressed-tint: rgb(205, 205, 205);
+    --cbj-dark-text-color: rgb(38, 46, 108);
+}
+
+/*
+ * Press feedback for every button (DEC-14, DEC-45, AC-1.6): one USS transition, no per-button code.
+ * Button's Clickable sets :active while the pointer is down on it.
+ * ".unity-button.cbj-pressable" outranks the default theme's ".unity-button" rules, which would
+ * otherwise add a grey fill, border, margin and hover colour.
+ */
+.unity-button.cbj-pressable,
+.cbj-pressable {
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    scale: 1 1;
+    transition-property: scale, -unity-background-image-tint-color;
+    transition-duration: 0.08s, 0.08s;
+    transition-timing-function: ease-out, ease-out;
+}
+
+.unity-button.cbj-pressable:hover,
+.unity-button.cbj-pressable:focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button.cbj-pressable:active,
+.cbj-pressable:active {
+    scale: 0.92 0.92;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: var(--cbj-pressed-tint);
+}
+
+/* Children of a pressed button darken with it (icons inside tab slots and holders). */
+.cbj-pressable:active > .cbj-press-tint {
+    -unity-background-image-tint-color: var(--cbj-pressed-tint);
+}
+
+.unity-button.cbj-pressable:disabled {
+    opacity: 0.6;
+}
+
+/* Bold white title text with a dark blue outline (design 6.6). The outline needs the SDF FontAsset. */
+.cbj-title {
+    -unity-font-style: bold;
+    color: var(--cbj-title-color);
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: var(--cbj-title-outline-color);
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+}
+
+/* Dark bold text on light panels (holder amounts, "Full"). */
+.cbj-dark-text {
+    -unity-font-style: bold;
+    color: var(--cbj-dark-text-color);
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+}
+
+/*
+ * Heavy two-layer text (Settings popup D-001, reused by Home D-010). LiberationSans is regular-only, so
+ * "-unity-font-style: bold" alone still renders thin white strokes. A caller authors one ".cbj-heavy-text"
+ * container around two same-text Labels: a "__back" layer (dark fill, wide outline) drawn first, then a
+ * "__front" layer (light fill, its own thinner outline) drawn on top, thickening the rendered stroke without
+ * touching the shared FontAsset or ".cbj-title". The back layer is absolutely positioned to fill the container,
+ * which itself takes the front label's normal-flow size, so both layers share one centred box. A caller must
+ * give both layers the exact same text and the same per-instance size/variant class; per-usage colour and
+ * outline width live on that class (for example ".settings-title.cbj-heavy-text__back", ".route-node__label.
+ * cbj-heavy-text__front"), since different sizes and backgrounds need different weights and fills to read alike.
+ */
+.cbj-heavy-text {
+    position: relative;
+}
+
+.cbj-heavy-text__back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: rgb(23, 35, 91);
+    -unity-text-outline-color: rgb(23, 35, 91);
+}
+
+.cbj-heavy-text__front {
+    color: rgb(255, 255, 255);
+    -unity-text-outline-color: rgb(255, 255, 255);
+}
+
+/* Camera-projected Ice labels: USS owns their fixed layer/box layout; code updates only projected geometry. */
+.ice-counter-label-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ice-counter-label,
+.ice-counter-label__fill {
+    position: absolute;
+    padding-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.ice-counter-label__fill {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}

@@ -1,0 +1,89 @@
+var sb = new System.Text.StringBuilder();
+string root = System.IO.Path.GetFullPath(System.IO.Path.Combine(UnityEngine.Application.dataPath, ".."));
+string gamePath = System.IO.Path.Combine(root, "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json");
+string refPath = System.IO.Path.Combine(root, "docs/levels/reference-levels.json");
+string gameText = System.IO.File.ReadAllText(gamePath);
+var sha = System.Security.Cryptography.SHA256.Create();
+string gameHashBefore = System.BitConverter.ToString(sha.ComputeHash(System.IO.File.ReadAllBytes(gamePath))).Replace("-", "").Substring(0, 16);
+// AC-1
+ColorBlockJam.Runtime.Levels.LevelData[] g; string e;
+bool gr = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(gameText, out g, out e);
+int v = 0, fx = 0, ob = 0;
+if (gr) foreach (var l in g) { v += l.VoidCellCount; ob += l.CellObjectCount; for (int i = 0; i < l.BlockCount; i++) fx += l.GetBlockAt(i).EffectCount; for (int i = 0; i < l.DoorCount; i++) fx += l.GetDoorAt(i).EffectCount; }
+string gw; bool gwOk = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(g, out gw, out e);
+var gj = Newtonsoft.Json.Linq.JObject.Parse(gw);
+var srcj = Newtonsoft.Json.Linq.JObject.Parse(gameText);
+sb.Append("AC1 fileFormatVersion=").Append((int)srcj["formatVersion"]).Append(" read=").Append(gr).Append(" levels=").Append(g == null ? 0 : g.Length).Append(" voids=").Append(v).Append(" effects=").Append(fx).Append(" cellObjects=").Append(ob);
+sb.Append(" write=").Append(gwOk).Append(" writtenVersion=").Append((int)gj["formatVersion"]);
+var l0 = gj["levels"][0];
+sb.Append(" l0.voidCells=").Append(l0["board"]["voidCells"].ToString(Newtonsoft.Json.Formatting.None)).Append(" l0.cellObjects=").Append(l0["cellObjects"].ToString(Newtonsoft.Json.Formatting.None)).Append(" l0.b0.effects=").Append(l0["blocks"][0]["effects"].ToString(Newtonsoft.Json.Formatting.None)).Append(" l0.d0.effects=").Append(l0["doors"][0]["effects"].ToString(Newtonsoft.Json.Formatting.None));
+var stripped = (Newtonsoft.Json.Linq.JObject)gj.DeepClone();
+stripped["formatVersion"] = srcj["formatVersion"];
+foreach (var lv in stripped["levels"]) { ((Newtonsoft.Json.Linq.JObject)lv["board"]).Remove("voidCells"); }
+bool sameContent = Newtonsoft.Json.Linq.JToken.DeepEquals(stripped, srcj);
+ColorBlockJam.Runtime.Levels.LevelData[] g2; string e2;
+bool rr = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(gw, out g2, out e2);
+sb.Append(" v1ContentEqualsWrittenMinusVersionAndVoidCells=").Append(sameContent).Append(" rereadV2=").Append(rr);
+var db = UnityEngine.ScriptableObject.CreateInstance<ColorBlockJam.Runtime.Levels.LevelDatabase>();
+string le1, le2;
+bool lj1 = db.LoadJson(gameText, out le1); int c1 = db.Count;
+bool lj2 = db.LoadJson(gw, out le2); int c2 = db.Count;
+UnityEngine.Object.DestroyImmediate(db);
+sb.Append(" LevelDatabase.LoadJson(v1)=").Append(lj1).Append(" count=").Append(c1).Append(" LoadJson(v2 rewrite)=").Append(lj2).Append(" count=").Append(c2);
+string gameHashAfter = System.BitConverter.ToString(sha.ComputeHash(System.IO.File.ReadAllBytes(gamePath))).Replace("-", "").Substring(0, 16);
+sb.Append(" fileSha16 before=").Append(gameHashBefore).Append(" after=").Append(gameHashAfter).Append("\n");
+// AC-2
+string refText = System.IO.File.ReadAllText(refPath);
+ColorBlockJam.Runtime.Levels.LevelData[] rl; string rerr;
+bool ra = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(refText, ColorBlockJam.Runtime.Levels.LevelReadMode.Authoring, out rl, out rerr);
+int valid = 0, arrows = 0, h = 0, vt = 0;
+if (ra) foreach (var l in rl)
+{
+    string ve; if (l.Validate(out ve)) valid++;
+    for (int i = 0; i < l.BlockCount; i++)
+    {
+        ColorBlockJam.Runtime.Levels.ArrowEffect a;
+        if (l.GetBlockAt(i).TryGetEffect(out a)) { arrows++; if (a.Axis == ColorBlockJam.Runtime.Levels.LevelEffectAxis.Horizontal) h++; else vt++; }
+    }
+}
+string rw1 = null, rw2 = null, we = null; ColorBlockJam.Runtime.Levels.LevelData[] rb = null; string rbe = null;
+bool w1 = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(rl, out rw1, out we);
+bool rb2 = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(rw1, ColorBlockJam.Runtime.Levels.LevelReadMode.Authoring, out rb, out rbe);
+bool w2 = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(rb, out rw2, out we);
+bool deep = Newtonsoft.Json.Linq.JToken.DeepEquals(Newtonsoft.Json.Linq.JToken.Parse(rw1), Newtonsoft.Json.Linq.JToken.Parse(refText));
+ColorBlockJam.Runtime.Levels.LevelData[] rrt; string rre;
+bool rrun = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(refText, out rrt, out rre);
+var l9 = rl[8];
+sb.Append("AC2 authoringRead=").Append(ra).Append(" levels=").Append(rl.Length).Append(" validLevels=").Append(valid).Append(" arrowEffects=").Append(arrows).Append(" (Horizontal=").Append(h).Append(" Vertical=").Append(vt).Append(")");
+sb.Append(" level09 id=").Append(l9.Id).Append(" voids=").Append(l9.VoidCellCount).Append(" [").Append(l9.GetVoidCellAt(0)).Append(" ").Append(l9.GetVoidCellAt(1)).Append("]");
+sb.Append(" writeEqualsFile(DeepEquals)=").Append(deep).Append(" secondWriteIdentical=").Append(w1 && rb2 && w2 && rw1 == rw2);
+sb.Append(" runtimeGatedRead=").Append(rrun).Append(" [").Append(rre).Append("]\n");
+// AC-5 BoardLayout
+ColorBlockJam.Runtime.Layout.BoardLayout lay; string le;
+bool lc = ColorBlockJam.Runtime.Layout.BoardLayout.TryCreate(l9, out lay, out le);
+int floors = 0;
+for (int x = 0; x < lay.Width; x++) for (int y = 0; y < lay.Height; y++) if (lay.IsFloor(x, y)) floors++;
+sb.Append("AC5 BoardLayout.TryCreate(level-09)=").Append(lc).Append(" size=").Append(lay.Width).Append("x").Append(lay.Height).Append(" floorCells=").Append(floors).Append(" IsFloor(0,0)=").Append(lay.IsFloor(0, 0)).Append(" IsFloor(5,0)=").Append(lay.IsFloor(5, 0)).Append(" IsFloor(1,0)=").Append(lay.IsFloor(1, 0)).Append(" doorSlots=").Append(lay.DoorSlotCount).Append(" LevelData.IsFloor(0,0)=").Append(l9.IsFloor(new UnityEngine.Vector2Int(0, 0))).Append("\n");
+// AC-3: an invalid LevelData is refused by TryWrite, nothing written
+var cells = new[] { new UnityEngine.Vector2Int(0, 0), new UnityEngine.Vector2Int(0, 1) };
+var blocks = new[] { new ColorBlockJam.Runtime.Levels.LevelBlockData("b1", "Red", "DoubleVertical", new UnityEngine.Vector2Int(0, 0), cells) };
+var doors = new[] { new ColorBlockJam.Runtime.Levels.LevelDoorData("d1", ColorBlockJam.Runtime.Levels.BoardSide.Top, 1, 2, "Red") };
+var closedParams = new[] { new ColorBlockJam.Runtime.Levels.LevelEffectParamData("startsOpen", "false") };
+var barrier = new ColorBlockJam.Runtime.Levels.LevelCellObjectData("o1", new[] { new UnityEngine.Vector2Int(0, 0) }, new ColorBlockJam.Runtime.Levels.LevelEffectData("barrier", closedParams));
+var bad = new ColorBlockJam.Runtime.Levels.LevelData("bad", "Bad", 5, 5, 120, new UnityEngine.Vector2Int[0], doors, blocks, new[] { barrier });
+string bj, be2;
+bool bw = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(new[] { bad }, out bj, out be2);
+sb.Append("AC3 TryWrite(closed barrier on block)=").Append(bw).Append(" jsonIsNull=").Append(bj == null).Append(" error=[").Append(be2).Append("]\n");
+// Peer requirement 3: JsonUtility round trip of a v2 level
+var arrowParams = new[] { new ColorBlockJam.Runtime.Levels.LevelEffectParamData("axis", "Vertical") };
+var fxBlock = new ColorBlockJam.Runtime.Levels.LevelBlockData("b1", "Red", "DoubleVertical", new UnityEngine.Vector2Int(0, 0), cells, new[] { new ColorBlockJam.Runtime.Levels.LevelEffectData("arrow", arrowParams) });
+var openParams = new[] { new ColorBlockJam.Runtime.Levels.LevelEffectParamData("startsOpen", "true") };
+var openBarrier = new ColorBlockJam.Runtime.Levels.LevelCellObjectData("o1", new[] { new UnityEngine.Vector2Int(4, 4) }, new ColorBlockJam.Runtime.Levels.LevelEffectData("barrier", openParams));
+var good = new ColorBlockJam.Runtime.Levels.LevelData("good", "Good", 5, 5, 120, new[] { new UnityEngine.Vector2Int(4, 0) }, doors, new[] { fxBlock }, new[] { openBarrier });
+string ju = UnityEngine.JsonUtility.ToJson(good);
+var copy = UnityEngine.JsonUtility.FromJson<ColorBlockJam.Runtime.Levels.LevelData>(ju);
+ColorBlockJam.Runtime.Levels.BarrierObject cb; ColorBlockJam.Runtime.Levels.ArrowEffect ca; string gve;
+bool arrowTyped = copy.GetBlockAt(0).TryGetEffect(out ca);
+bool barrierTyped = copy.GetCellObjectAt(0).TryGetEffect(out cb);
+sb.Append("PEER3 JsonUtility voids=").Append(copy.VoidCellCount).Append(" b1effects=").Append(copy.GetBlockAt(0).EffectCount).Append(" arrowTyped=").Append(arrowTyped).Append(" cellObjects=").Append(copy.CellObjectCount).Append(" barrierTyped=").Append(barrierTyped).Append(" startsOpen=").Append(cb != null && cb.StartsOpen).Append(" validates=").Append(copy.Validate(out gve)).Append(" jsonHasFields=").Append(ju.Contains("m_voidCells") && ju.Contains("m_cellObjects") && ju.Contains("m_effects")).Append("\n");
+return sb.ToString();

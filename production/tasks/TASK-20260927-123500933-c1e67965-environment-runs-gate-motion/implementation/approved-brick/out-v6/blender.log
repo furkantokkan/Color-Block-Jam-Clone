@@ -1,0 +1,16 @@
+00:13.969  render           | Saved: 'C:\out-v6\bricks_1_2_3.png'
+00:14.313  render           | Saved: 'C:\out-v6\board_door_gates_game.png'
+00:14.516  render           | Saved: 'C:\out-v6\board_door_gates_close.png'
+00:14.750  render           | Saved: 'C:\out-v6\board_brick_gates_close.png'
+00:14.891  render           | Saved: 'C:\out-v6\brick_end_close.png'
+FBX version: 7400
+Info: Saved copy as "Brick_End.blend"
+
+FBX export starting... 'out-v6\\WallBrick.fbx'
+export finished in 0.0125 sec.
+FBX version: 7400
+FBX version: 7400
+[brick-end] round trip OK; End/Wall step 0.0001; outputs in out-v6
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:38:20)
+
+Blender quit

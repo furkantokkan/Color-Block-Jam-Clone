@@ -1,0 +1,64 @@
+{
+  "contract_fingerprint": "sha256:0373777886bb96cc00ff5e08cfebc386eece21e360372cb757b47697f7fa0698",
+  "reviewed_revision": "vcs:plastic:cs:38@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity+owned-sha256:3bf017f02c8acd8ea7f3e9894e80aec0f98c08d02404943154fb18ec808d7995",
+  "evidence_fingerprint": "sha256:3c42189d9135f5678368e204ce2b05e6ae02832eb9b343bd2a9c46c061af3f02",
+  "criteria": [
+    [
+      "AC-1 Standalone authoring preview",
+      "PASS",
+      "Failed-only EditMode job 0c0fc4dec80b45b9a8891ba520a0bda7 succeeded 1/1; independent real Builder readback 1080x1920, visible, styled samples; verification/evidence.md",
+      "vcs:plastic:cs:38@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity+owned-sha256:3bf017f02c8acd8ea7f3e9894e80aec0f98c08d02404943154fb18ec808d7995"
+    ],
+    [
+      "AC-2 Hidden runtime initialization",
+      "PASS",
+      "Completed 11-case suite 11f08a4b2d4a48dba50a0f826c5d07e1 with no failure in host/constructor cases; unbound three-instance and reattach coverage; verification/evidence.md",
+      "vcs:plastic:cs:38@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity+owned-sha256:3bf017f02c8acd8ea7f3e9894e80aec0f98c08d02404943154fb18ec808d7995"
+    ],
+    [
+      "AC-3 Dynamic offers and preserved behavior",
+      "PASS",
+      "Completed suite with no failure in offer/open/close/dispose/null-icon/message/button/border/boundary cases; independent source review; verification/evidence.md",
+      "vcs:plastic:cs:38@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity+owned-sha256:3bf017f02c8acd8ea7f3e9894e80aec0f98c08d02404943154fb18ec808d7995"
+    ],
+    [
+      "AC-4 Durable authoring instructions",
+      "PASS",
+      "Independent document review; both local skills pass quick_validate.py; verification/evidence.md",
+      "vcs:plastic:cs:38@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity+owned-sha256:3bf017f02c8acd8ea7f3e9894e80aec0f98c08d02404943154fb18ec808d7995"
+    ]
+  ],
+  "channels": [
+    "Roslyn compile: PASS: unity_compile_check.py for BoosterPurchaseView.cs and BoosterPurchasePopupAssetTests.cs",
+    "EditMode: PASS with detailed-summary limitation: completed11, uncapped sole assertion failure corrected; failed-only rerun succeeded1/1; verification/evidence.md",
+    "Manual authoring: PASS: real Builder screen Flex1080x1920, correct font/sample icons, clean document; verification/evidence.md",
+    "Skill validation: PASS: quick_validate.py unity-cli and unity-game-dev; verification/evidence.md"
+  ],
+  "review_files": [
+    "AGENTS.md",
+    "PROJECT.md",
+    "Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uxml",
+    "Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uss",
+    "Assets/ColorBlockJam/Runtime/UI/Purchase/BoosterPurchaseView.cs",
+    "Assets/ColorBlockJam/Tests/UI/EditMode/BoosterPurchasePopupAssetTests.cs",
+    "Assets/ColorBlockJam/Tests/UI/EditMode/UiAssetAssert.cs",
+    "Assets/ColorBlockJam/Runtime/UI/Purchase/BoosterPurchasePresenter.cs",
+    "Assets/ColorBlockJam/Runtime/Gameplay/UI/InGamePurchaseHost.cs",
+    "Assets/ColorBlockJam/Runtime/Hub/Composition/HubScreen.cs",
+    "Assets/ColorBlockJam/Runtime/Hub/Lives/LifeRefillOverlay.cs",
+    "Assets/ColorBlockJam/UI/Hub/Hub.uxml",
+    "Assets/ColorBlockJam/UI/Game/GameplayHud.uxml",
+    "Assets/ColorBlockJam/UI/Common/Common.uss",
+    "Assets/ColorBlockJam/Data/UI/Fonts/LiberationSans-UITK.asset",
+    "Assets/ColorBlockJam/Art/UI/Supplied/Icons/Boosters/ic_rocket_purple.png",
+    "Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png",
+    "Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup.png.meta",
+    "Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_header.png.meta",
+    "Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_info_holder.png.meta",
+    "Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_green.png.meta",
+    "C:/Users/e-fur/.codex/AGENTS.md",
+    "C:/Users/e-fur/.codex/skills/unity-cli/SKILL.md",
+    "C:/Users/e-fur/.codex/skills/unity-game-dev/SKILL.md",
+    "production/tasks/TASK-20260929-224511984-eaa2cae5-purchase-popup-authoring/verification/evidence.md"
+  ]
+}

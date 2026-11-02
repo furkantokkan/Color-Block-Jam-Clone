@@ -1,0 +1,9 @@
+{
+  "canonicalRecords": 34,
+  "definitionsMatchBeforeMigration": true,
+  "prefabGuidsPreserved": 34,
+  "sourceFbxHashesMatchCs3": 4,
+  "canonicalJsonSha256": "1b982572331661f1d6855ee62621550f49c5c4f8a8df711e304f7a975aa5e17a",
+  "snapshot": "docs/art/board-kit/json-migration-source.json",
+  "note": "One-time migration audit; future legitimate piece edits may change counts and footprints."
+}

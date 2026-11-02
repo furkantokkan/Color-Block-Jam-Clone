@@ -1,0 +1,119 @@
+--- /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/base/GameplayHud.uss.live	2026-09-28 06:25:53.469529300 +0300
++++ /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/ours/GameplayHud.uss	2026-09-28 06:25:53.506273000 +0300
+@@ -55,7 +55,7 @@
+     -unity-background-scale-mode: scale-to-fit;
+ }
+ 
+-/* ---- Top area: timer band, freeze counter, targeting banner ---- */
++/* ---- Top area: the top bar (timer and freeze counter inside it) and the targeting banner ---- */
+ 
+ .top-area {
+     flex-shrink: 0;
+@@ -66,103 +66,10 @@
+     padding-top: 28px;
+ }
+ 
+-.timer-band {
+-    align-items: center;
+-}
+-
+-/* bg_gameplay_time_holder: border 50 on every side (B-27); the 112 unit height fits both 50 unit borders. */
+-.timer-holder {
+-    flex-direction: row;
+-    align-items: center;
+-    justify-content: center;
+-    width: 320px;
+-    height: 112px;
+-    padding-left: 48px;
+-    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Panels/bg_gameplay_time_holder.png");
+-    -unity-slice-left: 50;
+-    -unity-slice-top: 50;
+-    -unity-slice-right: 50;
+-    -unity-slice-bottom: 50;
+-    -unity-background-image-tint-color: rgb(255, 255, 255);
+-    transition-property: -unity-background-image-tint-color;
+-    transition-duration: 0.2s;
+-}
+-
+-/* The clock glyph overhangs the holder's left end. */
+-.timer-icon {
+-    position: absolute;
+-    left: -36px;
+-    top: -2px;
+-    width: 116px;
+-    height: 116px;
+-    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Gameplay/ic_time.png");
+-    -unity-background-scale-mode: scale-to-fit;
+-}
+-
+-.timer-label.cbj-title {
+-    font-size: 64px;
+-    -unity-text-outline-width: 3px;
+-}
+-
+-/* Frozen main timer: an icy tint while Time Freeze holds it (reference 04). */
+-.hud--frozen .timer-holder {
+-    -unity-background-image-tint-color: rgb(170, 225, 255);
+-}
+-
+-.freeze-counter {
+-    display: none;
+-    flex-direction: row;
+-    align-items: center;
+-    margin-top: 10px;
+-    height: 68px;
+-}
+-
+-.hud--frozen .freeze-counter {
+-    display: flex;
+-}
+-
+-.freeze-icon {
+-    width: 68px;
+-    height: 68px;
+-    margin-right: -14px;
+-    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Boosters/Clock_Freeze.png");
+-    -unity-background-scale-mode: scale-to-fit;
+-}
+-
+-.freeze-bar {
+-    width: 220px;
+-    height: 46px;
+-    justify-content: center;
+-    overflow: hidden;
+-    background-color: rgba(18, 38, 104, 0.9);
+-    border-left-width: 3px;
+-    border-top-width: 3px;
+-    border-right-width: 3px;
+-    border-bottom-width: 3px;
+-    border-left-color: rgb(170, 230, 255);
+-    border-top-color: rgb(170, 230, 255);
+-    border-right-color: rgb(170, 230, 255);
+-    border-bottom-color: rgb(170, 230, 255);
+-    border-top-left-radius: 23px;
+-    border-top-right-radius: 23px;
+-    border-bottom-left-radius: 23px;
+-    border-bottom-right-radius: 23px;
+-}
+-
+-/* GameplayHudView writes the width in whole-second steps. */
+-.freeze-fill {
+-    position: absolute;
+-    left: 0;
+-    top: 0;
+-    bottom: 0;
+-    width: 100%;
+-    background-color: rgb(110, 200, 255);
+-}
+-
+-.freeze-label.cbj-title {
+-    font-size: 38px;
+-    -unity-text-outline-width: 2px;
+-}
++/*
++ * The timer, the freeze counter and their hud--frozen states live in UI/Game/TopBar/GameTopBar.uss with the top bar
++ * that now holds them (Game HUD design 3, 8); hud--targeting hides the bar there, so the banner below rises to the top.
++ */
+ 
+ /* bg_popup: border L106 T74 R107 B104; the 196 unit banner needs slice-scale 0.5 for its 178 units of top + bottom. */
+ .info-banner {

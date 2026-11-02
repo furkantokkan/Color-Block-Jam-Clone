@@ -1,0 +1,59 @@
+--- /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/base/GameSceneInstaller.cs.cs16	2026-09-28 06:25:53.192597000 +0300
++++ /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/ours/GameSceneInstaller.cs	2026-09-28 06:25:53.974069400 +0300
+@@ -5,6 +5,10 @@
+ using ColorBlockJam.Gameplay.Board.Outline;
+ using ColorBlockJam.Gameplay.Boosters;
+ using ColorBlockJam.Gameplay.Effects;
++using ColorBlockJam.Gameplay.Hud;
++using ColorBlockJam.Gameplay.Hud.Menu;
++using ColorBlockJam.Gameplay.Hud.Navigation;
++using ColorBlockJam.Gameplay.Hud.TopBar;
+ using ColorBlockJam.Gameplay.Input;
+ using ColorBlockJam.Gameplay.Session;
+ using ColorBlockJam.Gameplay.UI;
+@@ -95,7 +99,11 @@
+             container.BindInstance(m_environment);
+             container.BindInstance<IUiPointerFilter>(new UiToolkitPointerFilter(GetPointerVetoDocuments()));
+             container.BindInstance<IBoardProjector>(new CameraBoardProjector(m_camera, m_environment.BoardRoot, m_pickPlaneHeight));
+-            container.BindInstance<IPauseOverlay>(new NoPauseOverlay(m_resumeOnForeground));
++            // With the HUD the pause menu shows on the foreground return and only its Close resumes (DEC-135); a
++            // HUD-less scene keeps the interim resume, so it never stays paused without a UI (DEC-116).
++            container.BindInstance<IPauseOverlay>(m_hudDocument != null
++                ? new PopupPauseOverlay()
++                : (IPauseOverlay)new NoPauseOverlay(m_resumeOnForeground));
+ 
+             // The attempt clock with its Time Freeze side (B-8): one instance behind both ports, so Suspend, Resume,
+             // Teardown and Won hold or stop both clocks through ICountdown.
+@@ -154,12 +162,32 @@
+                 // host then unbinds the shared presenter and ends its purchase wait (B-32).
+                 container.BindInterfacesAndSelfTo<InGamePurchaseHost>().AsSingle();
+                 container.BindInterfacesAndSelfTo<GameplayHud>().AsSingle();
++
++                // The top bar, pause menu and Retry confirmation (Game HUD design 4), registered after the session so
++                // the container disposes them first: the top bar, then the menu flow, then its hosts and the exit.
++                container.BindInstance(new AttemptLevelNumber());
++                container.BindInterfacesAndSelfTo<LevelSessionControl>().AsSingle();
++                container.BindInterfacesAndSelfTo<HubSceneTransition>().AsSingle();
++                container.BindInterfacesAndSelfTo<GameExitNavigator>().AsSingle();
++                container.BindInterfacesAndSelfTo<PauseMenuHost>().AsSingle();
++                container.BindInterfacesAndSelfTo<RestartConfirmHost>().AsSingle();
++                container.BindInterfacesAndSelfTo<OverlayBackInput>().AsSingle();
++                container.BindInterfacesAndSelfTo<GameMenuFlow>().AsSingle();
++                container.BindInterfacesAndSelfTo<GameTopBar>().AsSingle();
++
++                // Back without targeting opens the pause menu (design 5); set once when the scene container builds.
++                container.RegisterBuildCallback(SetBackFallback);
+             }
+ 
+             // The scene context awaits this callback, so the attempt build is never fire-and-forget.
+             container.RegisterBuildCallbackAsync(loader.LoadAsync);
+         }
+ 
++        private static void SetBackFallback(IResolver resolver)
++        {
++            resolver.Resolve<DragInputRouter>().SetBackFallback(resolver.Resolve<IGameplayBackFallback>());
++        }
++
+         // The listed documents plus the HUD's, once each; they may share a panel, but each is checked while active.
+         private UIDocument[] GetPointerVetoDocuments()
+         {

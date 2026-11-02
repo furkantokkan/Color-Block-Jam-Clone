@@ -1,0 +1,61 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "6a5075c3a5d448029d3ea7b2a80f4e79",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1790277857252,
+      "finished_unix_ms": 1790277860780,
+      "last_update_unix_ms": 1790277860780,
+      "progress": {
+        "completed": 2,
+        "total": 2,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790277860637,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.PlayMode.BoardKitLifecycleTests.PieceFactoryReturnsDisabledRootsAndDisposesOutstandingPieces",
+        "last_finished_unix_ms": 1790277860683,
+        "stuck_suspected": false,
+        "editor_is_focused": true,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 2,
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.1869063,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "DisableReturnsEveryPieceAndReuseClearsClipping",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoardKitLifecycleTests.DisableReturnsEveryPieceAndReuseClearsClipping",
+            "state": "Passed",
+            "durationSeconds": 0.0721542,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PieceFactoryReturnsDisabledRootsAndDisposesOutstandingPieces",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoardKitLifecycleTests.PieceFactoryReturnsDisabledRootsAndDisposesOutstandingPieces",
+            "state": "Passed",
+            "durationSeconds": 0.0458925,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

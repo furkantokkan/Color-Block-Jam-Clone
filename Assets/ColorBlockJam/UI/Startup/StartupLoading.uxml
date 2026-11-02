@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- The app's only loading screen, shown by Init until Home is bound (DEC-140). Layout after the real game's
+         startup screen: centred title, rounded navy bar near the bottom with the percentage inside. The root keeps
+         picking on, so it blocks presses to Hub while Hub builds behind it. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Startup/StartupLoading.uss" />
+    <ui:VisualElement name="startup-loading" class="startup-loading cbj-document">
+        <ui:VisualElement name="startup-loading-background" class="startup-loading__background" picking-mode="Ignore" />
+        <ui:VisualElement name="startup-loading-title" class="startup-loading__title" picking-mode="Ignore">
+            <ui:Label text="Color" class="startup-loading__title-line" picking-mode="Ignore" />
+            <ui:Label text="Block" class="startup-loading__title-line" picking-mode="Ignore" />
+            <ui:Label text="Jam" class="startup-loading__title-line" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:VisualElement name="startup-loading-bar" class="startup-loading__bar" picking-mode="Ignore">
+            <ui:VisualElement name="startup-loading-fill" class="startup-loading__fill" picking-mode="Ignore" />
+            <ui:Label name="startup-loading-percent" text="0%" class="startup-loading__percent" picking-mode="Ignore" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

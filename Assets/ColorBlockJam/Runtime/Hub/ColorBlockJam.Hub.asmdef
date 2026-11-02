@@ -1,0 +1,26 @@
+{
+  "name": "ColorBlockJam.Hub",
+  "rootNamespace": "ColorBlockJam.Hub",
+  "references": [
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Haptics",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.UI",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "Unity.InputSystem",
+    "ZString",
+    "PrimeTween.Runtime"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

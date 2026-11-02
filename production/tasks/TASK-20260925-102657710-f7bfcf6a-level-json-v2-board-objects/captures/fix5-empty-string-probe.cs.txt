@@ -1,0 +1,14 @@
+var path = "C:/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260925-102657710-f7bfcf6a-level-json-v2-board-objects/captures/verify3-empty-string-fixtures.json";
+var fixtures = Newtonsoft.Json.Linq.JArray.Parse(System.IO.File.ReadAllText(path));
+var sb = new System.Text.StringBuilder();
+foreach (var f in fixtures)
+{
+    string json = (string)f["json"];
+    ColorBlockJam.Runtime.Levels.LevelData[] l;
+    string er, ea, ed;
+    bool r = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(json, ColorBlockJam.Runtime.Levels.LevelReadMode.Runtime, out l, out er);
+    bool a = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(json, ColorBlockJam.Runtime.Levels.LevelReadMode.Authoring, out l, out ea);
+    bool d = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(json, out l, out ed);
+    sb.Append((string)f["name"]).Append(" | runtime=").Append(r).Append(" [").Append(er).Append("] | authoring=").Append(a).Append(" [").Append(ea).Append("] | default3arg=").Append(d == a && ed == ea ? "same-as-authoring" : "DIFFERENT " + ed).Append('\n');
+}
+return sb.ToString();

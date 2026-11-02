@@ -1,0 +1,23 @@
+/*
+ * The Game HUD's overlay layer (Game HUD design 6). The layer fills the HUD and picks nothing itself. In game the
+ * shared Settings popup dims the board with the pause reference's scrim (about 49 % black) instead of the Hub's navy;
+ * this rule applies only under .game-overlays, so the Hub popup is unchanged.
+ */
+
+.game-overlays {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.game-overlays .settings-scrim {
+    background-color: rgba(0, 0, 0, 0.49);
+}
+
+/* This composition previews Settings. Open each other popup's document to edit it visibly. */
+.game-overlays .restart-confirm-screen,
+.game-overlays .level-complete-screen {
+    display: none;
+}

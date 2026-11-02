@@ -1,0 +1,309 @@
+{
+  "edit": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "a477bd07a65f4c2ebf55e5d76178e9e2",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1790510987432,
+      "finished_unix_ms": 1790510990254,
+      "last_update_unix_ms": 1790510990254,
+      "progress": {
+        "completed": 20,
+        "total": 20,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790510990219,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.Gameplay.Gameplay.BlockEffectCompositionTests.RestartPublishesFreshStateWithoutChangingAuthoredMetadata",
+        "last_finished_unix_ms": 1790510990222,
+        "stuck_suspected": false,
+        "editor_is_focused": true,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 20,
+          "passed": 20,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.9458621,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "DisposableSavedFixtureReopensWithIceCountAndRuntimeSupportWhileArrowRemainsGated",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.DisposableSavedFixtureReopensWithIceCountAndRuntimeSupportWhileArrowRemainsGated",
+            "state": "Passed",
+            "durationSeconds": 0.0220079,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceGraphScalarGeneratesRequestedShaderValue(0.0f)",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.IceGraphScalarGeneratesRequestedShaderValue(0.0f)",
+            "state": "Passed",
+            "durationSeconds": 1.7550486,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceGraphScalarGeneratesRequestedShaderValue(0.2f)",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.IceGraphScalarGeneratesRequestedShaderValue(0.2f)",
+            "state": "Passed",
+            "durationSeconds": 0.0031404,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceGraphScalarGeneratesRequestedShaderValue(0.65f)",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.IceGraphScalarGeneratesRequestedShaderValue(0.65f)",
+            "state": "Passed",
+            "durationSeconds": 0.0029162,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceGraphScalarGeneratesRequestedShaderValue(0.98f)",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.IceGraphScalarGeneratesRequestedShaderValue(0.98f)",
+            "state": "Passed",
+            "durationSeconds": 0.002768,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceGraphScalarGeneratesRequestedShaderValue(1.0f)",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.IceGraphScalarGeneratesRequestedShaderValue(1.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.0026746,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceShellUsesAuthoredMaterialTintAndOpacity",
+            "fullName": "ColorBlockJam.Tests.IceAuthoringTests.IceShellUsesAuthoredMaterialTintAndOpacity",
+            "state": "Passed",
+            "durationSeconds": 0.0117223,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FrostBadgeKeepsCountBelowNameAcrossRemovalAndRestoredSnapshot(1)",
+            "fullName": "ColorBlockJam.Tests.LevelCanvasEffectLayerTests.FrostBadgeKeepsCountBelowNameAcrossRemovalAndRestoredSnapshot(1)",
+            "state": "Passed",
+            "durationSeconds": 0.0039222,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FrostBadgeKeepsCountBelowNameAcrossRemovalAndRestoredSnapshot(20)",
+            "fullName": "ColorBlockJam.Tests.LevelCanvasEffectLayerTests.FrostBadgeKeepsCountBelowNameAcrossRemovalAndRestoredSnapshot(20)",
+            "state": "Passed",
+            "durationSeconds": 0.0007604,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceCountSurvivesSnapshotAndLayerDisposesAndReattachesWithoutDuplicates",
+            "fullName": "ColorBlockJam.Tests.LevelCanvasEffectLayerTests.IceCountSurvivesSnapshotAndLayerDisposesAndReattachesWithoutDuplicates",
+            "state": "Passed",
+            "durationSeconds": 0.0009606,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RegisteredEffectBadgesStackThenOpenSideColumnsWithoutHidingAnyBadge",
+            "fullName": "ColorBlockJam.Tests.LevelCanvasEffectLayerTests.RegisteredEffectBadgesStackThenOpenSideColumnsWithoutHidingAnyBadge",
+            "state": "Passed",
+            "durationSeconds": 0.0041479,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TinyCellStartsSideColumnWhenNoBadgeFitsBelowTheName",
+            "fullName": "ColorBlockJam.Tests.LevelCanvasEffectLayerTests.TinyCellStartsSideColumnWhenNoBadgeFitsBelowTheName",
+            "state": "Passed",
+            "durationSeconds": 0.0008959,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "IceAndArrowCoexistAndRebuildReturnsAllTemporaryViews",
+            "fullName": "ColorBlockJam.Tests.LevelPreview.PreviewIceTests.IceAndArrowCoexistAndRebuildReturnsAllTemporaryViews",
+            "state": "Passed",
+            "durationSeconds": 0.0186299,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AttemptCopiesCountsAndHookReadsAllocateNothing",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Domain.IceRulesTests.AttemptCopiesCountsAndHookReadsAllocateNothing",
+            "state": "Passed",
+            "durationSeconds": 0.00056,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FrozenBlockRefusesDragMoveAndExitUntilAnotherBlockLeaves",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Domain.IceRulesTests.FrozenBlockRefusesDragMoveAndExitUntilAnotherBlockLeaves",
+            "state": "Passed",
+            "durationSeconds": 0.0133399,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OnlyDistinctOtherLeaveEventsThawAndCountsNeverBecomeNegative",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Domain.IceRulesTests.OnlyDistinctOtherLeaveEventsThawAndCountsNeverBecomeNegative",
+            "state": "Passed",
+            "durationSeconds": 0.0007108,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ThawKeepsOtherAxisAndExitHooksAndFrozenOccupancy",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Domain.IceRulesTests.ThawKeepsOtherAxisAndExitHooksAndFrozenOccupancy",
+            "state": "Passed",
+            "durationSeconds": 0.0011614,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EqualIdDoesNotAuthorizeDifferentLevelIdentityAndPrepareFailureClearsState",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.BlockEffectCompositionTests.EqualIdDoesNotAuthorizeDifferentLevelIdentityAndPrepareFailureClearsState",
+            "state": "Passed",
+            "durationSeconds": 0.0038932,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LaterModuleFailureCannotPublishOrKeepPreviousAttempt",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.BlockEffectCompositionTests.LaterModuleFailureCannotPublishOrKeepPreviousAttempt",
+            "state": "Passed",
+            "durationSeconds": 0.0029469,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RestartPublishesFreshStateWithoutChangingAuthoredMetadata",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.BlockEffectCompositionTests.RestartPublishesFreshStateWithoutChangingAuthoredMetadata",
+            "state": "Passed",
+            "durationSeconds": 0.0026925,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  },
+  "play": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "7040ebf76b3343b7a9d100acb5ca7385",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1790511017751,
+      "finished_unix_ms": 1790511021000,
+      "last_update_unix_ms": 1790511021000,
+      "progress": {
+        "completed": 5,
+        "total": 5,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790511020973,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.PlayMode.BlockIcePresentationTests.CounterUsesOutlinedNumeralAndCachedCountsAndIgnoresPicking",
+        "last_finished_unix_ms": 1790511020975,
+        "stuck_suspected": false,
+        "editor_is_focused": true,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 0.8153383,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "LoaderPreparesSharedContextAndIceThawsAndRestartsInRealGameScene",
+            "fullName": "ColorBlockJam.Tests.Gameplay.GameSceneIceTests.LoaderPreparesSharedContextAndIceThawsAndRestartsInRealGameScene",
+            "state": "Passed",
+            "durationSeconds": 0.5342888,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AttachedCounterStaysCentredAndScalesWithProjectedCell",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BlockIcePresentationTests.AttachedCounterStaysCentredAndScalesWithProjectedCell",
+            "state": "Passed",
+            "durationSeconds": 0.036816,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ConcaveAndHoledShellsUseSharedMaterialAndResetClipCracksAndTweensOnReturn",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BlockIcePresentationTests.ConcaveAndHoledShellsUseSharedMaterialAndResetClipCracksAndTweensOnReturn",
+            "state": "Passed",
+            "durationSeconds": 0.2040961,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CounterUsesContinuousSolidMidpointAndDeterministicOccupiedFallback",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BlockIcePresentationTests.CounterUsesContinuousSolidMidpointAndDeterministicOccupiedFallback",
+            "state": "Passed",
+            "durationSeconds": 0.001234,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CounterUsesOutlinedNumeralAndCachedCountsAndIgnoresPicking",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BlockIcePresentationTests.CounterUsesOutlinedNumeralAndCachedCountsAndIgnoresPicking",
+            "state": "Passed",
+            "durationSeconds": 0.0020616,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

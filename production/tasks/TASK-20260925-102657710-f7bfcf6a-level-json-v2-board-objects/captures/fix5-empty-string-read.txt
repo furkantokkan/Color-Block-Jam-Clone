@@ -1,0 +1,7 @@
+empty_value_enum | runtime=False [Level vf block b1 effect arrow key axis has value ''; expected one of Horizontal, Vertical.] | authoring=False [Level vf block b1 effect arrow key axis has value ''; expected one of Horizontal, Vertical.] | default3arg=same-as-authoring
+blank_value_enum | runtime=False [Level vf block b1 effect arrow key axis has value ' '; expected one of Horizontal, Vertical.] | authoring=False [Level vf block b1 effect arrow key axis has value ' '; expected one of Horizontal, Vertical.] | default3arg=same-as-authoring
+empty_key | runtime=False [Level vf block b1 effect arrow has an empty key.] | authoring=False [Level vf block b1 effect arrow has an empty key.] | default3arg=same-as-authoring
+blank_key | runtime=False [Level vf block b1 effect arrow has an empty key.] | authoring=False [Level vf block b1 effect arrow has an empty key.] | default3arg=same-as-authoring
+empty_value_list | runtime=False [Level vf block b1 effect layer key layerColors has 0 items in ''; expected 1 to 3 items.] | authoring=False [Level vf block b1 effect layer key layerColors has 0 items in ''; expected 1 to 3 items.] | default3arg=same-as-authoring
+empty_type | runtime=False [Level vf block b1 has an empty effect.] | authoring=False [Level vf block b1 has an empty effect.] | default3arg=same-as-authoring
+

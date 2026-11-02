@@ -1,0 +1,7 @@
+{
+  "name": "ColorBlockJam.Editor",
+  "rootNamespace": "ColorBlockJam.Editor",
+  "references": ["ColorBlockJam.Runtime", "ColorBlockJam.Presentation", "Onity.Unity", "Unity.Addressables.Editor", "ColorBlockJam.Environment", "ColorBlockJam.Editor.Validation"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

@@ -1,0 +1,93 @@
+== window 960x640 root (x:0.00, y:0.00, width:960.00, height:640.00)
+  ok  level-editor-split x     0.0-  960.0 y     0.0-  610.0
+  ok  tools-pane         x     0.0-  280.0 y     0.0-  610.0
+  ok  selection-pane     x   281.0-  961.0 y     0.0-  610.0
+  ok  top-bar            x   281.0-  961.0 y     0.0-   92.0
+  ok  database-row       x   289.0-  953.0 y    10.0-   32.0
+  ok  database-actions   x   289.0-  953.0 y    37.0-   58.0
+  ok  level-row          x   289.0-  953.0 y    62.0-   85.0
+  ok  refresh-json       x   896.0-  920.0 y    11.0-   31.0 text='' tip='Reload JSON: read the active JSON source from disk again.' enabled=True
+  ok  restore-backup     x   926.0-  950.0 y    11.0-   31.0 text='' tip='Restore Previous Save: bring back the JSON version that the last save replaced.' enabled=True
+  ok  create-level       x   627.0-  651.0 y    63.0-   84.0 text='+' tip='New level' enabled=True
+  ok  delete-level       x   657.0-  681.0 y    63.0-   84.0 text='×' tip='Delete selected level' enabled=True
+  ok  level-name         x   687.0-  950.0 y    63.0-   84.0
+  ok  canvas-slot        x   281.0-  961.0 y    92.0-  610.0
+  ok  bottom-bar         x     0.0-  960.0 y   610.0-  640.0
+  ok  save-level         x     9.0-  109.0 y   616.0-  635.0 text='Save Level' tip='Validate the draft and write it to the JSON source.' enabled=True
+  ok  status             x   120.0-  952.0 y   618.0-  633.0
+  ok  colors-group       x     6.0-  274.0 y     4.0-   39.0
+  ok  blocks-group       x     6.0-  274.0 y    43.0-  128.0
+  ok  doors-group        x     6.0-  274.0 y   132.0-  167.0
+  ok  board-group        x     6.0-  274.0 y   171.0-  275.0
+  ok  mechanics-group    x     6.0-  274.0 y   279.0-  314.0
+  ok  edit-group         x     6.0-  274.0 y   318.0-  353.0
+  ok  raw-data-group     x     6.0-  274.0 y   357.0-  377.0
+  ok  level-id           x    24.0-  271.0 y   192.0-  210.0
+  ok  board-width        x    24.0-  271.0 y   212.0-  230.0
+  ok  board-height       x    24.0-  271.0 y   232.0-  250.0
+  ok  timer-seconds      x    24.0-  231.0 y   256.0-  274.0
+  ok  timer-text         x   234.0-  274.0 y   255.0-  275.0
+  status='Editing Level 1. Save Level writes the JSON source.'
+  outside=0
+== window 1280x800 root (x:0.00, y:0.00, width:1280.00, height:800.00)
+  ok  level-editor-split x     0.0- 1280.0 y     0.0-  770.0
+  ok  tools-pane         x     0.0-  280.0 y     0.0-  770.0
+  ok  selection-pane     x   281.0- 1281.0 y     0.0-  770.0
+  ok  top-bar            x   281.0- 1281.0 y     0.0-   92.0
+  ok  database-row       x   289.0- 1273.0 y    10.0-   32.0
+  ok  database-actions   x   289.0- 1273.0 y    37.0-   58.0
+  ok  level-row          x   289.0- 1273.0 y    62.0-   85.0
+  ok  refresh-json       x  1216.0- 1240.0 y    11.0-   31.0 text='' tip='Reload JSON: read the active JSON source from disk again.' enabled=True
+  ok  restore-backup     x  1246.0- 1270.0 y    11.0-   31.0 text='' tip='Restore Previous Save: bring back the JSON version that the last save replaced.' enabled=True
+  ok  create-level       x   819.0-  843.0 y    63.0-   84.0 text='+' tip='New level' enabled=True
+  ok  delete-level       x   849.0-  873.0 y    63.0-   84.0 text='×' tip='Delete selected level' enabled=True
+  ok  level-name         x   879.0- 1270.0 y    63.0-   84.0
+  ok  canvas-slot        x   281.0- 1281.0 y    92.0-  770.0
+  ok  bottom-bar         x     0.0- 1280.0 y   770.0-  800.0
+  ok  save-level         x     9.0-  109.0 y   776.0-  795.0 text='Save Level' tip='Validate the draft and write it to the JSON source.' enabled=True
+  ok  status             x   120.0- 1272.0 y   778.0-  793.0
+  ok  colors-group       x     6.0-  274.0 y     4.0-   39.0
+  ok  blocks-group       x     6.0-  274.0 y    43.0-  128.0
+  ok  doors-group        x     6.0-  274.0 y   132.0-  167.0
+  ok  board-group        x     6.0-  274.0 y   171.0-  275.0
+  ok  mechanics-group    x     6.0-  274.0 y   279.0-  314.0
+  ok  edit-group         x     6.0-  274.0 y   318.0-  353.0
+  ok  raw-data-group     x     6.0-  274.0 y   357.0-  377.0
+  ok  level-id           x    24.0-  271.0 y   192.0-  210.0
+  ok  board-width        x    24.0-  271.0 y   212.0-  230.0
+  ok  board-height       x    24.0-  271.0 y   232.0-  250.0
+  ok  timer-seconds      x    24.0-  231.0 y   256.0-  274.0
+  ok  timer-text         x   234.0-  274.0 y   255.0-  275.0
+  status='Editing Level 1. Save Level writes the JSON source.'
+  outside=0
+== window 1600x1000 root (x:0.00, y:0.00, width:1600.00, height:1000.00)
+  ok  level-editor-split x     0.0- 1600.0 y     0.0-  970.0
+  ok  tools-pane         x     0.0-  280.0 y     0.0-  970.0
+  ok  selection-pane     x   281.0- 1601.0 y     0.0-  970.0
+  ok  top-bar            x   281.0- 1601.0 y     0.0-   92.0
+  ok  database-row       x   289.0- 1593.0 y    10.0-   32.0
+  ok  database-actions   x   289.0- 1593.0 y    37.0-   58.0
+  ok  level-row          x   289.0- 1593.0 y    62.0-   85.0
+  ok  refresh-json       x  1536.0- 1560.0 y    11.0-   31.0 text='' tip='Reload JSON: read the active JSON source from disk again.' enabled=True
+  ok  restore-backup     x  1566.0- 1590.0 y    11.0-   31.0 text='' tip='Restore Previous Save: bring back the JSON version that the last save replaced.' enabled=True
+  ok  create-level       x  1011.0- 1035.0 y    63.0-   84.0 text='+' tip='New level' enabled=True
+  ok  delete-level       x  1041.0- 1065.0 y    63.0-   84.0 text='×' tip='Delete selected level' enabled=True
+  ok  level-name         x  1071.0- 1590.0 y    63.0-   84.0
+  ok  canvas-slot        x   281.0- 1601.0 y    92.0-  970.0
+  ok  bottom-bar         x     0.0- 1600.0 y   970.0- 1000.0
+  ok  save-level         x     9.0-  109.0 y   976.0-  995.0 text='Save Level' tip='Validate the draft and write it to the JSON source.' enabled=True
+  ok  status             x   120.0- 1592.0 y   978.0-  993.0
+  ok  colors-group       x     6.0-  274.0 y     4.0-   39.0
+  ok  blocks-group       x     6.0-  274.0 y    43.0-  128.0
+  ok  doors-group        x     6.0-  274.0 y   132.0-  167.0
+  ok  board-group        x     6.0-  274.0 y   171.0-  275.0
+  ok  mechanics-group    x     6.0-  274.0 y   279.0-  314.0
+  ok  edit-group         x     6.0-  274.0 y   318.0-  353.0
+  ok  raw-data-group     x     6.0-  274.0 y   357.0-  377.0
+  ok  level-id           x    24.0-  271.0 y   192.0-  210.0
+  ok  board-width        x    24.0-  271.0 y   212.0-  230.0
+  ok  board-height       x    24.0-  271.0 y   232.0-  250.0
+  ok  timer-seconds      x    24.0-  231.0 y   256.0-  274.0
+  ok  timer-text         x   234.0-  274.0 y   255.0-  275.0
+  status='Editing Level 1. Save Level writes the JSON source.'
+  outside=0

@@ -1,0 +1,110 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Shared Settings popup (reference 19, DEC-134, DEC-136). Element names are the contract with SettingsPopupView,
+         its hosts and the tests. Draw order: later siblings draw on top, so the scrim comes first; inside the popup
+         the holder comes before the header, close button and message, which overlap the shell's edges. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Settings/SettingsPopup.uss" />
+    <ui:VisualElement name="settings-screen" class="settings-screen cbj-document" picking-mode="Ignore">
+        <!-- Full-screen dim over the host; pickable: blocks every host press underneath (AC-2.6), and a tap on it
+             closes the popup (AC-2.3a). -->
+        <ui:VisualElement name="settings-scrim" class="settings-scrim" picking-mode="Position" />
+
+        <!-- The host pads all four edges from its safe area; the popup centres inside the padding. -->
+        <ui:VisualElement name="settings-safe-area" class="settings-safe-area" picking-mode="Ignore">
+            <!-- bg_popup shell. Pickable, so a tap between the controls is not a scrim tap. -->
+            <ui:VisualElement name="settings-popup" class="settings-popup" picking-mode="Position">
+                <!-- bg_popup_info_holder inset: three rows, then the placeholder buttons and the hidden HOME button. -->
+                <ui:VisualElement name="settings-holder" class="settings-holder" picking-mode="Ignore">
+                    <ui:VisualElement name="vibration-row" class="settings-row" picking-mode="Ignore">
+                        <ui:VisualElement name="vibration-icon" class="settings-row__icon settings-row__icon--vibration" picking-mode="Ignore" />
+                        <ui:Button name="vibration-toggle" class="settings-toggle cbj-pressable cbj-haptic-tap">
+                            <ui:VisualElement class="settings-toggle__track" picking-mode="Ignore" />
+                            <ui:VisualElement name="toggle-knob" class="settings-toggle__knob" picking-mode="Ignore">
+                                <ui:VisualElement class="settings-toggle__knob-off" picking-mode="Ignore" />
+                                <ui:VisualElement class="settings-toggle__knob-on" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="sound-row" class="settings-row" picking-mode="Ignore">
+                        <ui:VisualElement name="sound-icon" class="settings-row__icon settings-row__icon--sound" picking-mode="Ignore" />
+                        <ui:Button name="sound-toggle" class="settings-toggle cbj-pressable cbj-haptic-tap">
+                            <ui:VisualElement class="settings-toggle__track" picking-mode="Ignore" />
+                            <ui:VisualElement name="toggle-knob" class="settings-toggle__knob" picking-mode="Ignore">
+                                <ui:VisualElement class="settings-toggle__knob-off" picking-mode="Ignore" />
+                                <ui:VisualElement class="settings-toggle__knob-on" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="music-row" class="settings-row settings-row--last" picking-mode="Ignore">
+                        <ui:VisualElement name="music-icon" class="settings-row__icon settings-row__icon--music" picking-mode="Ignore" />
+                        <ui:Button name="music-toggle" class="settings-toggle cbj-pressable cbj-haptic-tap">
+                            <ui:VisualElement class="settings-toggle__track" picking-mode="Ignore" />
+                            <ui:VisualElement name="toggle-knob" class="settings-toggle__knob" picking-mode="Ignore">
+                                <ui:VisualElement class="settings-toggle__knob-off" picking-mode="Ignore" />
+                                <ui:VisualElement class="settings-toggle__knob-on" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <!--
+                         Placeholders: press feedback only (brief 4.2, AC-2.4). Each label is a two-layer
+                         "cbj-heavy-text" pair (D-001 recurrence): a navy back label with a wide outline, then a
+                         white front label with its own thin white outline drawn on top, so LiberationSans' regular
+                         weight reads as heavy white lettering with a navy border, matching reference 19/20. The
+                         front label keeps the original element name so existing name-based queries (tests, HOME
+                         lookups) still resolve it; both layers must always carry the same text.
+                    -->
+                    <ui:Button name="legal-terms-button" class="settings-button cbj-pressable cbj-haptic-tap">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="settings-button__label cbj-title cbj-heavy-text__back" text="Legal Terms" picking-mode="Ignore" />
+                            <ui:Label name="legal-terms-label" class="settings-button__label cbj-title cbj-heavy-text__front" text="Legal Terms" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:Button>
+                    <ui:Button name="restore-purchases-button" class="settings-button cbj-pressable cbj-haptic-tap">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="settings-button__label settings-button__label--two-lines cbj-title cbj-heavy-text__back" text="Restore&#10;Purchases" picking-mode="Ignore" />
+                            <ui:Label name="restore-purchases-label" class="settings-button__label settings-button__label--two-lines cbj-title cbj-heavy-text__front" text="Restore&#10;Purchases" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:Button>
+                    <ui:Button name="support-button" class="settings-button cbj-pressable cbj-haptic-tap">
+                        <ui:VisualElement class="settings-button__support-icon cbj-press-tint" picking-mode="Ignore" />
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="settings-button__label cbj-title cbj-heavy-text__back" text="Support" picking-mode="Ignore" />
+                            <ui:Label name="support-label" class="settings-button__label cbj-title cbj-heavy-text__front" text="Support" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:Button>
+                    <ui:Button name="language-button" class="settings-button cbj-pressable cbj-haptic-tap">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="settings-button__label cbj-title cbj-heavy-text__back" text="Language" picking-mode="Ignore" />
+                            <ui:Label name="language-label" class="settings-button__label cbj-title cbj-heavy-text__front" text="Language" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:Button>
+
+                    <!-- Hidden unless a host shows it (the Game pause menu, reference 20, DEC-135). -->
+                    <ui:Button name="home-button" class="settings-button settings-button--home cbj-pressable cbj-haptic-confirm">
+                        <ui:VisualElement class="settings-button__home-icon cbj-press-tint" picking-mode="Ignore" />
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="settings-button__label settings-button__label--home cbj-title cbj-heavy-text__back" text="HOME" picking-mode="Ignore" />
+                            <ui:Label name="home-label" class="settings-button__label settings-button__label--home cbj-title cbj-heavy-text__front" text="HOME" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:Button>
+                </ui:VisualElement>
+
+                <!-- bg_popup_header title tab, overlapping the shell's top edge. Pickable, so it counts as the popup. -->
+                <ui:VisualElement name="settings-header" class="settings-header" picking-mode="Position">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="settings-title cbj-title cbj-heavy-text__back" text="SETTINGS" picking-mode="Ignore" />
+                        <ui:Label name="settings-title" class="settings-title cbj-title cbj-heavy-text__front" text="SETTINGS" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Popup_Close_Button at the shell's top-right corner. -->
+                <ui:Button name="settings-close-button" class="settings-close-button cbj-pressable cbj-haptic-tap" />
+
+                <!-- Save-failure message over the shell's bottom edge; hidden until a save fails, so nothing moves. -->
+                <ui:Label name="settings-message" class="settings-message cbj-title" text="" picking-mode="Ignore" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

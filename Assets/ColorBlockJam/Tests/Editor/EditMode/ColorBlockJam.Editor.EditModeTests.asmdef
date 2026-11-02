@@ -1,0 +1,20 @@
+{
+  "name": "ColorBlockJam.Editor.EditModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.EditMode",
+  "references": [
+    "ColorBlockJam.Editor",
+    "ColorBlockJam.Editor.Validation",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "Unity.Addressables.Editor",
+    "Onity.Factory",
+    "Onity.Unity",
+    "UnityEditor.TestRunner",
+    "UnityEngine.TestRunner"
+  ],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll", "Newtonsoft.Json.dll"],
+  "autoReferenced": false
+}

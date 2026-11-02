@@ -1,0 +1,16 @@
+firstSave=True []
+editorReloadAfterSave=True []
+secondSave=True []
+authoringReadOfSavedFile=True
+thirdSaveFromReloaded=True [] identical=True
+inspectorDescribe=1 level
+LevelDatabase.LoadJson(authoring)=True []
+LevelDatabase.LoadJson(Runtime, as LoadAsync)=False [Level bar cell object o1 effect barrier is not implemented in gameplay yet.]
+TryRead(Runtime)=False [Level bar cell object o1 effect barrier is not implemented in gameplay yet.]
+listLevelSave=True []
+listLevelReload=True [] levels=2
+listLevelSaveAgain=True identical=True
+inspectorDescribe2=2 levels
+LoadJson2(authoring)=True
+LoadJson2(Runtime)=False [Level bar cell object o1 effect barrier is not implemented in gameplay yet.] cacheAfterRuntimeRefusal=Level database has not been loaded.
+fileHas leaves=True layerColors=True buttonCell=True

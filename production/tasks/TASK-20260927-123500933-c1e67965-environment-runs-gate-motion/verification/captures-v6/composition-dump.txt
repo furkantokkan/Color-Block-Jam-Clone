@@ -1,0 +1,63 @@
+== hole: 125 placements, 0 gates
+  count Brick_End = 20
+  count Corner_1 = 10
+  count FloorBase = 30
+  count Grid = 30
+  count Wall = 35
+  Wall           local=(-0.750,3.250) grid=(-1.500,6.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,3.750) grid=(-1.500,7.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Brick_End      local=(-0.750,4.250) grid=(-1.500,8.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Corner_1       local=(1.750,3.250) grid=(3.500,6.500) yaw=270 scale=(0.500,1.000,0.500)
+  Corner_1       local=(-0.750,4.750) grid=(-1.500,9.500) yaw=270 scale=(0.500,1.000,0.500)
+  Brick_End      local=(-0.250,4.750) grid=(-0.500,9.500) yaw=270 scale=(0.500,1.000,0.500)
+  Wall           local=(0.250,4.750) grid=(0.500,9.500) yaw= 90 scale=(0.500,1.000,0.500)
+  Brick_End      local=(0.750,4.750) grid=(1.500,9.500) yaw= 90 scale=(0.500,1.000,0.500)
+  Corner_1       local=(1.250,4.750) grid=(2.500,9.500) yaw= 90 scale=(0.500,1.000,0.500)
+  Brick_End      local=(1.250,5.125) grid=(2.500,10.250) yaw=180 scale=(0.500,1.000,0.250)
+  Brick_End      local=(1.250,5.375) grid=(2.500,10.750) yaw=  0 scale=(0.500,1.000,0.250)
+  Corner_1       local=(1.250,5.750) grid=(2.500,11.500) yaw=270 scale=(0.500,1.000,0.500)
+  Brick_End      local=(1.750,5.750) grid=(3.500,11.500) yaw=270 scale=(0.500,1.000,0.500)
+== rect4x5: 76 placements, 2 gates
+  count Brick_End = 8
+  count Corner_1 = 4
+  count Door_1x1 = 6
+  count Door_Arrow = 2
+  count FloorBase = 20
+  count Grid = 20
+  count Wall = 16
+  Corner_1       local=(-0.750,-0.750) grid=(-1.500,-1.500) yaw=180 scale=(0.500,1.000,0.500)
+  Brick_End      local=(2.750,-0.750) grid=(5.500,-1.500) yaw=270 scale=(0.500,1.000,0.500)
+  Brick_End      local=(3.250,-0.750) grid=(6.500,-1.500) yaw= 90 scale=(0.500,1.000,0.500)
+  Corner_1       local=(3.750,-0.750) grid=(7.500,-1.500) yaw= 90 scale=(0.500,1.000,0.500)
+  Brick_End      local=(-0.750,-0.250) grid=(-1.500,-0.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,0.250) grid=(-1.500,0.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,0.750) grid=(-1.500,1.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,1.250) grid=(-1.500,2.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,1.750) grid=(-1.500,3.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,2.250) grid=(-1.500,4.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,2.750) grid=(-1.500,5.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,3.250) grid=(-1.500,6.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Wall           local=(-0.750,3.750) grid=(-1.500,7.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Brick_End      local=(-0.750,4.250) grid=(-1.500,8.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Brick_End      local=(3.750,-0.250) grid=(7.500,-0.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,0.250) grid=(7.500,0.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,0.750) grid=(7.500,1.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,1.250) grid=(7.500,2.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,1.750) grid=(7.500,3.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,2.250) grid=(7.500,4.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,2.750) grid=(7.500,5.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,3.250) grid=(7.500,6.500) yaw=180 scale=(0.500,1.000,0.500)
+  Wall           local=(3.750,3.750) grid=(7.500,7.500) yaw=180 scale=(0.500,1.000,0.500)
+  Brick_End      local=(3.750,4.250) grid=(7.500,8.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Corner_1       local=(-0.750,4.750) grid=(-1.500,9.500) yaw=270 scale=(0.500,1.000,0.500)
+  Brick_End      local=(-0.250,4.750) grid=(-0.500,9.500) yaw=270 scale=(0.500,1.000,0.500)
+  Brick_End      local=(0.250,4.750) grid=(0.500,9.500) yaw= 90 scale=(0.500,1.000,0.500)
+  Corner_1       local=(3.750,4.750) grid=(7.500,9.500) yaw=  0 scale=(0.500,1.000,0.500)
+  Door_1x1       local=(1.000,4.750) grid=(2.000,9.500) yaw=  0 scale=(1.000,1.000,0.500)
+  Door_1x1       local=(2.000,4.750) grid=(4.000,9.500) yaw=  0 scale=(1.000,1.000,0.500)
+  Door_1x1       local=(3.000,4.750) grid=(6.000,9.500) yaw=  0 scale=(1.000,1.000,0.500)
+  Door_Arrow     local=(2.000,4.750) grid=(4.000,9.500) yaw=180 scale=(0.500,1.000,0.500)
+  Door_1x1       local=(0.000,-0.750) grid=(0.000,-1.500) yaw=  0 scale=(1.000,1.000,0.500)
+  Door_1x1       local=(1.000,-0.750) grid=(2.000,-1.500) yaw=  0 scale=(1.000,1.000,0.500)
+  Door_1x1       local=(2.000,-0.750) grid=(4.000,-1.500) yaw=  0 scale=(1.000,1.000,0.500)
+  Door_Arrow     local=(1.000,-0.750) grid=(2.000,-1.500) yaw=  0 scale=(0.500,1.000,0.500)

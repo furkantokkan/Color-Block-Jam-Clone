@@ -1,0 +1,58 @@
+{
+ "result": {
+  "success": true,
+  "message": "Test job started.",
+  "error": null,
+  "data": {
+   "job_id": "052a1e6079a54d6fa6354e7eb8ab89be",
+   "status": "running",
+   "mode": "EditMode",
+   "include_details": false,
+   "include_failed_tests": false
+  },
+  "hint": null
+ }
+}
+job=052a1e6079a54d6fa6354e7eb8ab89be
+{
+ "result": {
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+   "job_id": "052a1e6079a54d6fa6354e7eb8ab89be",
+   "status": "succeeded",
+   "mode": "EditMode",
+   "started_unix_ms": 1790343042133,
+   "finished_unix_ms": 1790343129301,
+   "last_update_unix_ms": 1790343129301,
+   "progress": {
+    "completed": 752,
+    "total": 752,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1790343128467,
+    "last_finished_test_full_name": "AddressableAssets.DocExampleCode.TestStub.RequiredTest",
+    "last_finished_unix_ms": 1790343128467,
+    "stuck_suspected": false,
+    "editor_is_focused": true,
+    "blocked_reason": null,
+    "failures_so_far": [],
+    "failures_capped": false
+   },
+   "error": null,
+   "result": {
+    "mode": "EditMode",
+    "summary": {
+     "total": 752,
+     "passed": 752,
+     "failed": 0,
+     "skipped": 0,
+     "durationSeconds": 80.63556,
+     "resultState": "Passed"
+    },
+    "results": []
+   }
+  },
+  "hint": null
+ }
+}

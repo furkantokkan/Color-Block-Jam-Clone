@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2836915d68a696409d10f99d5a69e17, type: 3}
+  m_Name: Rocket
+  m_EditorClassIdentifier: 
+  m_id: 2
+  m_displayName: Rocket
+  m_description: Remove one cell from the selected block.
+  m_icon: {fileID: 21300000, guid: 26eda7e8b8a114e49a96cdf2ea529cdb, type: 3}
+  m_effectPrefab: {fileID: 4006365798657548950, guid: 433299897f5eb974dbf32428f52d0bfe,
+    type: 3}
+  m_useContexts: 2
+  m_targetKind: 1
+  m_initialCharges: 1
+  m_purchasePrice: 10
+  m_purchaseCurrency: {fileID: 11400000, guid: 5fd1561e40c5a6444af5a47c6a11914c, type: 2}
+  m_purchaseAmount: 1

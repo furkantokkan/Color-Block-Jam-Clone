@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="20" result="Passed" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-28 00:56:41Z" end-time="2026-09-28 00:56:42Z" duration="0.4474807">
+  <test-suite type="TestSuite" id="1000" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="1640" result="Passed" start-time="2026-09-28 00:56:41Z" end-time="2026-09-28 00:56:42Z" duration="0.447481" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="2618" name="ColorBlockJam.Gameplay.EditModeTests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/cbj-outline-d373bc/Library/ScriptAssemblies/ColorBlockJam.Gameplay.EditModeTests.dll" runstate="Runnable" testcasecount="329" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.322332" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="33024" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="2619" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="329" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.291582" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="2620" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="329" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.261870" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="2621" name="Gameplay" fullname="ColorBlockJam.Tests.Gameplay" runstate="Runnable" testcasecount="329" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.228260" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="2240" name="FootprintOutlineTests" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.188340" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2251" name="AddCell_RejectsADuplicateAndAnOverflow" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.AddCell_RejectsADuplicateAndAnOverflow" methodname="AddCell_RejectsADuplicateAndAnOverflow" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="635352823" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.023199" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2250" name="DiagonalPinch_EveryEdgeIsTracedOnceAndTheLoopsClose" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.DiagonalPinch_EveryEdgeIsTracedOnceAndTheLoopsClose" methodname="DiagonalPinch_EveryEdgeIsTracedOnceAndTheLoopsClose" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="7120591" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.012613" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2248" name="L_ConcaveCornerSitsInTheNotch" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.L_ConcaveCornerSitsInTheNotch" methodname="L_ConcaveCornerSitsInTheNotch" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="152704985" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.003824" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2256" name="Mesh_AFreeSideRampsIntoTheSeamBeforeABlockedCorner" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_AFreeSideRampsIntoTheSeamBeforeABlockedCorner" methodname="Mesh_AFreeSideRampsIntoTheSeamBeforeABlockedCorner" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1905389383" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.016760" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2257" name="Mesh_ASideChangesKindExactlyAtTheCellBoundary" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_ASideChangesKindExactlyAtTheCellBoundary" methodname="Mesh_ASideChangesKindExactlyAtTheCellBoundary" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1012196849" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.001523" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2255" name="Mesh_ASideTouchingANeighbourIsMarkedBlocked" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_ASideTouchingANeighbourIsMarkedBlocked" methodname="Mesh_ASideTouchingANeighbourIsMarkedBlocked" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="801954115" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.005229" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2259" name="Mesh_ConcaveCornerFollowsTheInnerFilletAtTheOutlineWidth" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_ConcaveCornerFollowsTheInnerFilletAtTheOutlineWidth" methodname="Mesh_ConcaveCornerFollowsTheInnerFilletAtTheOutlineWidth" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1540444390" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.002178" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2258" name="Mesh_EveryVertexCarriesItsOutwardDirectionAndPart" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_EveryVertexCarriesItsOutwardDirectionAndPart" methodname="Mesh_EveryVertexCarriesItsOutwardDirectionAndPart" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="679295373" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.032671" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2260" name="Mesh_RebuildWithinItsCapacityAllocatesNothing" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_RebuildWithinItsCapacityAllocatesNothing" methodname="Mesh_RebuildWithinItsCapacityAllocatesNothing" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1874932547" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.005554" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2261" name="Mesh_RejectsAnOutlineLargerThanItsCapacity" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_RejectsAnOutlineLargerThanItsCapacity" methodname="Mesh_RejectsAnOutlineLargerThanItsCapacity" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1511553829" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.001035" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2253" name="Mesh_SingleCellBandsHugTheRoundedSilhouetteAtTheOutlineWidth" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_SingleCellBandsHugTheRoundedSilhouetteAtTheOutlineWidth" methodname="Mesh_SingleCellBandsHugTheRoundedSilhouetteAtTheOutlineWidth" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1532068660" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.015259" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2254" name="Mesh_WithoutNeighbours_EverySideIsFree" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Mesh_WithoutNeighbours_EverySideIsFree" methodname="Mesh_WithoutNeighbours_EverySideIsFree" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1994265830" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.001910" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2249" name="Ring_OuterLoopAndAClockwiseHoleOfConcaveCorners" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Ring_OuterLoopAndAClockwiseHoleOfConcaveCorners" methodname="Ring_OuterLoopAndAClockwiseHoleOfConcaveCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1002841152" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.001773" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="2247" name="Shape_OneLoopWithOnlyItsTurningCorners" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Shape_OneLoopWithOnlyItsTurningCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.014828" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2242" name="Shape_OneLoopWithOnlyItsTurningCorners(&quot;I&quot;,4,4,0)" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Shape_OneLoopWithOnlyItsTurningCorners(&quot;I&quot;,4,4,0)" methodname="Shape_OneLoopWithOnlyItsTurningCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="2139428320" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.001333" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2243" name="Shape_OneLoopWithOnlyItsTurningCorners(&quot;2x2&quot;,4,4,0)" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Shape_OneLoopWithOnlyItsTurningCorners(&quot;2x2&quot;,4,4,0)" methodname="Shape_OneLoopWithOnlyItsTurningCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1855031440" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.000729" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2244" name="Shape_OneLoopWithOnlyItsTurningCorners(&quot;L&quot;,6,5,1)" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Shape_OneLoopWithOnlyItsTurningCorners(&quot;L&quot;,6,5,1)" methodname="Shape_OneLoopWithOnlyItsTurningCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="775158445" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.000561" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2245" name="Shape_OneLoopWithOnlyItsTurningCorners(&quot;T&quot;,8,6,2)" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Shape_OneLoopWithOnlyItsTurningCorners(&quot;T&quot;,8,6,2)" methodname="Shape_OneLoopWithOnlyItsTurningCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="344752156" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.000679" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2246" name="Shape_OneLoopWithOnlyItsTurningCorners(&quot;U&quot;,8,6,2)" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Shape_OneLoopWithOnlyItsTurningCorners(&quot;U&quot;,8,6,2)" methodname="Shape_OneLoopWithOnlyItsTurningCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="449591574" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.000634" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="2241" name="SingleCell_OneCounterclockwiseLoopOfFourConvexCorners" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.SingleCell_OneCounterclockwiseLoopOfFourConvexCorners" methodname="SingleCell_OneCounterclockwiseLoopOfFourConvexCorners" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="2009523396" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.001815" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2252" name="Trace_ReusesItsBuffersWithoutAllocating" fullname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests.Trace_ReusesItsBuffersWithoutAllocating" methodname="Trace_ReusesItsBuffersWithoutAllocating" classname="ColorBlockJam.Tests.Gameplay.FootprintOutlineTests" runstate="Runnable" seed="1387044335" result="Passed" start-time="2026-09-28 00:56:42Z" end-time="2026-09-28 00:56:42Z" duration="0.000307" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,15 @@
+/*
+ * Black screen fade over every scene change (DEC-198). ScreenFadeView writes opacity and display inline; the
+ * standalone document previews opaque black. ScreenFadeView closes it synchronously on every enable before rendering.
+ */
+
+.screen-fade {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    opacity: 1;
+    display: flex;
+}

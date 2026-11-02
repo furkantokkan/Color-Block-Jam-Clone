@@ -1,0 +1,66 @@
+[
+ {
+  "name": "value_number",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": 5}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_float",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": 1.5}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_object",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": {\"a\": \"Vertical\"}}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_array",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": [\"Vertical\"]}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_false",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": false}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "key_number",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": 7, \"value\": \"Vertical\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "key_null",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": null, \"value\": \"Vertical\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "key_missing",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"value\": \"Vertical\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "param_null",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [null]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "param_extra_member",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": \"Vertical\", \"note\": \"x\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "param_dup_key_member",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"key\": \"axis\", \"value\": \"Vertical\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_date_like_string",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": \"2026-09-25T10:00:00Z\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_empty_valid_type_ice",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"ice\", \"params\": [{\"key\": \"clearsToThaw\", \"value\": \"\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_valid_arrow",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": \"Vertical\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "value_ws_padded",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"axis\", \"value\": \" Vertical\"}]}]}], \"cellObjects\": []}]}"
+ },
+ {
+  "name": "key_case",
+  "json": "{\"formatVersion\": 2, \"levels\": [{\"id\": \"vf\", \"name\": \"Verify\", \"board\": {\"width\": 5, \"height\": 5, \"voidCells\": []}, \"timerSeconds\": 120, \"doors\": [{\"id\": \"d1\", \"side\": \"Top\", \"start\": 1, \"length\": 2, \"colorId\": \"Red\", \"effects\": []}], \"blocks\": [{\"id\": \"b1\", \"colorId\": \"Red\", \"shapeId\": \"DoubleVertical\", \"origin\": {\"x\": 0, \"y\": 0}, \"cells\": [{\"x\": 0, \"y\": 0}, {\"x\": 0, \"y\": 1}], \"effects\": [{\"type\": \"arrow\", \"params\": [{\"key\": \"Axis\", \"value\": \"Vertical\"}]}]}], \"cellObjects\": []}]}"
+ }
+]

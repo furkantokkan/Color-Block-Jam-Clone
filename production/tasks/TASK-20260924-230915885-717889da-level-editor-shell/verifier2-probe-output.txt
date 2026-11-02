@@ -1,0 +1,18 @@
+== domain-reload.txt
+before reload: id=level-01 name=Level 1 w=4 h=5 timer=300 text=5:00 dirty=False status='Editing Level 1. Save Level writes the JSON source.'
+after reload:  id=level-01 name=Level 1 w=4 h=5 timer=300 text=5:00 dirty=False status='Editing Level 1. Save Level writes the JSON source.'
+expected:      id=level-01 name=Level 1 w=4 h=5 timer=300
+PASS
+== dirty-prompts.txt
+edit: timer=60 dirty=True status='Unsaved level changes. Press Save Level to write the JSON source.' levels=5
+refresh-json: enabled=True dialog=[Assert: Cancelling DisplayDialogComplex: Unsaved Level Save this level before leaving it?
+This should not be called in batch mode.] timer=60 dirty=True levels=5 shaSame=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+restore-backup: enabled=True dialog=[Assert: Cancelling DisplayDialogComplex: Unsaved Level Save this level before leaving it?
+This should not be called in batch mode.] timer=60 dirty=True levels=5 shaSame=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+create-level: enabled=True dialog=[Assert: Cancelling DisplayDialogComplex: Unsaved Level Save this level before leaving it?
+This should not be called in batch mode.] timer=60 dirty=True levels=5 shaSame=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+delete-level: enabled=True dialog=[Assert: Cancelling DisplayDialogComplex: Unsaved Level Save this level before leaving it?
+This should not be called in batch mode.] timer=60 dirty=True levels=5 shaSame=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+switch level: dialog=[Assert: Cancelling DisplayDialogComplex: Unsaved Level Save this level before leaving it?
+This should not be called in batch mode.] index 0->0 timer=60 dirty=True
+PASS

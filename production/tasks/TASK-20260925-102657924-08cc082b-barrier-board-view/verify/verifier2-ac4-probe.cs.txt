@@ -1,0 +1,69 @@
+var ownerType = System.Type.GetType("ColorBlockJam.Editor.LevelPreview.LevelPreviewOwner, ColorBlockJam.Editor.LevelPreview");
+var publish = ownerType.GetMethod("OnLevelPublished", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+System.Func<string, bool, UnityEngine.Vector2Int[], ColorBlockJam.Runtime.Levels.LevelCellObjectData> barrier = (id, open, cells) =>
+  new ColorBlockJam.Runtime.Levels.LevelCellObjectData(id, cells, new ColorBlockJam.Runtime.Levels.LevelEffectData("barrier",
+    new[] { new ColorBlockJam.Runtime.Levels.LevelEffectParamData("startsOpen", open ? "true" : "false") }));
+System.Func<ColorBlockJam.Runtime.Levels.LevelCellObjectData[], ColorBlockJam.Runtime.Levels.LevelData> level = (objects) =>
+  new ColorBlockJam.Runtime.Levels.LevelData("verify-barrier", "Verify Barrier", 7, 8, 60, new UnityEngine.Vector2Int[0],
+    new[] { new ColorBlockJam.Runtime.Levels.LevelDoorData("d1", ColorBlockJam.Runtime.Levels.BoardSide.Top, 4, 2, "Pink") },
+    new[] { new ColorBlockJam.Runtime.Levels.LevelBlockData("b1", "Pink", "Square", new UnityEngine.Vector2Int(4, 0),
+      new[] { new UnityEngine.Vector2Int(0,0), new UnityEngine.Vector2Int(0,1), new UnityEngine.Vector2Int(1,0), new UnityEngine.Vector2Int(1,1) }) },
+    objects);
+System.Func<string, string> capture = (file) => {
+  var root = UnityEngine.GameObject.Find("Level Preview (not saved)");
+  if (root == null) return "no preview root";
+  var cam = root.transform.Find("Preview Camera").GetComponent<UnityEngine.Camera>();
+  var rt = new UnityEngine.RenderTexture(1080, 1920, 24);
+  var prev = cam.targetTexture; cam.targetTexture = rt; cam.aspect = 1080f / 1920f;
+  cam.Render();
+  UnityEngine.RenderTexture.active = rt;
+  var tex = new UnityEngine.Texture2D(1080, 1920, UnityEngine.TextureFormat.RGB24, false);
+  tex.ReadPixels(new UnityEngine.Rect(0, 0, 1080, 1920), 0, 0); tex.Apply();
+  UnityEngine.RenderTexture.active = null; cam.targetTexture = prev; cam.ResetAspect();
+  System.IO.File.WriteAllBytes(file, UnityEngine.ImageConversion.EncodeToPNG(tex));
+  UnityEngine.Object.DestroyImmediate(tex); rt.Release(); UnityEngine.Object.DestroyImmediate(rt);
+  return "captured " + System.IO.Path.GetFileName(file);
+};
+// Barrier pieces over the given cells: count, height range, rendered count and per-quadrant coverage.
+System.Func<UnityEngine.Vector2Int[], string> inspect = (cells) => {
+  var root = UnityEngine.GameObject.Find("Level Preview (not saved)");
+  int n = 0, shown = 0; float min = 9, max = -9; var quad = new System.Collections.Generic.Dictionary<UnityEngine.Vector2, int>();
+  foreach (var p in root.GetComponentsInChildren<ColorBlockJam.Presentation.Board.BoardPieceView>(false)) {
+    var lp = p.transform.localPosition; var c = new UnityEngine.Vector2Int(UnityEngine.Mathf.RoundToInt(lp.x), UnityEngine.Mathf.RoundToInt(lp.z));
+    if (!(p.name.StartsWith("Wall") || p.name.StartsWith("Corner_1")) || p.transform.parent.name != "BoardRoot" || System.Array.IndexOf(cells, c) < 0) continue;
+    n++; if (p.Renderer.enabled) shown++; min = UnityEngine.Mathf.Min(min, lp.y); max = UnityEngine.Mathf.Max(max, lp.y);
+    var q = new UnityEngine.Vector2(UnityEngine.Mathf.Round(lp.x * 4f) / 4f, UnityEngine.Mathf.Round(lp.z * 4f) / 4f);
+    int k; quad.TryGetValue(q, out k); quad[q] = k + 1;
+  }
+  int good = 0; foreach (var cell in cells) for (int qi = 0; qi < 4; qi++) {
+    var q = new UnityEngine.Vector2(cell.x - 0.25f + 0.5f * (qi & 1), cell.y - 0.25f + 0.5f * (qi >> 1)); int k; quad.TryGetValue(q, out k); if (k == 1) good++; }
+  return n + " pieces y[" + min.ToString("0.###") + ".." + max.ToString("0.###") + "] rendered " + shown + " quadrantsWithExactlyOnePiece " + good + "/" + (cells.Length * 4);
+};
+var outDir = "C:/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260925-102657924-08cc082b-barrier-board-view/verify/";
+var run = new[] { new UnityEngine.Vector2Int(1,4), new UnityEngine.Vector2Int(2,4), new UnityEngine.Vector2Int(3,4) };
+var runMoved = new[] { new UnityEngine.Vector2Int(1,6), new UnityEngine.Vector2Int(2,6), new UnityEngine.Vector2Int(3,6) };
+var ell = new[] { new UnityEngine.Vector2Int(5,4), new UnityEngine.Vector2Int(5,5), new UnityEngine.Vector2Int(4,5) };
+var single = new[] { new UnityEngine.Vector2Int(1,1) };
+var sb = new System.Text.StringBuilder(); var nl = System.Environment.NewLine;
+int before = UnityEngine.SceneManagement.SceneManager.sceneCount;
+var scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/ColorBlockJam/Scenes/LevelEditor.unity", UnityEditor.SceneManagement.OpenSceneMode.Additive);
+sb.Append("opened LevelEditor additively dirty=" + scene.isDirty + nl);
+try {
+  var a = level(new[] { barrier("run", false, run), barrier("ell", true, ell), barrier("single", false, single) });
+  string err; sb.Append("start draft valid=" + a.Validate(out err) + " " + err + nl);
+  publish.Invoke(null, new object[] { a });
+  sb.Append("START run(closed) " + inspect(run) + nl + "START ell(open) " + inspect(ell) + nl + "START single(closed) " + inspect(single) + nl);
+  sb.Append(capture(outDir + "verifier2-ac4-preview-start.png") + nl);
+  // Draft edit: run moved two rows up and opened, ell closed, single unchanged.
+  var b = level(new[] { barrier("run", true, runMoved), barrier("ell", false, ell), barrier("single", false, single) });
+  sb.Append("edited draft valid=" + b.Validate(out err) + " " + err + nl);
+  publish.Invoke(null, new object[] { b });
+  sb.Append("EDIT old run cells " + inspect(run) + nl + "EDIT run(open, moved) " + inspect(runMoved) + nl + "EDIT ell(closed) " + inspect(ell) + nl + "EDIT single(closed) " + inspect(single) + nl);
+  sb.Append(capture(outDir + "verifier2-ac4-preview-edited.png") + nl);
+  publish.Invoke(null, new object[] { null });
+} finally {
+  sb.Append("before close dirty=" + scene.isDirty + " previewRoot=" + (UnityEngine.GameObject.Find("Level Preview (not saved)") != null) + nl);
+  sb.Append("closed=" + UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true) + nl);
+}
+for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++) { var s = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i); sb.Append("scene '" + s.path + "' dirty=" + s.isDirty + nl); }
+return sb.ToString();

@@ -1,0 +1,35 @@
+var preview = new UnityEditor.PreviewRenderUtility();
+UnityEngine.GameObject root = null;
+try {
+var db = UnityEditor.AssetDatabase.LoadAssetAtPath<ColorBlockJam.Environment.EnvironmentDatabase>("Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset");
+root = UnityEngine.Object.Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>("Assets/ColorBlockJam/Prefabs/Environment/Environment.prefab"));
+preview.AddSingleGO(root);
+var view = root.GetComponent<ColorBlockJam.Environment.EnvironmentView>(); view.Construct(db);
+var cells = new System.Collections.Generic.List<UnityEngine.Vector2Int>();
+for (int x=1;x<=3;x++) cells.Add(new UnityEngine.Vector2Int(x,6));
+for (int x=5;x<=6;x++) for(int y=5;y<=6;y++) cells.Add(new UnityEngine.Vector2Int(x,y));
+cells.Add(new UnityEngine.Vector2Int(1,1)); cells.Add(new UnityEngine.Vector2Int(1,2)); cells.Add(new UnityEngine.Vector2Int(1,3)); cells.Add(new UnityEngine.Vector2Int(2,1)); cells.Add(new UnityEngine.Vector2Int(3,1));
+for(int x=5;x<=7;x++) for(int y=1;y<=3;y++) if(x!=6||y!=2) cells.Add(new UnityEngine.Vector2Int(x,y));
+ColorBlockJam.Runtime.Layout.BoardLayout layout; string error;
+var obstacle = new ColorBlockJam.Runtime.Levels.LevelCellObjectData("solid", cells.ToArray(), new ColorBlockJam.Runtime.Levels.LevelEffectData("solid-block", System.Array.Empty<ColorBlockJam.Runtime.Levels.LevelEffectParamData>()));
+var level = new ColorBlockJam.Runtime.Levels.LevelData("preview", "Preview", 9, 9, 60, System.Array.Empty<UnityEngine.Vector2Int>(), System.Array.Empty<ColorBlockJam.Runtime.Levels.LevelDoorData>(), System.Array.Empty<ColorBlockJam.Runtime.Levels.LevelBlockData>(), new[] { obstacle });
+if(!ColorBlockJam.Runtime.Layout.BoardLayout.TryCreate(level,out layout,out error)) return error;
+view.Build(layout, level);
+var renderers=root.GetComponentsInChildren<UnityEngine.MeshRenderer>();
+var bounds=renderers[0].bounds;foreach(var renderer in renderers) bounds.Encapsulate(renderer.bounds);
+preview.camera.orthographic=true;preview.camera.orthographicSize=bounds.extents.magnitude;
+preview.camera.transform.position=bounds.center+new UnityEngine.Vector3(0,16,-10);preview.camera.transform.LookAt(bounds.center);
+preview.camera.nearClipPlane=0.1f;preview.camera.farClipPlane=50;
+preview.camera.clearFlags=UnityEngine.CameraClearFlags.Color;
+preview.camera.backgroundColor=new UnityEngine.Color(0.71f,0.83f,0.97f);
+preview.lights[0].intensity=1.1f; preview.lights[0].transform.rotation=UnityEngine.Quaternion.Euler(45,-35,0);
+preview.lights[1].intensity=0.4f;preview.ambientColor=new UnityEngine.Color(0.65f,0.65f,0.65f);
+preview.BeginStaticPreview(new UnityEngine.Rect(0,0,1000,1000));
+preview.Render(true,true);
+var texture=preview.EndStaticPreview();
+System.IO.Directory.CreateDirectory("docs/art/solid-obstacles");
+System.IO.File.WriteAllBytes("docs/art/solid-obstacles/solid-blocks.png",texture.EncodeToPNG());
+UnityEngine.Object.DestroyImmediate(texture);
+view.Release();
+return "Captured bounds "+bounds.ToString()+" root "+view.BoardRoot.position.ToString();
+} finally {preview.Cleanup();}

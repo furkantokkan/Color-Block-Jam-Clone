@@ -1,0 +1,99 @@
+// Generate pose sequences from the real prefab components in isolated Unity preview scenes.
+var output = System.IO.Path.GetFullPath("docs/art/boosters/motion");
+var report = new System.Collections.Generic.List<object>();
+foreach (var name in new[] { "Hammer", "RocketPurple", "Vacuum" })
+{
+    var utility = new UnityEditor.PreviewRenderUtility();
+    UnityEngine.Material previewMaterial = null;
+    try
+    {
+        var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>("Assets/ColorBlockJam/Prefabs/Boosters/Effects/" + name + "Effect.prefab");
+        var root = utility.InstantiatePrefabInScene(prefab);
+        var view = root.GetComponent<ColorBlockJam.Presentation.Boosters.BoosterEffectView>();
+        UnityEngine.Vector3 target;
+        if (name == "Vacuum")
+        {
+            target = UnityEngine.Vector3.zero;
+            utility.camera.transform.position = new UnityEngine.Vector3(0, 0, -5);
+            utility.camera.transform.rotation = UnityEngine.Quaternion.identity;
+            utility.camera.orthographicSize = 1.45f;
+        }
+        else
+        {
+            target = name == "Hammer" ? new UnityEngine.Vector3(.35f, .95f, 0) : new UnityEngine.Vector3(0, 1.25f, 0);
+            utility.camera.transform.position = target + new UnityEngine.Vector3(-3, 3, 6);
+            utility.camera.transform.LookAt(target);
+            utility.camera.orthographicSize = name == "Hammer" ? 2.1f : 2.7f;
+            var block = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);
+            utility.AddSingleGO(block);
+            block.transform.localScale = new UnityEngine.Vector3(.8f, .20f, .8f);
+            block.transform.position = new UnityEngine.Vector3(0, -.11f, name == "Hammer" ? 0 : 1f);
+            previewMaterial = new UnityEngine.Material(UnityEngine.Shader.Find("Universal Render Pipeline/Simple Lit"));
+            previewMaterial.SetColor("_BaseColor", new UnityEngine.Color(.28f,.36f,.50f,1));
+            block.GetComponent<UnityEngine.Renderer>().sharedMaterial = previewMaterial;
+            if (name == "RocketPurple")
+            {
+                root.transform.position = new UnityEngine.Vector3(0, .3f, -2f);
+                var fields = new UnityEditor.SerializedObject(view);
+                fields.FindProperty("m_localDestination").vector3Value = new UnityEngine.Vector3(0, -.3f, 3f);
+                fields.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
+        utility.camera.orthographic = true;
+        utility.camera.nearClipPlane = .01f;
+        utility.camera.farClipPlane = 50f;
+        utility.camera.clearFlags = UnityEngine.CameraClearFlags.SolidColor;
+        utility.camera.backgroundColor = new UnityEngine.Color(.10f, .13f, .19f, 1);
+        utility.ambientColor = new UnityEngine.Color(.35f,.35f,.35f,1);
+        utility.lights[0].intensity = 1.3f;
+        utility.lights[0].transform.rotation = UnityEngine.Quaternion.LookRotation(new UnityEngine.Vector3(3,-4,-6));
+        utility.lights[1].intensity = .6f;
+        utility.lights[1].transform.rotation = UnityEngine.Quaternion.LookRotation(new UnityEngine.Vector3(-3,-2,-4));
+        // Fit the entire sweep, so anticipation and launch poses stay inside the frame.
+        if (name != "Vacuum")
+        {
+            float minX = float.PositiveInfinity, minY = float.PositiveInfinity;
+            float maxX = float.NegativeInfinity, maxY = float.NegativeInfinity;
+            for (int sample = 0; sample < 24; sample++)
+            {
+                view.SampleForPreview(sample / 23f);
+                foreach (var sceneRoot in root.scene.GetRootGameObjects())
+                foreach (var renderer in sceneRoot.GetComponentsInChildren<UnityEngine.Renderer>())
+                {
+                    var bounds = renderer.bounds;
+                    for (int corner = 0; corner < 8; corner++)
+                    {
+                        var sign = new UnityEngine.Vector3((corner & 1) == 0 ? -1 : 1,
+                            (corner & 2) == 0 ? -1 : 1, (corner & 4) == 0 ? -1 : 1);
+                        var point = utility.camera.transform.InverseTransformPoint(bounds.center
+                            + UnityEngine.Vector3.Scale(bounds.extents, sign));
+                        minX = UnityEngine.Mathf.Min(minX, point.x);
+                        maxX = UnityEngine.Mathf.Max(maxX, point.x);
+                        minY = UnityEngine.Mathf.Min(minY, point.y);
+                        maxY = UnityEngine.Mathf.Max(maxY, point.y);
+                    }
+                }
+            }
+            utility.camera.transform.position += utility.camera.transform.right * ((minX + maxX) * .5f)
+                + utility.camera.transform.up * ((minY + maxY) * .5f);
+            utility.camera.orthographicSize = UnityEngine.Mathf.Max(maxX - minX, maxY - minY) * .56f;
+        }
+        for (int frame = 0; frame < 24; frame++)
+        {
+            view.SampleForPreview(frame / 23f);
+            utility.BeginStaticPreview(new UnityEngine.Rect(0,0,384,384));
+            utility.Render(true,true);
+            var image = utility.EndStaticPreview();
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(output, name + "_" + frame.ToString("D2") + ".png"), image.EncodeToPNG());
+            UnityEngine.Object.DestroyImmediate(image);
+        }
+        view.Stop();
+        report.Add(new { name, frames = 24, duration = view.Duration, playingAfterPreview = view.IsPlaying });
+    }
+    finally
+    {
+        utility.Cleanup();
+        if (previewMaterial != null) UnityEngine.Object.DestroyImmediate(previewMaterial);
+    }
+}
+return new { report, activeSceneDirty = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().isDirty };

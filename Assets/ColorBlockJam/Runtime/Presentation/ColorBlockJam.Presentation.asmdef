@@ -1,0 +1,6 @@
+{
+  "name": "ColorBlockJam.Presentation",
+  "rootNamespace": "ColorBlockJam.Presentation",
+  "references": ["PrimeTween.Runtime", "ColorBlockJam.Runtime", "Onity.Pooling", "Onity.Factory"],
+  "autoReferenced": true
+}

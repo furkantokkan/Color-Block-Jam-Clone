@@ -1,0 +1,1479 @@
+{
+  "ProviderRevision": "plastic:cs:10@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity",
+  "ReviewedRevision": "vcs:plastic:cs:10@ColorBlockJamCase2026/ColorBlockJamCase2026@efurk64@unity+owned-sha256:4208767241f19f976baf9185d2674b2b516de3f7e7399bbf610928eb4be2782d",
+  "Algorithm": "SHA256 of UTF8(provider revision)+NUL then ordinal-sorted UTF8(relative forward-slash path)+NUL+raw bytes (or UTF8(<missing>))+NUL per file. Lifecycle outputs and this generated manifest are excluded.",
+  "Inputs": [
+    {
+      "Path": "Assets/AddressableAssetsData/AddressableAssetSettings.asset",
+      "Hash": "CE5C1DD45E1067C7B9DA0092CA0518532CF54A8EE482D1E2625B9E72CD327BA4"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroupTemplates/Packed Assets.asset",
+      "Hash": "6318DD366C8D58BC69E43ADDCD90AA7F5C23C305107D79837E5D02649FDDB3DB"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Built In Data.asset",
+      "Hash": "BC76D66E72708140DA0B9CFE3902EA0665FE1998E0A1125F549D802F151A1FD7"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Default Local Group.asset",
+      "Hash": "CCE167945DE7577E50DA32FB9CB04F47D855C0C1009E27F03BC87BA08D358C13"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Level Database.asset",
+      "Hash": "8B22390264D5E9AC4823B18924B4B1383C1C61714521B98634FA0ADBCF278548"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Schemas/Built In Data_PlayerDataGroupSchema.asset",
+      "Hash": "FCE4C95ABC7D291F962169005C98DE038665DC464CEB9A4E4055717F6633596B"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Schemas/Default Local Group_BundledAssetGroupSchema.asset",
+      "Hash": "384E995F31332B970F1A748947636D5E8CED73ABA74AB86E25521ACCDD9DF9C3"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Schemas/Default Local Group_ContentUpdateGroupSchema.asset",
+      "Hash": "858EB6C5222CCD211B4D6B3D78BCAA7B1A8283D37AE9C6DB2ED7704786331141"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Schemas/Level Database_BundledAssetGroupSchema.asset",
+      "Hash": "E3758466BDDCA91138A451336771E8D88B7C676A58803AF4361D1644B1C86EB8"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/AssetGroups/Schemas/Level Database_ContentUpdateGroupSchema.asset",
+      "Hash": "3D8EEB146BDE7D0F0341EF3CD9FB08C45D5B32A9DBC7DCCB30AAD23176119567"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/DataBuilders/BuildScriptFastMode.asset",
+      "Hash": "F7AD7A99337B708101AF1509E729F69A4A68D0FA2C4971735BCDCFEF79031422"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/DataBuilders/BuildScriptPackedMode.asset",
+      "Hash": "E1724ADE455E3A80C4DC00106BC91FE4216C6476E3ABF96F8F8C39A630962BFC"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/DataBuilders/BuildScriptPackedPlayMode.asset",
+      "Hash": "CFF7386B43348B7893B94BA8F9766CF3210227C69B1C9172F4A06259141B4C1B"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/DataBuilders/BuildScriptVirtualMode.asset",
+      "Hash": "3F4940C795A679BA52244B328444E7C55854A59C209979C2CA8310BD6A6BB85F"
+    },
+    {
+      "Path": "Assets/AddressableAssetsData/DefaultObject.asset",
+      "Hash": "8EF527C9053344C443F9C9A9AB449B22AC769E5554BEE9453F96C6E316159E89"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Art/GamePalette.asset",
+      "Hash": "49EE3FDE4DB243CE485F57C5F2DEB0D06C58ABA75098F2E0BF88696995022E9A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset",
+      "Hash": "DFC483BA8F6218EC8ACA878DD9DF2C5F5F13F8E5608D23C2C64D224A10107541"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset",
+      "Hash": "3B9A0FF3D9F7E1FFD6CB6BF011B50716C3A068378CB2831B4639295AEE25B039"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Board/PieceDatabases/BlockShapeLibrary.json",
+      "Hash": "C4661086572B591374DE7774B72B97960FB6DD75748F7BBCF3BFADB67F13A439"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Boosters/BoosterCatalog.asset",
+      "Hash": "95AE8C13B96CE1FF6AD455DA2D90E1479C9308B772A6EE891ECB9AFCE041028D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Boosters/Definitions/ExtraTime.asset",
+      "Hash": "BBC00F60C85AB7D42821C4605F7C33C5A49EE041906F6E5E93DE352BC59016CF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Boosters/Definitions/Hammer.asset",
+      "Hash": "22ED1A0BA0DC101D3324ADE3F4855F2F376508E43C431306658CB632C431BC18"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Boosters/Definitions/Rocket.asset",
+      "Hash": "FE6561611D68BAB13290EE08D600BBD6E3F696AAA4BBB098029EBC0DDC5855D5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Boosters/Definitions/TimeFreeze.asset",
+      "Hash": "5714F02E3226A60DB8837315B8FCA18708C57A7FFD8D7E3B82BE258AA183ED19"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Boosters/Definitions/Vacuum.asset",
+      "Hash": "E9281A76C80B4C44545F9A08B9F41C559B693918A2439F2C8E54B61330E99F6A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset",
+      "Hash": "D3381C684B22034D3007E6BF1D411D584729A4AD22DCA64D122C5E0694DD4B49"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Environment/EnvironmentRuleSet.asset",
+      "Hash": "306305BF67143F62E97F6986121338C244B96460B088A9941BD8DA156025442C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.asset",
+      "Hash": "3DABC1522269D447C11113A7DEA03C1BD06041D6B328E4888F6EB1B9D453B521"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json",
+      "Hash": "02C013A54E180F9570DAF142505E018E28564CA4F7AB91BAD847B35D8F3ECD6E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/SceneFlow/SceneFlowProfile.asset",
+      "Hash": "0AF7819756E2594D47788AF237E7460D43E872F16EE1DB32510019566AB692FD"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Data/UI/LoadingPanelSettings.asset",
+      "Hash": "EDA91DA56855D481B924F7439327477B05737FDF1CFFBD2EC9C5278C71E937F8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BlockPieceEditor.cs",
+      "Hash": "708141A3254081561999EBCE86B6B901030B65AB4E9083291014D99B7A2BC300"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BlockPieceEditor.cs.meta",
+      "Hash": "DB2275F6FB3B10A99A39E00F795A8267D4563F04451828FA042A188D5C3AFFA2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardArrowAssets.cs",
+      "Hash": "A9254DAA5B1804C4166C63D41FBF7B9F0666CF3390C49723CD317CF57E12C6F1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardArrowAssets.cs.meta",
+      "Hash": "0143EBD3346094574AD7FB1C369C4600DA7CBC6E9623A2861A9038E176B2F5EE"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitAssets.cs",
+      "Hash": "AF8B21D8B9CB7A484A649F7DA8DF789B0EC47655DD2150C682B1018F54381205"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitAssets.cs.meta",
+      "Hash": "F8E481232674B93F4441D39D667F60D5D1AC5D0A2BAC0158E3BD31314DCD4B56"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitMigration.cs",
+      "Hash": "A702ADF863F03CDFEEC38466C4FEC87FD7AD6B350207E1AAC7C6710D1A35D2FA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitMigration.cs.meta",
+      "Hash": "7302AE7994B8768F68476463BD92C1CF80D7E0187D7676D7AD9AD66EFCDBD0CF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitPreview.cs",
+      "Hash": "537DC14BABB21005494535174CE7054AD7A47D5DEEC5C8B578BF8FCE85186CCD"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitPreview.cs.meta",
+      "Hash": "981956A61AA4E60FB97CD33278370C0BB65C7D061C3224331F1B7DE3D2FB91E1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/EditorAssemblyInfo.cs",
+      "Hash": "7C12FF2C5491A90AB88D6428A2A1BD27364B67FA73E5FC7BE06D0B06760FF62C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/EditorAssemblyInfo.cs.meta",
+      "Hash": "99A1FDA23C5C040325BD5244D52763EE35700AB82701C96BB70610B0B7D34E7F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/LevelPieceRequest.cs",
+      "Hash": "E8F25AD6B7CE26D4BE9F4EBB4A98CD4FEFD9106AD86CBE9FC8C6A01F96361AAF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/LevelPieceRequest.cs.meta",
+      "Hash": "C5BCE139B86635B9BDF8BE46D7ECE712F9FC0E9C67452B9BBCC388627E717E71"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceDatabaseFiles.cs",
+      "Hash": "04D732D3F92E8989192A40D848743A546DDBA0A55B9E5C71704DFFB74FAF5081"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceDatabaseFiles.cs.meta",
+      "Hash": "BB598F818BBE5A5497D24389A2010E0F92AA92CABD01CF328F5361E30FE03373"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs",
+      "Hash": "16D4474FBA064DD4C47E486A8FE9E8AEA62685CC61C6F0B6DAA7BB6DABA91239"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs.meta",
+      "Hash": "13ACEA15E2C9F9C23612FC635B9C6A463791CF744826D3AFA86B45B18AFCCEF8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridDraft.cs",
+      "Hash": "E8C7CA3C08A2FF084A1F4303B121F141ABE8AF4A41295C4D5FA85466950B9DD3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridDraft.cs.meta",
+      "Hash": "A37625F57743261F7F20E56581DF4909EB2C9D1315F8E0BCD8E0A3D6213E8E12"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridUndoState.cs",
+      "Hash": "AB17FE9C42E009977A05773A29C234B9E1E57A90C27F30D543318FE433FCACA1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridUndoState.cs.meta",
+      "Hash": "F08DE8AF2C51DC141E708254BBF941880E12875EB44C6D100FA1270FDF6249D0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryAuthoring.cs",
+      "Hash": "E491249E123FCACD54ED5C2125FED2EA63F18CBDD55F88D46F9BA2D4C2CA1CE8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryAuthoring.cs.meta",
+      "Hash": "4E41ADDEE583C32FBDE8612CC8C96B872F9CFA7D045004C745D049427C4A2CA5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryFile.cs",
+      "Hash": "E737029FF3CB93DEF852F97C78E0C32F3614DF61CEC3F9E2369E5E59C982EEA0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryFile.cs.meta",
+      "Hash": "5557C4DA7C546179A314FBE5938AC43CA670FAFD705E0FFD547715F160FF38DC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryTransaction.cs",
+      "Hash": "D9B2F17F52661B04E7277468103480286E970687F35C908D33F2A122A3CA8BEA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryTransaction.cs.meta",
+      "Hash": "5DB3573907DB6ED9B6BBCBF00C28DF175F0BCE2DD1ECED89FA9F8DD0DCEA059C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryUndoState.cs",
+      "Hash": "93261CF0CFB0D68A1667AED68DB61BC2856ABF98F853F4D01B6135294215D5CD"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryUndoState.cs.meta",
+      "Hash": "AFF92D4D46ECE6C057CC2FF558E59B0E947340B852168EB34818E37EC57302C2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapePrefabAuthoring.cs",
+      "Hash": "EC68B18CED70ED5E12113197010EFB8D5D87FE25488257EDEA6D043184435E9D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/ShapePrefabAuthoring.cs.meta",
+      "Hash": "4F311AE3C3AFF8EBF82815B4E476F5D36AAAAD7E5CC07BC79CA5DDB8C4CE90A9"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/SharedArtAssets.cs",
+      "Hash": "AE8578020AAEDA878B9145F0C099F449A860DDEE7073ACE3158D65F5401FC2C5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/BoardKit/SharedArtAssets.cs.meta",
+      "Hash": "12526FA4D509A83D6B56A0F873E5563AC984F8445E58E6510C2DEF7B01EA898A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/ColorBlockJam.Editor.asmdef",
+      "Hash": "0464B1091235B687C722D41086E5AB2A6C54943BE122F5281EB7F1B28BB76B77"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBarrierCommands.cs",
+      "Hash": "2DDFCDEDED8A72AE57FEB54E07CDE661C42C3FC5E9C2F33CE61DE05EBDB96C79"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBarrierCommands.cs.meta",
+      "Hash": "CB3C5EB37D3ED370C14C898D3A2FBC44B4944795530DD2C3EBBDE56A2FB91FD7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBlockOverlap.cs",
+      "Hash": "AABCE1F4352140C907331732AEA2CCE85D0BF4639BDC6E0053C153F078348FF8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBlockOverlap.cs.meta",
+      "Hash": "56D3BBD5C72DDDE810021E5545FF23A043F92B62A6AB716E263D4A1C08FF715D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBlockShapeCheck.cs",
+      "Hash": "6B4A9BC6042795729E1DFD6FFACAF9D50CC9515651094F63CE06B65F19F3C638"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBlockShapeCheck.cs.meta",
+      "Hash": "2F204A0BB57D0C9985EA406C8DEF19A27464DE7D7411BA09640F537DF60EAFC5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBoardResize.cs",
+      "Hash": "65A2D6BECD675EA3374977E0E77C04F09640DBBDA32DDA0588BCA85776CDF02A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelBoardResize.cs.meta",
+      "Hash": "60886CCCAD80C94DB1EAF6CF8BF2412FFF8208964AAEF7A32F7C8EF233BC2A91"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasElement.cs",
+      "Hash": "C89C29963DB0E5919916EDBBF89A6B09E8E5C2755C0DFA77B89E0D7DB187893B"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasElement.cs.meta",
+      "Hash": "5F1832D635F0AFBA228B76E6F209972CA10B495A7B3222993A7340A6CB436FE8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasGeometry.cs",
+      "Hash": "CD9966182AEAD33A681BE44AB83D2FE807B008D16C9D5092EF5DEB76B41F7E68"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasGeometry.cs.meta",
+      "Hash": "69489C6F9538E21A6905609B6F4031C84FD29BD599E8409BC1C5BC39BC0C8544"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasHit.cs",
+      "Hash": "4846854AA9AEC6B6509B25AE783AC2EBB90263D9AE4A17B9BB57738DBE27D377"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasHit.cs.meta",
+      "Hash": "9C735200633C66BD903A27309BB9DB8D180EB9C4BE07DD05FDF7E865CDD2AE57"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasHitTest.cs",
+      "Hash": "5DFF7DAE09F1EB4085C80832B3988A42FCAC01974EE1C491EF356ABDCBA299A5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasHitTest.cs.meta",
+      "Hash": "20735F488AD17ED7E181A4E352DD6AE962FC992051FBBFBBEE5F13ACEB135483"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasHover.cs",
+      "Hash": "65545C5483EC0538C11E59EB62018281EEAF218EC80A82C94FE70A48802213B7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasHover.cs.meta",
+      "Hash": "02CD1821440F899DDE3AFBCF3D23AF4AF957745A0EB6C0C539733B67DD66C12F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasModel.cs",
+      "Hash": "6BB909B1701FE6EBF44F246A19BD590D045141B5E72424875D80A95287EFEBE2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasModel.cs.meta",
+      "Hash": "E468DC4CEB8AB20CA1BED013010C015F7F053BD809B78183F62E880846CB90C8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasSelection.cs",
+      "Hash": "72D43693C5E56B8FB609635C1006EC495FAA14E44141D180923BF8504DCCDDDC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasSelection.cs.meta",
+      "Hash": "BCE8BE1D024BD9C0BC06AE2F09325308F695D9A35FF5C3B00D123A02D0349CEB"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasWalk.cs",
+      "Hash": "02DF9305F99E815F5293669759179425FB7312F22E9374B841EC647A30301582"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasWalk.cs.meta",
+      "Hash": "BE79B4F51234B78ED25F8218BA5E8AF4869E4F525689143EE0EED551922E1551"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasWalls.cs",
+      "Hash": "4D77C9AD550E9EC056E69DFB66E58116D8A14E1B73C89929DD62E85EAF0764CC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasWalls.cs.meta",
+      "Hash": "F12CB4EDF93454096B0440BC10D448A11FE632BF564710A3E310BF6DDB3772E3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorKeys.cs",
+      "Hash": "0D8D31CFAD362C4F046AB9BAEA5F6E55BB47D7E771746969B4D71AE5139BCB64"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorKeys.cs.meta",
+      "Hash": "C157BC1AD489931671E2AC6411D8D6C60039E2FBF3B9133CED195AF3CD316F34"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorOrder.cs",
+      "Hash": "264EDAAF7CA261B6257963A7668358520BAFBA4A7A5D1C914CA567BDEFD738EF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorOrder.cs.meta",
+      "Hash": "A6D440CE512BB7D89894AE770780937E397015FEC57A4F9D6484EE0AAA291296"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorRemap.cs",
+      "Hash": "F138E20605D64919487F43A8B2CF684BEBC261CB86E7C75641AED2E097EA56F2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorRemap.cs.meta",
+      "Hash": "747368B915D4C54414059D2D038DDC19292379B8B762D8461BD738D83AEC4F8A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorSwatches.cs",
+      "Hash": "A62BF98D42E09EDDACC5C397621217469E9B0501E1C496CC3311A7E624AB72A0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelColorSwatches.cs.meta",
+      "Hash": "28F2AF94319A85FA16B381208CD08247D285FAE2EE35D27B9B32B17A9CC69FDA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCornerSteps.cs",
+      "Hash": "445CA1C3118DBA589B236010BDF8520CE5B823E001C11209C4C8AB18FD2CA1C0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCornerSteps.cs.meta",
+      "Hash": "5F95F4F6DEA58247D969B50DE391D1946C178ECD60B4B7655DDA508DD47321AB"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCustomPiece.cs",
+      "Hash": "80C6FDAE0F0DBCA9153C6D928AEC6AFB213442F38AA30DD76EF22361397D565E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCustomPiece.cs.meta",
+      "Hash": "0BC4F03C78EC6CFAFC5ABDD0C9A8933A74D4226A7A5080A762DDB508963CAAF8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelDraftIssues.cs",
+      "Hash": "63A03A553F3A1159746B02AD1BE2CACF4016017EB542E6257A94231F2E3E0A51"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelDraftIssues.cs.meta",
+      "Hash": "B28368141B8F48D6C97DA9181C9AF6B045B445CE7C2D49F390AF4C33AE64558B"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditCommands.cs",
+      "Hash": "6E5E473397002E7B3536DD52BD5F0C3502FAB2CA84D4BC36ABCF10979A71D1D0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditCommands.cs.meta",
+      "Hash": "CCA3A87C3691C935B70431D3A233F510AEBC7955A5FDDEDA67FEBFDBF529B423"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditorIcons.cs",
+      "Hash": "ED238283A17B686624744AF6C86E7D6D03650D4A025B23D3B44895E0C02B2FDF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditorIcons.cs.meta",
+      "Hash": "B4F8A0ABA819EB197B0CE28628D30721A098B0AA34F9DA370D661CB28696F8C4"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditorIssuesList.cs",
+      "Hash": "A1FE2A6014241889E219A4104E5645896F3FDE59B69EC5911118896F48621F6E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditorIssuesList.cs.meta",
+      "Hash": "FF1D9F194C441D2D3579DF0F840F63443F6DF336BC534BD616A1AF10E8720D2E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditorToolState.cs",
+      "Hash": "905C8455472DC6BE3FBE05FFB3F8B5D6A50375335D1D12D676032BCF654D8C9D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEditorToolState.cs.meta",
+      "Hash": "DB612AF12E795BE419FADD20A29E45F00F8A70DE0619D436226B85C9F32CDDB5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEffectCommands.cs",
+      "Hash": "498CA44FB66CB983E29843E9778D68A5865C82197ABE4A9CAC365318A34C5667"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelEffectCommands.cs.meta",
+      "Hash": "3C4C80DE69D5E9ADB2BFF95B162DC829CB70082ADE77D23E9446AF512913A84E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelNamedPiece.cs",
+      "Hash": "0DF121F694A8E04CEF6304272ADF049E1152A155F7AEBB88424CAC8904F85EAA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelNamedPiece.cs.meta",
+      "Hash": "B079D33BF74D75BF850F8AAD794239286FAF0016B72BFC3254306637BFC21B04"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelPieceDeletePlan.cs",
+      "Hash": "94B004CEBE545B0273282BEA6DB6C854EA932F86AFED0DFF0B1AC1F5A07A3077"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelPieceDeletePlan.cs.meta",
+      "Hash": "BAC256BC75C3E8FAC7E74EF05739687C0FE624F9C1150AFD3A9CAAEEDA3FC2BD"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelPieceFamilies.cs",
+      "Hash": "CFF44433E9546BE104838270ED2D5182770DEF1332FF68FD128C08B03452E9F5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelPieceFamilies.cs.meta",
+      "Hash": "F3352362D1D91A972087D79B1ED67CB91F537092D3473FAFA56B3BCC5B9BBC50"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelPieceSession.cs",
+      "Hash": "7B511CEE5C3AECD72F58DDC997F2318EFF2B97B0ED8241FEBEEC3F555F40DCC1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelPieceSession.cs.meta",
+      "Hash": "905CF81B39515D02312E833DDB1F1B9DAA10CE7DB5717AFFE581A365542ABFDC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelRecordCopy.cs",
+      "Hash": "F95D894101E4FB1FDA4396B346546F8A42D3DF90266F680A74F203C9587C7BF3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelRecordCopy.cs.meta",
+      "Hash": "08FF903F2AC330667455FC72F3AFBD76C5F9B232BE60C0F62416E5A9AC9ACEA0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelResizeReport.cs",
+      "Hash": "CE1F7F19169188CCFA604944EB5D15087B839ADDC2DC823659798BB094DC6981"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelResizeReport.cs.meta",
+      "Hash": "C7D87CE31410084DD684F0D9928C9132CF02BE19B3A69011108C5ADA79ADFA39"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapeCatalog.cs",
+      "Hash": "CB25A74E5816C88B3AAB2DF4C36F8611CF7B4635F7B43890BBC58FA1D9CF77DB"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapeCatalog.cs.meta",
+      "Hash": "521C2D06B6E9E982DB27593CD5424322022E2097FC2C1578B7A7B38C3E68D98E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapePalette.cs",
+      "Hash": "BA075AAA669DDF4C623D590A3EDFE5467A228C4CC1A512721A2CB0F889E5CDB4"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapePalette.cs.meta",
+      "Hash": "DEC927175ED7EADE8B7FBA0B0C7D7F8816B5D0F9CD060CFF18613D7022CCD4B7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapeRestamp.cs",
+      "Hash": "AB5BDBFAA0381719E92DA03733CB42036EE73142B5916350D587669BFE55E272"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapeRestamp.cs.meta",
+      "Hash": "BCC7A65B585AE9604976E65E8D7564F56EF25DB8D7CEF8C39869FE52C1952EF6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapeThumbnail.cs",
+      "Hash": "3636240813A3CB9476405B274F2076F678A059D67CB0915C1BF811C59C0452E6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelShapeThumbnail.cs.meta",
+      "Hash": "95F4FEF4CEDAB648EB4C366B7570BB140E4C56A267AECE512629E96BED2CDDD0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelTemplateCommands.cs",
+      "Hash": "20FE97FCA7FF8D1D7D5494FE64A0B0F5D9F088BAE3DB418FF8D4FC17C77E2E4E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelTemplateCommands.cs.meta",
+      "Hash": "801D6742BC32BAD21E0AC454E613108F6C65DAAACA38F8CE8518C931CC9C7C90"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelTemplateEdit.cs",
+      "Hash": "4F3A86C4456771373884F7D81554C96C5AE1B7234F37854A76666E15CBDCFD4D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelTemplateEdit.cs.meta",
+      "Hash": "B87C7C6AA6E5F95B3E2CC2FD967BE74DC3BD15E8F84303D2B605E3729AE5723C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelTemplateSavePlan.cs",
+      "Hash": "0B187EF81AB67CE58CE67F91AE9D8B6ECD4A5C48F4184529C73C0E155617DA19"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelTemplateSavePlan.cs.meta",
+      "Hash": "BE7C31C99EBCB543B43543BA120CC97ACB07C8417DE40218189B460582079C18"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseAddressables.cs",
+      "Hash": "E9C6E07C747FC6095819C4104D6CAFD9271D4BDA29402427A15928BF14E41086"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseAddressables.cs.meta",
+      "Hash": "35EAF878D6699FA71012078823B3024549169018B8746E56A687F4D93861241E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseFile.cs",
+      "Hash": "048AB5B6D716C585384832A803A3687C25A51705BCEEED218F1663E24E43EAA2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseFile.cs.meta",
+      "Hash": "F0E294D5D9BB690366E454367123DBAE97FC14B3CCC4197EF8EBDDC272AA14C6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseInspector.cs",
+      "Hash": "BC712A2E862D7EC74623B113A0390B77AB7BEB7D827B340969255B2C8D69B6B9"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseInspector.cs.meta",
+      "Hash": "F96DA2A3F1B440733C2A15A7F5DDC3789B2CC4D555FE6E286EB23606445A9509"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseWindow.cs",
+      "Hash": "BE9974C24702D6DAF9E57BE57573287C11A4C4947AEE58FBBF3D610D7CC4A6C5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDatabaseWindow.cs.meta",
+      "Hash": "ED9A1DBE7748DD474EC4F19427696D253306CC3DB417EE2F11C9017E4ED57D44"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDraft.cs",
+      "Hash": "DA15888D451A7A49933377D53C3B8B387DCD660BE883D0AED7F4759E4B5CDA48"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDraft.cs.meta",
+      "Hash": "63FDD41C2D86751A9BC0A2069C1A6942845404FCFA76107CC7266939EC30FFE2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDraftController.cs",
+      "Hash": "C923A870D8C1BE8EA7B73A7AE688A38DB9B02383EED4BEFCA901CE5B00313AA9"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelDraftController.cs.meta",
+      "Hash": "E887D719916E2382CAB407FA6B5199E0528F270953C27110F23A2B3998189781"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEditorWorkspace.cs",
+      "Hash": "B41FE8ECC3317F4159BF51AA362D0D60C3CD24DE5228B6A151AE3DC9501C0AD6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEditorWorkspace.cs.meta",
+      "Hash": "0BAB05AA9C830F9A91896E673FCF4CB43D7F5A2F1D9F26A6E88C8910F6FB4A00"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEffectCard.cs",
+      "Hash": "88206577C95B7B5912FA504E1A84FEF5331E01E866270245697BB51DAE13DFAE"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEffectCard.cs.meta",
+      "Hash": "3FF5EEF2B0B3114BCD9E23D2B8E99F6A57F4D00C9FC6CE8BE3D89F8D981704A1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEffectDropdown.cs",
+      "Hash": "7E3D5367FE367CB8C677513AD4190C881A149AAD54F6F6BEF7F5CF7EB7E4B97B"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEffectDropdown.cs.meta",
+      "Hash": "1A28A9BB430320AFF3711BB8DE425F155819E777A04DED88F35986B22ABEE054"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEffectEditorWindow.cs",
+      "Hash": "A2E31BAFC769656848C8FC7DDCAD917BF9C7282F000647FB50925BA4045E9F2E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelEffectEditorWindow.cs.meta",
+      "Hash": "DD3CCAD6BB401DF9F2FEFE7297640590B02907DEF356970A04434C1FF5AAF0B0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelPieceDeleteRoute.cs",
+      "Hash": "AE9C4B9A2AB73E60B3A7A72A7B10CEC16080F4CEAE48DBD4A278CD7E8DBEA0F2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelPieceDeleteRoute.cs.meta",
+      "Hash": "F9A5AC0EC8C88335B3EB0E8883ECA77550CBD7311FE1E6F5F522CF4372A8532E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelPieceEditController.cs",
+      "Hash": "C3AA2B0B3F471790A8142D06D1B1500E91D87A78A8FF14091A1BCBDA0ADBFDF7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelPieceEditController.cs.meta",
+      "Hash": "8EBE569563A84C1BD3FCC5D796F74D3CD8971FEFAA83B04F1C3F069D819A3F5A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelSaveController.cs",
+      "Hash": "9AAC1A7954500D2B55A88611069AFB2CEAB135F1D5DC11B2C652B0B328906720"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelSaveController.cs.meta",
+      "Hash": "29458932286FAA238FE1104BEA7385C65A25371B5AE0E6AC275C030CFFF0B79F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelTemplateLibraryCommit.cs",
+      "Hash": "E5D31D7CA94B5D6AE53EFC1D12289E6A9439472B54639782A9B8A7605B378C8F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Editor/Levels/LevelTemplateLibraryCommit.cs.meta",
+      "Hash": "C1E2CFEFF4D4254FEB36DBCF56E97B2ECDA62B434A4C6FAD2D6CA7950DEFF61C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/ModularBlock.prefab",
+      "Hash": "6CA5CA985F155B693E317F9AF6CECCD7AC533F351876FB91597755FB81AEF1F2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_1.prefab",
+      "Hash": "FA27A20C6E12E10862E6B84A223575874184E0FD84DEE1F20AF564BDE74ED809"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_2.prefab",
+      "Hash": "CC2FBF24D4B24FD4D5E7BFE8E09A6BD9ECACCAF68A37F7A7A45421CA7E9A172B"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_3.prefab",
+      "Hash": "2CCCE840C66991BB33D9D192C26929A8314B857F138853ADCC8B7EA1D902EFDF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Center.prefab",
+      "Hash": "2AAB4C7D45259F2F01169C300E1EAA8D6EA95F7D1A3EECE72D66C6A1FD163B95"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Corner_1.prefab",
+      "Hash": "DAC85511015C1A0103E041D3F78B94614E6AC52C0ADFDC254C89EB368EB0170D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_1x1.prefab",
+      "Hash": "714E9B9A17CEC8D7831D902B09E1801D1E4CD9A249E17242C5007F2AC64371DD"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_Arrow.prefab",
+      "Hash": "6A14EC339BB71138AAD2DB1155F4E7022119AD119BD49BC24D1F703FE5503925"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Edge.prefab",
+      "Hash": "776D965C5B8C1B0668DB7A3C63CA7DFEF54ADE2E5F71BF8958491487F459199C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Grid.prefab",
+      "Hash": "1EE4CE17E91F82E9EAAC28C742F30C27E84EB7FE4C86E12C70CCBF59C1DC0064"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/InnerCorner.prefab",
+      "Hash": "711A5ADCEA113C6AE61BD4BA5CE902549A1FCC678497586A59A96A0B34ED164F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/OuterCorner.prefab",
+      "Hash": "0A2BF8711936993B7BB44FFB65E08D7A98444A0285EA8D8108162F73A901EE6F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Wall.prefab",
+      "Hash": "62C20AEDECDFA6D6ED7AF885BD2ADFBDDCA3DD401C39DC4D22B54350C2CD606A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_3.prefab",
+      "Hash": "5EB4A6F0CCDECB5EE2D5CA27F0AE89E4F6ACA6D9402BB02B69AE9989B75F2DA5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_5.prefab",
+      "Hash": "39C02FAD3BAA79FA686C0D9F7236A423A6E8F805F01865D3FCC5E1B5864476EF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_000.prefab",
+      "Hash": "9D0CAF55E83A911495B5C87411EFB7591079C8709C0E91FAE249D596D9E90828"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_001.prefab",
+      "Hash": "E80E49CFDE9D641500C7BB3CCD8E17DAEF66E2D451BADD76A8C6A09A36C6B0F3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_002.prefab",
+      "Hash": "60DE7D45A80D8B86A8FD60575E19C39CF8A8163B82BD32DDB87B554CBB97CF2C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_004.prefab",
+      "Hash": "FC60927EAE388BA2E323F852CC8E9BA4BF0BB92933BE6A4BC5ED3B39748B76F8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_006.prefab",
+      "Hash": "F35FF273292F6871AED94A5FAEDE9339A0502DB2918A98A3240424C3BD4739AC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_010.prefab",
+      "Hash": "BB67946872635A7C7BCA59F5778F9F64C9AFE86AFC0A3B04F05C05F8B7BA91AB"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_018.prefab",
+      "Hash": "F8F0A69F5E392DC33BC623C56D2B7F9305F6DCA9F702A0116C30515AD0453617"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_022.prefab",
+      "Hash": "803F95903E14ACD6BFE5F7B4C6E444565A36C65ED309939B367C5C12950A1870"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_023.prefab",
+      "Hash": "0EA2D167DDCB343D45473F009648AC9267A4C473AADDFBC70D7F6A8F1520554E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_027.prefab",
+      "Hash": "112AD88A24E5855A6B4B531FFAE80A5C621CD8E5A607E7C727F568EDAC39AA60"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_029.prefab",
+      "Hash": "5884D0FC35E62BC8EA162D23339FD4416913C01FA8D500B4A5B9154A98999608"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_030.prefab",
+      "Hash": "9BE640EB4CAC0E5C4120103F151DD377859C294977ED13B23B210468A3097AC5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_031.prefab",
+      "Hash": "393A12EA4000BC03E95027F1C3408F9832160D8F7B5336A5F24E2BF5BF5CED5C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Boosters/Effects/HammerEffect.prefab",
+      "Hash": "1F8F5584C5F1472825D1520BE429D034174721E7110708B3654B3EFD14F6EDA6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Boosters/Effects/RocketPurpleEffect.prefab",
+      "Hash": "18C5B9A4D22330BF6045DEE38554087DC63018DD919ED2FE95F4149E1CAA5DB1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Boosters/Effects/VacuumEffect.prefab",
+      "Hash": "A2EB0FED712BDFA245DD774C802A92FF63E44DD98A2A4AF1C8CD3182CC3AF614"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Boosters/Models/Hammer.prefab",
+      "Hash": "0032803B0529DF4A5CECF2DEBF85CF37BC243EC0996B990BDF07A81F48F3F837"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Boosters/Models/RocketPurple.prefab",
+      "Hash": "72F7C10F361FB7F0A906C1D36E20C3D08A4EB2C945C26D2976027B09A1E7F5DF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Boosters/Models/Vacuum.prefab",
+      "Hash": "E69641296FD10D5F16F5898BB71A969BB9E13B0A436C72332C94C04DA8554BE5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Environment/BlockFill.prefab",
+      "Hash": "7065E2D0392137233BD1B35CB78640BB4E23BC6CEB3339466D1BCEEFA9F3D1C3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Environment/Environment.prefab",
+      "Hash": "1FDB24457EDFD694324A285103CDBB177E8B76FA499E8FFB4957916045D804B3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Prefabs/Environment/FloorBase.prefab",
+      "Hash": "F613ED220CE517BE2CFB219D1391D2EF958A5C4698955D3A7DD868309CCE6A23"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Resources/Onity/ProjectContext.prefab",
+      "Hash": "55992F73C5205F2A730AEA059962CB16CAF616B828DE29F83CF069150F728452"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/ColorBlockJam.Runtime.asmdef",
+      "Hash": "3E538C769D2456EF6C905AE99B949FB097F8ACF4FF87A3B3AA69B1A9F617E6DE"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelCellObjectData.cs",
+      "Hash": "F22225C02630A9316B7B5C924480F5E7748EC1D943E0A778D1F8F777BFEC1CA6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelCellObjectData.cs.meta",
+      "Hash": "1ED193E72EB4AB42905C3560FE35B57104EC829006CBA0294C151225003CF838"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelData.cs",
+      "Hash": "827A31DC98F04E03A3089563F4E13A8DE52460EECEBF1E4C882135683186C808"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelData.cs.meta",
+      "Hash": "CC9F7209AEF374D82F7DF4924EFF2430EDB8CD78DB0B968FD90D862C1D9980ED"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelDatabase.cs",
+      "Hash": "41BFF6DC3F48ED33047F733C01E3690442D547B9858CFF84E723FF42DE65A333"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelDatabase.cs.meta",
+      "Hash": "AEFC4A4E643B7A7CC8D2717CF64466F9C1B844FDFE7868809157A66C957B043F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelDatabaseJson.cs",
+      "Hash": "3A525398E75E5C64F386ACF73E7478209780A0AC807CC42DD07A8DF70CE9BD87"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelDatabaseJson.cs.meta",
+      "Hash": "3E0F604C6B144F6D5D4E2E810383879603AE5F3E2B62C809BACB7C2FBA7AE270"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectChecks.cs",
+      "Hash": "F74F99FEF4B77D203CB5CED1EC65F6245CB143CAF5543AC7974C28180724FA4C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectChecks.cs.meta",
+      "Hash": "3CF35004403249C1DF81E26A5189C2438253168DDD65FB9E6E2B7794730DFEFC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectData.cs",
+      "Hash": "175EBFC0201B575183CE74DD5B147DFF9E4CE435EEDDC21832B8FBB28178FA5C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectData.cs.meta",
+      "Hash": "98C83BA34BB0E16EBC66BF5CEAC0BC7FD2D1C9D5FC17AFB04C929487D7246646"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectDefinition.cs",
+      "Hash": "38FA584AEAFC4D30D8C08A0B506FEE1B7AB95C6C71288DAB97A963E0903EA09A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectDefinition.cs.meta",
+      "Hash": "C24DCBDBF58B1DFA36B5A480D6B68C6BB87D451E0184495D37722603C4E0B627"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectParameters.cs",
+      "Hash": "B9A74D86F42A94F56FC32BA524C6E13559BD6E0B03EED259956F938DCBDACF6C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectParameters.cs.meta",
+      "Hash": "FC9B6203375201B8C78C5CD49005496FFA2D4099481CBB30FFBFC87123DB8069"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectRegistry.cs",
+      "Hash": "44802A667F1E3BB18ACF697F09BBF5987CCC91CCD4F049397B8C2A08BD7A3A6F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectRegistry.cs.meta",
+      "Hash": "ABEA60B15C418CD74BF76FD68AE1D316E24E2818B21F1968A9697B0A9F320ACB"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectValidator.cs",
+      "Hash": "9EB62F78E78508A2922DEF674DD3D1D637BDB029E0A99172DAA59D0D0D365403"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Runtime/Levels/LevelEffectValidator.cs.meta",
+      "Hash": "20B6B0F91D094C0F07311845CD78A231777BC10CB0841ED2219A510902C995EA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Scenes/Game.unity",
+      "Hash": "2F33F294C7426271F21DAF5CC24D7B62A41BD2E1EC08EA30091D36729BDD90D2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Scenes/Hub.unity",
+      "Hash": "D030AD3E4A3561C48A4134F2E15A686B2EA990C1EA483DAA7273BE1507696D52"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Scenes/Init.unity",
+      "Hash": "6A4256D37BF2D3D72F1DD83CAE294C98A3698EDFC077666D2C82768F79FC891D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Scenes/LevelEditor.unity",
+      "Hash": "729984D8618E6DC14E993A3033F390F186401DCF025C8C7133529C049C3D3115"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Scenes/Loading.unity",
+      "Hash": "249B7D2A1EAC0DB65BE10D72B72D28E91EF8B6F2B16332A0146C3D8CA95FC1F7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/SampleSceneProfile.asset",
+      "Hash": "A9932BCBA1B1B55C8939C72ACA2B5CCA21EFC41847BD16208FE3E171C9CBA89F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/URP-Balanced-Renderer.asset",
+      "Hash": "8DDABA42CF10B34A3797D185FB1755DD65BF9BCAC2D31AF190D0AD465E29CB57"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/URP-Balanced.asset",
+      "Hash": "CDD5AB294DB5F7069851E3F5B55C0FC963E8193DBEFE97431463EA3B9AA32ADF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/URP-HighFidelity-Renderer.asset",
+      "Hash": "A8F65B6A4A95DD9D71FB896E44CDB2173D4B771A904E67F4F68E015E0A639E0D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/URP-HighFidelity.asset",
+      "Hash": "CBCDBFF289E5270128FB8333F49B484C71CFAF61564713D403BD351356FEDDB5"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/URP-Performant-Renderer.asset",
+      "Hash": "11D4463A714B8572792A6818DECE9E3C84EE2635DFF9048575155B064E056BB9"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Settings/URP-Performant.asset",
+      "Hash": "7B521772D503D3A37B5A6A00A4BA16CA1E67BF77B1CD0B920DC4F5AAB549602A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/ColorBlockJam.Editor.EditModeTests.asmdef",
+      "Hash": "4449102CA2E7316B9128C6A7C18A1322F9E7097328157A0FB783D039B2EFF036"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/DatabaseControlsTests.cs",
+      "Hash": "76FA824451C824F2D194A018B9AF17800D7B236329E1C1E53809E23FCEE2F4CA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/DatabaseControlsTests.cs.meta",
+      "Hash": "C5D09673446C63ACE3AC5B0A148AC0D465657B741A42FE8D2ADBD305B5C1F722"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasBlockToolsTests.cs",
+      "Hash": "0D69649DB4512E443BB11F5942677BC5BA2E66D6E7607A902E5E787E754357C1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasBlockToolsTests.cs.meta",
+      "Hash": "91CBADA2F51D55EBFDC4ED15F1E96BA518CDA238A2BC9EFFA25787605EC47798"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasCornerVoidsTests.cs",
+      "Hash": "4329D7B5E6E499E84B36596284315506F0EA01FE1F844B71C309CDAB982D6500"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasCornerVoidsTests.cs.meta",
+      "Hash": "4D980F2AB95D2347EDC8D0D3D50BB68B3E73EBC335545FCE8846F1CB5BAAE86A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasElementTests.cs",
+      "Hash": "0DD296C10169C1D19287FB0CB96FA0B33243BE3DF9CF24A451C5E31C22BA9297"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasElementTests.cs.meta",
+      "Hash": "26F92456600C0C78FC491601AB7AC6E432C1D370059D4DB4B6B6A7013ACF7444"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasGatesEdgesTests.cs",
+      "Hash": "525312AB577978C4DFFFF6AFC78E49C38C0527394A232798FFB6DA094AD5C395"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasGatesEdgesTests.cs.meta",
+      "Hash": "295E0ED9EB104846C2306F5317CFD57B64D37454CF2B6E9EA071DB008F47B2FC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasHitTestTests.cs",
+      "Hash": "1C419AD3B43877343DE3221A4673CD350F3500C2EF6CCB49DF399FC489A55A76"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasHitTestTests.cs.meta",
+      "Hash": "4A273D0338DE92CA251E684CDF3010A60C10771913FEA131E6D7E2B32C78EE1F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasHoverTests.cs",
+      "Hash": "9C646FD56AE37EB917237261D4EC99FA03891182B669C07862389616ED3CBAD1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasHoverTests.cs.meta",
+      "Hash": "021F945580DC8AAF77476784CF2951E8B6E5D8C29683EE343841D52F58D3BC82"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasLabelTests.cs",
+      "Hash": "0EC6D51666B2B7E3FF87B6393E85449CA4361FEB9D782AF4EE28E7281A06E79D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasLabelTests.cs.meta",
+      "Hash": "9628706F5B2BBEC1E3197E95C9A0CF0E1E63BAAA45004D8DBC6357B7FF56184A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasModelTests.cs",
+      "Hash": "A53528E6BAF16A8206B094B08C48E0D3DE6B6B467903DE568B779172E8D2E2C1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasModelTests.cs.meta",
+      "Hash": "3FB7B5F0D643B344AF43B557D1ACF574E37779E19B0597382B76A5412CEE30BA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasWallsTests.cs",
+      "Hash": "90EE4F49729E4D68304E7025A305EE48696F40F7A676F45CE3DFE30A0C098BB2"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCanvasWallsTests.cs.meta",
+      "Hash": "D735810A24B7D843C498922197032C9D903533664964BC906AE39D2F3BBCB256"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCellObjectTests.cs",
+      "Hash": "1C93F7C36E2675B3172DB7523AB092542DFB5AFD61D0573D15EC423DE2CF90FA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCellObjectTests.cs.meta",
+      "Hash": "EFEB6A011A33EA25CBF067580F004063AF8BB321A18C2C0D6074ADAF587456BB"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorKeysTests.cs",
+      "Hash": "2607C05D7639C89EBC345C3EC51C34282933F6797CC8561A22AB4AB767F32959"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorKeysTests.cs.meta",
+      "Hash": "22AF119F30C02B18747C716FBF35090E51EE9D1ADE2F6B2C06D97E799DEEA02C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorOrderTests.cs",
+      "Hash": "8E2EB7DC338BF9968D5C212CD5C41DB7EFA5F96B4215FA962AA5BA05E5957CBC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorOrderTests.cs.meta",
+      "Hash": "6BCC2D76E6E4261702964DB03464C47941F9B88CB037B534A2995A9879567BF4"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorOrderWindowTests.cs",
+      "Hash": "BFF06E865AF6B2E8E718BE541A401EA8A5ED1CDC71743261A9213D2657276459"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorOrderWindowTests.cs.meta",
+      "Hash": "F28E743A68427CEB1D217B55C8F2DB876EBE448E9BFB8484120628150E71049D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorSwatchesLayoutTests.cs",
+      "Hash": "E6350B6FCB8C46259FFD18AD1013B43377D52EB37616C2CC0B11AB1044A9D137"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelColorSwatchesLayoutTests.cs.meta",
+      "Hash": "DDBBA6066562B83C0CAA2C202E712431990E8F71F117FD1CC9C98EF5FC09D0D8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCornerStepsTests.cs",
+      "Hash": "836953B322B3792E4901BF32362151BA23B1AC654270E863EF133B2A4814046A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCornerStepsTests.cs.meta",
+      "Hash": "87EE9530453D2F10EE0CF4CF6326F857FDF9D9029624105711D47F5FC8ACB262"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCreateColourTests.cs",
+      "Hash": "3DB4CF33EF9C5760FE2469E430E77B28A8D5D67D9ED1FF97D61D898E4830C1B6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCreateColourTests.cs.meta",
+      "Hash": "F6322616B4FAFFA881BC40ACB17014424B6757F4289AD085C961B91436D6DB5D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCustomPieceTests.cs",
+      "Hash": "646D4BBDB1A6FE1BAB21D4AF27A3A03154740DE4FA5831AE5028C64155168FDA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelCustomPieceTests.cs.meta",
+      "Hash": "20B31CEF46483626DBFFCCC75CD1FD428811AE13131CE72F2E232A7A6A51EC2F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseAddressablesTests.cs",
+      "Hash": "3C870CDE4C051EECCED71376C31D64CF84D50CE2A7375E8A0E60C6BCDDA99368"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseAddressablesTests.cs.meta",
+      "Hash": "68532D1005E9C2E6763A17A9CA0BD8E30367A40733E99564B0CC46CCEA688FF4"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseFileTests.cs",
+      "Hash": "9ABE93D1A13580775E67DD41EA6067A50C11925DDA567143FD7B2B4A5407DDA7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseFileTests.cs.meta",
+      "Hash": "34EEE08C89E36AF87C32991E2F850F9AB3127A18B6F5CAA8E10536C6AABCEC2A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseInspectorTests.cs",
+      "Hash": "2CCA8E45A3B94BC236CE80A65FEE28DCFF8FA9251F5A81784FA3188A87D3D71E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseInspectorTests.cs.meta",
+      "Hash": "1C4C6B23C77A1AB09C7EF8BBA02FE364AC45AB0854FACFC668A876DC4A35CC21"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseJsonTests.cs",
+      "Hash": "CFF6316A1127BEB07B94E19FF8B33E305862BA590F5770D15F693B78FC6296D8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseJsonTests.cs.meta",
+      "Hash": "78E10D10F1A7A4AE64D68017CC6BF68A6DAA9CE48FEED5F1230B8145C4DBD12E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseTests.cs",
+      "Hash": "34D2DF1AB989F65D330BEF2DEC6D97158962EB5F7E48C63329D7D9DC1AC492D3"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDatabaseTests.cs.meta",
+      "Hash": "A02B9F35183C187D144EA7D23422B0554C31128B8F233FA469D9F1636E6FBEE7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDraftControllerTests.cs",
+      "Hash": "DAF09CF9ECFD4F3D62D0269D17725061D5D42B7FB356ABA075605A4C426B7BF6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDraftControllerTests.cs.meta",
+      "Hash": "A5ACA485D1CE0B389CACEC74977483CFF9A0BF4EF22F3C506ED8092BCF271115"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDraftIssuesTests.cs",
+      "Hash": "5F4242B3D4B1D24BB9C353C83D7C006E3DB3C08B5B0650A4B4E7FEF2CC81EE5E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDraftIssuesTests.cs.meta",
+      "Hash": "70096CFA78C52E19A9DECFDEBE2BF003351BAF8AF3A372D8CF7AC187ECC0E3DF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDraftReloadTests.cs",
+      "Hash": "7A7047EA54EB42A7E42BF389476A18D7008A36E4281EC11D1DB838C15BFCC16F"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelDraftReloadTests.cs.meta",
+      "Hash": "56EE779EC5BBA83465D8E270C2844C84AF1F8AB2E7D9537D63EA567CD0D3F55A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditCommandTests.cs",
+      "Hash": "924F6D7C4EB6E69648EE7ACD64B58AFFA54AF0DB8EDE7245DD7850A12FD9CA49"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditCommandTests.cs.meta",
+      "Hash": "0F6180D9DD7576785CBD1786AA0A50D77E8152DB02AE0148AC9122C9C6EB4731"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditV2FieldsTests.cs",
+      "Hash": "D10F49DA3C49F7C7727B338FAA68B4E525F49B285E62444E168D3470E3B21307"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditV2FieldsTests.cs.meta",
+      "Hash": "4175F8D0CCCE6B96280EFD29E5C52475F957D443D343E68B8E9FEF480F605FB8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorIconsTests.cs",
+      "Hash": "100BF6688EC5BC62F6EED34B4565214F7F224CEBC22E66A2A5B5EABB2CFF8466"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorIconsTests.cs.meta",
+      "Hash": "42AE1D0AC96C7F1CCCED8E4118F94E3CAD440147F7BDC7697363FD1696D6FAD0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorPlayModeGuardTests.cs",
+      "Hash": "9101F2E6826862A24F0DD920FDF30B7826D0E76C0EEC971B07B30F94642907F8"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorPlayModeGuardTests.cs.meta",
+      "Hash": "DE9111037B3523448A3DD76843CF553F8B53E01BFF6C13498BF3036CA26DFA73"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorShellTests.cs",
+      "Hash": "1437CAE174A13C67FEFB91FFF92EB4B0410FBC65E983A957B39C2DB0E8A91B1C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorShellTests.cs.meta",
+      "Hash": "DA7E81B90F2A3A1F04D9BAF0FE3CBF0C33092FFB7E154B3F162D8DA01818FA56"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorTestAccess.cs",
+      "Hash": "2AD33460A5A3283CF850741978657AEB036CD50104E776060B78F1D3D7475727"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorTestAccess.cs.meta",
+      "Hash": "416C57FCDEA8E602CB2DE27327565B6AEFA5EE8967D4087429FCDE9851F334B9"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorToolStateTests.cs",
+      "Hash": "E834AD4D76D7D9A69A91C1C9C9309B1A67198E4AF4E1C353BF9F437E6263ACBC"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorToolStateTests.cs.meta",
+      "Hash": "AF88F97417160B38C69F617484CF2D69831598CAEC3DA86A1E46AB74D2DCEC26"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorToolsCleanupTests.cs",
+      "Hash": "A55E0F7DA4612F8B3059F99412D39C0796554313BB449DB8C2562B3A59AE7271"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEditorToolsCleanupTests.cs.meta",
+      "Hash": "8D3E40044905DDB8637784294AB8725EB5BE3AD3CFDECFEB786F1B82BF8866BF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEffectCommandsTests.cs",
+      "Hash": "F4BE62A99A694972520B6111683A3A5CE3CBAB9DC665CFB6AD6755370366E060"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEffectCommandsTests.cs.meta",
+      "Hash": "64ABF2B7EB71A85163E0A8F7459AC28E4B07B776DB279C13876DB5070BC94FCF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEffectEditorTests.cs",
+      "Hash": "6067DB45D9C0B288D29D8872C2CC5F890A6B714B218994D9A93D0FAA8F0844C4"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEffectEditorTests.cs.meta",
+      "Hash": "A362DF8AA107C9D6A14DB7DED6AAF527D36B7B42E63A6293A4810A76970EB6D1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEffectTests.cs",
+      "Hash": "82CBC0F888AD816B71DC32563C3B2F2C4A4528128BE1C5531E70BFDEA78FCB47"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelEffectTests.cs.meta",
+      "Hash": "FC53B0DCD8E2D8C0448F222D05D47F69D6405C015EBEC20F6BE1364AADA4AB38"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelFreehandPieceTests.cs",
+      "Hash": "E605AB9ACE27FC42C0E87D975FEB1BD43F8A68C3BA0899B64607B74CC4CD5E54"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelFreehandPieceTests.cs.meta",
+      "Hash": "B7F3DC7329FEBEE48D9C713CFCE24742A0268953FEF90C72C450B451CED5FC71"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelObstacleBarrierTests.cs",
+      "Hash": "2538DEBBE2F1928F0E046A0CE9AEAAFB82785B38ABD5BC7417C5CAF62DBDC204"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelObstacleBarrierTests.cs.meta",
+      "Hash": "B8E3C782B1FC037398543487F62D9484E32EA99703DB2D1C5692ACD1A0BB6A4E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelObstacleWallCommandsTests.cs",
+      "Hash": "04732AB7EFF97F5FAA092A70B00AF8464256302C96FE4904B687A21EC5F49DDF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelObstacleWallCommandsTests.cs.meta",
+      "Hash": "AFA8AEEA7243C5174F598034901DACD5C7DE92FA8E13B31AA56AA1F67A4BBB45"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelObstaclesSectionTests.cs",
+      "Hash": "789A82A9ABAB9B797D1CD3C37CFCAE13097E6631FC54F99A522305EFD5D347D1"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelObstaclesSectionTests.cs.meta",
+      "Hash": "2D3C36FC4059CE9760A13E24FE22D0477B66DEFC0EB78DD8E67BE410C95B9770"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPaletteHoverTests.cs",
+      "Hash": "2E4F0603800B385E1DCB18F44396BD520F486BB29EAB96F6D2CEE04DC78781FA"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPaletteHoverTests.cs.meta",
+      "Hash": "BE133235AD84CEA85F4C8578E50E5060552BA5BA41FF871A1D1C51630BA71157"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPenEditCanvasTests.cs",
+      "Hash": "016F81C07BA4E06A6C9301CA5BD70CC35907A6BE7944E99BFBFB38D595761F62"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPenEditCanvasTests.cs.meta",
+      "Hash": "6EED1715D29715DFAD6891088CFCA340D5E94932574E34012FD45D1DB6C8CACE"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPenEditTests.cs",
+      "Hash": "9340FC1E7388005CA38CED8D44B664F0915BAE0C2BD77FBD8490A5255A928D54"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPenEditTests.cs.meta",
+      "Hash": "74085C1634B8C97E319D0C6F58A2E0C68215FACEF781C77FA6CAB891FCA5E2BF"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPieceDeletePlanTests.cs",
+      "Hash": "8D71E0C0B447C380CA3C28F2460C59DAB655C0135713BEC896A2315639411314"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPieceDeletePlanTests.cs.meta",
+      "Hash": "982D29EBA1EDCF61E6FC09090CEBE9A933DECAD98D0AD2459077AEC597FAD814"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPieceDeleteTests.cs",
+      "Hash": "23B23FA1FA57B50B059D4F37A752BB38AF46D0A14CFE2B007EBAC551A5F3DA7B"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPieceDeleteTests.cs.meta",
+      "Hash": "ABF4254D83FCE3D54A94A495D89520BFF2A80C5F58B80AB2902191DF4B806CC9"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPieceEditControllerTests.cs",
+      "Hash": "D97E0255C49531E6C108ECCEFE3CFB2557F66F3FD5A7E0D3BBDF672F1AE7BB5E"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPieceEditControllerTests.cs.meta",
+      "Hash": "26F8959124E8BF4BA91BEC10C18055959F3488D6CE3DC047199AEA925E3F3105"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPlusTileTests.cs",
+      "Hash": "87FE69E25C9B514667180ED727FAF2BED717A4EA3BC65B16FCC86DBD192FC390"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelPlusTileTests.cs.meta",
+      "Hash": "571A76F0D5969CA40F99D82FB1D2031617F8BC0E720EA17E92D3AA017D9D5E0B"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelRecordCopyTests.cs",
+      "Hash": "48B285E2B6EF98CFA5127794E1801E220AE7B8C9FF5073C7046B261D5D71F32D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelRecordCopyTests.cs.meta",
+      "Hash": "A93A3A8BDE9D9757921AAB3694CC9A7C02B172DB82D5C4C8C9A4B5F3A661CF9C"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelSaveControllerTests.cs",
+      "Hash": "941B58400011A9152A36C7F458FECD7A006AD5E7C60699C08B462EEE448FE791"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelSaveControllerTests.cs.meta",
+      "Hash": "D21EFE236990D23F831BB313A889DD4D070EF50F22F836D146C5FF452F147419"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelShapePaletteTests.cs",
+      "Hash": "79F7EAEC5A415D3832F992AC8032BB9D2EA66CF79DA9BDE50807B0BF97880CA6"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelShapePaletteTests.cs.meta",
+      "Hash": "DF2178E57D8FC81A58133BDAC7AD8589AD8BFAC145A373D938924EF45372753D"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTemplateEditTests.cs",
+      "Hash": "389FD64CAABC04BC8EE0BD40BA278A59A5EB9F8B5E92C8CC6FC48284DC10FEB7"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTemplateEditTests.cs.meta",
+      "Hash": "27DA950303EBB83175D4392A6EDA4E45516F6AECA371689E2812C3E307E12197"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTemplateLibraryCommitTests.cs",
+      "Hash": "C31CA55395C988B4280F265E83BF3EE50CBECA304DE30A06B9E6F761C382B3DE"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTemplateLibraryCommitTests.cs.meta",
+      "Hash": "4BDA45594A2C65B48F541FC7CC4093590713B05C896AA6FACD2F87F6852DC1BD"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTemplateSavePlanTests.cs",
+      "Hash": "A1B7C86B81B393EEB22855862F9A4659713A3A9218C5565507DDB343F1C957E0"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTemplateSavePlanTests.cs.meta",
+      "Hash": "8E86A197EC1F502966F6A7B65FAC61612EC2B72B8B6A3A1A9B972632D3741C44"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTimerIconTests.cs",
+      "Hash": "768221E605BB523AD02CDD2B2A719062D23E5CDE3CAA31F81A2ED7A4B4EF3C76"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/LevelTimerIconTests.cs.meta",
+      "Hash": "823FA72656AEF97FC3993D708F0CBF07647A55AD9DF4352FF7BC642CAB2EE08A"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/PieceEditorLinkTests.cs",
+      "Hash": "31A2E789BDAC91FAC6B6EED45201B21B24B441CCD58FCE3313A8A11BB198BE51"
+    },
+    {
+      "Path": "Assets/ColorBlockJam/Tests/EditMode/PieceEditorLinkTests.cs.meta",
+      "Hash": "842501A1D99480EF453674E4006537FDB7F77D82BFCC77C714122D2E53622A93"
+    },
+    {
+      "Path": "Library/ColorBlockJam/ArchitectureReview/TASK-20260926-204508638-a3ad6ee3-level-editor-architecture/authored-assets-before.json",
+      "Hash": "87781C006FCCDD0CC3D5F529C1436391973D4FC451FCB9B83C32586ADEDC924E"
+    },
+    {
+      "Path": "Library/ColorBlockJam/ArchitectureReview/TASK-20260926-204508638-a3ad6ee3-level-editor-architecture/final-source-before-tests.json",
+      "Hash": "16E3608967CE017A2275F312F540BDE61FD7A9528D2E21981F45E7AC42E42AE8"
+    },
+    {
+      "Path": "Library/ColorBlockJam/ArchitectureReview/TASK-20260926-204508638-a3ad6ee3-level-editor-architecture/open-user-window-before-stage2.json",
+      "Hash": "A513D894182A0A6678B584AAE4E5285EAF40A9BEE458A37825914E5DCCC2FE9C"
+    },
+    {
+      "Path": "Library/PackageCache/com.unity.addressables@1.22.3/Editor/Settings/AddressableAssetGroup.cs",
+      "Hash": "FF331CBDB103AE0D04A317808B6BF2232E73CF7BCC22E5F7E633A83B40A17F0A"
+    },
+    {
+      "Path": "Library/PackageCache/com.unity.addressables@1.22.3/Editor/Settings/AddressableAssetGroupSchema.cs",
+      "Hash": "4C64D0EC52E1306606458DCE5A3EDB56CDB84B3DE824985609AD01341129CC95"
+    },
+    {
+      "Path": "Library/PackageCache/com.unity.addressables@1.22.3/Editor/Settings/AddressableAssetGroupSchemaSet.cs",
+      "Hash": "FAD20E4DF5B1D9A3E6304B51D7A92CC794550862C74DE578C08D635DB95FD57F"
+    },
+    {
+      "Path": "Library/PackageCache/com.unity.addressables@1.22.3/Editor/Settings/AddressableAssetSettings.cs",
+      "Hash": "668068B334C7D460AA0782907EFD7FA77A8460BAA5229AC4D8F86C6FCD2D87AB"
+    },
+    {
+      "Path": "Packages/manifest.json",
+      "Hash": "0EEC21EC383C625F0C57289A4253222053EE0C2ED72BC012401910E355A7D440"
+    },
+    {
+      "Path": "Packages/packages-lock.json",
+      "Hash": "D1FA90B7C8C6E22FA053CCFEF860D7C7D84055E8E4FE65DC03CEE5871667A563"
+    },
+    {
+      "Path": "ProjectSettings/ProjectVersion.txt",
+      "Hash": "21B4CD39F50B6E0B77CC9F18B79C453E9212E19B953A23E0CEB761C627DE97C3"
+    },
+    {
+      "Path": "docs/Architecture-Review-2026-09-26.md",
+      "Hash": "76D8FD6237D6BC52ECB26B51F387DFC834ED87002FDF24AF9877781074C8ED20"
+    },
+    {
+      "Path": "production/tasks/TASK-20260926-204508638-a3ad6ee3-level-editor-architecture/final-tests.xml",
+      "Hash": "5BC7B011DA2857D23B14639D3187C7ED355B967D6632DCFA59842E53B817CF8E"
+    },
+    {
+      "Path": "production/tasks/TASK-20260926-204508638-a3ad6ee3-level-editor-architecture/final-verification.json",
+      "Hash": "218B90C5D57543B846DAE387F6FCC1A2D24B7A2D6AC42B6BF067E11300AC33A0"
+    },
+    {
+      "Path": "production/tasks/TASK-20260926-204508638-a3ad6ee3-level-editor-architecture/stage2-verification.json",
+      "Hash": "52603AB97D934A0D77A75BAA3447565D6A14E3BCB73A9BBFDA185FD4124B2265"
+    }
+  ]
+}

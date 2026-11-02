@@ -1,0 +1,26 @@
+[
+  {
+    "file": "Arrows.fbx",
+    "current_sha256": "8a5d34a7bf1cb16ddeac01bbe0b6fbc912560b5ea14262697d9c566ee8e8e7d6",
+    "baseline_cs3_sha256": "8a5d34a7bf1cb16ddeac01bbe0b6fbc912560b5ea14262697d9c566ee8e8e7d6",
+    "unchanged": true
+  },
+  {
+    "file": "BlockParts.fbx",
+    "current_sha256": "06a0ced6b8398e86bb48bf655a73554e3e19ea648dddac7129b8006d25c67015",
+    "baseline_cs3_sha256": "06a0ced6b8398e86bb48bf655a73554e3e19ea648dddac7129b8006d25c67015",
+    "unchanged": true
+  },
+  {
+    "file": "GroundGrid.fbx",
+    "current_sha256": "33ead966add6b35d6f12b7d3b70c1d3a81717c98a181285cca62a8649346ba08",
+    "baseline_cs3_sha256": "33ead966add6b35d6f12b7d3b70c1d3a81717c98a181285cca62a8649346ba08",
+    "unchanged": true
+  },
+  {
+    "file": "WallAndDoor.fbx",
+    "current_sha256": "b418a5929ab1a6dbe33a23c71c4f46018b4c33e2ce84ef3bc051a6743f124418",
+    "baseline_cs3_sha256": "b418a5929ab1a6dbe33a23c71c4f46018b4c33e2ce84ef3bc051a6743f124418",
+    "unchanged": true
+  }
+]

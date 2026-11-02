@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="24" result="Passed" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:18Z" duration="7.8987034">
+  <test-suite type="TestSuite" id="1194" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="142" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:18Z" duration="7.898703" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1029" name="ColorBlockJam.Environment.PlayModeTests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/cbj-envgate-7336b1-int/Library/ScriptAssemblies/ColorBlockJam.Environment.PlayModeTests.dll" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:18Z" duration="7.889105" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="159876" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1030" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:18Z" duration="7.887843" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1031" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:18Z" duration="7.886911" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1032" name="Environment" fullname="ColorBlockJam.Tests.Environment" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:18Z" duration="7.885963" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="EnvironmentBarrierViewTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:12Z" duration="1.593350" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1004" name="AnimatedFlipReachesItsHeightWithinThreeTenthsOfASecond" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.AnimatedFlipReachesItsHeightWithinThreeTenthsOfASecond" methodname="AnimatedFlipReachesItsHeightWithinThreeTenthsOfASecond" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" seed="444260109" result="Passed" start-time="2026-09-27 20:00:10Z" end-time="2026-09-27 20:00:11Z" duration="0.657467" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="BarrierFlipsPauseAndStopAllocateNothing" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.BarrierFlipsPauseAndStopAllocateNothing" methodname="BarrierFlipsPauseAndStopAllocateNothing" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" seed="1672138853" result="Passed" start-time="2026-09-27 20:00:11Z" end-time="2026-09-27 20:00:11Z" duration="0.023886" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="ClosedBarrierFlushWithTheBoardEdgeCoversEveryQuadrantOfItsCells" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.ClosedBarrierFlushWithTheBoardEdgeCoversEveryQuadrantOfItsCells" methodname="ClosedBarrierFlushWithTheBoardEdgeCoversEveryQuadrantOfItsCells" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" seed="1352753783" result="Passed" start-time="2026-09-27 20:00:11Z" end-time="2026-09-27 20:00:11Z" duration="0.013735" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="ClosedBarriersStandOnTheirCellsAndOpenOnesSinkUnderTheFloor" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.ClosedBarriersStandOnTheirCellsAndOpenOnesSinkUnderTheFloor" methodname="ClosedBarriersStandOnTheirCellsAndOpenOnesSinkUnderTheFloor" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" seed="888892581" result="Passed" start-time="2026-09-27 20:00:11Z" end-time="2026-09-27 20:00:11Z" duration="0.033635" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="SnapAndRestartReturnBarriersToTheirStartStateWithoutRebuilding" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.SnapAndRestartReturnBarriersToTheirStartStateWithoutRebuilding" methodname="SnapAndRestartReturnBarriersToTheirStartStateWithoutRebuilding" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" seed="1891018996" result="Passed" start-time="2026-09-27 20:00:11Z" end-time="2026-09-27 20:00:11Z" duration="0.031809" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="SuspendPausesTheTweenAndTeardownStopsItAndReturnsThePieces" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.SuspendPausesTheTweenAndTeardownStopsItAndReturnsThePieces" methodname="SuspendPausesTheTweenAndTeardownStopsItAndReturnsThePieces" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests" runstate="Runnable" seed="1393290020" result="Passed" start-time="2026-09-27 20:00:11Z" end-time="2026-09-27 20:00:12Z" duration="0.810082" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1008" name="EnvironmentGateTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-27 20:00:12Z" end-time="2026-09-27 20:00:18Z" duration="5.740716" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1011" name="ALoweredGateStaysDownUntilRaised" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.ALoweredGateStaysDownUntilRaised" methodname="ALoweredGateStaysDownUntilRaised" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1350092850" result="Passed" start-time="2026-09-27 20:00:12Z" end-time="2026-09-27 20:00:13Z" duration="0.643767" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="AnOpenedGateSinksHoldsAndRisesToItsExactBuiltHeight" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.AnOpenedGateSinksHoldsAndRisesToItsExactBuiltHeight" methodname="AnOpenedGateSinksHoldsAndRisesToItsExactBuiltHeight" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1375967822" result="Passed" start-time="2026-09-27 20:00:13Z" end-time="2026-09-27 20:00:13Z" duration="0.689957" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1017" name="AnUnknownDoorHasNoGateAndMovesNothing" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.AnUnknownDoorHasNoGateAndMovesNothing" methodname="AnUnknownDoorHasNoGateAndMovesNothing" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1208836413" result="Passed" start-time="2026-09-27 20:00:13Z" end-time="2026-09-27 20:00:13Z" duration="0.010057" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="ASinkingGateClipsAtTheFloorAndAResetGateDoesNot" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.ASinkingGateClipsAtTheFloorAndAResetGateDoesNot" methodname="ASinkingGateClipsAtTheFloorAndAResetGateDoesNot" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1556329626" result="Passed" start-time="2026-09-27 20:00:13Z" end-time="2026-09-27 20:00:13Z" duration="0.011819" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="EachAuthoredDoorBecomesOneGateOverItsSlotsAndArrow" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.EachAuthoredDoorBecomesOneGateOverItsSlotsAndArrow" methodname="EachAuthoredDoorBecomesOneGateOverItsSlotsAndArrow" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="716440239" result="Passed" start-time="2026-09-27 20:00:13Z" end-time="2026-09-27 20:00:13Z" duration="0.009400" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="EverySideAndAuthoredSpanMovesOnlyItsSlotsAndArrow" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.EverySideAndAuthoredSpanMovesOnlyItsSlotsAndArrow" methodname="EverySideAndAuthoredSpanMovesOnlyItsSlotsAndArrow" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1581059516" result="Passed" start-time="2026-09-27 20:00:13Z" end-time="2026-09-27 20:00:16Z" duration="2.733105" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="OpeningPausingStoppingAndResettingGatesAllocateNothing" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.OpeningPausingStoppingAndResettingGatesAllocateNothing" methodname="OpeningPausingStoppingAndResettingGatesAllocateNothing" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="717712614" result="Passed" start-time="2026-09-27 20:00:16Z" end-time="2026-09-27 20:00:16Z" duration="0.008616" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="ReopeningARisingGateSinksItAgainFromWhereItStands" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.ReopeningARisingGateSinksItAgainFromWhereItStands" methodname="ReopeningARisingGateSinksItAgainFromWhereItStands" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="966073424" result="Passed" start-time="2026-09-27 20:00:16Z" end-time="2026-09-27 20:00:17Z" duration="0.950851" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="RestartBuildResetsTheGatesAndClearForgetsThem" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.RestartBuildResetsTheGatesAndClearForgetsThem" methodname="RestartBuildResetsTheGatesAndClearForgetsThem" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1535381807" result="Passed" start-time="2026-09-27 20:00:17Z" end-time="2026-09-27 20:00:17Z" duration="0.142042" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="SuspendHoldsAGateStopLeavesItAndResetRestoresItsBuiltPose" fullname="ColorBlockJam.Tests.Environment.EnvironmentGateTests.SuspendHoldsAGateStopLeavesItAndResetRestoresItsBuiltPose" methodname="SuspendHoldsAGateStopLeavesItAndResetRestoresItsBuiltPose" classname="ColorBlockJam.Tests.Environment.EnvironmentGateTests" runstate="Runnable" seed="1857704580" result="Passed" start-time="2026-09-27 20:00:17Z" end-time="2026-09-27 20:00:18Z" duration="0.533888" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1019" name="EnvironmentSolidViewTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidViewTests" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidViewTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.457311" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1020" name="WideBarrierFillMovesWithItsEdgesAndReturnsToThePool" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidViewTests.WideBarrierFillMovesWithItsEdgesAndReturnsToThePool" methodname="WideBarrierFillMovesWithItsEdgesAndReturnsToThePool" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidViewTests" runstate="Runnable" seed="802929292" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.456047" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1021" name="EnvironmentViewLifecycleTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.091037" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1022" name="BuildRentsEveryPieceWithItsTransformAndClearReturnsThemAll" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.BuildRentsEveryPieceWithItsTransformAndClearReturnsThemAll" methodname="BuildRentsEveryPieceWithItsTransformAndClearReturnsThemAll" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="1826826216" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.011220" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="DisablingClearsAndReleaseDestroysThePooledPieces" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.DisablingClearsAndReleaseDestroysThePooledPieces" methodname="DisablingClearsAndReleaseDestroysThePooledPieces" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="34053835" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.009396" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="DoorsCarryTheirPaletteColourAndPiecesResetWhenReleased" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.DoorsCarryTheirPaletteColourAndPiecesResetWhenReleased" methodname="DoorsCarryTheirPaletteColourAndPiecesResetWhenReleased" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="1792968456" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.012835" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="EachFloorCellGetsAPooledGreyBaseSquareAndNoPlaneRemains" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.EachFloorCellGetsAPooledGreyBaseSquareAndNoPlaneRemains" methodname="EachFloorCellGetsAPooledGreyBaseSquareAndNoPlaneRemains" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="404042519" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.012612" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="EnvironmentComponentsNeverTick" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.EnvironmentComponentsNeverTick" methodname="EnvironmentComponentsNeverTick" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="1121212961" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.001129" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="RebuildingReusesPiecesAndOnlyALargerLevelAddsInstances" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.RebuildingReusesPiecesAndOnlyALargerLevelAddsInstances" methodname="RebuildingReusesPiecesAndOnlyALargerLevelAddsInstances" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="1492424133" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.021764" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError" fullname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError" methodname="RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError" classname="ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests" runstate="Runnable" seed="785665700" result="Passed" start-time="2026-09-27 20:00:18Z" end-time="2026-09-27 20:00:18Z" duration="0.018125" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

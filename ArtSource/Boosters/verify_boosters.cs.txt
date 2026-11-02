@@ -1,0 +1,87 @@
+// Run in the pinned Unity Editor after import_boosters.cs.txt. Generates evidence only.
+var files = new System.Collections.Generic.List<string>();
+var models = new System.Collections.Generic.List<object>();
+var folder = "Assets/ColorBlockJam/Art/Models/Boosters/";
+var sharedMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>("Assets/ColorBlockJam/Art/Materials/Shared/MAT_Gameplay.mat");
+if (sharedMaterial.shader.name != "ColorBlockJam/Board Lit" || UnityEditor.ShaderUtil.ShaderHasError(sharedMaterial.shader))
+    throw new System.InvalidOperationException("The shared opaque art shader must compile.");
+foreach (var name in new[] { "Hammer", "RocketPurple", "Vacuum" })
+{
+    var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>(folder + name + ".prefab");
+    var importer = (UnityEditor.ModelImporter)UnityEditor.AssetImporter.GetAtPath(folder + name + ".fbx");
+    var group = prefab.GetComponent<UnityEngine.LODGroup>();
+    var lods = group.GetLODs();
+    if (lods.Length != 2 || group.fadeMode != UnityEngine.LODFadeMode.None || lods[0].renderers.Length != 1 || lods[1].renderers.Length != 1 || lods[0].renderers[0] == lods[1].renderers[0])
+        throw new System.InvalidOperationException("Invalid LOD configuration: " + name);
+    if (importer.isReadable || importer.importAnimation || importer.addCollider || importer.generateSecondaryUV || importer.importTangents != UnityEditor.ModelImporterTangents.None)
+        throw new System.InvalidOperationException("Invalid mobile import settings: " + name);
+    var levels = new System.Collections.Generic.List<object>();
+    for (int index = 0; index < 2; index++)
+    {
+        var renderer = lods[index].renderers[0];
+        var mesh = renderer.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
+        if (mesh.subMeshCount != 1 || renderer.sharedMaterials.Length != 1 || renderer.sharedMaterial != sharedMaterial || mesh.isReadable)
+            throw new System.InvalidOperationException("Invalid mesh/material configuration: " + name);
+        if (renderer.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off || !renderer.receiveShadows)
+            throw new System.InvalidOperationException("Booster LODs receive shared lighting without casting shadows: " + name);
+        levels.Add(new {
+            level = index, triangles = mesh.GetIndexCount(0) / 3, vertices = mesh.vertexCount,
+            submeshes = mesh.subMeshCount, readable = mesh.isReadable,
+            runtimeMeshBytes = UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(mesh),
+            boundsCenter = mesh.bounds.center.ToString(), boundsSize = mesh.bounds.size.ToString(),
+            screenRelativeHeight = lods[index].screenRelativeTransitionHeight
+        });
+    }
+    models.Add(new { name, lods = levels, oneSharedMaterial = true, fadeMode = group.fadeMode.ToString() });
+    var utility = new UnityEditor.PreviewRenderUtility();
+    try
+    {
+        var instance = utility.InstantiatePrefabInScene(prefab);
+        var previewGroup = instance.GetComponent<UnityEngine.LODGroup>();
+        var bounds = instance.GetComponentsInChildren<UnityEngine.Renderer>()[0].bounds;
+        var target = bounds.center;
+        utility.camera.orthographic = true;
+        utility.camera.orthographicSize = 1.65f;
+        utility.camera.nearClipPlane = .01f;
+        utility.camera.farClipPlane = 50f;
+        utility.camera.transform.position = target + new UnityEngine.Vector3(-4, 3, 7);
+        utility.camera.transform.LookAt(target);
+        utility.camera.clearFlags = UnityEngine.CameraClearFlags.SolidColor;
+        utility.camera.backgroundColor = new UnityEngine.Color(.13f, .15f, .20f, 1);
+        utility.ambientColor = new UnityEngine.Color(.35f, .35f, .35f, 1);
+        utility.lights[0].intensity = 1.3f;
+        utility.lights[0].transform.rotation = UnityEngine.Quaternion.LookRotation(new UnityEngine.Vector3(3, -4, -6));
+        utility.lights[1].intensity = .6f;
+        utility.lights[1].transform.rotation = UnityEngine.Quaternion.LookRotation(new UnityEngine.Vector3(-3, -2, -4));
+        for (int lod = 0; lod < 2; lod++)
+        {
+            previewGroup.ForceLOD(lod);
+            utility.BeginStaticPreview(new UnityEngine.Rect(0, 0, 512, 512));
+            utility.Render(true, true);
+            var image = utility.EndStaticPreview();
+            var file = System.IO.Path.GetFullPath("docs/art/boosters/Unity_" + name + "_LOD" + lod + ".png");
+            System.IO.File.WriteAllBytes(file, image.EncodeToPNG());
+            UnityEngine.Object.DestroyImmediate(image);
+            files.Add(file);
+        }
+    }
+    finally
+    {
+        utility.Cleanup();
+    }
+}
+var palette = (UnityEngine.Texture2D)sharedMaterial.GetTexture("_BaseMap");
+var result = new {
+    unityVersion = UnityEngine.Application.unityVersion,
+    project = UnityEngine.Application.dataPath,
+    models,
+    palette = new { palette.width, palette.height, format = palette.format.ToString(),
+                    readable = palette.isReadable, runtimeBytes = UnityEngine.Profiling.Profiler.GetRuntimeMemorySizeLong(palette) },
+    shader = sharedMaterial.shader.name, keywords = sharedMaterial.shaderKeywords,
+    activeSceneDirty = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().isDirty,
+    previewFiles = files,
+    verificationScope = "Editor import, asset checks, forced-LOD preview renders. No device profiling or gameplay integration."
+};
+System.IO.File.WriteAllText(System.IO.Path.GetFullPath("docs/art/boosters/unity-report.json"),
+    Newtonsoft.Json.JsonConvert.SerializeObject(result, Newtonsoft.Json.Formatting.Indented));
+return result;

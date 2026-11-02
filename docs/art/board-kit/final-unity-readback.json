@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "path": "C:/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/Assets",
+      "compiling": false,
+      "dirtyScene": false
+    },
+    "compiler": "roslyn"
+  }
+}

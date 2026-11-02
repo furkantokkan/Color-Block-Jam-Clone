@@ -1,0 +1,10 @@
+{
+ "success": true,
+ "message": "Retrieved 4 log entries.",
+ "data": [
+  "Import Error Code:(4)",
+  "Assets\\ColorBlockJam\\Editor\\Boosters\\VacuumMotionAssets.cs(54,13): warning CS0618: 'TextureImporter.spritesheet' is obsolete: 'Support for accessing sprite meta data through spritesheet has been removed. Please use the UnityEditor.U2D.Sprites.ISpriteEditorDataProvider interface instead.'\n",
+  "Assets\\ColorBlockJam\\Tests\\EditMode\\LevelEditorShellTests.cs(436,42): error CS0117: 'LevelBoardResize' does not contain a definition for 'ClampWidth'\n",
+  "Assets\\ColorBlockJam\\Tests\\EditMode\\LevelEditorShellTests.cs(437,42): error CS0117: 'LevelBoardResize' does not contain a definition for 'ClampHeight'\n"
+ ]
+}

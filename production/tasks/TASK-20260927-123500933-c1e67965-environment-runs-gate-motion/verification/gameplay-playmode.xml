@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="56" result="Failed(Child)" total="56" passed="55" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:52Z" duration="11.7379511">
+  <test-suite type="TestSuite" id="1189" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="138" result="Failed" site="Child" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:52Z" duration="11.737951" total="56" passed="55" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1101" name="ColorBlockJam.Gameplay.PlayModeTests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/cbj-envgate-7336b1/Library/ScriptAssemblies/ColorBlockJam.Gameplay.PlayModeTests.dll" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:52Z" duration="11.727099" total="56" passed="55" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="153860" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1102" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:52Z" duration="11.723329" total="56" passed="55" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1103" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:52Z" duration="11.721340" total="56" passed="55" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1104" name="Gameplay" fullname="ColorBlockJam.Tests.Gameplay" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:52Z" duration="11.719350" total="56" passed="55" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1033" name="GameSceneDragTests" fullname="ColorBlockJam.Tests.Gameplay.GameSceneDragTests" classname="ColorBlockJam.Tests.Gameplay.GameSceneDragTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:41Z" duration="1.156802" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1034" name="EveryBlockOfLevelOneLeavesThroughItsDoorAndTheLevelIsWon" fullname="ColorBlockJam.Tests.Gameplay.GameSceneDragTests.EveryBlockOfLevelOneLeavesThroughItsDoorAndTheLevelIsWon" methodname="EveryBlockOfLevelOneLeavesThroughItsDoorAndTheLevelIsWon" classname="ColorBlockJam.Tests.Gameplay.GameSceneDragTests" runstate="Runnable" seed="716450236" result="Passed" start-time="2026-09-27 14:59:40Z" end-time="2026-09-27 14:59:41Z" duration="1.133313" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1035" name="GameSceneIceTests" fullname="ColorBlockJam.Tests.Gameplay.GameSceneIceTests" classname="ColorBlockJam.Tests.Gameplay.GameSceneIceTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 14:59:41Z" end-time="2026-09-27 14:59:41Z" duration="0.175249" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1036" name="LoaderPreparesSharedContextAndIceThawsAndRestartsInRealGameScene" fullname="ColorBlockJam.Tests.Gameplay.GameSceneIceTests.LoaderPreparesSharedContextAndIceThawsAndRestartsInRealGameScene" methodname="LoaderPreparesSharedContextAndIceThawsAndRestartsInRealGameScene" classname="ColorBlockJam.Tests.Gameplay.GameSceneIceTests" runstate="Runnable" seed="210757577" result="Passed" start-time="2026-09-27 14:59:41Z" end-time="2026-09-27 14:59:41Z" duration="0.170443" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1037" name="GameSceneLearnedShapeTests" fullname="ColorBlockJam.Tests.Gameplay.GameSceneLearnedShapeTests" classname="ColorBlockJam.Tests.Gameplay.GameSceneLearnedShapeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 14:59:41Z" end-time="2026-09-27 14:59:42Z" duration="1.055281" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1038" name="ALearnedShapeLevelBuildsOnHomeAndIsWonInTheGameScene" fullname="ColorBlockJam.Tests.Gameplay.GameSceneLearnedShapeTests.ALearnedShapeLevelBuildsOnHomeAndIsWonInTheGameScene" methodname="ALearnedShapeLevelBuildsOnHomeAndIsWonInTheGameScene" classname="ColorBlockJam.Tests.Gameplay.GameSceneLearnedShapeTests" runstate="Runnable" seed="90325374" result="Passed" start-time="2026-09-27 14:59:41Z" end-time="2026-09-27 14:59:42Z" duration="1.052301" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestSuite" id="1105" name="PlayMode" fullname="ColorBlockJam.Tests.Gameplay.PlayMode" runstate="Runnable" testcasecount="53" result="Failed" site="Child" start-time="2026-09-27 14:59:42Z" end-time="2026-09-27 14:59:52Z" duration="9.327925" total="53" passed="52" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1039" name="BoardPresenterArrowMarkerTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-27 14:59:42Z" end-time="2026-09-27 14:59:43Z" duration="0.432373" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1044" name="ALevelChangeOrDisposeLeavesNoMarker" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.ALevelChangeOrDisposeLeavesNoMarker" methodname="ALevelChangeOrDisposeLeavesNoMarker" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="420115661" result="Passed" start-time="2026-09-27 14:59:42Z" end-time="2026-09-27 14:59:42Z" duration="0.017796" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1046" name="ALevelWhoseCatalogLacksItsArrowPrefabIsRejectedNamingTheBlockAndChangesNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.ALevelWhoseCatalogLacksItsArrowPrefabIsRejectedNamingTheBlockAndChangesNothing" methodname="ALevelWhoseCatalogLacksItsArrowPrefabIsRejectedNamingTheBlockAndChangesNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="322997479" result="Passed" start-time="2026-09-27 14:59:42Z" end-time="2026-09-27 14:59:42Z" duration="0.012364" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1042" name="AnExitClipsTheMarkerWithItsBlockAndReturnsItWhenTheExitEnds" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.AnExitClipsTheMarkerWithItsBlockAndReturnsItWhenTheExitEnds" methodname="AnExitClipsTheMarkerWithItsBlockAndReturnsItWhenTheExitEnds" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="665214659" result="Passed" start-time="2026-09-27 14:59:42Z" end-time="2026-09-27 14:59:43Z" duration="0.366574" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1040" name="EachArrowBlockShowsItsVariantOnItsRootCentredTurnedAndTinted" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.EachArrowBlockShowsItsVariantOnItsRootCentredTurnedAndTinted" methodname="EachArrowBlockShowsItsVariantOnItsRootCentredTurnedAndTinted" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="1147834302" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.011778" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1043" name="TeardownReturnsEveryMarkerAndRestartReattachesThemWithoutInstantiating" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.TeardownReturnsEveryMarkerAndRestartReattachesThemWithoutInstantiating" methodname="TeardownReturnsEveryMarkerAndRestartReattachesThemWithoutInstantiating" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="2060022402" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.006180" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1041" name="TheMarkerMovesWithItsBlockRoot" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.TheMarkerMovesWithItsBlockRoot" methodname="TheMarkerMovesWithItsBlockRoot" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="444323174" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.004443" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1045" name="WithoutAuthoredDataOrWithAnotherLevelsDataNoMarkerIsShown" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests.WithoutAuthoredDataOrWithAnotherLevelsDataNoMarkerIsShown" methodname="WithoutAuthoredDataOrWithAnotherLevelsDataNoMarkerIsShown" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterArrowMarkerTests" runstate="Runnable" seed="1929754948" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.008410" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1047" name="BoardPresenterExitFragmentTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:44Z" duration="0.887172" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1050" name="AMoveOrAStayExitPlaysNoBurst" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.AMoveOrAStayExitPlaysNoBurst" methodname="AMoveOrAStayExitPlaysNoBurst" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="1241641061" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.005750" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1055" name="AnExitSyncAfterRestartAllocatesNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.AnExitSyncAfterRestartAllocatesNothing" methodname="AnExitSyncAfterRestartAllocatesNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="2095499639" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.003128" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1051" name="ARefusedExitCommandPlaysNoBurst" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.ARefusedExitCommandPlaysNoBurst" methodname="ARefusedExitCommandPlaysNoBurst" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="1343657056" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.002795" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1049" name="AValidExitPlaysOneBurstOnTheDoorLineInItsBlocksColour" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.AValidExitPlaysOneBurstOnTheDoorLineInItsBlocksColour" methodname="AValidExitPlaysOneBurstOnTheDoorLineInItsBlocksColour" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="202895924" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.003755" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1054" name="RestartKeepsTheWarmedEmittersAndCreatesNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.RestartKeepsTheWarmedEmittersAndCreatesNothing" methodname="RestartKeepsTheWarmedEmittersAndCreatesNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="1161437956" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.003421" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1052" name="SuspendHoldsTheBurstAndTeardownStopsAndReturnsIt" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.SuspendHoldsTheBurstAndTeardownStopsAndReturnsIt" methodname="SuspendHoldsTheBurstAndTeardownStopsAndReturnsIt" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="14054820" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:43Z" duration="0.107959" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1053" name="TheBurstReturnsInSyncOnceItsLastFragmentDies" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.TheBurstReturnsInSyncOnceItsLastFragmentDies" methodname="TheBurstReturnsInSyncOnceItsLastFragmentDies" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="1167898004" result="Passed" start-time="2026-09-27 14:59:43Z" end-time="2026-09-27 14:59:44Z" duration="0.749054" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1048" name="TryBuildWarmsHiddenEmittersOnHome" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests.TryBuildWarmsHiddenEmittersOnHome" methodname="TryBuildWarmsHiddenEmittersOnHome" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterExitFragmentTests" runstate="Runnable" seed="1558264872" result="Passed" start-time="2026-09-27 14:59:44Z" end-time="2026-09-27 14:59:44Z" duration="0.002311" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1056" name="BoardPresenterGateTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" testcasecount="10" result="Failed" site="Child" start-time="2026-09-27 14:59:44Z" end-time="2026-09-27 14:59:47Z" duration="3.232167" total="10" passed="9" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1060" name="AHeldBlockLeaningIntoItsDoorLowersTheGateAndLeansOnlyAsFarAsItIsDown" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.AHeldBlockLeaningIntoItsDoorLowersTheGateAndLeansOnlyAsFarAsItIsDown" methodname="AHeldBlockLeaningIntoItsDoorLowersTheGateAndLeansOnlyAsFarAsItIsDown" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="2110912290" result="Passed" start-time="2026-09-27 14:59:44Z" end-time="2026-09-27 14:59:44Z" duration="0.675863" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1059" name="AMoveOrAStayExitMovesNoGate" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.AMoveOrAStayExitMovesNoGate" methodname="AMoveOrAStayExitMovesNoGate" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="2143779778" result="Passed" start-time="2026-09-27 14:59:44Z" end-time="2026-09-27 14:59:44Z" duration="0.009938" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1061" name="AnExitFromALoweredGateCrossesAtOnce" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.AnExitFromALoweredGateCrossesAtOnce" methodname="AnExitFromALoweredGateCrossesAtOnce" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="1592041172" result="Passed" start-time="2026-09-27 14:59:44Z" end-time="2026-09-27 14:59:45Z" duration="0.624892" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1058" name="AnExitFromARaisedGateWaitsForItsSinkThenCrossesAndTheGateRisesAfter" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.AnExitFromARaisedGateWaitsForItsSinkThenCrossesAndTheGateRisesAfter" methodname="AnExitFromARaisedGateWaitsForItsSinkThenCrossesAndTheGateRisesAfter" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="142162470" result="Passed" start-time="2026-09-27 14:59:45Z" end-time="2026-09-27 14:59:46Z" duration="0.473637" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1062" name="AStaggeredShorterExitKeepsTheGateDownForTheEarlierLongerOne" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.AStaggeredShorterExitKeepsTheGateDownForTheEarlierLongerOne" methodname="AStaggeredShorterExitKeepsTheGateDownForTheEarlierLongerOne" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="1276142598" result="Failed" start-time="2026-09-27 14:59:46Z" end-time="2026-09-27 14:59:46Z" duration="0.111234" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                    <stack-trace><![CDATA[at ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.ExitBlockAt (ColorBlockJam.Domain.Session.BoardSimulation simulation, System.Int32 block, ColorBlockJam.Domain.Board.Cell origin) [0x0001c] in C:\Users\e-fur\AppData\Local\Temp\cbj-envgate-7336b1\Assets\ColorBlockJam\Tests\Gameplay\PlayMode\BoardPresenterGateTests.cs:396
+at ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests+<AStaggeredShorterExitKeepsTheGateDownForTheEarlierLongerOne>d__14.MoveNext () [0x0015f] in C:\Users\e-fur\AppData\Local\Temp\cbj-envgate-7336b1\Assets\ColorBlockJam\Tests\Gameplay\PlayMode\BoardPresenterGateTests.cs:217
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e] in .\Library\PackageCache\com.unity.test-framework@1.4.6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1066" name="LeanAndExitSyncsThatMoveAGateAfterRestartAllocateNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.LeanAndExitSyncsThatMoveAGateAfterRestartAllocateNothing" methodname="LeanAndExitSyncsThatMoveAGateAfterRestartAllocateNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="524204945" result="Passed" start-time="2026-09-27 14:59:46Z" end-time="2026-09-27 14:59:46Z" duration="0.012434" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1065" name="SuspendCancelsALeanAndResumeRaisesItsGateWithThePointerInert" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.SuspendCancelsALeanAndResumeRaisesItsGateWithThePointerInert" methodname="SuspendCancelsALeanAndResumeRaisesItsGateWithThePointerInert" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="919296466" result="Passed" start-time="2026-09-27 14:59:46Z" end-time="2026-09-27 14:59:46Z" duration="0.685885" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1063" name="SuspendHoldsTheGateWithItsBlockAndTeardownRestoresIt" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.SuspendHoldsTheGateWithItsBlockAndTeardownRestoresIt" methodname="SuspendHoldsTheGateWithItsBlockAndTeardownRestoresIt" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="776096682" result="Passed" start-time="2026-09-27 14:59:46Z" end-time="2026-09-27 14:59:47Z" duration="0.445848" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1064" name="TeardownBeforeTheFragmentCueFiresCannotStartFragmentsInTheNextAttempt" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.TeardownBeforeTheFragmentCueFiresCannotStartFragmentsInTheNextAttempt" methodname="TeardownBeforeTheFragmentCueFiresCannotStartFragmentsInTheNextAttempt" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="1211287847" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:47Z" duration="0.184057" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1057" name="TheLongestExitAndItsGateRiseFitTheWonFinishBound" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests.TheLongestExitAndItsGateRiseFitTheWonFinishBound" methodname="TheLongestExitAndItsGateRiseFitTheWonFinishBound" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterGateTests" runstate="Runnable" seed="788518005" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:47Z" duration="0.000890" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1067" name="BoardPresenterLifecycleTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:48Z" duration="1.111078" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1073" name="ALevelWhosePrefabsCannotBePooledIsRejectedAndChangesNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.ALevelWhosePrefabsCannotBePooledIsRejectedAndChangesNothing" methodname="ALevelWhosePrefabsCannotBePooledIsRejectedAndChangesNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1594318861" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:47Z" duration="0.006635" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1076" name="AMoveThePointerDidNotDragSettlesOntoItsNewCell" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.AMoveThePointerDidNotDragSettlesOntoItsNewCell" methodname="AMoveThePointerDidNotDragSettlesOntoItsNewCell" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1688549845" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:47Z" duration="0.085581" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1069" name="AnExitPlaysAClippedTweenOnTheRootAndReturnsTheRootWhenItEnds" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.AnExitPlaysAClippedTweenOnTheRootAndReturnsTheRootWhenItEnds" methodname="AnExitPlaysAClippedTweenOnTheRootAndReturnsTheRootWhenItEnds" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="207368229" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:47Z" duration="0.247037" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1078" name="AnExitThePointerDidNotDragLeavesFromItsExitCell" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.AnExitThePointerDidNotDragLeavesFromItsExitCell" methodname="AnExitThePointerDidNotDragLeavesFromItsExitCell" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1911393367" result="Passed" start-time="2026-09-27 14:59:47Z" end-time="2026-09-27 14:59:48Z" duration="0.325930" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1079" name="AnExitWhileStillSettlingLeavesFromItsExitCell" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.AnExitWhileStillSettlingLeavesFromItsExitCell" methodname="AnExitWhileStillSettlingLeavesFromItsExitCell" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1195643565" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.126509" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1075" name="AnInterruptedDragStaysWhereThePlayerLeftItUntilItsMoveRuns" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.AnInterruptedDragStaysWhereThePlayerLeftItUntilItsMoveRuns" methodname="AnInterruptedDragStaysWhereThePlayerLeftItUntilItsMoveRuns" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1483130290" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.004229" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1077" name="ASourceMoveRightAfterAReleaseSettlesOnTheFinalCell" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.ASourceMoveRightAfterAReleaseSettlesOnTheFinalCell" methodname="ASourceMoveRightAfterAReleaseSettlesOnTheFinalCell" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="779315523" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.086407" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1071" name="BuildingTheSameLevelAgainInstantiatesNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.BuildingTheSameLevelAgainInstantiatesNothing" methodname="BuildingTheSameLevelAgainInstantiatesNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1533240975" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.004118" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1074" name="PausedTweensHoldTheRootUntilResumed" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.PausedTweensHoldTheRootUntilResumed" methodname="PausedTweensHoldTheRootUntilResumed" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="916450054" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.205840" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1068" name="PlacePutsEveryRootOnItsCellUnderBoardRoot" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.PlacePutsEveryRootOnItsCellUnderBoardRoot" methodname="PlacePutsEveryRootOnItsCellUnderBoardRoot" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="754130373" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.002890" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1072" name="ReleasingARootOnItsCellStartsNoTweenAndLogsNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.ReleasingARootOnItsCellStartsNoTweenAndLogsNothing" methodname="ReleasingARootOnItsCellStartsNoTweenAndLogsNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1217109181" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.006107" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1070" name="StopTweensAndReturnPiecesLeaveNoTweenAndNoCheckedOutRoot" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests.StopTweensAndReturnPiecesLeaveNoTweenAndNoCheckedOutRoot" methodname="StopTweensAndReturnPiecesLeaveNoTweenAndNoCheckedOutRoot" classname="ColorBlockJam.Tests.Gameplay.PlayMode.BoardPresenterLifecycleTests" runstate="Runnable" seed="1367549484" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.002999" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1080" name="ExitFragmentsTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:50Z" duration="1.769520" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1082" name="ABurstDrawsTheSharedMaterialInItsBlockColourAndFliesOutOfTheBoard" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.ABurstDrawsTheSharedMaterialInItsBlockColourAndFliesOutOfTheBoard" methodname="ABurstDrawsTheSharedMaterialInItsBlockColourAndFliesOutOfTheBoard" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="1810244652" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:48Z" duration="0.154487" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1083" name="ABurstReturnsToThePoolOnceItsLastFragmentDies" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.ABurstReturnsToThePoolOnceItsLastFragmentDies" methodname="ABurstReturnsToThePoolOnceItsLastFragmentDies" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="1736550928" result="Passed" start-time="2026-09-27 14:59:48Z" end-time="2026-09-27 14:59:49Z" duration="0.698102" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1084" name="AFullPoolSkipsTheBurstInsteadOfGrowing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.AFullPoolSkipsTheBurstInsteadOfGrowing" methodname="AFullPoolSkipsTheBurstInsteadOfGrowing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="289880086" result="Passed" start-time="2026-09-27 14:59:49Z" end-time="2026-09-27 14:59:49Z" duration="0.001362" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1085" name="PauseHoldsTheBurstAndResumeContinuesIt" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.PauseHoldsTheBurstAndResumeContinuesIt" methodname="PauseHoldsTheBurstAndResumeContinuesIt" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="1960325199" result="Passed" start-time="2026-09-27 14:59:49Z" end-time="2026-09-27 14:59:49Z" duration="0.155444" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1088" name="PlayingPausingStoppingAndReturningAllocateNothing" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.PlayingPausingStoppingAndReturningAllocateNothing" methodname="PlayingPausingStoppingAndReturningAllocateNothing" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="204054972" result="Passed" start-time="2026-09-27 14:59:49Z" end-time="2026-09-27 14:59:49Z" duration="0.001878" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1081" name="PrepareWarmsAtMostTheCapOnceAndKeepsTheEmittersHidden" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.PrepareWarmsAtMostTheCapOnceAndKeepsTheEmittersHidden" methodname="PrepareWarmsAtMostTheCapOnceAndKeepsTheEmittersHidden" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="1230648250" result="Passed" start-time="2026-09-27 14:59:49Z" end-time="2026-09-27 14:59:49Z" duration="0.001078" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1086" name="ResumingAnEndedBurstDoesNotReplayIt" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.ResumingAnEndedBurstDoesNotReplayIt" methodname="ResumingAnEndedBurstDoesNotReplayIt" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="2044833720" result="Passed" start-time="2026-09-27 14:59:49Z" end-time="2026-09-27 14:59:50Z" duration="0.697037" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1087" name="StopClearsEveryBurstAndReturnAllHidesThem" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests.StopClearsEveryBurstAndReturnAllHidesThem" methodname="StopClearsEveryBurstAndReturnAllHidesThem" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ExitFragmentsTests" runstate="Runnable" seed="243393122" result="Passed" start-time="2026-09-27 14:59:50Z" end-time="2026-09-27 14:59:50Z" duration="0.054543" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1089" name="FinishDeadlineTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-27 14:59:50Z" end-time="2026-09-27 14:59:51Z" duration="1.051430" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1091" name="AFinishLongerThanTheBoundEndsAtTheCap" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests.AFinishLongerThanTheBoundEndsAtTheCap" methodname="AFinishLongerThanTheBoundEndsAtTheCap" classname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests" runstate="Runnable" seed="1059590428" result="Passed" start-time="2026-09-27 14:59:50Z" end-time="2026-09-27 14:59:51Z" duration="0.803222" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1092" name="BackgroundingDuringFinishTearsDownAtOnce" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests.BackgroundingDuringFinishTearsDownAtOnce" methodname="BackgroundingDuringFinishTearsDownAtOnce" classname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests" runstate="Runnable" seed="1870582440" result="Passed" start-time="2026-09-27 14:59:51Z" end-time="2026-09-27 14:59:51Z" duration="0.002474" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1090" name="TheLastExitLatchesWonAndTearsDownWithinTheFinishBound" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests.TheLastExitLatchesWonAndTearsDownWithinTheFinishBound" methodname="TheLastExitLatchesWonAndTearsDownWithinTheFinishBound" classname="ColorBlockJam.Tests.Gameplay.PlayMode.FinishDeadlineTests" runstate="Runnable" seed="1552329451" result="Passed" start-time="2026-09-27 14:59:51Z" end-time="2026-09-27 14:59:51Z" duration="0.242956" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1093" name="LearnedShapeAttemptTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.LearnedShapeAttemptTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.LearnedShapeAttemptTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 14:59:51Z" end-time="2026-09-27 14:59:52Z" duration="0.604057" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1094" name="ALearnedShapeIsPooledOnHomeAndLeavesThroughItsDoorWithoutInstantiating" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.LearnedShapeAttemptTests.ALearnedShapeIsPooledOnHomeAndLeavesThroughItsDoorWithoutInstantiating" methodname="ALearnedShapeIsPooledOnHomeAndLeavesThroughItsDoorWithoutInstantiating" classname="ColorBlockJam.Tests.Gameplay.PlayMode.LearnedShapeAttemptTests" runstate="Runnable" seed="700881815" result="Passed" start-time="2026-09-27 14:59:51Z" end-time="2026-09-27 14:59:52Z" duration="0.602497" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1095" name="ProjectScopeShapeCatalogTests" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-27 14:59:52Z" end-time="2026-09-27 14:59:52Z" duration="0.235273" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-suite type="ParameterizedMethod" id="1098" name="DestroyingTheInstallerBeforeBuildCancelsBeforeLoading" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests.DestroyingTheInstallerBeforeBuildCancelsBeforeLoading" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-27 14:59:52Z" end-time="2026-09-27 14:59:52Z" duration="0.009068" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1096" name="DestroyingTheInstallerBeforeBuildCancelsBeforeLoading(False)" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests.DestroyingTheInstallerBeforeBuildCancelsBeforeLoading(False)" methodname="DestroyingTheInstallerBeforeBuildCancelsBeforeLoading" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" runstate="Runnable" seed="1122314543" result="Passed" start-time="2026-09-27 14:59:52Z" end-time="2026-09-27 14:59:52Z" duration="0.006954" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                    <output><![CDATA[Project shape library is not assigned, so level JSON cannot add pieces (DEC-124).
+]]></output>
+                  </test-case>
+                  <test-case id="1097" name="DestroyingTheInstallerBeforeBuildCancelsBeforeLoading(True)" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests.DestroyingTheInstallerBeforeBuildCancelsBeforeLoading(True)" methodname="DestroyingTheInstallerBeforeBuildCancelsBeforeLoading" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" runstate="Runnable" seed="1008314098" result="Passed" start-time="2026-09-27 14:59:52Z" end-time="2026-09-27 14:59:52Z" duration="0.001046" asserts="0">
+                    <properties>
+                      <property name="retryIteration" value="0" />
+                      <property name="repeatIteration" value="0" />
+                    </properties>
+                  </test-case>
+                </test-suite>
+                <test-case id="1099" name="DestroyingTheInstallerCancelsAnUnfinishedCacheReadBeforeContainerDisposal" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests.DestroyingTheInstallerCancelsAnUnfinishedCacheReadBeforeContainerDisposal" methodname="DestroyingTheInstallerCancelsAnUnfinishedCacheReadBeforeContainerDisposal" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" runstate="Runnable" seed="1531117708" result="Passed" start-time="2026-09-27 14:59:52Z" end-time="2026-09-27 14:59:52Z" duration="0.112843" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1100" name="TheProjectScopeLearnsAtLoadWritesAtMostOnceAndSealsTheCatalog" fullname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests.TheProjectScopeLearnsAtLoadWritesAtMostOnceAndSealsTheCatalog" methodname="TheProjectScopeLearnsAtLoadWritesAtMostOnceAndSealsTheCatalog" classname="ColorBlockJam.Tests.Gameplay.PlayMode.ProjectScopeShapeCatalogTests" runstate="Runnable" seed="1543252710" result="Passed" start-time="2026-09-27 14:59:52Z" end-time="2026-09-27 14:59:52Z" duration="0.111551" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

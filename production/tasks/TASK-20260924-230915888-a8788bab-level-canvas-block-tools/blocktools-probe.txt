@@ -1,0 +1,83 @@
+json sha256 before=02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e
+size=(960.00, 640.00) cell=74 model=4x5 blocks=2 tiles=11 message=''
+  tile shape-Single enabled=True world=(x:21.33, y:100.00, width:58.00, height:70.00)
+  tile shape-Square enabled=True world=(x:82.67, y:100.00, width:58.00, height:70.00)
+  tile shape-DoubleHorizontal enabled=True world=(x:144.00, y:100.00, width:58.00, height:70.00)
+  tile shape-TripleHorizontal enabled=True world=(x:21.33, y:173.33, width:58.00, height:70.00)
+  tile shape-CornerLB enabled=True world=(x:82.67, y:173.33, width:58.00, height:70.00)
+  tile shape-LTypeB1 enabled=True world=(x:144.00, y:173.33, width:58.00, height:70.00)
+  tile shape-TTypeB enabled=True world=(x:21.33, y:246.67, width:58.00, height:70.00)
+  tile shape-Cross enabled=True world=(x:82.67, y:246.67, width:58.00, height:70.00)
+  tile shape-ZTypeHorizL enabled=True world=(x:144.00, y:246.67, width:58.00, height:70.00)
+  tile shape-DoubleTripleHorizontal enabled=True world=(x:21.33, y:320.00, width:58.00, height:70.00)
+  tile shape-CTypeB enabled=True world=(x:82.67, y:320.00, width:58.00, height:70.00)
+  captured blocktools-960x640-initial.png
+  armed tool=Place via shape-Single
+  captured blocktools-960x640-ghost-valid.png
+  captured blocktools-960x640-ghost-invalid.png
+  place on (0, 1): blocks=2 status='Overlaps Pink block b2 at (0,1).' dirty=False
+  place on (0, 0): blocks=3 status='Unsaved level changes. Press Save Level to write the JSON source.' dirty=True
+  captured blocktools-960x640-placed.png
+  after Esc tool=Select
+  dragging=True offset=(0, 1)
+  captured blocktools-960x640-drag-ghost.png
+  after drop: block0 cell0=(2, 3) status='Unsaved level changes. Press Save Level to write the JSON source.'
+  right click: blocks 3 -> 2
+  undo: blocks=3
+  captured blocktools-960x640-after-undo.png
+  undo all: blocks=2 dirty=False status='Editing Level 1. Save Level writes the JSON source.'
+size=(1280.00, 800.00) cell=99 model=4x5 blocks=2 tiles=11 message=''
+  tile shape-Single enabled=True world=(x:21.33, y:100.00, width:58.00, height:70.00)
+  tile shape-Square enabled=True world=(x:82.67, y:100.00, width:58.00, height:70.00)
+  tile shape-DoubleHorizontal enabled=True world=(x:144.00, y:100.00, width:58.00, height:70.00)
+  tile shape-TripleHorizontal enabled=True world=(x:205.33, y:100.00, width:58.00, height:70.00)
+  tile shape-CornerLB enabled=True world=(x:21.33, y:173.33, width:58.00, height:59.33)
+  tile shape-LTypeB1 enabled=True world=(x:82.67, y:173.33, width:58.00, height:59.33)
+  tile shape-TTypeB enabled=True world=(x:144.00, y:173.33, width:58.00, height:59.33)
+  tile shape-Cross enabled=True world=(x:205.33, y:173.33, width:58.00, height:59.33)
+  tile shape-ZTypeHorizL enabled=True world=(x:21.33, y:236.00, width:58.00, height:70.00)
+  tile shape-DoubleTripleHorizontal enabled=True world=(x:82.67, y:236.00, width:58.00, height:70.00)
+  tile shape-CTypeB enabled=True world=(x:144.00, y:236.00, width:58.00, height:70.00)
+  captured blocktools-1280x800-initial.png
+  armed tool=Place via shape-Single
+  captured blocktools-1280x800-ghost-valid.png
+  captured blocktools-1280x800-ghost-invalid.png
+  place on (0, 1): blocks=2 status='Overlaps Pink block b2 at (0,1).' dirty=False
+  place on (0, 0): blocks=3 status='Unsaved level changes. Press Save Level to write the JSON source.' dirty=True
+  captured blocktools-1280x800-placed.png
+  after Esc tool=Select
+  dragging=True offset=(0, 1)
+  captured blocktools-1280x800-drag-ghost.png
+  after drop: block0 cell0=(2, 3) status='Unsaved level changes. Press Save Level to write the JSON source.'
+  right click: blocks 3 -> 2
+  undo: blocks=3
+  captured blocktools-1280x800-after-undo.png
+  undo all: blocks=2 dirty=False status='Editing Level 1. Save Level writes the JSON source.'
+size=(1600.00, 1000.00) cell=130 model=4x5 blocks=2 tiles=11 message=''
+  tile shape-Single enabled=True world=(x:21.33, y:100.00, width:58.00, height:70.00)
+  tile shape-Square enabled=True world=(x:82.67, y:100.00, width:58.00, height:70.00)
+  tile shape-DoubleHorizontal enabled=True world=(x:144.00, y:100.00, width:58.00, height:70.00)
+  tile shape-TripleHorizontal enabled=True world=(x:205.33, y:100.00, width:58.00, height:70.00)
+  tile shape-CornerLB enabled=True world=(x:21.33, y:173.33, width:58.00, height:59.33)
+  tile shape-LTypeB1 enabled=True world=(x:82.67, y:173.33, width:58.00, height:59.33)
+  tile shape-TTypeB enabled=True world=(x:144.00, y:173.33, width:58.00, height:59.33)
+  tile shape-Cross enabled=True world=(x:205.33, y:173.33, width:58.00, height:59.33)
+  tile shape-ZTypeHorizL enabled=True world=(x:21.33, y:236.00, width:58.00, height:70.00)
+  tile shape-DoubleTripleHorizontal enabled=True world=(x:82.67, y:236.00, width:58.00, height:70.00)
+  tile shape-CTypeB enabled=True world=(x:144.00, y:236.00, width:58.00, height:70.00)
+  captured blocktools-1600x1000-initial.png
+  armed tool=Place via shape-Single
+  captured blocktools-1600x1000-ghost-valid.png
+  captured blocktools-1600x1000-ghost-invalid.png
+  place on (0, 1): blocks=2 status='Overlaps Pink block b2 at (0,1).' dirty=False
+  place on (0, 0): blocks=3 status='Unsaved level changes. Press Save Level to write the JSON source.' dirty=True
+  captured blocktools-1600x1000-placed.png
+  after Esc tool=Select
+  dragging=True offset=(0, 1)
+  captured blocktools-1600x1000-drag-ghost.png
+  after drop: block0 cell0=(2, 3) status='Unsaved level changes. Press Save Level to write the JSON source.'
+  right click: blocks 3 -> 2
+  undo: blocks=3
+  captured blocktools-1600x1000-after-undo.png
+  undo all: blocks=2 dirty=False status='Editing Level 1. Save Level writes the JSON source.'
+json sha256 after=02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e

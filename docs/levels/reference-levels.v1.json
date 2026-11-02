@@ -1,0 +1,775 @@
+{
+  "formatVersion": 3,
+  "levels": [
+    {
+      "id": "level-01",
+      "name": "Level 1",
+      "board": {
+        "width": 4,
+        "height": 5
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 1,
+          "length": 3,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d2",
+          "side": "Bottom",
+          "start": 0,
+          "length": 3,
+          "colorId": "Pink"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "LightBlue",
+          "origin": "2,2",
+          "cells": "0,0 0,1 1,0 1,1"
+        },
+        {
+          "id": "b2",
+          "colorId": "Pink",
+          "origin": "0,1",
+          "cells": "0,0 0,1 1,0 1,1"
+        }
+      ]
+    },
+    {
+      "id": "level-02",
+      "name": "Level 2",
+      "board": {
+        "width": 5,
+        "height": 5
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 2,
+          "length": 3,
+          "colorId": "LightGreen"
+        },
+        {
+          "id": "d2",
+          "side": "Bottom",
+          "start": 0,
+          "length": 3,
+          "colorId": "Orange"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "LightGreen",
+          "origin": "1,1",
+          "cells": "0,0 0,1 0,2"
+        },
+        {
+          "id": "b2",
+          "colorId": "Orange",
+          "origin": "3,1",
+          "cells": "0,0 0,1 0,2"
+        }
+      ]
+    },
+    {
+      "id": "level-03",
+      "name": "Level 3",
+      "board": {
+        "width": 5,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 0,
+          "length": 2,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d2",
+          "side": "Left",
+          "start": 2,
+          "length": 2,
+          "colorId": "Red"
+        },
+        {
+          "id": "d3",
+          "side": "Right",
+          "start": 2,
+          "length": 2,
+          "colorId": "Red"
+        },
+        {
+          "id": "d4",
+          "side": "Bottom",
+          "start": 3,
+          "length": 2,
+          "colorId": "Yellow"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "LightBlue",
+          "origin": "1,2",
+          "cells": "0,0 0,1 0,2 1,2"
+        },
+        {
+          "id": "b2",
+          "colorId": "Red",
+          "origin": "2,2",
+          "cells": "0,0 0,1"
+        },
+        {
+          "id": "b3",
+          "colorId": "Yellow",
+          "origin": "2,1",
+          "cells": "0,0 1,0 1,1 1,2"
+        }
+      ]
+    },
+    {
+      "id": "level-04",
+      "name": "Level 4",
+      "board": {
+        "width": 5,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 0,
+          "length": 2,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d2",
+          "side": "Left",
+          "start": 4,
+          "length": 2,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d3",
+          "side": "Right",
+          "start": 0,
+          "length": 2,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d4",
+          "side": "Bottom",
+          "start": 3,
+          "length": 2,
+          "colorId": "Blue"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Blue",
+          "origin": "0,3",
+          "cells": "0,0 0,1 1,0 1,1"
+        },
+        {
+          "id": "b2",
+          "colorId": "Orange",
+          "origin": "2,2",
+          "cells": "0,0 0,1"
+        },
+        {
+          "id": "b3",
+          "colorId": "Yellow",
+          "origin": "3,1",
+          "cells": "0,0 0,1 1,0 1,1"
+        }
+      ]
+    },
+    {
+      "id": "level-05",
+      "name": "Level 5",
+      "board": {
+        "width": 5,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 0,
+          "length": 2,
+          "colorId": "Pink"
+        },
+        {
+          "id": "d2",
+          "side": "Top",
+          "start": 3,
+          "length": 2,
+          "colorId": "LightGreen"
+        },
+        {
+          "id": "d3",
+          "side": "Left",
+          "start": 0,
+          "length": 2,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d4",
+          "side": "Right",
+          "start": 0,
+          "length": 2,
+          "colorId": "Red"
+        },
+        {
+          "id": "d5",
+          "side": "Bottom",
+          "start": 1,
+          "length": 3,
+          "colorId": "LightBlue"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "LightBlue",
+          "origin": "2,3",
+          "cells": "0,0 0,1 0,2"
+        },
+        {
+          "id": "b2",
+          "colorId": "LightGreen",
+          "origin": "0,2",
+          "cells": "0,0 0,1 1,0 1,1"
+        },
+        {
+          "id": "b3",
+          "colorId": "Pink",
+          "origin": "3,2",
+          "cells": "0,0 0,1 1,0 1,1"
+        },
+        {
+          "id": "b4",
+          "colorId": "Orange",
+          "origin": "1,1",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b5",
+          "colorId": "Red",
+          "origin": "1,0",
+          "cells": "0,0 1,0 2,0"
+        }
+      ]
+    },
+    {
+      "id": "level-06",
+      "name": "Level 6",
+      "board": {
+        "width": 6,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 0,
+          "length": 3,
+          "colorId": "Purple"
+        },
+        {
+          "id": "d2",
+          "side": "Top",
+          "start": 3,
+          "length": 3,
+          "colorId": "Red"
+        },
+        {
+          "id": "d3",
+          "side": "Left",
+          "start": 2,
+          "length": 2,
+          "colorId": "DarkGreen"
+        },
+        {
+          "id": "d4",
+          "side": "Right",
+          "start": 2,
+          "length": 2,
+          "colorId": "LightGreen"
+        },
+        {
+          "id": "d5",
+          "side": "Bottom",
+          "start": 0,
+          "length": 2,
+          "colorId": "Blue"
+        },
+        {
+          "id": "d6",
+          "side": "Bottom",
+          "start": 4,
+          "length": 2,
+          "colorId": "Yellow"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Red",
+          "origin": "0,4",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b2",
+          "colorId": "Purple",
+          "origin": "3,4",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "Yellow",
+          "origin": "0,2",
+          "cells": "0,0 0,1"
+        },
+        {
+          "id": "b4",
+          "colorId": "LightGreen",
+          "origin": "2,3",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b5",
+          "colorId": "Blue",
+          "origin": "5,2",
+          "cells": "0,0 0,1"
+        },
+        {
+          "id": "b6",
+          "colorId": "DarkGreen",
+          "origin": "1,2",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b7",
+          "colorId": "Blue",
+          "origin": "1,0",
+          "cells": "0,0 0,1 1,0"
+        },
+        {
+          "id": "b8",
+          "colorId": "Yellow",
+          "origin": "3,0",
+          "cells": "0,1 1,0 1,1"
+        }
+      ]
+    },
+    {
+      "id": "level-07",
+      "name": "Level 7",
+      "board": {
+        "width": 5,
+        "height": 7
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 0,
+          "length": 1,
+          "colorId": "Pink"
+        },
+        {
+          "id": "d2",
+          "side": "Top",
+          "start": 1,
+          "length": 2,
+          "colorId": "Purple"
+        },
+        {
+          "id": "d3",
+          "side": "Top",
+          "start": 3,
+          "length": 2,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d4",
+          "side": "Left",
+          "start": 6,
+          "length": 1,
+          "colorId": "Blue"
+        },
+        {
+          "id": "d5",
+          "side": "Left",
+          "start": 3,
+          "length": 3,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d6",
+          "side": "Left",
+          "start": 0,
+          "length": 3,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d7",
+          "side": "Right",
+          "start": 6,
+          "length": 1,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d8",
+          "side": "Right",
+          "start": 3,
+          "length": 3,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d9",
+          "side": "Right",
+          "start": 0,
+          "length": 3,
+          "colorId": "Blue"
+        },
+        {
+          "id": "d10",
+          "side": "Bottom",
+          "start": 0,
+          "length": 2,
+          "colorId": "Purple"
+        },
+        {
+          "id": "d11",
+          "side": "Bottom",
+          "start": 2,
+          "length": 3,
+          "colorId": "Red"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Blue",
+          "origin": "1,6",
+          "cells": "0,0"
+        },
+        {
+          "id": "b2",
+          "colorId": "Yellow",
+          "origin": "2,6",
+          "cells": "0,0 1,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "Red",
+          "origin": "4,4",
+          "cells": "0,0 0,1 0,2"
+        },
+        {
+          "id": "b4",
+          "colorId": "Purple",
+          "origin": "1,3",
+          "cells": "0,0 0,1 0,2 1,2"
+        },
+        {
+          "id": "b5",
+          "colorId": "Pink",
+          "origin": "0,3",
+          "cells": "0,0 0,1"
+        },
+        {
+          "id": "b6",
+          "colorId": "Orange",
+          "origin": "2,4",
+          "cells": "0,0"
+        },
+        {
+          "id": "b7",
+          "colorId": "Blue",
+          "origin": "2,3",
+          "cells": "0,0 1,0"
+        },
+        {
+          "id": "b8",
+          "colorId": "Orange",
+          "origin": "1,1",
+          "cells": "0,0 0,1 1,0 1,1"
+        },
+        {
+          "id": "b9",
+          "colorId": "LightBlue",
+          "origin": "0,1",
+          "cells": "0,0"
+        },
+        {
+          "id": "b10",
+          "colorId": "Blue",
+          "origin": "2,0",
+          "cells": "0,0 1,0 1,1"
+        }
+      ]
+    },
+    {
+      "id": "level-08",
+      "name": "Level 8",
+      "board": {
+        "width": 5,
+        "height": 7
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 1,
+          "length": 3,
+          "colorId": "Purple"
+        },
+        {
+          "id": "d2",
+          "side": "Left",
+          "start": 6,
+          "length": 1,
+          "colorId": "Red"
+        },
+        {
+          "id": "d3",
+          "side": "Left",
+          "start": 3,
+          "length": 3,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d4",
+          "side": "Right",
+          "start": 4,
+          "length": 1,
+          "colorId": "LightGreen"
+        },
+        {
+          "id": "d5",
+          "side": "Right",
+          "start": 3,
+          "length": 1,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d6",
+          "side": "Right",
+          "start": 2,
+          "length": 1,
+          "colorId": "Red"
+        },
+        {
+          "id": "d7",
+          "side": "Bottom",
+          "start": 1,
+          "length": 3,
+          "colorId": "Orange"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Purple",
+          "origin": "2,6",
+          "cells": "0,0"
+        },
+        {
+          "id": "b2",
+          "colorId": "Red",
+          "origin": "3,6",
+          "cells": "0,0 1,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "Orange",
+          "origin": "0,4",
+          "cells": "0,0 0,1"
+        },
+        {
+          "id": "b4",
+          "colorId": "Red",
+          "origin": "1,5",
+          "cells": "0,0"
+        },
+        {
+          "id": "b5",
+          "colorId": "LightBlue",
+          "origin": "2,4",
+          "cells": "0,0 1,0 1,1 2,0"
+        },
+        {
+          "id": "b6",
+          "colorId": "Purple",
+          "origin": "1,4",
+          "cells": "0,0"
+        },
+        {
+          "id": "b7",
+          "colorId": "LightGreen",
+          "origin": "0,3",
+          "cells": "0,0 1,0"
+        },
+        {
+          "id": "b8",
+          "colorId": "Yellow",
+          "origin": "2,3",
+          "cells": "0,0"
+        },
+        {
+          "id": "b9",
+          "colorId": "LightBlue",
+          "origin": "0,2",
+          "cells": "0,0"
+        },
+        {
+          "id": "b10",
+          "colorId": "Red",
+          "origin": "1,2",
+          "cells": "0,0 1,0"
+        },
+        {
+          "id": "b11",
+          "colorId": "LightGreen",
+          "origin": "3,2",
+          "cells": "0,0"
+        },
+        {
+          "id": "b12",
+          "colorId": "LightBlue",
+          "origin": "3,0",
+          "cells": "0,0 1,0 1,1 1,2"
+        },
+        {
+          "id": "b13",
+          "colorId": "Purple",
+          "origin": "1,0",
+          "cells": "0,0 0,1 1,0"
+        },
+        {
+          "id": "b14",
+          "colorId": "Yellow",
+          "origin": "2,1",
+          "cells": "0,0 1,0"
+        },
+        {
+          "id": "b15",
+          "colorId": "Orange",
+          "origin": "0,0",
+          "cells": "0,0"
+        }
+      ]
+    },
+    {
+      "id": "level-10",
+      "name": "Level 10",
+      "board": {
+        "width": 3,
+        "height": 7
+      },
+      "timerSeconds": 60,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Right",
+          "start": 5,
+          "length": 1,
+          "colorId": "Pink"
+        },
+        {
+          "id": "d2",
+          "side": "Right",
+          "start": 4,
+          "length": 1,
+          "colorId": "Blue"
+        },
+        {
+          "id": "d3",
+          "side": "Right",
+          "start": 3,
+          "length": 1,
+          "colorId": "Red"
+        },
+        {
+          "id": "d4",
+          "side": "Left",
+          "start": 3,
+          "length": 1,
+          "colorId": "Purple"
+        },
+        {
+          "id": "d5",
+          "side": "Left",
+          "start": 2,
+          "length": 1,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d6",
+          "side": "Left",
+          "start": 1,
+          "length": 1,
+          "colorId": "DarkTurquoise"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "DarkTurquoise",
+          "origin": "0,6",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b2",
+          "colorId": "Yellow",
+          "origin": "0,5",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "Purple",
+          "origin": "0,4",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b4",
+          "colorId": "Blue",
+          "origin": "0,3",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b5",
+          "colorId": "Red",
+          "origin": "0,2",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b6",
+          "colorId": "Pink",
+          "origin": "0,1",
+          "cells": "0,0 1,0 2,0"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+json sha256 before=02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e
+size=(960.00, 640.00) canvas.world=(x:281.33, y:98.67, width:680.00, height:509.33) content=(x:0.00, y:0.00, width:680.00, height:509.33) cell=74 board=(x:192.00, y:69.00, width:296.00, height:370.00) model=4x5 blocks=2 doors=2
+  label 'b1' at (x:340.00, y:217.33, width:74.00, height:74.00)
+  label 'b2' at (x:192.00, y:291.33, width:74.00, height:74.00)
+  door d1 Top 1+3 colour=LightBlue known=True
+  door d2 Bottom 0+3 colour=Pink known=True
+  initial selection=Block/0/b1 dropdown='1. b1'
+  captured canvas-960x640-initial.png ppp=1.5
+  after block click: selection=Block/1/b2 dropdown='2. b2' hover=Cell cell (0, 0) side Top index -1 entity -1  dirty=False
+  captured canvas-960x640-block-selected.png ppp=1.5
+  after door click: selection=Door/0/d1 dropdown='Door d1' dirty=False
+  captured canvas-960x640-door-selected.png ppp=1.5
+  after dropdown + corner click: selection=Block/0/b1 dropdown='1. b1' dirty=False
+size=(1280.00, 800.00) canvas.world=(x:281.33, y:98.67, width:1000.00, height:669.33) content=(x:0.00, y:0.00, width:1000.00, height:669.33) cell=99 board=(x:302.00, y:87.00, width:396.00, height:495.00) model=4x5 blocks=2 doors=2
+  label 'b1' at (x:500.00, y:285.33, width:99.33, height:98.67)
+  label 'b2' at (x:302.00, y:384.00, width:99.33, height:99.33)
+  door d1 Top 1+3 colour=LightBlue known=True
+  door d2 Bottom 0+3 colour=Pink known=True
+  initial selection=Block/0/b1 dropdown='1. b1'
+  captured canvas-1280x800-initial.png ppp=1.5
+  after block click: selection=Block/1/b2 dropdown='2. b2' hover=Cell cell (0, 0) side Top index -1 entity -1  dirty=False
+  captured canvas-1280x800-block-selected.png ppp=1.5
+  after door click: selection=Door/0/d1 dropdown='Door d1' dirty=False
+  captured canvas-1280x800-door-selected.png ppp=1.5
+  after dropdown + corner click: selection=Block/0/b1 dropdown='1. b1' dirty=False
+json sha256 after=02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e

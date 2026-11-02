@@ -1,0 +1,219 @@
+/*
+ * Retry confirmation popup (Game HUD design 6, the user's Retry reference of 2026-09-28). Shell, header, close, holder
+ * and green-button geometry are copied from UI/Purchase/BoosterPurchasePopup.uss (reference 01), so both in-game popups
+ * read as one family; that file is not imported or changed. Sizes are panel units at the 1080 x 1920 reference: the
+ * 866 unit shell fits the HUD panel's 966 units at 20:9. Nine-slice values equal the Sprite Editor borders in
+ * docs/UI-Asset-Import.md (USS order left, top, right, bottom). Button selectors carry ".unity-button" plus a parent
+ * class so they outrank the shared ".unity-button.cbj-pressable" reset in Common.uss. No broken-heart art is supplied:
+ * the whole Heart icon carries a heavy "-1".
+ */
+
+/* ---- Overlay, scrim and safe area ---- */
+
+/* Visible standalone; GameOverlays initializes embedded copies closed before binding. */
+.restart-confirm-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+}
+
+/* The in-game dim of the pause reference (about 49 % black over the board). */
+.restart-confirm-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.49);
+}
+
+.restart-confirm-safe-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Shell (BoosterPurchasePopup.uss .booster-purchase-popup) ---- */
+
+.restart-confirm-popup {
+    width: 866px;
+    flex-shrink: 0;
+    padding-left: 107px;
+    padding-top: 190px;
+    padding-right: 108px;
+    padding-bottom: 116px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup.png");
+    -unity-slice-left: 106;
+    -unity-slice-top: 74;
+    -unity-slice-right: 107;
+    -unity-slice-bottom: 104;
+}
+
+/* ---- Header and close (BoosterPurchasePopup.uss .booster-purchase-header, -close) ---- */
+
+.restart-confirm-header {
+    position: absolute;
+    left: 139px;
+    top: -21px;
+    width: 588px;
+    height: 204px;
+    padding-bottom: 14px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_header.png");
+    -unity-slice-left: 79;
+    -unity-slice-top: 90;
+    -unity-slice-right: 79;
+    -unity-slice-bottom: 90;
+}
+
+.restart-confirm-title {
+    font-size: 76px;
+    -unity-font-style: bold;
+}
+
+.restart-confirm-title.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.restart-confirm-title.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.restart-confirm-popup > .unity-button.restart-confirm-close {
+    position: absolute;
+    top: 0;
+    right: 28px;
+    width: 117px;
+    height: 121px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_close.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Holder: heart box and message (BoosterPurchasePopup.uss .booster-purchase-holder, -icon-box) ---- */
+
+.restart-confirm-holder {
+    width: 651px;
+    flex-shrink: 0;
+    padding-top: 26px;
+    padding-bottom: 30px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_info_holder.png");
+    -unity-background-image-tint-color: rgb(77, 255, 255);
+    -unity-slice-left: 43;
+    -unity-slice-top: 26;
+    -unity-slice-right: 42;
+    -unity-slice-bottom: 35;
+}
+
+/* The dark rounded box around the heart; a plain colour, no extra sprite. */
+.restart-confirm-icon-box {
+    width: 585px;
+    height: 300px;
+    flex-shrink: 0;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    background-color: rgba(18, 52, 132, 0.55);
+}
+
+/* Heart (512 x 512), fixed, centred in the box. */
+.restart-confirm-heart {
+    position: absolute;
+    left: 167px;
+    top: 24px;
+    width: 250px;
+    height: 250px;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_heart.png");
+}
+
+/* The white "-1" over the heart's centre; a wrapper, so the heavy-text container keeps Common.uss's relative position. */
+.restart-confirm-penalty-box {
+    position: absolute;
+    left: 167px;
+    top: 24px;
+    width: 250px;
+    height: 250px;
+    align-items: center;
+    justify-content: center;
+}
+
+.restart-confirm-penalty {
+    font-size: 96px;
+    -unity-font-style: bold;
+}
+
+.restart-confirm-penalty.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.restart-confirm-penalty.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* One centred line in white heavy text. */
+.restart-confirm-message-text {
+    width: 585px;
+    margin-top: 20px;
+}
+
+.restart-confirm-message {
+    font-size: 50px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.restart-confirm-message.cbj-heavy-text__back {
+    -unity-text-outline-width: 6px;
+}
+
+.restart-confirm-message.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+/* ---- Retry (BoosterPurchasePopup.uss .booster-purchase-buy) ---- */
+
+/* Btn_popup_green (425 x 316; L69 T129 R70 B128) drawn at 0.58 scale, so its borders (149 units high) fit 164. */
+.restart-confirm-popup > .unity-button.restart-confirm-retry {
+    width: 360px;
+    height: 164px;
+    margin-top: 40px;
+    padding-bottom: 12px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_green.png");
+    -unity-slice-left: 69;
+    -unity-slice-top: 129;
+    -unity-slice-right: 70;
+    -unity-slice-bottom: 128;
+    -unity-slice-scale: 0.58px;
+}
+
+/* Cream fill and dark-green outline, as the Buy label (D-010). */
+.restart-confirm-retry__label {
+    font-size: 64px;
+    -unity-font-style: bold;
+}
+
+.restart-confirm-retry__label.cbj-heavy-text__back {
+    color: rgb(24, 81, 28);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 7px;
+}
+
+.restart-confirm-retry__label.cbj-heavy-text__front {
+    color: rgb(255, 246, 214);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 2px;
+}

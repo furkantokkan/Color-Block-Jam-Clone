@@ -1,0 +1,19 @@
+// Run as a method body in the pinned Unity Editor. Isolated material study; no scene save.
+var preview=new UnityEditor.PreviewRenderUtility();
+var roots=new System.Collections.Generic.List<UnityEngine.GameObject>();
+try {
+var palette=UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("Assets/ColorBlockJam/Data/Art/GamePalette.asset"); var paletteData=new UnityEditor.SerializedObject(palette); var entries=paletteData.FindProperty("m_colors");
+System.Action<UnityEngine.GameObject,UnityEngine.Color> tint=(root,color)=>{foreach(var c in root.GetComponentsInChildren<UnityEngine.MonoBehaviour>(true)){if(c.GetType().Name=="BoardPieceView") c.GetType().GetMethod("SetColor").Invoke(c,new object[]{color});}};
+System.Func<string,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.GameObject> add=(path,pos,scale)=>{var o=UnityEngine.Object.Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>(path));preview.AddSingleGO(o);roots.Add(o);o.transform.position=pos;o.transform.localScale=scale;return o;};
+for(int z=0;z<6;z++)for(int x=0;x<6;x++)add("Assets/ColorBlockJam/Prefabs/Board/Pieces/Grid.prefab",new UnityEngine.Vector3(x,0,z),UnityEngine.Vector3.one);
+for(int i=0;i<6;i++){add("Assets/ColorBlockJam/Prefabs/Board/Pieces/Wall.prefab",new UnityEngine.Vector3(-.65f,0,i),new UnityEngine.Vector3(.5f,1,.5f));add("Assets/ColorBlockJam/Prefabs/Board/Pieces/Wall.prefab",new UnityEngine.Vector3(5.65f,0,i),new UnityEngine.Vector3(.5f,1,.5f));}
+int[] shapeIds={1,2,0,2,1,0,0,2,1}; var positions=new[]{new UnityEngine.Vector3(0,0,0),new UnityEngine.Vector3(2,0,0),new UnityEngine.Vector3(4,0,0),new UnityEngine.Vector3(0,0,2),new UnityEngine.Vector3(2,0,2),new UnityEngine.Vector3(4,0,2),new UnityEngine.Vector3(0,0,4),new UnityEngine.Vector3(2,0,4),new UnityEngine.Vector3(4,0,4)};
+for(int i=0;i<positions.Length;i++){var o=add("Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_"+shapeIds[i].ToString("D3")+".prefab",positions[i],UnityEngine.Vector3.one);tint(o,entries.GetArrayElementAtIndex(new[]{0,1,2,3,4,7,8,9,10}[i]).FindPropertyRelative("m_color").colorValue);}
+for(int i=0;i<3;i++){var o=add("Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_1x1.prefab",new UnityEngine.Vector3(i*2+.5f,0,-.65f),new UnityEngine.Vector3(2,1,.5f));tint(o,entries.GetArrayElementAtIndex(i*4).FindPropertyRelative("m_color").colorValue);}
+string[] models={"Hammer","RocketPurple","Vacuum"}; for(int i=0;i<3;i++){var o=add("Assets/ColorBlockJam/Prefabs/Boosters/Models/"+models[i]+".prefab",new UnityEngine.Vector3(7.6f,0,i*2.3f),UnityEngine.Vector3.one*.7f);o.transform.rotation=UnityEngine.Quaternion.Euler(60,15,0);o.GetComponent<UnityEngine.LODGroup>().ForceLOD(0);}
+preview.ambientColor=new UnityEngine.Color(.45f,.48f,.55f);
+preview.lights[0].intensity=1.15f;preview.lights[0].transform.rotation=UnityEngine.Quaternion.Euler(50,-30,0);
+preview.lights[1].intensity=.25f;preview.lights[1].transform.rotation=UnityEngine.Quaternion.Euler(30,130,0);
+var cam=preview.camera;cam.orthographic=true;cam.orthographicSize=5.3f;cam.nearClipPlane=.01f;cam.farClipPlane=100;cam.clearFlags=UnityEngine.CameraClearFlags.SolidColor;cam.backgroundColor=new UnityEngine.Color(.76f,.87f,.98f);var target=new UnityEngine.Vector3(3.9f,0,2.4f);cam.transform.position=target+new UnityEngine.Vector3(0,12,-7);cam.transform.LookAt(target);
+preview.BeginStaticPreview(new UnityEngine.Rect(0,0,1100,950));preview.Render(true,true);var image=preview.EndStaticPreview();System.IO.Directory.CreateDirectory("docs/art/shared-art");System.IO.File.WriteAllBytes("docs/art/shared-art/AFTER.png",image.EncodeToPNG());UnityEngine.Object.DestroyImmediate(image);return "Rendered comparison.";
+}finally{preview.Cleanup();}

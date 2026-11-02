@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="890" viewBox="0 0 1440 890" role="img" aria-labelledby="title desc">
+  <title id="title">Player saves: prepare, persist, publish</title>
+  <desc id="desc">The app-scoped PlayerSaveService serializes writes. It validates a request against the committed snapshot, persists a new complete snapshot through a storage port, and publishes balances and progress only after success. Invalid requests and failed writes do not publish changes. Gameplay effects require a successful debit and a still-current attempt.</desc>
+  <defs>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #17283d; }
+      .eyebrow { font-size: 17px; font-weight: 700; letter-spacing: 2px; fill: #47728b; }
+      .title { font-size: 42px; font-weight: 700; }
+      .sub { font-size: 23px; fill: #526578; }
+      .heading { font-size: 28px; font-weight: 700; }
+      .body { font-size: 23px; }
+      .small { font-size: 21px; fill: #526578; }
+      .number { font-size: 21px; font-weight: 700; fill: #126365; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 1 L8 5 L0 9" fill="none" stroke="#6b8298" stroke-width="1.7"/></marker>
+  </defs>
+  <rect width="1440" height="890" rx="24" fill="#f5f7fb"/>
+  <text x="48" y="48" class="eyebrow">COLOR BLOCK JAM / PLAYER DATA</text>
+  <text x="48" y="103" class="title">Prepare → persist → publish</text>
+  <text x="48" y="143" class="sub">One app-owned service. One complete snapshot. One write at a time.</text>
+  <rect x="48" y="177" width="1344" height="62" rx="12" fill="#e9f1f8"/>
+  <text x="72" y="216" class="body">PlayerSnapshot: progress · currencies · booster stock · refill timestamps · settings · revision</text>
+
+  <rect x="48" y="276" width="402" height="242" rx="16" fill="#ffffff" stroke="#b8c8d9" stroke-width="2"/>
+  <rect x="519" y="276" width="402" height="242" rx="16" fill="#ffffff" stroke="#b8c8d9" stroke-width="2"/>
+  <rect x="990" y="276" width="402" height="242" rx="16" fill="#e8f6f0" stroke="#83bba4" stroke-width="2"/>
+  <text x="74" y="314" class="number">01 / PREPARE</text>
+  <text x="74" y="358" class="heading">Validate the request</text>
+  <text x="74" y="401" class="body">Read the committed snapshot.</text>
+  <text x="74" y="436" class="body">Check balance, stock and limits.</text>
+  <text x="74" y="480" class="small">Build a new immutable snapshot.</text>
+  <text x="545" y="314" class="number">02 / PERSIST</text>
+  <text x="545" y="358" class="heading">IPlayerSnapshotStore</text>
+  <text x="545" y="401" class="body">Player: encrypt → write + flush</text>
+  <text x="545" y="436" class="body">.tmp → replace .dat, keep .bak</text>
+  <text x="545" y="480" class="small">Editor: isolated in-memory store</text>
+  <text x="1016" y="314" class="number">03 / PUBLISH</text>
+  <text x="1016" y="358" class="heading">Expose committed state</text>
+  <text x="1016" y="401" class="body">Replace the in-memory snapshot.</text>
+  <text x="1016" y="436" class="body">Notify reactive subscribers.</text>
+  <text x="1016" y="480" class="small">Return Saved to the caller.</text>
+  <path d="M450 390 H505" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M921 390 H976" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="957" y="363" class="small" text-anchor="middle">OK</text>
+
+  <path d="M249 518 V566" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M720 518 V566" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M1191 518 V566" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="48" y="578" width="402" height="128" rx="14" fill="#fff1ed" stroke="#d4a394"/>
+  <rect x="519" y="578" width="402" height="128" rx="14" fill="#fff1ed" stroke="#d4a394"/>
+  <rect x="990" y="578" width="402" height="128" rx="14" fill="#e8f6f0" stroke="#83bba4"/>
+  <text x="74" y="616" class="body" font-weight="600">Invalid request</text>
+  <text x="74" y="651" class="small">No write, no spend, no effect.</text>
+  <text x="545" y="616" class="body" font-weight="600">Write failed</text>
+  <text x="545" y="651" class="small">Keep committed state; report failure.</text>
+  <text x="1016" y="616" class="body" font-weight="600">Accepted booster use</text>
+  <text x="1016" y="651" class="small">Apply once if the attempt is current.</text>
+  <text x="1016" y="681" class="small">An ended attempt gets no replay.</text>
+
+  <rect x="48" y="746" width="1344" height="102" rx="14" fill="#fff3d7" stroke="#e1c690"/>
+  <text x="72" y="782" class="body" font-weight="600">Lifetime matters</text>
+  <text x="72" y="817" class="small">Saving pauses an accepted in-game use. A committed charge survives Restart; a late result cannot revive an old attempt.</text>
+</svg>

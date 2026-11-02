@@ -1,0 +1,147 @@
+{
+  "result": "PASS",
+  "channel": "Blender renders plus independent visual review",
+  "frames": 16,
+  "atlas": [
+    1024,
+    1024
+  ],
+  "first_last_decoded_pixels_equal": true,
+  "alpha_bounds": [
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ],
+    [
+      75,
+      18,
+      181,
+      238
+    ]
+  ],
+  "hose_alpha_widths_at_rows_78_94_114": {
+    "0": [
+      14,
+      14,
+      12
+    ],
+    "5": [
+      19,
+      15,
+      13
+    ],
+    "7": [
+      15,
+      27,
+      13
+    ],
+    "10": [
+      14,
+      13,
+      18
+    ],
+    "15": [
+      14,
+      14,
+      12
+    ]
+  },
+  "geometry_checks": "Generator asserts manifold closed components, no loose vertices, fixed hose endpoints and all-frame camera margins.",
+  "visual_review": "Upright body below rigid upper head; local hose bulge travels upper to lower; no gaps/clipping; original palette retained.",
+  "preserved_sha256": {
+    "Assets/Scripts/Presentation/Boosters/BoosterEffectView.cs": "15007b9c644f62241b84cd5f9bc7f7d2e11fa8e52868bdb651ce46bf76ef9da4",
+    "Assets/Scripts/Presentation/Boosters/HammerEffectView.cs": "fb3cd914f0ab618338c4700da7742956bd8ad3f3facfe25fd9bb896817f99488",
+    "Assets/Scripts/Presentation/Boosters/RocketEffectView.cs": "a37cf96dcddb725b3e7263de5d4c882c4e5e30703920c1ffbd4e446fe21951c5",
+    "Assets/Scripts/Presentation/Boosters/VacuumEffectView.cs": "fbb737d6e9030ab44fa452b0c36d8d98f5dfe46ffb02c07137e49989d0005782",
+    "Assets/Art/Models/Boosters/Effects/HammerEffect.prefab": "1f8f5584c5f1472825d1520be429d034174721e7110708b3654b3efd14f6eda6",
+    "Assets/Art/Models/Boosters/Effects/RocketPurpleEffect.prefab": "18c5b9a4d22330bf6045dee38554087dc63018dd919ed2fe95f4149e1caa5db1"
+  },
+  "unity_import_evidence": "vacuum-import.json",
+  "limits": "Rendered motion and asset/lifecycle checks only; no gameplay integration, device or allocation profiling."
+}

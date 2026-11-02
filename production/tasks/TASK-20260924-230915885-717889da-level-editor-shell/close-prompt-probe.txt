@@ -1,0 +1,17 @@
+batchMode=True
+docked=False host=HostView window.dirty=True
+  container.hasUnsaved=True
+  unsavedList.Contains=True count=1
+  displayedTitle='ColorBlockJam.Editor.Levels.LevelDatabaseWindow*' title='ColorBlockJam.Editor.Levels.LevelDatabaseWindow'
+  LOG: Cancelling DisplayDialogComplex: ColorBlockJam.Editor.Levels.LevelDatabaseWindow - Unsaved Changes Detected The selected level has unsaved changes. Save them to the JSON source? / This should not be called in batch mode.
+  InternalRequestClose(window)=False after: dirty=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+  after Discard: container.hasUnsaved=False list.Contains=True displayedTitle='ColorBlockJam.Editor.Levels.LevelDatabaseWindow'
+  InternalRequestClose(clean)=True
+docked=True host=DockArea window.dirty=True
+  container.hasUnsaved=True
+  unsavedList.Contains=True count=1
+  displayedTitle='*' title='ColorBlockJam.Editor.Levels.LevelDatabaseWindow'
+  LOG: Cancelling DisplayDialogComplex: ColorBlockJam.Editor.Levels.LevelDatabaseWindow - Unsaved Changes Detected The selected level has unsaved changes. Save them to the JSON source? / This should not be called in batch mode.
+  InternalRequestClose(window)=False after: dirty=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+  after Discard: container.hasUnsaved=False list.Contains=True displayedTitle=''
+  InternalRequestClose(clean)=True

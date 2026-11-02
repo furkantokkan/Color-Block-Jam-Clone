@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "observedUtc": "2026-09-27T02:52:26.7641808Z",
+  "contractFingerprint": "sha256:3381dfdaacf6364c4e99663c09c69bf0b06e2d2d7ba841d9ced83a4c0eb221e1",
+  "sources": [
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/BoardIceAssets.cs",
+      "sha256": "a792f3ac0752daed4bdef4760597adc80959000161925da274f816ef977fcc39"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Shaders/Ice.shadergraph",
+      "sha256": "5d8831be867fed2b49307f8766f2199b60d9b0bd97b4fdae149f9cc7c2431182"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Materials/Effects/MAT_Ice.mat",
+      "sha256": "133893f4cd32f4fc2a403943062fed940e2fb701dec179f1e3c427681b3b789f"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/Levels/Canvas/LevelCanvasEffectBadgeLayout.cs",
+      "sha256": "f05324397d1b82f8b68915a4720cbade2987adf3388d826cd4724b2bcee8a172"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/Levels/Canvas/IceCanvasEffectLayer.cs",
+      "sha256": "ff41b7ca1875257710c07db794972e3ed6b156e78ca713445babc53e5a065e79"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Gameplay/Composition/GameAttemptLoader.cs",
+      "sha256": "988cf1a10a3710dcdfe26ef8476aea6c039c52fef7353ae3469ecdcb306ee464"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Gameplay/Effects/BlockEffectContextSource.cs",
+      "sha256": "71dbcf190f0d0df31703d51cae545d2678f245a576e6e61c9317b765d61e550e"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Gameplay/Effects/BlockEffectAttempt.cs",
+      "sha256": "cda9fd90781f65dc26166314c599e9db5b665c2c398602eb73306ccac71f45c6"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/Gameplay/PlayMode/GameSceneIceTests.cs",
+      "sha256": "da05ba8b2e380c0b0e702fa48bd9b12083af452e1450b2aa33965ae536ac3c59"
+    },
+    {
+      "path": "Packages/manifest.json",
+      "sha256": "3a8a13b06fd8a975951ae1aaae58945e48d1aca53a7bf7eff4e6852f09010286"
+    },
+    {
+      "path": "Packages/packages-lock.json",
+      "sha256": "e64055a1cd107f735680252922b26308662e76f587db979cf9fdc72709bb1e5b"
+    }
+  ],
+  "protectedInputs": [
+    {
+      "path": "Assets/ColorBlockJam/Art/Textures/icetexture.jpg",
+      "sha256": "6669d7e7adf6c94f74bdeaece4e4d6a2e598dec0a6913b836a5117da7b8cfd63",
+      "baselineSha256": "6669d7e7adf6c94f74bdeaece4e4d6a2e598dec0a6913b836a5117da7b8cfd63",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset",
+      "sha256": "dfc483ba8f6218ec8aca878dd9df2c5f5f13f8e5608d23c2c64d224a10107541",
+      "baselineSha256": "dfc483ba8f6218ec8aca878dd9df2c5f5f13f8e5608d23c2c64d224a10107541",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset.meta",
+      "sha256": "fc82ae8ada98436f32de92bf182011a5e063bf40d79e99cad63c7c785d9e441e",
+      "baselineSha256": "fc82ae8ada98436f32de92bf182011a5e063bf40d79e99cad63c7c785d9e441e",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset",
+      "sha256": "3b9a0ff3d9f7e1ffd6cb6bf011b50716c3a068378cb2831b4639295aee25b039",
+      "baselineSha256": "3b9a0ff3d9f7e1ffd6cb6bf011b50716c3a068378cb2831b4639295aee25b039",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset.meta",
+      "sha256": "5abb39d03f26979ee4406490adc3f1d25af75e079ea6748f864117c3a6c40de6",
+      "baselineSha256": "5abb39d03f26979ee4406490adc3f1d25af75e079ea6748f864117c3a6c40de6",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/PieceDatabases.meta",
+      "sha256": "e54b5471a00f019f2017de9ef879120ba3f9cc1d48b1e319067fd23ad2b8feec",
+      "baselineSha256": "e54b5471a00f019f2017de9ef879120ba3f9cc1d48b1e319067fd23ad2b8feec",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/PieceDatabases/BlockShapeLibrary.json",
+      "sha256": "c4661086572b591374de7774b72b97960fb6dd75748f7bbcf3bfadb67f13a439",
+      "baselineSha256": "c4661086572b591374de7774b72b97960fb6dd75748f7bbcf3bfadb67f13a439",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/PieceDatabases/BlockShapeLibrary.json.meta",
+      "sha256": "190789aecf38437e1ff238e36fcd12f3eab698c833543fad359e136affc530c6",
+      "baselineSha256": "190789aecf38437e1ff238e36fcd12f3eab698c833543fad359e136affc530c6",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.asset",
+      "sha256": "3dabc1522269d447c11113a7dea03c1bd06041d6b328e4888f6eb1b9d453b521",
+      "baselineSha256": "3dabc1522269d447c11113a7dea03c1bd06041d6b328e4888f6eb1b9d453b521",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.asset.meta",
+      "sha256": "091ef1da4f1ea4c59bde06ed956d98a3c6b2804a5a2cedadd774dbac5a72f2c5",
+      "baselineSha256": "091ef1da4f1ea4c59bde06ed956d98a3c6b2804a5a2cedadd774dbac5a72f2c5",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json",
+      "sha256": "02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e",
+      "baselineSha256": "02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json.meta",
+      "sha256": "3158f02d79e08cc8e29f0f5c89bdd776f237740acd4b4676d91dbbdfd67ca226",
+      "baselineSha256": "3158f02d79e08cc8e29f0f5c89bdd776f237740acd4b4676d91dbbdfd67ca226",
+      "matches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Scenes/LevelEditor.unity",
+      "sha256": "729984d8618e6dc14e993a3033f390f186401dcf025c8c7133529c049c3d3115",
+      "baselineSha256": "729984d8618e6dc14e993a3033f390f186401dcf025c8c7133529c049c3d3115",
+      "matches": true
+    }
+  ],
+  "images": [
+    {
+      "path": "final-preview-user-portrait.png",
+      "sha256": "fef97fa64def6bf73a3f6c0e0be696efd5bc7fd40acadb892c8a98729761eda2"
+    },
+    {
+      "path": "final-preview-shapes-portrait.png",
+      "sha256": "2a977e4aa2a665bd28dc4d6ef48ac5bd3bb5de4685d251dec7a189e84521ddd8"
+    },
+    {
+      "path": "final-runtime-portrait-valid.png",
+      "sha256": "4d873265122e7ed4213070e7b6ad61861e96899e33b5866b3722c43f86dad049"
+    },
+    {
+      "path": "final-runtime-20x9.png",
+      "sha256": "d89bee7384a260df75821593c99bf0595abc6807a6bb6b2388b12c2141a315e4"
+    },
+    {
+      "path": "final-canvas-current.png",
+      "sha256": "5c00fdf33421cdf5fb1aca831747306f25b266969624d519ae2d4daf5d34f8fe"
+    },
+    {
+      "path": "final-canvas-visible-columns.png",
+      "sha256": "a623751de116cc4a8c48f5897564feb377df2a94e944b837bd6b7a1c5cd107f5"
+    },
+    {
+      "path": "preview-user-draft-portrait-1.png",
+      "sha256": "58a3b8aa509149945ada4077e2ac3cbfa9eb73f17fcba35c1fb6657a2259e072"
+    }
+  ]
+}

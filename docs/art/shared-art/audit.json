@@ -1,0 +1,47 @@
+{
+  "before": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "error": null,
+    "data": {
+      "result": {
+        "Assets/ColorBlockJam/Art/Materials/Board/MAT_Board.mat": 455,
+        "Assets/ColorBlockJam/Art/Models/Boosters/MAT_BoosterPalette.mat": 10,
+        "Assets/ColorBlockJam/Art/Models/Boosters/Effects/MAT_VacuumSprite.mat": 1
+      },
+      "compiler": "roslyn"
+    },
+    "hint": null
+  },
+  "after": {
+    "success": true,
+    "message": "Code executed successfully.",
+    "error": null,
+    "data": {
+      "result": {
+        "materials": {
+          "Assets/ColorBlockJam/Art/Materials/Board/MAT_Board.mat": 169,
+          "Assets/ColorBlockJam/Art/Models/Boosters/Effects/MAT_VacuumSprite.mat": 1
+        },
+        "meshPrefabRendererReferences": 169,
+        "spritePrefabRendererReferences": 1,
+        "atlas": {
+          "width": 128,
+          "height": 32,
+          "format": "RGB24",
+          "runtimeBytes": 29352,
+          "pngBytes": 283
+        },
+        "shaderMessages": [],
+        "scene": {
+          "path": "Assets/ColorBlockJam/Scenes/LevelEditor.unity",
+          "dirty": false
+        },
+        "cameras": []
+      },
+      "compiler": "roslyn"
+    },
+    "hint": null
+  },
+  "note": "Prefab renderer totals can change with piece-database synchronization and are not an optimization metric. Compare unique referenced opaque materials only. No phone frame-time measurement."
+}

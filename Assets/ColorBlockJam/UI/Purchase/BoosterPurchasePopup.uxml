@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Shared booster purchase popup (reference 01, design 9.2, DEC-85, DEC-136). Element names are the contract with
+         BoosterPurchaseView, its hosts and the tests. Draw order: later siblings draw on top, so the scrim comes first;
+         inside the popup the holder, message and Buy come before the header and close button, which overlap the
+         shell's top edge. Every title and button label is a two-layer ".cbj-heavy-text" pair (Common.uss): the view
+         writes the same text into both layers; the front label carries the element name. -->
+    <!-- Representative authoring offer only. SetOffer replaces both text layers, amount, price and icons at runtime.
+         Open this shared document directly in UI Builder; embedded host instances start closed. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uss" />
+    <ui:VisualElement name="booster-purchase-screen" class="booster-purchase-screen" picking-mode="Ignore">
+        <!-- Full-screen dim over the host; pickable, so it blocks every press underneath (AC-2.6). -->
+        <ui:VisualElement name="booster-purchase-scrim" class="booster-purchase-scrim" picking-mode="Position" />
+
+        <!-- The host pads all four edges from its safe area; the popup centres inside the padding. -->
+        <ui:VisualElement name="booster-purchase-safe-area" class="booster-purchase-safe-area" picking-mode="Ignore">
+            <!-- bg_popup shell. -->
+            <ui:VisualElement name="booster-purchase-popup" class="booster-purchase-popup" picking-mode="Position">
+                <!-- bg_popup_info_holder inset: the icon box (icon and bundle amount), then the description. -->
+                <ui:VisualElement name="booster-purchase-holder" class="booster-purchase-holder" picking-mode="Ignore">
+                    <ui:VisualElement name="booster-purchase-icon-box" class="booster-purchase-icon-box" picking-mode="Ignore">
+                        <ui:VisualElement name="booster-purchase-icon" class="booster-purchase-icon" picking-mode="Ignore" />
+                        <ui:VisualElement class="booster-purchase-amount-text cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="booster-purchase-amount cbj-title cbj-heavy-text__back" text="x1" picking-mode="Ignore" />
+                            <ui:Label name="booster-purchase-amount" class="booster-purchase-amount cbj-title cbj-heavy-text__front" text="x1" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="booster-purchase-description-text cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="booster-purchase-description cbj-title cbj-heavy-text__back" text="Remove one cell from the selected block." picking-mode="Ignore" />
+                        <ui:Label name="booster-purchase-description" class="booster-purchase-description cbj-title cbj-heavy-text__front" text="Remove one cell from the selected block." picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Reserved feedback row ("Not enough coins"); hidden while empty, so nothing moves. -->
+                <ui:Label name="booster-purchase-message" class="booster-purchase-message cbj-title" text="" picking-mode="Ignore" />
+
+                <!-- Btn_popup_green Buy with the price currency's icon and the price (reference 01). -->
+                <ui:Button name="booster-purchase-buy" class="booster-purchase-buy cbj-pressable cbj-haptic-confirm">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="booster-purchase-buy__label cbj-title cbj-heavy-text__back" text="Buy" picking-mode="Ignore" />
+                        <ui:Label name="booster-purchase-buy-label" class="booster-purchase-buy__label cbj-title cbj-heavy-text__front" text="Buy" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="booster-purchase-buy__price-row" picking-mode="Ignore">
+                        <ui:VisualElement name="booster-purchase-price-icon" class="booster-purchase-buy__price-icon cbj-press-tint" picking-mode="Ignore" />
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="booster-purchase-buy__price cbj-title cbj-heavy-text__back" text="10" picking-mode="Ignore" />
+                            <ui:Label name="booster-purchase-price" class="booster-purchase-buy__price cbj-title cbj-heavy-text__front" text="10" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:Button>
+
+                <!-- bg_popup_header title tab with the booster's name, overlapping the shell's top edge. -->
+                <ui:VisualElement name="booster-purchase-header" class="booster-purchase-header" picking-mode="Position">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="booster-purchase-title cbj-title cbj-heavy-text__back" text="Rocket" picking-mode="Ignore" />
+                        <ui:Label name="booster-purchase-title" class="booster-purchase-title cbj-title cbj-heavy-text__front" text="Rocket" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Popup_Close_Button at the shell's top-right corner. -->
+                <ui:Button name="booster-purchase-close" class="booster-purchase-close cbj-pressable cbj-haptic-tap" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

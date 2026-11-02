@@ -1,0 +1,28 @@
+{
+  "name": "EnvGateCapture.PlayMode",
+  "rootNamespace": "EnvGateCapture",
+  "references": [
+    "ColorBlockJam.Domain",
+    "ColorBlockJam.Gameplay",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "PrimeTween.Runtime",
+    "Unity.InputSystem",
+    "Unity.InputSystem.TestFramework",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

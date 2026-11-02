@@ -1,0 +1,13 @@
+{
+ "success": true,
+ "message": "Retrieved 7 log entries.",
+ "data": [
+  "LevelEditor is an edit-only scene. Close it before entering Play Mode.",
+  "Could not restore piece JSON: Piece data changed on disk. Reload the piece data before saving: Assets/ColorBlockJam/Data/Board/PrefabTests_2d000f5c400f451f877d032c461dc278/Library.json",
+  "Level preview: a 13-cell Square block exceeds the 12-cell enumeration limit, so it warms the connected-footprint bound.",
+  "LevelEditor is an edit-only scene. Close it before entering Play Mode.",
+  "Could not restore piece JSON: Piece data changed on disk. Reload the piece data before saving: Assets/ColorBlockJam/Data/Board/PrefabTests_5876abc7e322495ebc5b445bf344d6eb/Library.json",
+  "Level preview: a 13-cell Square block exceeds the 12-cell enumeration limit, so it warms the connected-footprint bound.",
+  "<b><color=#cc7a00>MCP-FOR-UNITY</color></b>: [WebSocket] Unexpected receive error: WebSocket is not initialised"
+ ]
+}

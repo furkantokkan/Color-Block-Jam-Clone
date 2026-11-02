@@ -1,0 +1,81 @@
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+namespace ColorBlockJam.Environment
+{
+    /// <summary>
+    /// Unity RuleTile whose neighbours are Floor or Void instead of This/NotThis.
+    /// Designers author the wall and corner rules in the RuleTile inspector; the
+    /// environment composer evaluates them and never paints this tile on a Tilemap.
+    /// </summary>
+    [CreateAssetMenu(fileName = "WallRuleTile", menuName = "Color Block Jam/Environment/Wall Rule Tile")]
+    public sealed class EnvironmentRuleTile : RuleTile<EnvironmentRuleTile.Neighbor>
+    {
+        // Marks floor quadrants on the floor mask. Anything else, including an
+        // empty position outside the board, counts as void.
+        [SerializeField] private TileBase m_floorMarker;
+
+        public TileBase FloorMarker => m_floorMarker;
+
+        public sealed class Neighbor : TilingRuleOutput.Neighbor
+        {
+            public const int Floor = 3;
+            public const int Void = 4;
+        }
+
+        public override bool RuleMatch(int neighbor, TileBase other)
+        {
+            switch (neighbor)
+            {
+                case Neighbor.Floor: return other != null && other == m_floorMarker;
+                case Neighbor.Void: return other == null || other != m_floorMarker;
+                default: return base.RuleMatch(neighbor, other);
+            }
+        }
+
+        public bool Validate(out string error)
+        {
+            if (m_floorMarker == null)
+            {
+                error = "The wall rule tile needs a floor marker tile.";
+                return false;
+            }
+
+            if (m_TilingRules == null || m_TilingRules.Count == 0)
+            {
+                error = "The wall rule tile has no rules.";
+                return false;
+            }
+
+            for (int index = 0; index < m_TilingRules.Count; index++)
+            {
+                TilingRule rule = m_TilingRules[index];
+                // Mirror rules would flip 3D mesh winding, so only rotation is allowed.
+                if (rule.m_RuleTransform != TilingRuleOutput.Transform.Rotated)
+                {
+                    error = $"Wall rule {index} must use the Rotated transform.";
+                    return false;
+                }
+
+                if (rule.m_GameObject == null)
+                {
+                    error = $"Wall rule {index} needs a piece prefab as its GameObject output.";
+                    return false;
+                }
+
+                for (int neighborIndex = 0; neighborIndex < rule.m_Neighbors.Count; neighborIndex++)
+                {
+                    int neighbor = rule.m_Neighbors[neighborIndex];
+                    if (neighbor == TilingRuleOutput.Neighbor.This || neighbor == TilingRuleOutput.Neighbor.NotThis)
+                    {
+                        error = $"Wall rule {index} must use Floor or Void neighbours.";
+                        return false;
+                    }
+                }
+            }
+
+            error = null;
+            return true;
+        }
+    }
+}

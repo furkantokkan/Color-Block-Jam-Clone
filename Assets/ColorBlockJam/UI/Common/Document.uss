@@ -1,0 +1,4 @@
+/* Standalone documents use the same SDF font as the runtime panel theme. */
+.cbj-document {
+    -unity-font-definition: url("project://database/Assets/ColorBlockJam/Data/UI/Fonts/LiberationSans-UITK.asset");
+}

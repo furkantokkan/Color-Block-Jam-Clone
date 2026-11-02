@@ -1,0 +1,13 @@
+{
+  "name": "ColorBlockJam.Environment",
+  "rootNamespace": "ColorBlockJam.Environment",
+  "references": [
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Pooling",
+    "PrimeTween.Runtime"
+  ],
+  "autoReferenced": false
+}

@@ -1,0 +1,31 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "5de650afc5d14e398bf35ee172859dcc",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1790274911183,
+      "finished_unix_ms": 1790274930249,
+      "last_update_unix_ms": 1790274930249,
+      "progress": {
+        "completed": 27,
+        "total": 27,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790274928267,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.EditMode.ShapePrefabTests.SavePreservesGuidCustomChildrenAndStableIdentityAcrossRenameDeleteAndRestore",
+        "last_finished_unix_ms": 1790274929992,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": null
+    },
+    "hint": null
+  }
+}

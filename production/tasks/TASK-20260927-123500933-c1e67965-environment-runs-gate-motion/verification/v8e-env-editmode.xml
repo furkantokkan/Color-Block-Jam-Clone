@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="91" result="Passed" total="91" passed="91" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="2.0066893">
+  <test-suite type="TestSuite" id="1000" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="1577" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="2.006689" total="91" passed="91" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="2181" name="ColorBlockJam.Environment.EditModeTests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/cbj-envgate-7336b1-int/Library/ScriptAssemblies/ColorBlockJam.Environment.EditModeTests.dll" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="1.988517" total="91" passed="91" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="164424" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="2182" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="1.985710" total="91" passed="91" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="2183" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="1.983563" total="91" passed="91" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="2184" name="Environment" fullname="ColorBlockJam.Tests.Environment" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="1.978629" total="91" passed="91" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="2075" name="BoardCameraFramingTests" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.057715" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2088" name="BoardCameraNeverTicks" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.BoardCameraNeverTicks" methodname="BoardCameraNeverTicks" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1333315046" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.012984" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2086" name="BoardCameraPoseIgnoresThePreviousCameraPosition" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.BoardCameraPoseIgnoresThePreviousCameraPosition" methodname="BoardCameraPoseIgnoresThePreviousCameraPosition" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1665543118" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.008576" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="2085" name="DistanceIsTheLargerOfTheWidthAndDepthFits" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.DistanceIsTheLargerOfTheWidthAndDepthFits" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.007332" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2083" name="DistanceIsTheLargerOfTheWidthAndDepthFits(9.0f,5.0f,16.166f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.DistanceIsTheLargerOfTheWidthAndDepthFits(9.0f,5.0f,16.166f)" methodname="DistanceIsTheLargerOfTheWidthAndDepthFits" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1174344454" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.004504" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2084" name="DistanceIsTheLargerOfTheWidthAndDepthFits(5.0f,11.0f,13.856f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.DistanceIsTheLargerOfTheWidthAndDepthFits(5.0f,11.0f,13.856f)" methodname="DistanceIsTheLargerOfTheWidthAndDepthFits" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="27441005" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000187" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="2087" name="InvalidLensIsRejected" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.InvalidLensIsRejected" methodname="InvalidLensIsRejected" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1572894800" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001833" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2076" name="RotationIsThePitchAndTheCameraLooksAtTheBoundsCentre" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.RotationIsThePitchAndTheCameraLooksAtTheBoundsCentre" methodname="RotationIsThePitchAndTheCameraLooksAtTheBoundsCentre" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1921762578" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000921" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="2082" name="WidthAndDepthFitInsideTheFrustum" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.WidthAndDepthFitInsideTheFrustum" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.004929" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2077" name="WidthAndDepthFitInsideTheFrustum(5.0f,6.0f,0.5625f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.WidthAndDepthFitInsideTheFrustum(5.0f,6.0f,0.5625f)" methodname="WidthAndDepthFitInsideTheFrustum" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1338423800" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001406" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2078" name="WidthAndDepthFitInsideTheFrustum(9.0f,5.0f,0.5625f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.WidthAndDepthFitInsideTheFrustum(9.0f,5.0f,0.5625f)" methodname="WidthAndDepthFitInsideTheFrustum" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1527658815" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000343" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2079" name="WidthAndDepthFitInsideTheFrustum(5.0f,11.0f,0.5625f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.WidthAndDepthFitInsideTheFrustum(5.0f,11.0f,0.5625f)" methodname="WidthAndDepthFitInsideTheFrustum" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1835353003" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000301" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2080" name="WidthAndDepthFitInsideTheFrustum(9.0f,11.0f,0.5625f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.WidthAndDepthFitInsideTheFrustum(9.0f,11.0f,0.5625f)" methodname="WidthAndDepthFitInsideTheFrustum" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1751029606" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000451" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2081" name="WidthAndDepthFitInsideTheFrustum(9.0f,11.0f,0.45f)" fullname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests.WidthAndDepthFitInsideTheFrustum(9.0f,11.0f,0.45f)" methodname="WidthAndDepthFitInsideTheFrustum" classname="ColorBlockJam.Tests.Environment.BoardCameraFramingTests" runstate="Runnable" seed="1959716383" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000500" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="2089" name="BoardLayoutTests" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.040570" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="2111" name="DoorColoursAreExactGatePaletteNames" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.014365" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2101" name="DoorColoursAreExactGatePaletteNames(&quot;Red&quot;,True)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;Red&quot;,True)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="711839100" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.005867" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2102" name="DoorColoursAreExactGatePaletteNames(&quot;Pink&quot;,True)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;Pink&quot;,True)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1979658553" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000261" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2103" name="DoorColoursAreExactGatePaletteNames(&quot;LightTurquoise&quot;,True)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;LightTurquoise&quot;,True)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="770718143" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000170" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2104" name="DoorColoursAreExactGatePaletteNames(&quot;Wall&quot;,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;Wall&quot;,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="569119329" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.003010" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2105" name="DoorColoursAreExactGatePaletteNames(&quot;Ground&quot;,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;Ground&quot;,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1839982894" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000338" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2106" name="DoorColoursAreExactGatePaletteNames(&quot;red&quot;,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;red&quot;,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1139484067" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000202" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2107" name="DoorColoursAreExactGatePaletteNames(&quot;3&quot;,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;3&quot;,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1546238363" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000232" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2108" name="DoorColoursAreExactGatePaletteNames(&quot;Red,Blue&quot;,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;Red,Blue&quot;,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1699274528" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000195" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2109" name="DoorColoursAreExactGatePaletteNames(&quot;&quot;,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(&quot;&quot;,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="336860024" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000302" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2110" name="DoorColoursAreExactGatePaletteNames(null,False)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorColoursAreExactGatePaletteNames(null,False)" methodname="DoorColoursAreExactGatePaletteNames" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="173875661" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000226" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="2092" name="DoorSlotsFollowTheJsonSpanAndStandInTheWallRing" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.DoorSlotsFollowTheJsonSpanAndStandInTheWallRing" methodname="DoorSlotsFollowTheJsonSpanAndStandInTheWallRing" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="823693963" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.003875" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2091" name="EveryFloorCellRoundTripsThroughLocalSpace" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.EveryFloorCellRoundTripsThroughLocalSpace" methodname="EveryFloorCellRoundTripsThroughLocalSpace" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1973073566" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.003097" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2093" name="LevelDataBuildsARectangularLayoutWithItsDoors" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.LevelDataBuildsARectangularLayoutWithItsDoors" methodname="LevelDataBuildsARectangularLayoutWithItsDoors" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1179332265" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.002626" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2094" name="LevelDataVoidCellsBecomeHolesInTheLayout" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.LevelDataVoidCellsBecomeHolesInTheLayout" methodname="LevelDataVoidCellsBecomeHolesInTheLayout" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="889204829" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.006475" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2090" name="RectangleExposesFloorCellMappingAndBounds" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RectangleExposesFloorCellMappingAndBounds" methodname="RectangleExposesFloorCellMappingAndBounds" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="2127301203" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001130" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="2098" name="RejectsAVoidCellOutsideTheBoard" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RejectsAVoidCellOutsideTheBoard" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.002920" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2095" name="RejectsAVoidCellOutsideTheBoard(-1,0)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RejectsAVoidCellOutsideTheBoard(-1,0)" methodname="RejectsAVoidCellOutsideTheBoard" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1114889109" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000910" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2096" name="RejectsAVoidCellOutsideTheBoard(4,0)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RejectsAVoidCellOutsideTheBoard(4,0)" methodname="RejectsAVoidCellOutsideTheBoard" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1897583339" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000196" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2097" name="RejectsAVoidCellOutsideTheBoard(0,3)" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RejectsAVoidCellOutsideTheBoard(0,3)" methodname="RejectsAVoidCellOutsideTheBoard" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1152426015" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000123" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="2100" name="RejectsDoorsOntoVoidOverlappingOrOutsideTheirEdge" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RejectsDoorsOntoVoidOverlappingOrOutsideTheirEdge" methodname="RejectsDoorsOntoVoidOverlappingOrOutsideTheirEdge" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="697403126" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000541" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2099" name="RejectsDuplicateVoidCellsAndABoardWithoutFloor" fullname="ColorBlockJam.Tests.Environment.BoardLayoutTests.RejectsDuplicateVoidCellsAndABoardWithoutFloor" methodname="RejectsDuplicateVoidCellsAndABoardWithoutFloor" classname="ColorBlockJam.Tests.Environment.BoardLayoutTests" runstate="Runnable" seed="1651906070" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000545" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2112" name="EnvironmentBarrierComposerTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.056168" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2117" name="BarrierOffTheFloorOrWithARepeatedIdIsRefused" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.BarrierOffTheFloorOrWithARepeatedIdIsRefused" methodname="BarrierOffTheFloorOrWithARepeatedIdIsRefused" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" runstate="Runnable" seed="1374402537" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.035994" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2114" name="BarrierPiecesAreThePiecesOfAnInteriorWallBlockOnTheSameCells" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.BarrierPiecesAreThePiecesOfAnInteriorWallBlockOnTheSameCells" methodname="BarrierPiecesAreThePiecesOfAnInteriorWallBlockOnTheSameCells" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" runstate="Runnable" seed="616235498" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.007051" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2116" name="BarriersFlushWithTheBoardEdgeOrAVoidCellWallEveryQuadrantOfTheirCells" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.BarriersFlushWithTheBoardEdgeOrAVoidCellWallEveryQuadrantOfTheirCells" methodname="BarriersFlushWithTheBoardEdgeOrAVoidCellWallEveryQuadrantOfTheirCells" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" runstate="Runnable" seed="1789313410" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.004734" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2115" name="LevelsWithoutBarriersComposeNothing" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.LevelsWithoutBarriersComposeNothing" methodname="LevelsWithoutBarriersComposeNothing" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" runstate="Runnable" seed="777220324" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001553" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2113" name="SingleStraightAndLShapedBarriersGetTheirPieceKindsPositionsAndYaws" fullname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.SingleStraightAndLShapedBarriersGetTheirPieceKindsPositionsAndYaws" methodname="SingleStraightAndLShapedBarriersGetTheirPieceKindsPositionsAndYaws" classname="ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests" runstate="Runnable" seed="383396640" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.003146" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2118" name="EnvironmentComposerTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.208988" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2133" name="ComposeNamesARuleSetEditMadeAfterTheComposerWasCreated" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.ComposeNamesARuleSetEditMadeAfterTheComposerWasCreated" methodname="ComposeNamesARuleSetEditMadeAfterTheComposerWasCreated" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="882471738" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.008415" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2125" name="CornerNotchTurnsItsInnerCornerTowardTheFloor" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.CornerNotchTurnsItsInnerCornerTowardTheFloor" methodname="CornerNotchTurnsItsInnerCornerTowardTheFloor" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="189097383" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.003135" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2127" name="CorridorGetsWallsOnBothSidesAndOuterCornersAtItsDeadEnds" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.CorridorGetsWallsOnBothSidesAndOuterCornersAtItsDeadEnds" methodname="CorridorGetsWallsOnBothSidesAndOuterCornersAtItsDeadEnds" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="552396839" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001422" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2119" name="DatabaseAuthorsThreeRotatedFloorVoidRulesOnTheBoardKitPieces" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.DatabaseAuthorsThreeRotatedFloorVoidRulesOnTheBoardKitPieces" methodname="DatabaseAuthorsThreeRotatedFloorVoidRulesOnTheBoardKitPieces" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1041133058" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001523" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2128" name="DoorsReplaceTheWallsBehindTheirSpanAndKeepTheirNeighbourCorners" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.DoorsReplaceTheWallsBehindTheirSpanAndKeepTheirNeighbourCorners" methodname="DoorsReplaceTheWallsBehindTheirSpanAndKeepTheirNeighbourCorners" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1677204051" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.003459" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2122" name="EveryFloorCellGetsOneTintedBaseSquareAtItsCentreAndVoidCellsGetNone" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.EveryFloorCellGetsOneTintedBaseSquareAtItsCentreAndVoidCellsGetNone" methodname="EveryFloorCellGetsOneTintedBaseSquareAtItsCentreAndVoidCellsGetNone" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="353125347" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.005743" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2130" name="EveryPieceHasItsOwnPosition" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.EveryPieceHasItsOwnPosition" methodname="EveryPieceHasItsOwnPosition" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1950758931" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.002732" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2120" name="FloorAndWallPlacementsCarryTheDatabaseFloorAndWallColours" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.FloorAndWallPlacementsCarryTheDatabaseFloorAndWallColours" methodname="FloorAndWallPlacementsCarryTheDatabaseFloorAndWallColours" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="759269258" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.002202" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2138" name="GridMapsCellsAndQuadrantsToTheBoardLayoutPositions" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.GridMapsCellsAndQuadrantsToTheBoardLayoutPositions" methodname="GridMapsCellsAndQuadrantsToTheBoardLayoutPositions" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="832446624" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001889" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2124" name="HoleIsRingedByWallsAndInnerCornersAndKeepsItsCentreOpen" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.HoleIsRingedByWallsAndInnerCornersAndKeepsItsCentreOpen" methodname="HoleIsRingedByWallsAndInnerCornersAndKeepsItsCentreOpen" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="509054814" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.002376" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2123" name="InteriorWallRowFormsTheGroovedBlockOfReference17" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.InteriorWallRowFormsTheGroovedBlockOfReference17" methodname="InteriorWallRowFormsTheGroovedBlockOfReference17" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="891291012" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001832" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2126" name="PinchedFloorGetsTwoInnerCornersMeetingAtTheVertex" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PinchedFloorGetsTwoInnerCornersMeetingAtTheVertex" methodname="PinchedFloorGetsTwoInnerCornersMeetingAtTheVertex" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="455373743" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.000818" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2136" name="PlannedAndCurrentReferenceFilesDescribeTheSameBoards" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PlannedAndCurrentReferenceFilesDescribeTheSameBoards" methodname="PlannedAndCurrentReferenceFilesDescribeTheSameBoards" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="412983968" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.102789" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2132" name="PlayAreaGateSpansGroupEachDoorsSlotsThenItsArrowInAuthoredDoorOrder" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PlayAreaGateSpansGroupEachDoorsSlotsThenItsArrowInAuthoredDoorOrder" methodname="PlayAreaGateSpansGroupEachDoorsSlotsThenItsArrowInAuthoredDoorOrder" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1159681466" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.010829" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2137" name="PrefabHasOneGridOnBoardRootAndNoTilemap" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PrefabHasOneGridOnBoardRootAndNoTilemap" methodname="PrefabHasOneGridOnBoardRootAndNoTilemap" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1273014810" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.002708" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2131" name="RecomposingAPreparedBoardAllocatesZeroBytes" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.RecomposingAPreparedBoardAllocatesZeroBytes" methodname="RecomposingAPreparedBoardAllocatesZeroBytes" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="8791541" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001980" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2121" name="RectangleGetsFloorAWallRingAndFourOuterCorners" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.RectangleGetsFloorAWallRingAndFourOuterCorners" methodname="RectangleGetsFloorAWallRingAndFourOuterCorners" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1309316308" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.001095" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2135" name="ReferenceLevelNineTurnsItsVoidNotchesIntoInnerCorners" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.ReferenceLevelNineTurnsItsVoidNotchesIntoInnerCorners" methodname="ReferenceLevelNineTurnsItsVoidNotchesIntoInnerCorners" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="1957211625" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.018549" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2134" name="ReferenceLevelsLoadWithTheCurrentLoaderAndGetACompleteRing" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.ReferenceLevelsLoadWithTheCurrentLoaderAndGetACompleteRing" methodname="ReferenceLevelsLoadWithTheCurrentLoaderAndGetACompleteRing" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="28760224" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.022159" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2129" name="TransposedBoardGivesTheTransposedPieces" fullname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests.TransposedBoardGivesTheTransposedPieces" methodname="TransposedBoardGivesTheTransposedPieces" classname="ColorBlockJam.Tests.Environment.EnvironmentComposerTests" runstate="Runnable" seed="510179565" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.004713" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2139" name="EnvironmentRuleSetEditorTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="1.401935" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2141" name="CyclingANeighbourGoesAnyFloorVoidMarksDirtyAndUndoes" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests.CyclingANeighbourGoesAnyFloorVoidMarksDirtyAndUndoes" methodname="CyclingANeighbourGoesAnyFloorVoidMarksDirtyAndUndoes" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests" runstate="Runnable" seed="1580193150" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.097544" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2140" name="EachRuleShowsAColouredThreeByThreeGridTheOutputAndTheRotatedToggle" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests.EachRuleShowsAColouredThreeByThreeGridTheOutputAndTheRotatedToggle" methodname="EachRuleShowsAColouredThreeByThreeGridTheOutputAndTheRotatedToggle" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests" runstate="Runnable" seed="361879619" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.005501" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2142" name="RulesCanBeAddedReorderedAndRemovedWithUndo" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests.RulesCanBeAddedReorderedAndRemovedWithUndo" methodname="RulesCanBeAddedReorderedAndRemovedWithUndo" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests" runstate="Runnable" seed="1986786695" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:17Z" duration="0.015128" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2143" name="StatusFollowsEditsMadeThroughTheBoundFields" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests.StatusFollowsEditsMadeThroughTheBoundFields" methodname="StatusFollowsEditsMadeThroughTheBoundFields" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetEditorTests" runstate="Runnable" seed="1269635853" result="Passed" start-time="2026-09-27 19:59:17Z" end-time="2026-09-27 19:59:19Z" duration="1.279981" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2144" name="EnvironmentRuleSetTableTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTableTests" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTableTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.011807" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2145" name="RuleSetReproducesTheRecordedRuleTileMatchesForEveryPatternAndAngle" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTableTests.RuleSetReproducesTheRecordedRuleTileMatchesForEveryPatternAndAngle" methodname="RuleSetReproducesTheRecordedRuleTileMatchesForEveryPatternAndAngle" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTableTests" runstate="Runnable" seed="46219339" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.010603" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2146" name="EnvironmentRuleSetTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.011922" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2151" name="MatcherTreatsQuadrantsOutsideItsMaskAsVoid" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.MatcherTreatsQuadrantsOutsideItsMaskAsVoid" methodname="MatcherTreatsQuadrantsOutsideItsMaskAsVoid" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="2010255554" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001653" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2150" name="MatcherTurnsRulesClockwiseInRuleTileOrder" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.MatcherTurnsRulesClockwiseInRuleTileOrder" methodname="MatcherTurnsRulesClockwiseInRuleTileOrder" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="634513561" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.000709" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2153" name="MatchingAPreparedMaskAllocatesZeroBytes" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.MatchingAPreparedMaskAllocatesZeroBytes" methodname="MatchingAPreparedMaskAllocatesZeroBytes" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="1689001171" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001457" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2147" name="MigratedRuleSetKeepsTheThreeRotatedWallRulesInOrder" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.MigratedRuleSetKeepsTheThreeRotatedWallRulesInOrder" methodname="MigratedRuleSetKeepsTheThreeRotatedWallRulesInOrder" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="1551281809" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001088" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2148" name="NeighbourOffsetsFollowTheRuleTileOrder" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.NeighbourOffsetsFollowTheRuleTileOrder" methodname="NeighbourOffsetsFollowTheRuleTileOrder" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="801373284" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001009" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2152" name="UnrotatedRulesAreOnlyTriedAtZeroDegrees" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.UnrotatedRulesAreOnlyTriedAtZeroDegrees" methodname="UnrotatedRulesAreOnlyTriedAtZeroDegrees" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="1096329523" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.000889" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2149" name="ValidateRejectsMissingOutputsUnknownValuesAndAllAnyRules" fullname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests.ValidateRejectsMissingOutputsUnknownValuesAndAllAnyRules" methodname="ValidateRejectsMissingOutputsUnknownValuesAndAllAnyRules" classname="ColorBlockJam.Tests.Environment.EnvironmentRuleSetTests" runstate="Runnable" seed="952750871" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001658" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2154" name="EnvironmentSolidTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.024002" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="2161" name="BarrierCoversExactlyItsOccupiedQuadrants" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.013223" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2155" name="BarrierSingle" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierSingle" methodname="BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="67777524" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.003682" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2156" name="BarrierRun" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierRun" methodname="BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="974133120" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.000796" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2157" name="BarrierSquare" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierSquare" methodname="BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="365349909" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001318" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2158" name="BarrierL" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierL" methodname="BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="530008745" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.000858" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2159" name="BarrierWide" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierWide" methodname="BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="121265322" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.002725" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2160" name="BarrierWithFloorHole" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BarrierWithFloorHole" methodname="BarrierCoversExactlyItsOccupiedQuadrants" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="805861217" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001589" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="2162" name="BoundaryAndGatesKeepTheSuppliedWallAndDoorMeshes" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BoundaryAndGatesKeepTheSuppliedWallAndDoorMeshes" methodname="BoundaryAndGatesKeepTheSuppliedWallAndDoorMeshes" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="780169588" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.003010" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2163" name="FillReusesTheExistingQuadMaterialAndPoolRegistration" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.FillReusesTheExistingQuadMaterialAndPoolRegistration" methodname="FillReusesTheExistingQuadMaterialAndPoolRegistration" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="1102851927" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.003273" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2164" name="RebuildingTheBoardAndBarriersAllocatesNothing" fullname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests.RebuildingTheBoardAndBarriersAllocatesNothing" methodname="RebuildingTheBoardAndBarriersAllocatesNothing" classname="ColorBlockJam.Tests.Environment.EnvironmentSolidTests" runstate="Runnable" seed="12913030" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001654" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="2165" name="EnvironmentWallRunTests" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.159451" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="2175" name="AGateSplitsItsSideIntoTwoBricks" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.AGateSplitsItsSideIntoTwoBricks" methodname="AGateSplitsItsSideIntoTwoBricks" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="1191860447" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.006900" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2178" name="AnInteriorHoleKeepsOneContinuousRuleFrameWhileANotchIsBricked" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.AnInteriorHoleKeepsOneContinuousRuleFrameWhileANotchIsBricked" methodname="AnInteriorHoleKeepsOneContinuousRuleFrameWhileANotchIsBricked" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="219604902" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.004003" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2177" name="AOneQuadrantRunGetsTwoHalfLengthCapsBackToBack" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.AOneQuadrantRunGetsTwoHalfLengthCapsBackToBack" methodname="AOneQuadrantRunGetsTwoHalfLengthCapsBackToBack" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="68469809" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.007724" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="2170" name="ARectangleHasFourBricksIndependentOfItsSize" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.ARectangleHasFourBricksIndependentOfItsSize" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.006264" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="2167" name="ARectangleHasFourBricksIndependentOfItsSize(1,1)" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.ARectangleHasFourBricksIndependentOfItsSize(1,1)" methodname="ARectangleHasFourBricksIndependentOfItsSize" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="535154538" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001491" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2168" name="ARectangleHasFourBricksIndependentOfItsSize(4,3)" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.ARectangleHasFourBricksIndependentOfItsSize(4,3)" methodname="ARectangleHasFourBricksIndependentOfItsSize" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="31747125" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001518" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="2169" name="ARectangleHasFourBricksIndependentOfItsSize(12,2)" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.ARectangleHasFourBricksIndependentOfItsSize(12,2)" methodname="ARectangleHasFourBricksIndependentOfItsSize" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="2128097631" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001591" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="2174" name="AStraightWallBaseReachesTheFloorEdge" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.AStraightWallBaseReachesTheFloorEdge" methodname="AStraightWallBaseReachesTheFloorEdge" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="2022267175" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.001402" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2180" name="ComposeStillGivesOnlyRulePieces" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.ComposeStillGivesOnlyRulePieces" methodname="ComposeStillGivesOnlyRulePieces" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="793610126" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.002587" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2172" name="EachWallQuadrantAndDoorSlotStandsOnOneDarkBaseThatStopsShortOfOpenVoid" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.EachWallQuadrantAndDoorSlotStandsOnOneDarkBaseThatStopsShortOfOpenVoid" methodname="EachWallQuadrantAndDoorSlotStandsOnOneDarkBaseThatStopsShortOfOpenVoid" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="1961913624" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.053227" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2176" name="EveryFixtureClosesEachStraightRunAtBothEnds" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.EveryFixtureClosesEachStraightRunAtBothEnds" methodname="EveryFixtureClosesEachStraightRunAtBothEnds" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="242553396" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.012158" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2173" name="EveryGateIsClosedByRoundedEndsFacingOutOfItsSpan" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.EveryGateIsClosedByRoundedEndsFacingOutOfItsSpan" methodname="EveryGateIsClosedByRoundedEndsFacingOutOfItsSpan" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="1154608254" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.003599" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2171" name="EveryOuterCornerIsACornerEndWhileHoleCornersKeepCorner1" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.EveryOuterCornerIsACornerEndWhileHoleCornersKeepCorner1" methodname="EveryOuterCornerIsACornerEndWhileHoleCornersKeepCorner1" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="2041384809" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.003623" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2166" name="ThePlayAreaKeepsEveryRuleQuadrantFloorAndDoor" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.ThePlayAreaKeepsEveryRuleQuadrantFloorAndDoor" methodname="ThePlayAreaKeepsEveryRuleQuadrantFloorAndDoor" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="1655794994" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.046944" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="2179" name="TransposingTheBoardTransposesThePlayArea" fullname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests.TransposingTheBoardTransposesThePlayArea" methodname="TransposingTheBoardTransposesThePlayArea" classname="ColorBlockJam.Tests.Environment.EnvironmentWallRunTests" runstate="Runnable" seed="80476170" result="Passed" start-time="2026-09-27 19:59:19Z" end-time="2026-09-27 19:59:19Z" duration="0.005134" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,87 @@
+field s_UssClassName : String serialized=False
+field s_ContentContainerClassName : String serialized=False
+field s_HandleDragLineClassName : String serialized=False
+field s_HandleDragLineVerticalClassName : String serialized=False
+field s_HandleDragLineHorizontalClassName : String serialized=False
+field s_HandleDragLineAnchorClassName : String serialized=False
+field s_HandleDragLineAnchorVerticalClassName : String serialized=False
+field s_HandleDragLineAnchorHorizontalClassName : String serialized=False
+field s_VerticalClassName : String serialized=False
+field s_HorizontalClassName : String serialized=False
+field m_LeftPane : VisualElement serialized=False
+field m_RightPane : VisualElement serialized=False
+field m_FixedPane : VisualElement serialized=False
+field m_FlexedPane : VisualElement serialized=False
+field m_FixedPaneDimension : Single serialized=True
+field m_DragLine : VisualElement serialized=False
+field m_DragLineAnchor : VisualElement serialized=False
+field m_CollapseMode : Boolean serialized=False
+field m_CollapseChildCalledBeforeSetupComplete : Boolean serialized=False
+field m_CollapsedChildIndex : Int32 serialized=False
+field m_Content : VisualElement serialized=False
+field m_Orientation : TwoPaneSplitViewOrientation serialized=False
+field m_FixedPaneIndex : Int32 serialized=False
+field m_FixedPaneInitialDimension : Single serialized=False
+field m_Resizer : TwoPaneSplitViewResizer serialized=False
+method get_fixedPaneInitialDimension
+method set_fixedPaneInitialDimension
+method get_fixedPaneDimension
+method set_fixedPaneDimension
+method OnViewDataReady
+method SetFixedPaneDimension
+== window 960x640 root (x:0.00, y:0.00, width:960.00, height:640.00)
+level-editor-split: (x:0.00, y:0.00, width:960.00, height:610.00) display=Flex
+tools-pane: (x:0.00, y:0.00, width:280.00, height:610.00) display=Flex
+selection-pane: (x:281.00, y:0.00, width:680.00, height:610.00) display=Flex
+top-bar: (x:281.00, y:0.00, width:680.00, height:92.00) display=Flex
+database-row: (x:289.00, y:10.00, width:664.00, height:22.00) display=Flex
+database-actions: (x:289.00, y:37.00, width:664.00, height:21.00) display=Flex
+level-row: (x:289.00, y:62.00, width:664.00, height:23.00) display=Flex
+level-name: (x:687.00, y:63.00, width:263.00, height:21.00) display=Flex
+refresh-json: (x:896.00, y:11.00, width:24.00, height:20.00) display=Flex
+restore-backup: (x:926.00, y:11.00, width:24.00, height:20.00) display=Flex
+create-level: (x:627.00, y:63.00, width:24.00, height:21.00) display=Flex
+delete-level: (x:657.00, y:63.00, width:24.00, height:21.00) display=Flex
+canvas-slot: (x:281.00, y:92.00, width:680.00, height:518.00) display=Flex
+bottom-bar: (x:0.00, y:610.00, width:960.00, height:30.00) display=Flex
+save-level: (x:9.00, y:616.00, width:100.00, height:19.00) display=Flex
+status: (x:120.00, y:618.00, width:832.00, height:15.00) display=Flex
+colors-group: (x:6.00, y:4.00, width:268.00, height:35.00) display=Flex
+blocks-group: (x:6.00, y:43.00, width:268.00, height:85.00) display=Flex
+block-actions: (x:21.00, y:107.00, width:253.00, height:21.00) display=Flex
+doors-group: (x:6.00, y:132.00, width:268.00, height:35.00) display=Flex
+board-group: (x:6.00, y:171.00, width:268.00, height:104.00) display=Flex
+timer-row: (x:21.00, y:255.00, width:253.00, height:20.00) display=Flex
+mechanics-group: (x:6.00, y:279.00, width:268.00, height:35.00) display=Flex
+edit-group: (x:6.00, y:318.00, width:268.00, height:35.00) display=Flex
+raw-data-group: (x:6.00, y:357.00, width:268.00, height:20.00) display=Flex
+status text: Editing Level 1. Save Level writes the JSON source.
+level-id: level-01 width=4 timer=5:00
+== window 1280x800 root (x:0.00, y:0.00, width:1280.00, height:800.00)
+level-editor-split: (x:0.00, y:0.00, width:1280.00, height:770.00) display=Flex
+tools-pane: (x:0.00, y:0.00, width:280.00, height:770.00) display=Flex
+selection-pane: (x:281.00, y:0.00, width:1000.00, height:770.00) display=Flex
+top-bar: (x:281.00, y:0.00, width:1000.00, height:92.00) display=Flex
+database-row: (x:289.00, y:10.00, width:984.00, height:22.00) display=Flex
+database-actions: (x:289.00, y:37.00, width:984.00, height:21.00) display=Flex
+level-row: (x:289.00, y:62.00, width:984.00, height:23.00) display=Flex
+level-name: (x:879.00, y:63.00, width:391.00, height:21.00) display=Flex
+refresh-json: (x:1216.00, y:11.00, width:24.00, height:20.00) display=Flex
+restore-backup: (x:1246.00, y:11.00, width:24.00, height:20.00) display=Flex
+create-level: (x:819.00, y:63.00, width:24.00, height:21.00) display=Flex
+delete-level: (x:849.00, y:63.00, width:24.00, height:21.00) display=Flex
+canvas-slot: (x:281.00, y:92.00, width:1000.00, height:678.00) display=Flex
+bottom-bar: (x:0.00, y:770.00, width:1280.00, height:30.00) display=Flex
+save-level: (x:9.00, y:776.00, width:100.00, height:19.00) display=Flex
+status: (x:120.00, y:778.00, width:1152.00, height:15.00) display=Flex
+colors-group: (x:6.00, y:4.00, width:268.00, height:35.00) display=Flex
+blocks-group: (x:6.00, y:43.00, width:268.00, height:85.00) display=Flex
+block-actions: (x:21.00, y:107.00, width:253.00, height:21.00) display=Flex
+doors-group: (x:6.00, y:132.00, width:268.00, height:35.00) display=Flex
+board-group: (x:6.00, y:171.00, width:268.00, height:104.00) display=Flex
+timer-row: (x:21.00, y:255.00, width:253.00, height:20.00) display=Flex
+mechanics-group: (x:6.00, y:279.00, width:268.00, height:35.00) display=Flex
+edit-group: (x:6.00, y:318.00, width:268.00, height:35.00) display=Flex
+raw-data-group: (x:6.00, y:357.00, width:268.00, height:20.00) display=Flex
+status text: Editing Level 1. Save Level writes the JSON source.
+level-id: level-01 width=4 timer=5:00

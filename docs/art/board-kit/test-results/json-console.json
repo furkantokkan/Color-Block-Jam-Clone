@@ -1,0 +1,62 @@
+{
+  "success": true,
+  "message": "Retrieved 8 log entries.",
+  "data": [
+    {
+      "type": "Error",
+      "message": "Could not restore piece JSON: Piece data changed on disk. Reload JSON before saving: Assets/ColorBlockJam/Data/Board/PrefabTests_c46e4457f9e34a28a51c07da9287d710/Library.json",
+      "file": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryUndoState.cs",
+      "line": 55,
+      "stackTrace": null
+    },
+    {
+      "type": "Exception",
+      "message": "System.Exception: Invalid path in TextDataProvider : 'Library/com.unity.addressables/aa/Android/settings.json'.",
+      "file": "./Library/PackageCache/com.unity.addressables@1.22.3/Runtime/AddressablesImpl.cs",
+      "line": 212,
+      "stackTrace": null
+    },
+    {
+      "type": "Error",
+      "message": "RuntimeData is null.  Please ensure you have built the correct Player Content.",
+      "file": "./Library/PackageCache/com.unity.addressables@1.22.3/Runtime/AddressablesImpl.cs",
+      "line": 205,
+      "stackTrace": null
+    },
+    {
+      "type": "Exception",
+      "message": "OperationException : Addressables - Unable to load runtime data at location UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle`1[[UnityEngine.AddressableAssets.Initialization.ResourceManagerRuntimeData, Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]].\n",
+      "file": "./Library/PackageCache/com.unity.addressables@1.22.3/Runtime/AddressablesImpl.cs",
+      "line": 212,
+      "stackTrace": null
+    },
+    {
+      "type": "Exception",
+      "message": "UnityEngine.AddressableAssets.InvalidKeyException: Exception of type 'UnityEngine.AddressableAssets.InvalidKeyException' was thrown. No Location found for Key=b93477650b31db14b8d2e3b792a56b08, Path=Assets/ColorBlockJam/Data/Levels/LevelDatabase.json. Verify the asset is marked as Addressable.",
+      "file": "./Library/PackageCache/com.unity.addressables@1.22.3/Runtime/AddressablesImpl.cs",
+      "line": 212,
+      "stackTrace": null
+    },
+    {
+      "type": "Exception",
+      "message": "OperationException : ChainOperation failed because dependent operation failed",
+      "file": "./Library/PackageCache/com.unity.addressables@1.22.3/Runtime/AddressablesImpl.cs",
+      "line": 212,
+      "stackTrace": null
+    },
+    {
+      "type": "Exception",
+      "message": "InvalidKeyException: Exception of type 'UnityEngine.AddressableAssets.InvalidKeyException' was thrown. No Location found for Key=b93477650b31db14b8d2e3b792a56b08, Path=Assets/ColorBlockJam/Data/Levels/LevelDatabase.json. Verify the asset is marked as Addressable.\nRethrow as OperationException: ChainOperation failed because dependent operation failed",
+      "file": "Assets/ColorBlockJam/Runtime/Levels/LevelDatabase.cs",
+      "line": 52,
+      "stackTrace": null
+    },
+    {
+      "type": "Error",
+      "message": "Could not restore piece JSON: Piece data changed on disk. Reload JSON before saving: Assets/ColorBlockJam/Data/Board/PrefabTests_e11176b35f904195851e701f9ea57f27/Library.json",
+      "file": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryUndoState.cs",
+      "line": 55,
+      "stackTrace": null
+    }
+  ]
+}

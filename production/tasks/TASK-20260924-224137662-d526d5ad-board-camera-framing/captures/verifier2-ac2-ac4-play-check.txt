@@ -1,0 +1,7 @@
+after load: built=False saved pose=(0.0000, 15.4173, -4.0346) euler=(75.00, 0.00, 0.00)
+built after 1 frames; pieces=76 renderers=76
+board bounds c=(0.000, 0.360, 0.000) s=(5.000, 0.720, 6.000)
+camera pos=(0.0000, 15.4173, -4.0346) euler=(75.00, 0.00, 0.00) fov=60 aspect=0.5625 poseMatchesFraming=True pitch75=True
+board viewport x[0.234,0.766] y[0.329,0.662]
+rendered pieces viewport x[0.233,0.767] y[0.329,0.663]
+AC-4: after 60 more frames the displaced camera stayed put: True

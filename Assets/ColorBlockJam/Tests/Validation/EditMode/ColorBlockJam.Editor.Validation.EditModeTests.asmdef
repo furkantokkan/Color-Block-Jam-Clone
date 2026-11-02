@@ -1,0 +1,17 @@
+{
+  "name": "ColorBlockJam.Editor.Validation.EditModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.Validation",
+  "references": [
+    "ColorBlockJam.Editor.Validation",
+    "ColorBlockJam.Domain",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Gameplay",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

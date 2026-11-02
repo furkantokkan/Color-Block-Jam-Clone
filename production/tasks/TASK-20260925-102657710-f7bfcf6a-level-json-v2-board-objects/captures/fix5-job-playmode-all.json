@@ -1,0 +1,42 @@
+{
+ "result": {
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+   "job_id": "d6924ad6587b4b2daa68989fea02a9bd",
+   "status": "succeeded",
+   "mode": "PlayMode",
+   "started_unix_ms": 1790344562321,
+   "finished_unix_ms": 1790344584870,
+   "last_update_unix_ms": 1790344584870,
+   "progress": {
+    "completed": 38,
+    "total": 38,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1790344584126,
+    "last_finished_test_full_name": "ColorBlockJam.Tests.PlayMode.SceneFlowSmokeTests.ProjectScopeLoadsActiveAddressableLevelJson",
+    "last_finished_unix_ms": 1790344584720,
+    "stuck_suspected": false,
+    "editor_is_focused": false,
+    "blocked_reason": null,
+    "failures_so_far": [],
+    "failures_capped": false
+   },
+   "error": null,
+   "result": {
+    "mode": "PlayMode",
+    "summary": {
+     "total": 38,
+     "passed": 38,
+     "failed": 0,
+     "skipped": 0,
+     "durationSeconds": 13.2118225,
+     "resultState": "Passed"
+    },
+    "results": []
+   }
+  },
+  "hint": null
+ }
+}

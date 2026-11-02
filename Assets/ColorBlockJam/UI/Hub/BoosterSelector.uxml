@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Representative authoring item only. PreLevelView clones this layout and replaces every dynamic field. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Hub/PreLevel.uss" />
+    <ui:VisualElement name="booster-selector" class="booster-selector cbj-document" picking-mode="Ignore">
+        <ui:Button class="booster-selector__button cbj-pressable cbj-haptic-tap">
+            <ui:VisualElement class="booster-selector__icon cbj-press-tint" picking-mode="Ignore" />
+            <ui:VisualElement class="booster-selector__count-badge" picking-mode="Ignore">
+                <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                    <ui:Label name="selector-count-back" class="booster-selector__count cbj-title cbj-heavy-text__back" text="2" picking-mode="Ignore" />
+                    <ui:Label name="selector-count" class="booster-selector__count cbj-title cbj-heavy-text__front" text="2" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="booster-selector__check-badge" picking-mode="Ignore">
+                <ui:VisualElement class="booster-selector__check-mark" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement class="booster-selector__plus-badge" picking-mode="Ignore">
+                <ui:VisualElement class="booster-selector__plus-icon" picking-mode="Ignore" />
+            </ui:VisualElement>
+        </ui:Button>
+        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+            <ui:Label name="selector-label-back" class="booster-selector__label cbj-title cbj-heavy-text__back" text="Extra Time" picking-mode="Ignore" />
+            <ui:Label name="selector-label" class="booster-selector__label cbj-title cbj-heavy-text__front" text="Extra Time" picking-mode="Ignore" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

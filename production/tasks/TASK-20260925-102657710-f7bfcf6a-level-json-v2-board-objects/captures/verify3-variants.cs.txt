@@ -1,0 +1,48 @@
+var sb = new System.Text.StringBuilder();
+string scratch = @"C:\Users\e-fur\AppData\Local\Temp\claude\C--Users-e-fur-Documents-Repos-ColorBlockJamCase2026\203011cf-a558-4604-982b-dc0432104f74\scratchpad\vfy_final\variants.json";
+var arr = Newtonsoft.Json.Linq.JArray.Parse(System.IO.File.ReadAllText(scratch));
+System.Func<object, string> dump = null;
+dump = p => {
+  if (p == null) return "null";
+  var t = p.GetType(); var parts = new System.Collections.Generic.List<string>();
+  foreach (var pr in t.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)) {
+    object val = pr.GetValue(p);
+    if (pr.Name.EndsWith("Count") && val is int n) {
+      foreach (var m in t.GetMethods()) {
+        var ps = m.GetParameters();
+        if (m.Name.StartsWith("Get") && m.Name.EndsWith("At") && ps.Length == 1 && ps[0].ParameterType == typeof(int)) {
+          var items = new System.Collections.Generic.List<string>();
+          for (int i = 0; i < n; i++) items.Add(System.Convert.ToString(m.Invoke(p, new object[] { i })));
+          parts.Add(m.Name + "=[" + string.Join(",", items) + "]");
+        }
+      }
+    } else parts.Add(pr.Name + "=" + System.Convert.ToString(val));
+  }
+  return t.Name + "(" + string.Join(" ", parts) + ")";
+};
+foreach (var item in arr) {
+  string name = (string)item["name"]; string json = (string)item["json"];
+  ColorBlockJam.Runtime.Levels.LevelData[] rl; string re; ColorBlockJam.Runtime.Levels.LevelData[] al; string ae; ColorBlockJam.Runtime.Levels.LevelData[] dl; string de;
+  bool r = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(json, ColorBlockJam.Runtime.Levels.LevelReadMode.Runtime, out rl, out re);
+  bool a = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(json, ColorBlockJam.Runtime.Levels.LevelReadMode.Authoring, out al, out ae);
+  bool d = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(json, out dl, out de);
+  sb.Append(name).Append(" | runtime=").Append(r).Append(r ? "" : " [" + re + "]").Append(" | authoring=").Append(a).Append(a ? "" : " [" + ae + "]");
+  sb.Append(" | default3arg=").Append(d == a && de == ae ? "same-as-authoring" : "DIFFERS");
+  if (a) {
+    string w1; string we; bool wOk = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(al, out w1, out we);
+    ColorBlockJam.Runtime.Levels.LevelData[] back = null; string be = null;
+    bool b2 = wOk && ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(w1, ColorBlockJam.Runtime.Levels.LevelReadMode.Authoring, out back, out be);
+    string w2 = null; if (b2) ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(back, out w2, out we);
+    bool deep = wOk && Newtonsoft.Json.Linq.JToken.DeepEquals(Newtonsoft.Json.Linq.JToken.Parse(w1), Newtonsoft.Json.Linq.JToken.Parse(json));
+    sb.Append(" | write=").Append(wOk).Append(" roundTripIdentical=").Append(b2 && w1 == w2).Append(" writeDeepEqualsInput=").Append(deep);
+    var lv = al[0];
+    for (int i = 0; i < lv.BlockCount; i++) { var bk = lv.GetBlockAt(i); for (int k = 0; k < bk.EffectCount; k++) sb.Append(" block ").Append(bk.Id).Append(":").Append(dump(bk.GetEffectAt(k).Parameters)); }
+    for (int i = 0; i < lv.DoorCount; i++) { var dr = lv.GetDoorAt(i); for (int k = 0; k < dr.EffectCount; k++) sb.Append(" door ").Append(dr.Id).Append(":").Append(dump(dr.GetEffectAt(k).Parameters)); }
+    for (int i = 0; i < lv.CellObjectCount; i++) { var co = lv.GetCellObjectAt(i); sb.Append(" obj ").Append(co.Id).Append(":").Append(dump(co.Effect.Parameters)); }
+  } else {
+    string wj; string wErr; bool wr = false;
+    sb.Append(" | ");
+  }
+  sb.Append("\n");
+}
+return sb.ToString();

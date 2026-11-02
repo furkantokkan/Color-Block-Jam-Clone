@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- The black screen fade over every scene change (DEC-198), on the persistent ProjectContext. ScreenFadeView
+         shows it only while a change runs; shown, it keeps picking on, so it blocks presses on every panel below. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/ScreenFade.uss" />
+    <ui:VisualElement name="screen-fade" class="screen-fade" />
+</ui:UXML>

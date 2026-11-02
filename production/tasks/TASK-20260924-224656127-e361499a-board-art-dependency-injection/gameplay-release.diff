@@ -1,0 +1,152 @@
+--- a/Assets/ColorBlockJam/Gameplay/Board/BoardPresenter.cs
++++ b/Assets/ColorBlockJam/Gameplay/Board/BoardPresenter.cs
+@@ -39,6 +39,7 @@
+         private const float k_onCellSqrDistance = 1e-8f;
+ 
+         private readonly EnvironmentView m_environment;
++        private readonly BoardArt m_art;
+         private readonly BlockShapeLibrary m_shapes;
+ 
+         private Transform m_blocksRoot;
+@@ -57,20 +58,21 @@
+         private bool m_disposed;
+ 
+         // Owner: the Game scene container (AsSingle). Stops: Dispose, when the scene container is disposed.
+-        public BoardPresenter(EnvironmentView environment, BlockShapeLibrary shapes)
++        public BoardPresenter(EnvironmentView environment, BoardArt art)
+         {
+             if (environment == null)
+             {
+                 throw new ArgumentNullException(nameof(environment));
+             }
+ 
+-            if (shapes == null)
++            if (art == null)
+             {
+-                throw new ArgumentNullException(nameof(shapes));
++                throw new ArgumentNullException(nameof(art));
+             }
+ 
+             m_environment = environment;
+-            m_shapes = shapes;
++            m_art = art;
++            m_shapes = art.Library;
+         }
+ 
+         /// <summary>The time the longest running exit still needs; the session caps its Won Finish with it (DEC-93).</summary>
+@@ -131,7 +133,7 @@
+             CreateBlocksRoot();
+ 
+             // Owner: this presenter. Stops: the next TryBuild of another level or Dispose disposes it.
+-            BlockPieceFactory factory = new BlockPieceFactory(m_shapes, m_blocksRoot);
++            BlockPieceFactory factory = new BlockPieceFactory(m_art, m_blocksRoot);
+             try
+             {
+                 foreach (KeyValuePair<BlockShapeType, PoolNeed> need in needs)
+@@ -347,7 +349,7 @@
+                 BlockVisualSpec visual = level.GetVisual(block);
+                 BlockShapeLibrary.Shape shape = m_shapes.Get(visual.SourceType);
+                 BlockPiece prefab = shape.Prefab != null ? shape.Prefab.GetComponent<BlockPiece>() : null;
+-                if (prefab == null || prefab.Library != m_shapes || prefab.SourceType != visual.SourceType)
++                if (prefab == null || prefab.SourceType != visual.SourceType)
+                 {
+                     error = $"Block {level.GetBlockId(block)} uses shape '{shape.TypeName}', whose prefab has no BlockPiece for this shape library.";
+                     return false;
+--- a/Assets/ColorBlockJam/Gameplay/Composition/GameSceneInstaller.cs
++++ b/Assets/ColorBlockJam/Gameplay/Composition/GameSceneInstaller.cs
+@@ -4,6 +4,8 @@
+ using ColorBlockJam.Gameplay.Board;
+ using ColorBlockJam.Gameplay.Input;
+ using ColorBlockJam.Gameplay.Session;
++using ColorBlockJam.Presentation.Board;
++using ColorBlockJam.Runtime.Art;
+ using ColorBlockJam.Runtime.Board;
+ using Onity.DI;
+ using Onity.Unity.Installers;
+@@ -22,6 +24,9 @@
+     {
+         [SerializeField] private EnvironmentView m_environment = null;
+         [SerializeField] private BlockShapeLibrary m_shapes = null;
++        [Tooltip("With the shape library and piece catalog, the one BoardArt this scene binds (DEC-123).")]
++        [SerializeField] private GamePalette m_palette = null;
++        [SerializeField] private BoardPieceCatalog m_catalog = null;
+         [SerializeField] private Camera m_camera = null;
+         [Tooltip("Optional: frames the board once per build. Without it, one warning is logged and play continues.")]
+         [SerializeField] private BoardCamera m_boardCamera = null;
+@@ -51,7 +56,20 @@
+                 throw new InvalidOperationException("Game scene installer: the gameplay camera is missing.");
+             }
+ 
++            if (m_palette == null || m_catalog == null)
++            {
++                throw new InvalidOperationException("Game scene installer: the palette or the board piece catalog is missing.");
++            }
++
++            // Validation loads the shape definitions now, at scope build, before any attempt reads them.
++            BoardArt art = new BoardArt(m_palette, m_catalog, m_shapes);
++            if (!art.Validate(out string artError))
++            {
++                throw new InvalidOperationException("Game scene installer: " + artError);
++            }
++
+             container.BindScriptableObject(m_shapes);
++            container.BindInstance(art);
+             container.BindInstance(m_environment);
+             container.BindInstance<IUiPointerFilter>(new UiToolkitPointerFilter(m_uiDocuments ?? Array.Empty<UIDocument>()));
+             container.BindInstance<IBoardProjector>(new CameraBoardProjector(m_camera, m_environment.BoardRoot, m_pickPlaneHeight));
+--- a/Assets/ColorBlockJam/Tests/Gameplay/PlayMode/BoardPresenterLifecycleTests.cs
++++ b/Assets/ColorBlockJam/Tests/Gameplay/PlayMode/BoardPresenterLifecycleTests.cs
+@@ -92,7 +92,8 @@
+             Assert.That(presenter.GetPiece(0), Is.Null);
+             Assert.That(presenter.ActivePieceCount, Is.EqualTo(1));
+             Assert.That(root.gameObject.activeSelf, Is.False, "The pool deactivates a returned root.");
+-            Assert.That(IsClipped(tiles), Is.False, "The pool release resets the clip plane.");
++            // Release makes no GPU write (DEC-123); the next checkout's colour write clears the clip plane,
++            // which BoardKitLifecycleTests.PooledTileTakesItsOwnersColourAndReleaseMakesNoPropertyBlockWrite covers.
+         }
+ 
+         [Test]
+@@ -163,7 +164,7 @@
+             // A library loaded from the shape JSON alone has no prefab bindings (BlockShapeLibrary.Load).
+             BlockShapeLibrary unbound = ScriptableObject.CreateInstance<BlockShapeLibrary>();
+             unbound.Load(File.ReadAllText(k_shapeJsonPath));
+-            BoardPresenter presenter = new BoardPresenter(m_scene.Environment, unbound);
++            BoardPresenter presenter = new BoardPresenter(m_scene.Environment, PresenterScene.CreateArt(unbound));
+             try
+             {
+                 Assert.That(presenter.TryBuild(m_level, out string error), Is.False);
+--- a/Assets/ColorBlockJam/Tests/Gameplay/PlayMode/Fixtures/PresenterScene.cs
++++ b/Assets/ColorBlockJam/Tests/Gameplay/PlayMode/Fixtures/PresenterScene.cs
+@@ -4,6 +4,7 @@
+ using ColorBlockJam.Environment;
+ using ColorBlockJam.Gameplay.Board;
+ using ColorBlockJam.Gameplay.Levels;
++using ColorBlockJam.Presentation.Board;
+ using ColorBlockJam.Runtime.Art;
+ using ColorBlockJam.Runtime.Board;
+ using ColorBlockJam.Runtime.Layout;
+@@ -23,6 +24,8 @@
+         private const string k_environmentPrefabPath = "Assets/ColorBlockJam/Prefabs/Environment/Environment.prefab";
+         private const string k_environmentDatabasePath = "Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset";
+         private const string k_shapeLibraryPath = "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset";
++        private const string k_palettePath = "Assets/ColorBlockJam/Data/Art/GamePalette.asset";
++        private const string k_catalogPath = "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset";
+         private const int k_size = 3;
+ 
+         /// <summary>The exiting block's origin: column 1 of the top row, under the door.</summary>
+@@ -35,7 +38,14 @@
+             m_root = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(k_environmentPrefabPath));
+             Environment = m_root.GetComponent<EnvironmentView>();
+             Environment.Construct(AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(k_environmentDatabasePath));
+-            Presenter = new BoardPresenter(Environment, AssetDatabase.LoadAssetAtPath<BlockShapeLibrary>(k_shapeLibraryPath));
++            Presenter = new BoardPresenter(Environment, CreateArt(AssetDatabase.LoadAssetAtPath<BlockShapeLibrary>(k_shapeLibraryPath)));
++        }
++
++        /// <summary>The board art the Game scene binds, over the given shape library.</summary>
++        public static BoardArt CreateArt(BlockShapeLibrary library)
++        {
++            return new BoardArt(AssetDatabase.LoadAssetAtPath<GamePalette>(k_palettePath),
++                AssetDatabase.LoadAssetAtPath<BoardPieceCatalog>(k_catalogPath), library);
+         }
+ 
+         public EnvironmentView Environment { get; }

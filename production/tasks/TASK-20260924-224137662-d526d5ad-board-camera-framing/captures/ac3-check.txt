@@ -1,0 +1,10 @@
+LevelEditor.unity sha256 before=3e743628869c4f5f4b38616b496209284d46016c7f1dc370cc96502636902de9
+level-01: bounds c=(0.000, 0.360, 0.000) s=(5.000, 0.720, 6.000) cam pos=(0.0000, 15.4173, -4.0346) euler=(75.00, 0.00, 0.00) fov=60 aspect=0.5625 viewport x[0.234,0.766] y[0.329,0.662] poseMatchesFraming=True pitch75=True wholeBoardInView=True missingDontSave=0 png=ac3-leveleditor-preview-level-01.png
+level-02: bounds c=(0.000, 0.360, 0.000) s=(6.000, 0.720, 6.000) cam pos=(0.0000, 15.4173, -4.0346) euler=(75.00, 0.00, 0.00) fov=60 aspect=0.5625 viewport x[0.181,0.819] y[0.329,0.662] poseMatchesFraming=True pitch75=True wholeBoardInView=True missingDontSave=0 png=ac3-leveleditor-preview-level-02.png
+level-03: bounds c=(0.000, 0.360, 0.000) s=(6.000, 0.720, 7.000) cam pos=(0.0000, 16.2538, -4.2587) euler=(75.00, 0.00, 0.00) fov=60 aspect=0.5625 viewport x[0.196,0.804] y[0.311,0.677] poseMatchesFraming=True pitch75=True wholeBoardInView=True missingDontSave=0 png=ac3-leveleditor-preview-level-03.png
+level-04: bounds c=(0.000, 0.360, 0.000) s=(6.000, 0.720, 7.000) cam pos=(0.0000, 16.2538, -4.2587) euler=(75.00, 0.00, 0.00) fov=60 aspect=0.5625 viewport x[0.196,0.804] y[0.311,0.677] poseMatchesFraming=True pitch75=True wholeBoardInView=True missingDontSave=0 png=ac3-leveleditor-preview-level-04.png
+level-05: bounds c=(0.000, 0.360, 0.000) s=(6.000, 0.720, 7.000) cam pos=(0.0000, 16.2538, -4.2587) euler=(75.00, 0.00, 0.00) fov=60 aspect=0.5625 viewport x[0.196,0.804] y[0.311,0.677] poseMatchesFraming=True pitch75=True wholeBoardInView=True missingDontSave=0 png=ac3-leveleditor-preview-level-05.png
+save-as-copy (shown level-03): saved=True dirty=False copy sha256=3e743628869c4f5f4b38616b496209284d46016c7f1dc370cc96502636902de9 identicalToLevelEditor=True LevelEditor.unity unchanged=True
+after null publish: host=null and roots back to 1: True
+save-as-copy (disposed): saved=True dirty=False copy sha256=3e743628869c4f5f4b38616b496209284d46016c7f1dc370cc96502636902de9 identicalToLevelEditor=True LevelEditor.unity unchanged=True
+RESULT PASS

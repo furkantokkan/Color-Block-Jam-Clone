@@ -1,0 +1,36 @@
+{
+  "name": "ColorBlockJam.Gameplay.PlayModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.Gameplay",
+  "references": [
+    "ColorBlockJam.Domain",
+    "ColorBlockJam.Gameplay",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "Onity.Pooling",
+    "Onity.Factory",
+    "PrimeTween.Runtime",
+    "Unity.InputSystem",
+    "Unity.InputSystem.TestFramework",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "HighlightPlus.Runtime"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

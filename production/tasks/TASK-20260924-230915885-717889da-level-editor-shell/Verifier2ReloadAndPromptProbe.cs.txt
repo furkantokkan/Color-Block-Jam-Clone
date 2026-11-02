@@ -1,0 +1,224 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using ColorBlockJam.Runtime.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    /// <summary>
+    /// Second verifier probe (isolated copy only, never copied back): a real domain reload with the window open
+    /// (D-001 related observation) and the dirty-draft prompts of Refresh, Restore, +, x and level switch.
+    /// </summary>
+    public sealed class VerifierShellReloadProbeTests
+    {
+        private const string k_out = "VerifierOut2";
+        private const string k_stepKey = "VerifierShellReloadProbe.Step";
+
+        [UnityTest]
+        public IEnumerator A_RealDomainReloadKeepsTheBoardFields()
+        {
+            Directory.CreateDirectory(k_out);
+            string logPath = Path.Combine(k_out, "domain-reload.txt");
+            LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            window.ShowUtility();
+            window.position = new Rect(40f, 40f, 960f, 640f);
+            // No lambda captures: closure objects do not survive the reload of the test enumerator.
+            double end = EditorApplication.timeSinceStartup + 10.0;
+            while (FindReadyWindow() == null && EditorApplication.timeSinceStartup < end)
+            {
+                yield return null;
+            }
+
+            File.WriteAllText(logPath, "before reload: " + Describe(FindReadyWindow()) + "\n");
+            Assert.That(LevelId(FindReadyWindow()), Is.Not.Empty);
+
+            EditorUtility.RequestScriptReload();
+            yield return new WaitForDomainReload();
+
+            // After the reload, wait only for the rebuilt GUI (not for a loaded level), then half a second more.
+            end = EditorApplication.timeSinceStartup + 10.0;
+            while (FindWindowWithGui() == null && EditorApplication.timeSinceStartup < end)
+            {
+                yield return null;
+            }
+
+            end = EditorApplication.timeSinceStartup + 0.5;
+            while (EditorApplication.timeSinceStartup < end)
+            {
+                yield return null;
+            }
+
+            logPath = Path.Combine(k_out, "domain-reload.txt");
+            LevelDatabaseWindow reloaded = FindWindowWithGui();
+            Assert.That(reloaded, Is.Not.Null, "The window survives the domain reload.");
+            string after = Describe(reloaded);
+            File.AppendAllText(logPath, "after reload:  " + after + "\n");
+
+            LevelData level = AssetDatabase.LoadAssetAtPath<LevelDatabase>(LevelDatabaseAddressables.DefaultDatabasePath).GetAt(0);
+            VisualElement root = reloaded.rootVisualElement;
+            try
+            {
+                Assert.That(root.Q<TextField>("level-id").value, Is.EqualTo(level.Id), after);
+                Assert.That(root.Q<TextField>("level-name").value, Is.EqualTo(level.Name), after);
+                Assert.That(root.Q<IntegerField>("board-width").value, Is.EqualTo(level.Width), after);
+                Assert.That(root.Q<IntegerField>("board-height").value, Is.EqualTo(level.Height), after);
+                Assert.That(root.Q<IntegerField>("timer-seconds").value, Is.EqualTo(level.TimerSeconds), after);
+                Assert.That(reloaded.hasUnsavedChanges, Is.False);
+                File.AppendAllText(logPath, $"expected:      id={level.Id} name={level.Name} w={level.Width} h={level.Height} timer={level.TimerSeconds}\nPASS\n");
+            }
+            finally
+            {
+                reloaded.DiscardChanges();
+                reloaded.Close();
+            }
+        }
+
+        [Test]
+        public void B_DirtyDraftPromptsBeforeRefreshRestorePlusDeleteAndSwitch()
+        {
+            Directory.CreateDirectory(k_out);
+            StringBuilder log = new StringBuilder();
+            List<string> messages = new List<string>();
+            void Capture(string message, string stack, LogType type) => messages.Add(type + ": " + message);
+            LogAssert.ignoreFailingMessages = true;
+            Application.logMessageReceived += Capture;
+            LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            try
+            {
+                window.ShowUtility();
+                window.position = new Rect(40f, 40f, 960f, 640f);
+                typeof(LevelDatabaseWindow).GetMethod("CreateGUI", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(window, null);
+                VisualElement root = window.rootVisualElement;
+                string path = LevelDatabaseAddressables.GetActivePath(
+                    AssetDatabase.LoadAssetAtPath<LevelDatabase>(LevelDatabaseAddressables.DefaultDatabasePath));
+                string sha = Sha(path);
+                int count = Count();
+                IntegerField timer = root.Q<IntegerField>("timer-seconds");
+                int edited = timer.value == 60 ? 61 : 60;
+                timer.value = edited;
+                Label status = root.Q<Label>("status");
+                log.AppendLine($"edit: timer={timer.value} dirty={window.hasUnsavedChanges} status='{status.text}' levels={count}");
+                Assert.That(window.hasUnsavedChanges, Is.True);
+
+                foreach (string name in new[] { "refresh-json", "restore-backup", "create-level", "delete-level" })
+                {
+                    Button button = root.Q<Button>(name);
+                    messages.Clear();
+                    bool enabled = button.enabledInHierarchy;
+                    if (enabled)
+                    {
+                        Click(button);
+                    }
+
+                    string dialogs = string.Join(" | ", messages);
+                    log.AppendLine($"{name}: enabled={enabled} dialog=[{dialogs}] timer={timer.value} dirty={window.hasUnsavedChanges} levels={Count()} shaSame={Sha(path) == sha} status='{status.text}'");
+                    if (enabled)
+                    {
+                        Assert.That(dialogs, Does.Contain("Unsaved Level"), name + " asks before leaving the draft");
+                    }
+
+                    Assert.That(timer.value, Is.EqualTo(edited), name);
+                    Assert.That(window.hasUnsavedChanges, Is.True, name);
+                    Assert.That(Count(), Is.EqualTo(count), name);
+                    Assert.That(Sha(path), Is.EqualTo(sha), name);
+                }
+
+                DropdownField target = null;
+                foreach (DropdownField field in root.Query<DropdownField>().ToList())
+                {
+                    if (field.label == "Target Level")
+                    {
+                        target = field;
+                    }
+                }
+
+                messages.Clear();
+                int selected = target.index;
+                target.index = selected == 0 ? 1 : 0;
+                log.AppendLine($"switch level: dialog=[{string.Join(" | ", messages)}] index {selected}->{target.index} timer={timer.value} dirty={window.hasUnsavedChanges}");
+                Assert.That(target.index, Is.EqualTo(selected), "Cancel keeps the selected level.");
+                Assert.That(timer.value, Is.EqualTo(edited));
+                Assert.That(Sha(path), Is.EqualTo(sha));
+                log.AppendLine("PASS");
+            }
+            finally
+            {
+                Application.logMessageReceived -= Capture;
+                File.WriteAllText(Path.Combine(k_out, "dirty-prompts.txt"), log.ToString());
+                window.DiscardChanges();
+                window.Close();
+            }
+        }
+
+        private static LevelDatabaseWindow FindWindowWithGui()
+        {
+            LevelDatabaseWindow[] windows = Resources.FindObjectsOfTypeAll<LevelDatabaseWindow>();
+            return windows.Length > 0 && windows[0].rootVisualElement.Q("top-bar") != null ? windows[0] : null;
+        }
+
+        // Ready means the GUI is built and a level is loaded into the fields.
+        private static LevelDatabaseWindow FindReadyWindow()
+        {
+            LevelDatabaseWindow[] windows = Resources.FindObjectsOfTypeAll<LevelDatabaseWindow>();
+            return windows.Length > 0 && windows[0].rootVisualElement.Q("top-bar") != null && LevelId(windows[0]) != ""
+                ? windows[0]
+                : null;
+        }
+
+        private static string LevelId(LevelDatabaseWindow window)
+        {
+            TextField id = window.rootVisualElement.Q<TextField>("level-id");
+            return id != null ? id.value : "";
+        }
+
+        private static string Describe(LevelDatabaseWindow window)
+        {
+            VisualElement root = window.rootVisualElement;
+            return $"id={root.Q<TextField>("level-id")?.value} name={root.Q<TextField>("level-name")?.value} " +
+                   $"w={root.Q<IntegerField>("board-width")?.value} h={root.Q<IntegerField>("board-height")?.value} " +
+                   $"timer={root.Q<IntegerField>("timer-seconds")?.value} text={root.Q<Label>("timer-text")?.text} " +
+                   $"dirty={window.hasUnsavedChanges} status='{root.Q<Label>("status")?.text}'";
+        }
+
+        private static IEnumerator WaitUntil(System.Func<bool> condition)
+        {
+            double end = EditorApplication.timeSinceStartup + 10.0;
+            while (!condition() && EditorApplication.timeSinceStartup < end)
+            {
+                yield return null;
+            }
+        }
+
+        private static int Count()
+        {
+            return AssetDatabase.LoadAssetAtPath<LevelDatabase>(LevelDatabaseAddressables.DefaultDatabasePath).Count;
+        }
+
+        private static void Click(Button button)
+        {
+            using (NavigationSubmitEvent submit = NavigationSubmitEvent.GetPooled())
+            {
+                submit.target = button;
+                button.SendEvent(submit);
+            }
+        }
+
+        private static string Sha(string path)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] hash = sha.ComputeHash(File.ReadAllBytes(path));
+                return System.BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+    }
+}

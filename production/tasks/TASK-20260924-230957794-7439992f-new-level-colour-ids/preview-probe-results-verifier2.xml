@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="10" result="Passed" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.4532098">
+  <test-suite type="TestSuite" id="1000" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="388" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.453210" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1138" name="ColorBlockJam.Editor.LevelPreview.Tests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/CBJcolourverify2-ff0896/Library/ScriptAssemblies/ColorBlockJam.Editor.LevelPreview.Tests.dll" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.424401" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="55588" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1139" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.420173" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1140" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.415265" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1141" name="LevelPreview" fullname="ColorBlockJam.Tests.LevelPreview" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.413772" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1125" name="LevelPreviewTests" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.398758" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1135" name="FailedRebuildShowsTheLastValidLevelAgain" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.FailedRebuildShowsTheLastValidLevelAgain" methodname="FailedRebuildShowsTheLastValidLevelAgain" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="146501401" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:41Z" duration="0.279100" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1134" name="FailedRootCreationReturnsFalseLeavesNothingAndCanBeRetried" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.FailedRootCreationReturnsFalseLeavesNothingAndCanBeRetried" methodname="FailedRootCreationReturnsFalseLeavesNothingAndCanBeRetried" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="931330234" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:41Z" duration="0.002046" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1132" name="HostBuildsRebuildsWithBoundedPoolsKeepsInvalidDraftsAndLeavesNothingOnDispose" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.HostBuildsRebuildsWithBoundedPoolsKeepsInvalidDraftsAndLeavesNothingOnDispose" methodname="HostBuildsRebuildsWithBoundedPoolsKeepsInvalidDraftsAndLeavesNothingOnDispose" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="341830603" result="Passed" start-time="2026-09-25 04:26:41Z" end-time="2026-09-25 04:26:42Z" duration="0.077628" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1126" name="LevelOneBlocksMapToShapeColourCellsAndFloorCellPositions" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.LevelOneBlocksMapToShapeColourCellsAndFloorCellPositions" methodname="LevelOneBlocksMapToShapeColourCellsAndFloorCellPositions" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="1155748865" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.002888" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1133" name="ShapePrefabOfAnotherLibraryIsRejectedBeforeTheSceneChanges" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.ShapePrefabOfAnotherLibraryIsRejectedBeforeTheSceneChanges" methodname="ShapePrefabOfAnotherLibraryIsRejectedBeforeTheSceneChanges" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="1949264961" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.004327" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1131" name="UnknownShapeOrColourIsRejectedWithTheBlockId" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.UnknownShapeOrColourIsRejectedWithTheBlockId" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.008288" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1127" name="UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Banana&quot;,&quot;LightBlue&quot;,&quot;unknown shape 'Banana'&quot;)" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Banana&quot;,&quot;LightBlue&quot;,&quot;unknown shape 'Banana'&quot;)" methodname="UnknownShapeOrColourIsRejectedWithTheBlockId" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="1497090564" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.001909" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1128" name="UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Square&quot;,&quot;Magenta&quot;,&quot;unknown colour 'Magenta'&quot;)" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Square&quot;,&quot;Magenta&quot;,&quot;unknown colour 'Magenta'&quot;)" methodname="UnknownShapeOrColourIsRejectedWithTheBlockId" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="892853148" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.000490" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1129" name="UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Square&quot;,&quot;Wall&quot;,&quot;unknown colour 'Wall'&quot;)" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Square&quot;,&quot;Wall&quot;,&quot;unknown colour 'Wall'&quot;)" methodname="UnknownShapeOrColourIsRejectedWithTheBlockId" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="2001126698" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.000416" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1130" name="UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Square&quot;,&quot;7&quot;,&quot;unknown colour '7'&quot;)" fullname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests.UnknownShapeOrColourIsRejectedWithTheBlockId(&quot;Square&quot;,&quot;7&quot;,&quot;unknown colour '7'&quot;)" methodname="UnknownShapeOrColourIsRejectedWithTheBlockId" classname="ColorBlockJam.Tests.LevelPreview.LevelPreviewTests" runstate="Runnable" seed="1905437149" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.000298" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1136" name="VerifierStarterLevelPreviewProbe" fullname="ColorBlockJam.Tests.LevelPreview.VerifierStarterLevelPreviewProbe" classname="ColorBlockJam.Tests.LevelPreview.VerifierStarterLevelPreviewProbe" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.012879" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1137" name="CreateLevelSeedShowsInThePreviewHostWithoutError" fullname="ColorBlockJam.Tests.LevelPreview.VerifierStarterLevelPreviewProbe.CreateLevelSeedShowsInThePreviewHostWithoutError" methodname="CreateLevelSeedShowsInThePreviewHostWithoutError" classname="ColorBlockJam.Tests.LevelPreview.VerifierStarterLevelPreviewProbe" runstate="Runnable" seed="945203015" result="Passed" start-time="2026-09-25 04:26:42Z" end-time="2026-09-25 04:26:42Z" duration="0.011584" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[VERIFIER-PROBE seed TryShow=True error='' blocks=1 levelId=level-001
+VERIFIER-PROBE old-lowercase TryShow=False error='Door 0 needs a gate colour name.'
+Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

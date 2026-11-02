@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "8810067fefc14fa59850468ea4072818",
+    "status": "succeeded",
+    "mode": "PlayMode",
+    "started_unix_ms": 1790255646183,
+    "finished_unix_ms": 1790255658653,
+    "last_update_unix_ms": 1790255658653,
+    "progress": {
+      "completed": 11,
+      "total": 11,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1790255658589,
+      "last_finished_test_full_name": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.VacuumUsesSixteenSharedTextureFramesAndOneRendererWithoutRig",
+      "last_finished_unix_ms": 1790255658592,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": null
+  },
+  "hint": null
+}

@@ -1,0 +1,144 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Home screen, reference 06 (design 7). Element names are the contract with HomeView, HubScreen and the tests. -->
+    <!-- Load shared styles here as well as through PanelSettings so UI Builder can preview Home on its own. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Hub/Home.uss" />
+    <!-- DEC-143: the currency holders are authored instances of CurrencyHolder.uxml instead of being added by
+         HomeView at runtime, so the Editor and UI Builder show the finished top bar without Play Mode. -->
+    <ui:Template name="CurrencyHolder" src="project://database/Assets/ColorBlockJam/UI/Hub/CurrencyHolder.uxml" />
+    <ui:VisualElement name="home-screen" class="home-screen" picking-mode="Ignore">
+        <ui:VisualElement name="home-background" class="home-background" picking-mode="Ignore" />
+
+        <!-- HubScreen pads left, top and right from the safe area. -->
+        <ui:VisualElement name="safe-area" class="safe-area" picking-mode="Ignore">
+
+            <!--
+              D-008: absolute children position from the parent's border box, not its padding box, so an
+              absolute top-bar directly under #safe-area ignored the padding-top the safe-area inset writes
+              there. safe-content is a normal-flow child of #safe-area, so it starts below that padding; the
+              absolute top-bar, now a child of safe-content instead, positions from safe-content's border box
+              (which has no padding of its own), so the inset reaches it again.
+            -->
+            <ui:VisualElement name="safe-content" class="safe-content" picking-mode="Ignore">
+
+                <!-- Decorative route: rails behind, nodes bottom-up (column-reverse), slot 0 = current level. -->
+                <ui:VisualElement name="level-route" class="level-route" picking-mode="Ignore">
+                    <ui:VisualElement name="route-rails" class="route-rails" picking-mode="Ignore">
+                        <ui:VisualElement class="route-rail" picking-mode="Ignore" />
+                        <ui:VisualElement class="route-fill" picking-mode="Ignore" />
+                        <ui:VisualElement class="route-rail" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <!--
+                      D-010: each numeral is a two-layer "cbj-heavy-text" pair (Common.uss, reused from the
+                      Settings popup's D-001 fix): a back Label (dark, wide outline) then the front Label the
+                      presenter writes (its original "route-node-label" name keeps HomeView's query working).
+                    -->
+                    <ui:VisualElement class="route-node route-node--current" picking-mode="Ignore">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="route-node__label cbj-title cbj-heavy-text__back" text="1" picking-mode="Ignore" />
+                            <ui:Label name="route-node-label" class="route-node__label cbj-title cbj-heavy-text__front" text="1" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="route-node-lock" class="route-node__lock" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="route-node route-node--locked" picking-mode="Ignore">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="route-node__label cbj-title cbj-heavy-text__back" text="2" picking-mode="Ignore" />
+                            <ui:Label name="route-node-label" class="route-node__label cbj-title cbj-heavy-text__front" text="2" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="route-node-lock" class="route-node__lock" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="route-node route-node--locked" picking-mode="Ignore">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label class="route-node__label cbj-title cbj-heavy-text__back" text="3" picking-mode="Ignore" />
+                            <ui:Label name="route-node-label" class="route-node__label cbj-title cbj-heavy-text__front" text="3" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="route-node-lock" class="route-node__lock" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!--
+                  D-010: the label is a two-layer "cbj-heavy-text" pair instead of the Button's own text, so
+                  HomeView writes both layers; the front layer keeps the name a caller would expect on the button.
+                -->
+                <ui:Button name="level-button" class="level-button cbj-pressable cbj-haptic-confirm">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="level-button__label cbj-title cbj-heavy-text__back" text="Level 1" picking-mode="Ignore" />
+                        <ui:Label name="level-button-label" class="level-button__label cbj-title cbj-heavy-text__front" text="Level 1" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+
+                <!-- Empty band above the tab bar; it and the route absorb extra height (reference 06 bands). -->
+                <ui:VisualElement name="home-gap" class="home-gap" picking-mode="Ignore" />
+
+                <!--
+                  Positioned last (drawn last) so it paints above the level-route rails (D-007); position: absolute
+                  in Home.uss takes it out of flow, so its place in this list only controls paint order.
+                -->
+                <ui:VisualElement name="top-bar" class="top-bar" picking-mode="Ignore">
+                    <ui:Button name="profile-button" class="profile-button cbj-pressable">
+                        <ui:VisualElement class="profile-button__frame cbj-press-tint" picking-mode="Ignore" />
+                    </ui:Button>
+                    <!--
+                      DEC-143: HomeView finds each holder by the name prefix "currency-holder-" plus the
+                      currency's stable ID (Data/Currencies/*.asset). Order here is the top-bar order (Life,
+                      then Coin); HomePresenter shows or hides a holder, it never adds or removes one. The
+                      preview text/count on each instance's children (AttributeOverrides) is what the Editor and
+                      UI Builder show without Play Mode; HomePresenter overrides them once bound.
+                    -->
+                    <ui:VisualElement name="currency-holders" class="currency-holders" picking-mode="Ignore">
+                        <ui:Instance template="CurrencyHolder" name="currency-holder-life" class="currency-holder--life" picking-mode="Ignore">
+                            <AttributeOverrides element-name="holder-text" text="Full" />
+                            <AttributeOverrides element-name="icon-count" text="5" />
+                        </ui:Instance>
+                        <ui:Instance template="CurrencyHolder" name="currency-holder-coin" class="currency-holder--coin" picking-mode="Ignore">
+                            <AttributeOverrides element-name="holder-text" text="0" />
+                        </ui:Instance>
+                    </ui:VisualElement>
+                    <ui:Button name="settings-button" class="settings-button cbj-pressable cbj-haptic-tap" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Outside safe-area: the fill reaches the bottom edge; HubScreen pads its bottom so the slots stay safe. -->
+        <ui:VisualElement name="tab-bar" class="tab-bar" picking-mode="Position">
+            <!--
+              DEC-169: each slot is a Button named "tab-" plus its ID in Data/Hub/HubNavigationCatalog.asset, in
+              tab-bar order. HubTabPresenter shows, locks or hides a slot from its catalog entry and the saved level,
+              and writes the catalog icon and label; the classes and texts below only preview the shipped catalog,
+              so the Editor and UI Builder show the finished bar without Play Mode (as DEC-143 does for the holders).
+              Every slot has the same parts (icon, tab-lock, label), so any tab can take any look. The state classes
+              are listed in Home.uss (XML comments cannot hold a double hyphen): the "locked" modifier is the dimmed
+              icon plus lock (DEC-86), the "lock-only" modifier is ic_lock.png as the icon (DEC-141), and HubTabBarView
+              sets the "no-divider" modifier on the last shown slot and beside the active tab. An empty label keeps its
+              line height, so the icon never shifts. Add a slot here and an entry in the catalog to add a tab.
+            -->
+            <ui:VisualElement name="tab-row" class="tab-row" picking-mode="Ignore">
+                <ui:Button name="tab-leaderboard" class="tab tab--lock-only cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement class="tab__icon tab__icon--leaderboard cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="tab-lock" class="tab__lock cbj-press-tint" picking-mode="Ignore" />
+                    <ui:Label class="tab__label cbj-title" text="" picking-mode="Ignore" />
+                </ui:Button>
+                <ui:Button name="tab-shop" class="tab tab--locked tab--no-divider cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement class="tab__icon tab__icon--shop cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="tab-lock" class="tab__lock cbj-press-tint" picking-mode="Ignore" />
+                    <ui:Label class="tab__label cbj-title" text="" picking-mode="Ignore" />
+                </ui:Button>
+                <ui:Button name="tab-home" class="tab tab--active tab--no-divider cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement class="tab__icon tab__icon--home cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="tab-lock" class="tab__lock cbj-press-tint" picking-mode="Ignore" />
+                    <ui:Label class="tab__label tab__label--active cbj-title" text="Home" picking-mode="Ignore" />
+                </ui:Button>
+                <ui:Button name="tab-collection" class="tab tab--locked cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement class="tab__icon tab__icon--collection cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="tab-lock" class="tab__lock cbj-press-tint" picking-mode="Ignore" />
+                    <ui:Label class="tab__label cbj-title" text="" picking-mode="Ignore" />
+                </ui:Button>
+                <ui:Button name="tab-support" class="tab tab--lock-only tab--no-divider cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement class="tab__icon tab__icon--support cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="tab-lock" class="tab__lock cbj-press-tint" picking-mode="Ignore" />
+                    <ui:Label class="tab__label cbj-title" text="Lvl 50" picking-mode="Ignore" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

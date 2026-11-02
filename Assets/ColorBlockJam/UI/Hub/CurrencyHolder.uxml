@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- One Home currency holder (design 7). Home.uxml authors one instance of this template per Home currency
+         under currency-holders, named "currency-holder-<id>" (DEC-143); HomeView finds it by that name instead
+         of instantiating this template at runtime. This document also loads its styles for standalone editing. -->
+    <!-- Representative coin holder; Home overrides the text and icon by currency, then runtime binds saved data. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Hub/Home.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Hub/CurrencyHolder.uss" />
+    <ui:VisualElement name="currency-holder" class="currency-holder cbj-document" picking-mode="Ignore">
+        <ui:VisualElement name="holder-pill" class="holder-pill" picking-mode="Ignore">
+            <ui:Label name="holder-text" class="holder-text cbj-dark-text" text="0" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:VisualElement name="holder-icon" class="holder-icon" picking-mode="Ignore">
+            <ui:Label name="icon-count" class="icon-count cbj-title" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:Button name="plus-button" class="plus-button cbj-pressable cbj-haptic-tap">
+            <ui:VisualElement class="plus-button__icon cbj-press-tint" picking-mode="Ignore" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

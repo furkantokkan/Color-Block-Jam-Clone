@@ -1,0 +1,42 @@
+{
+ "result": {
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+   "job_id": "4be710a3189d43eabb6dd31a0382c51e",
+   "status": "succeeded",
+   "mode": "EditMode",
+   "started_unix_ms": 1790340196059,
+   "finished_unix_ms": 1790340199284,
+   "last_update_unix_ms": 1790340199284,
+   "progress": {
+    "completed": 164,
+    "total": 164,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1790340198957,
+    "last_finished_test_full_name": "ColorBlockJam.Tests.EditMode.LevelEffectTests.WriterOrdersParamsByDefinitionAndKeepsEffectOrder",
+    "last_finished_unix_ms": 1790340198958,
+    "stuck_suspected": false,
+    "editor_is_focused": true,
+    "blocked_reason": null,
+    "failures_so_far": [],
+    "failures_capped": false
+   },
+   "error": null,
+   "result": {
+    "mode": "EditMode",
+    "summary": {
+     "total": 164,
+     "passed": 164,
+     "failed": 0,
+     "skipped": 0,
+     "durationSeconds": 0.9113787,
+     "resultState": "Passed"
+    },
+    "results": []
+   }
+  },
+  "hint": null
+ }
+}

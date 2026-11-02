@@ -1,0 +1,1 @@
+Inspector assignment check (isolated copy, 2026-09-24): [EnvironmentVerify] assign=True error= beforeIsOriginal=True afterIsNew=True status='9 levels' rows=9 undoRestored=True firstRow='1. level-01 (Level 1): 4x5, 5:00, doors 2, blocks 1'

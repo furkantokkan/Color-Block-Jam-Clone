@@ -1,0 +1,66 @@
+// Copy-only verifier probe (never in the repository): resizes one open Level Editor window in place and checks
+// that the canvas re-centres the board, keeps cells >= 18 px and moves the block labels with it.
+using System.Collections;
+using System.IO;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    public sealed class ZzCanvasResizeProbe
+    {
+        [UnityTest]
+        public IEnumerator ResizeOneWindowInPlace()
+        {
+            StringBuilder text = new StringBuilder();
+            StringBuilder fail = new StringBuilder();
+            LogAssert.ignoreFailingMessages = true;
+            LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            window.ShowUtility();
+            window.position = new Rect(40f, 40f, 960f, 640f);
+            double end = EditorApplication.timeSinceStartup + 5;
+            while (window.rootVisualElement.Q("top-bar") == null && EditorApplication.timeSinceStartup < end) yield return null;
+            for (int i = 0; i < 10; i++) { window.Repaint(); yield return null; }
+            LevelCanvasElement canvas = window.rootVisualElement.Q<LevelCanvasElement>();
+            Vector2[] sizes = { new Vector2(1280f, 800f), new Vector2(1600f, 1000f), new Vector2(1100f, 660f), new Vector2(960f, 640f), new Vector2(2000f, 700f) };
+            float cellAt960 = canvas.Geometry.CellSize;
+            text.AppendLine($"start 960x640: content={canvas.contentRect} cell={cellAt960} board={canvas.Geometry.BoardRect}");
+            foreach (Vector2 size in sizes)
+            {
+                window.position = new Rect(40f, 40f, size.x, size.y);
+                for (int i = 0; i < 10; i++) { window.Repaint(); yield return null; }
+                LevelCanvasGeometry g = canvas.Geometry;
+                Rect content = canvas.contentRect;
+                float dx = g.BoardRect.center.x - content.width * 0.5f;
+                float dy = g.BoardRect.center.y - content.height * 0.5f;
+                var labels = canvas.Query<Label>(className: LevelCanvasElement.k_labelClass).ToList();
+                bool labelsFollow = labels.Count == canvas.Model.BlockCount;
+                for (int b = 0; b < labels.Count && labelsFollow; b++)
+                {
+                    Rect cell = g.GetCellRect(canvas.Model.GetBlock(b).LabelCell);
+                    labelsFollow = Vector2.Distance(labels[b].layout.center, cell.center) < 2f;
+                }
+
+                float door = LevelCanvasGeometry.k_doorDepth * g.CellSize;
+                bool fits = g.BoardRect.xMin - door >= 0f && g.BoardRect.xMax + door <= content.width
+                    && g.BoardRect.yMin - door >= 0f && g.BoardRect.yMax + door <= content.height;
+                bool ok = Mathf.Abs(dx) <= 1f && Mathf.Abs(dy) <= 1f && g.CellSize >= 18f && labelsFollow && fits;
+                text.AppendLine($"{(ok ? "PASS" : "FAIL")} resize to {size}: window={window.position.size} content={content} cell={g.CellSize} board={g.BoardRect} dx={dx} dy={dy} labelsFollow={labelsFollow} doorBarsInside={fits}");
+                if (!ok) fail.AppendLine("resize " + size);
+            }
+
+            text.AppendLine($"unsaved={window.hasUnsavedChanges}");
+            if (window.hasUnsavedChanges) fail.AppendLine("draft marked unsaved");
+            window.DiscardChanges();
+            window.Close();
+            text.AppendLine(fail.Length == 0 ? "RESULT: all resize checks passed" : "RESULT: FAILURES\n" + fail);
+            File.WriteAllText("canvas-verify-resize.txt", text.ToString());
+            Assert.That(fail.Length, Is.EqualTo(0), fail.ToString());
+        }
+    }
+}

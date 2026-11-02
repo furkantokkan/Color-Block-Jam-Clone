@@ -1,0 +1,122 @@
+// Execute in the exact project's Editor after the runtime scripts compile and the atlas is baked.
+var folder = "Assets/ColorBlockJam/Prefabs/Boosters/Effects/";
+var texturePath = "Assets/ColorBlockJam/Art/Textures/Atlases/VacuumSuctionAtlas.png";
+UnityEditor.AssetDatabase.ImportAsset(texturePath, UnityEditor.ImportAssetOptions.ForceSynchronousImport);
+var importer = (UnityEditor.TextureImporter)UnityEditor.AssetImporter.GetAtPath(texturePath);
+importer.textureType = UnityEditor.TextureImporterType.Sprite;
+importer.spriteImportMode = UnityEditor.SpriteImportMode.Multiple;
+importer.spritePixelsPerUnit = 100;
+importer.mipmapEnabled = false;
+importer.isReadable = false;
+importer.sRGBTexture = true;
+importer.alphaIsTransparency = true;
+importer.wrapMode = UnityEngine.TextureWrapMode.Clamp;
+importer.filterMode = UnityEngine.FilterMode.Bilinear;
+importer.maxTextureSize = 1024;
+importer.textureCompression = UnityEditor.TextureImporterCompression.Uncompressed;
+var settings = new UnityEditor.TextureImporterSettings();
+importer.ReadTextureSettings(settings);
+settings.spriteMeshType = UnityEngine.SpriteMeshType.FullRect;
+settings.spriteGenerateFallbackPhysicsShape = false;
+importer.SetTextureSettings(settings);
+importer.maxTextureSize = 1024;
+var rects = new UnityEditor.SpriteMetaData[16];
+for (int index = 0; index < 16; index++)
+{
+    rects[index] = new UnityEditor.SpriteMetaData {
+        name = "VacuumSuction_" + index.ToString("D2"),
+        rect = new UnityEngine.Rect((index % 4) * 256, (3 - index / 4) * 256, 256, 256),
+        alignment = 0, pivot = new UnityEngine.Vector2(.5f, .5f)
+    };
+}
+importer.spritesheet = rects;
+foreach (var platform in new[] { "Android", "iPhone" })
+{
+    var platformSettings = importer.GetPlatformTextureSettings(platform);
+    platformSettings.name = platform;
+    platformSettings.overridden = true;
+    platformSettings.maxTextureSize = 1024;
+    platformSettings.format = UnityEditor.TextureImporterFormat.ASTC_6x6;
+    platformSettings.compressionQuality = 100;
+    importer.SetPlatformTextureSettings(platformSettings);
+}
+importer.SaveAndReimport();
+var sprites = new UnityEngine.Sprite[16];
+foreach (var asset in UnityEditor.AssetDatabase.LoadAllAssetsAtPath(texturePath))
+{
+    var sprite = asset as UnityEngine.Sprite;
+    if (sprite == null) continue;
+    int index = int.Parse(sprite.name.Substring(sprite.name.Length - 2));
+    sprites[index] = sprite;
+}
+for (int index = 0; index < sprites.Length; index++)
+    if (sprites[index] == null) throw new System.InvalidOperationException("Missing vacuum frame " + index);
+var materialPath = "Assets/ColorBlockJam/Art/Materials/Effects/MAT_VacuumSprite.mat";
+var material = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(materialPath);
+if (material == null)
+{
+    material = new UnityEngine.Material(UnityEngine.Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
+    UnityEditor.AssetDatabase.CreateAsset(material, materialPath);
+}
+var results = new System.Collections.Generic.List<object>();
+foreach (var name in new[] { "Hammer", "RocketPurple", "Vacuum" })
+{
+    var scene = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+    try
+    {
+        var root = new UnityEngine.GameObject(name + "Effect");
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root, scene);
+        UnityEngine.GameObject visual;
+        ColorBlockJam.Presentation.Boosters.BoosterEffectView view;
+        if (name == "Vacuum")
+        {
+            visual = new UnityEngine.GameObject("Visual");
+            visual.transform.SetParent(root.transform, false);
+            var renderer = visual.AddComponent<UnityEngine.SpriteRenderer>();
+            renderer.sprite = sprites[0];
+            renderer.sharedMaterial = material;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            renderer.receiveShadows = false;
+            renderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
+            renderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
+            var intake = new UnityEngine.GameObject("Intake");
+            intake.transform.SetParent(visual.transform, false);
+            var bake = Newtonsoft.Json.Linq.JObject.Parse(System.IO.File.ReadAllText("docs/art/boosters/motion/vacuum-bake.json"));
+            var point = bake["intake_local"];
+            intake.transform.localPosition = new UnityEngine.Vector3((float)point[0], (float)point[1], 0);
+            view = root.AddComponent<ColorBlockJam.Presentation.Boosters.VacuumEffectView>();
+            var serialized = new UnityEditor.SerializedObject(view);
+            serialized.FindProperty("m_spriteRenderer").objectReferenceValue = renderer;
+            serialized.FindProperty("m_intake").objectReferenceValue = intake.transform;
+            var frames = serialized.FindProperty("m_frames");
+            frames.arraySize = sprites.Length;
+            for (int index = 0; index < sprites.Length; index++)
+                frames.GetArrayElementAtIndex(index).objectReferenceValue = sprites[index];
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+        }
+        else
+        {
+            var model = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.GameObject>("Assets/ColorBlockJam/Prefabs/Boosters/Models/" + name + ".prefab");
+            visual = (UnityEngine.GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(model, scene);
+            visual.name = "Visual";
+            visual.transform.SetParent(root.transform, false);
+            visual.transform.localScale = UnityEngine.Vector3.one * .55f;
+            view = name == "Hammer"
+                ? (ColorBlockJam.Presentation.Boosters.BoosterEffectView)root.AddComponent<ColorBlockJam.Presentation.Boosters.HammerEffectView>()
+                : root.AddComponent<ColorBlockJam.Presentation.Boosters.RocketEffectView>();
+        }
+        var fields = new UnityEditor.SerializedObject(view);
+        fields.FindProperty("m_visual").objectReferenceValue = visual.transform;
+        fields.FindProperty("m_duration").floatValue = .75f;
+        fields.ApplyModifiedPropertiesWithoutUndo();
+        visual.SetActive(false);
+        var path = folder + name + "Effect.prefab";
+        UnityEditor.PrefabUtility.SaveAsPrefabAsset(root, path);
+        results.Add(new { path, type = view.GetType().Name, duration = view.Duration });
+    }
+    finally
+    {
+        UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);
+    }
+}
+return new { effects = results, frames = sprites.Length, activeSceneDirty = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().isDirty };

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1040" viewBox="0 0 1440 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Onity ownership: application, scene and level attempt</title>
+  <desc id="desc">The persistent project container owns shared services. Hub and Game have child scene containers. A LevelSession in Game creates and tears down ordinary LevelAttempt objects; an attempt is not a third DI container. Only Playing advances the gameplay simulation.</desc>
+  <defs>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #17283d; }
+      .eyebrow { font-size: 17px; font-weight: 700; letter-spacing: 2px; fill: #47728b; }
+      .title { font-size: 42px; font-weight: 700; }
+      .sub { font-size: 23px; fill: #526578; }
+      .heading { font-size: 27px; font-weight: 700; }
+      .body { font-size: 23px; }
+      .small { font-size: 21px; fill: #526578; }
+      .tag { font-size: 18px; font-weight: 700; fill: #126365; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 1 L8 5 L0 9" fill="none" stroke="#6b8298" stroke-width="1.7"/></marker>
+  </defs>
+  <rect width="1440" height="1040" rx="24" fill="#f5f7fb"/>
+  <text x="48" y="48" class="eyebrow">COLOR BLOCK JAM / ARCHITECTURE</text>
+  <text x="48" y="103" class="title">Three lifetimes. Explicit owners.</text>
+  <text x="48" y="143" class="sub">Container scope controls services; the session controls each attempt.</text>
+
+  <rect x="40" y="177" width="1360" height="613" rx="20" fill="#e9f1f8" stroke="#a8bdd2" stroke-width="2"/>
+  <text x="68" y="219" class="heading">ProjectContext</text>
+  <text x="1370" y="218" text-anchor="end" class="tag">APPLICATION LIFETIME</text>
+  <text x="68" y="254" class="body">Scene flow + fade + LevelPreloader · LevelCatalog · PlayerSaveService · lives + haptics</text>
+  <text x="68" y="287" class="small">Shared through constructor-injected interfaces; survives Hub / Game scene changes.</text>
+
+  <rect x="68" y="318" width="395" height="435" rx="16" fill="#ffffff" stroke="#b8c8d9" stroke-width="2"/>
+  <rect x="491" y="318" width="881" height="435" rx="16" fill="#ffffff" stroke="#b8c8d9" stroke-width="2"/>
+  <text x="94" y="360" class="heading">Hub SceneContext</text>
+  <text x="94" y="394" class="tag">SCENE LIFETIME</text>
+  <text x="94" y="441" class="body">Home and tab presenters</text>
+  <text x="94" y="477" class="body">Settings / pre-level overlays</text>
+  <text x="94" y="513" class="body">Level launch coordination</text>
+  <line x1="94" y1="557" x2="436" y2="557" stroke="#dbe4ed" stroke-width="2"/>
+  <text x="94" y="596" class="small">Scene-owned services end</text>
+  <text x="94" y="625" class="small">when their scene unloads.</text>
+  <text x="94" y="679" class="small">Init also has a scene scope;</text>
+  <text x="94" y="708" class="small">it only handles startup.</text>
+
+  <text x="519" y="360" class="heading">Game SceneContext</text>
+  <text x="1344" y="359" text-anchor="end" class="tag">SCENE LIFETIME</text>
+  <text x="519" y="404" class="body">LevelSession · GameplayTickOwner · input · BoardPresenter · HUD</text>
+  <text x="519" y="438" class="small">A scene can host another attempt without recreating its container.</text>
+  <path d="M550 452 V477" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="519" y="487" width="825" height="238" rx="14" fill="#e8f6f0" stroke="#83bba4" stroke-width="2"/>
+  <text x="543" y="528" class="heading">LevelAttempt</text>
+  <text x="1320" y="526" text-anchor="end" class="tag">OWNED OBJECT, NOT A DI SCOPE</text>
+  <text x="543" y="568" class="body">AttemptLevel + BoardSimulation + generation + AttemptLifetime</text>
+  <text x="543" y="604" class="small">The session resets clocks and returns borrowed visuals on teardown.</text>
+  <text x="543" y="640" class="small">Cancellation and disposal end attempt work and subscriptions.</text>
+  <text x="543" y="691" class="body" font-weight="600">Restart replaces this state; committed player data remains.</text>
+
+  <text x="48" y="839" class="eyebrow">ONE GAMEPLAY ENTRY POINT</text>
+  <rect x="48" y="860" width="346" height="84" rx="12" fill="#ffffff" stroke="#c5d2df"/>
+  <rect x="449" y="860" width="402" height="84" rx="12" fill="#fff3d7" stroke="#d6b16a"/>
+  <rect x="906" y="860" width="486" height="84" rx="12" fill="#e8f6f0" stroke="#83bba4"/>
+  <text x="221" y="909" class="body" text-anchor="middle">Onity → GameplayTickOwner</text>
+  <text x="650" y="909" class="body" text-anchor="middle">State is Playing?</text>
+  <text x="1149" y="909" class="body" text-anchor="middle">RunTick → commands, clocks, views</text>
+  <path d="M394 902 H437" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M851 902 H894" fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="873" y="875" class="small" text-anchor="middle">Yes</text>
+  <text x="48" y="990" class="small">Outside Playing, skip gameplay simulation. UI, rendering and owned presentation may still run.</text>
+</svg>

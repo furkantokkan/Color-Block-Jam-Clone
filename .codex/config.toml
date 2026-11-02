@@ -1,0 +1,14 @@
+# Project-scoped Codex config. Loaded when this project is trusted.
+# Unity 2022.3 cannot run the Unity CLI Pipeline package (Unity 6.0+ only),
+# so live Editor control goes through MCP for Unity (com.coplaydev.unity-mcp).
+[mcp_servers.unityMCP]
+url = "http://127.0.0.1:8082/mcp"
+
+[mcp_servers.unityMCP.tools.manage_packages]
+approval_mode = "approve"
+
+[mcp_servers.unityMCP.tools.execute_code]
+approval_mode = "approve"
+
+[mcp_servers.unityMCP.tools.run_tests]
+approval_mode = "approve"

@@ -1,0 +1,6 @@
+{
+  "name": "ColorBlockJam.Runtime",
+  "rootNamespace": "ColorBlockJam.Runtime",
+  "references": ["Onity.DI", "Onity.Unity", "PrimeTween.Runtime", "Unity.Addressables", "Unity.ResourceManager", "ZString"],
+  "autoReferenced": true
+}

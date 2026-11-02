@@ -1,0 +1,2 @@
+base sha: BoardPresenter 34b331b08dc8a130bdf059262eb602c2d7f5a5f9e440cf6fd7ad9ecaa0593051 GameSceneInstaller d40f1d3a9de8d3766498f806057aa389718802ff5bcb58ff6a1dc4018e9646ce
+623:  m_outlineMaterial: {fileID: 2100000, guid: cd5738d6bd9318f42be66da0a3062da9, type: 2}

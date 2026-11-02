@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!--
+      The Game HUD's in-game overlays (Game HUD design 6): the shared Settings popup as the pause menu (DEC-135,
+      DEC-136; PauseMenuHost shows HOME) and the Retry confirmation. GameplayHud.uxml places one full-size, Ignore
+      instance of this file after the booster purchase popup, so these draw on top of it. GameplayHud's scoped rules
+      start all overlays closed. This composition previews Settings; individual popup documents preview themselves.
+      Every container here is Ignore, so board presses pass through when their popup is closed.
+    -->
+    <ui:Template name="SettingsPopup" src="project://database/Assets/ColorBlockJam/UI/Settings/SettingsPopup.uxml" />
+    <ui:Template name="RestartConfirmPopup" src="project://database/Assets/ColorBlockJam/UI/Game/Overlays/RestartConfirmPopup.uxml" />
+    <ui:Template name="LevelCompletePopup" src="project://database/Assets/ColorBlockJam/UI/Game/Overlays/LevelCompletePopup.uxml" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Game/Overlays/GameOverlays.uss" />
+    <ui:VisualElement name="game-overlays" class="game-overlays cbj-document" picking-mode="Ignore">
+        <ui:Instance template="SettingsPopup" name="pause-menu-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+        <ui:Instance template="RestartConfirmPopup" name="restart-confirm-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+        <!-- The Level Complete overlay (reference 05), shown by LevelCompleteFlow after Won's Finish and Teardown. -->
+        <ui:Instance template="LevelCompletePopup" name="level-complete-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

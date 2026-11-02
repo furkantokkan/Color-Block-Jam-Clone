@@ -1,0 +1,53 @@
+{
+  "formatVersion": 2,
+  "shapes": [
+    {
+      "name": "Single",
+      "cells": "0,0"
+    },
+    {
+      "name": "Square",
+      "cells": "0,0 1,0 0,1 1,1"
+    },
+    {
+      "name": "Double",
+      "cells": "0,0 1,0"
+    },
+    {
+      "name": "Triple",
+      "cells": "0,0 1,0 2,0"
+    },
+    {
+      "name": "Corner",
+      "cells": "0,0 1,0 0,1"
+    },
+    {
+      "name": "L Shape",
+      "cells": "0,0 0,1 0,2 1,2"
+    },
+    {
+      "name": "T Shape",
+      "cells": "1,0 0,1 1,1 2,1"
+    },
+    {
+      "name": "Cross",
+      "cells": "1,0 0,1 1,1 2,1 1,2"
+    },
+    {
+      "name": "Z Shape",
+      "cells": "1,0 2,0 0,1 1,1"
+    },
+    {
+      "name": "Rectangle",
+      "cells": "0,0 1,0 2,0 0,1 1,1 2,1"
+    },
+    {
+      "name": "C Shape",
+      "cells": "0,0 2,0 0,1 1,1 2,1"
+    },
+    {
+      "name": "Level 6 Piece 1",
+      "cells": "0,0 0,1 0,2 0,3"
+    }
+  ]
+}

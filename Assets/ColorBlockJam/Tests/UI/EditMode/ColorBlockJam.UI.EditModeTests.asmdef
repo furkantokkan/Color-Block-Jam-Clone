@@ -1,0 +1,19 @@
+{
+  "name": "ColorBlockJam.UI.EditModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.SharedUI",
+  "references": [
+    "ColorBlockJam.UI",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Haptics",
+    "Haptics",
+    "ColorBlockJam.Runtime",
+    "Onity.Reactive",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

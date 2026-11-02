@@ -1,0 +1,451 @@
+{
+  "fbx": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\Assets\\ColorBlockJam\\Art\\Models\\WallAndDoor.fbx",
+  "axis_fit": {
+    "error": 0.00017439826107085166,
+    "perm": [
+      0,
+      2,
+      1
+    ],
+    "signs": [
+      1,
+      1,
+      -1
+    ],
+    "scale": 0.9999721654056761,
+    "det": 1
+  },
+  "mouths_at_yaw_0": {
+    "Wall": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "Corner_1": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "Door_1x1": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "mesh_space_side_roof_y": {
+    "Wall": {
+      "+x": -0.41818,
+      "-x": -0.41826,
+      "+z": -0.61096,
+      "-z": -0.61096
+    },
+    "Corner_1": {
+      "+x": -0.61084,
+      "-x": -0.41813,
+      "+z": -0.61085,
+      "-z": -0.41812
+    },
+    "Door_1x1": {
+      "+x": -0.61148,
+      "-x": -0.61148,
+      "+z": -0.4187,
+      "-z": -0.41877
+    }
+  },
+  "baseline_corner_yaws_match_mouths": {
+    "270": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "0": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "180": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "90": [
+      [
+        0,
+        -1
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "roof": {
+    "baseline": {
+      "profiles": {
+        "middle": [
+          0.6728,
+          0.6986,
+          0.7087,
+          0.7148,
+          0.7184,
+          0.7198,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7184,
+          0.7148,
+          0.7087,
+          0.6986,
+          0.6729
+        ],
+        "cap_join_before": [
+          0.6728,
+          0.6986,
+          0.7087,
+          0.7148,
+          0.7184,
+          0.7198,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7184,
+          0.7148,
+          0.7087,
+          0.6986,
+          0.6729
+        ],
+        "cap_join_after": [
+          0.6728,
+          0.6986,
+          0.7087,
+          0.7148,
+          0.7184,
+          0.7198,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7184,
+          0.7148,
+          0.7087,
+          0.6986,
+          0.6729
+        ],
+        "cap_centre": [
+          0.6728,
+          0.6986,
+          0.7087,
+          0.7148,
+          0.7184,
+          0.7198,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7184,
+          0.7148,
+          0.7087,
+          0.6986,
+          0.6729
+        ]
+      },
+      "roof_max": 0.72,
+      "centre_groove_depth": 0.0,
+      "cap_join_max_step": 0.0
+    },
+    "single": {
+      "profiles": {
+        "middle": [
+          0.6729,
+          0.6986,
+          0.7087,
+          0.7148,
+          0.7184,
+          0.7198,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7184,
+          0.7148,
+          0.7087,
+          0.6986,
+          0.6728
+        ],
+        "cap_join_before": [
+          0.6841,
+          0.7015,
+          0.7107,
+          0.7158,
+          0.7187,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7185,
+          0.7151,
+          0.7093,
+          0.6994,
+          null
+        ],
+        "cap_join_after": [
+          0.6729,
+          0.6986,
+          0.7087,
+          0.7148,
+          0.7184,
+          0.7198,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7198,
+          0.7184,
+          0.7148,
+          0.7087,
+          0.6986,
+          0.6728
+        ],
+        "cap_centre": [
+          0.6838,
+          0.7011,
+          0.7105,
+          0.7158,
+          0.7186,
+          0.7197,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          null
+        ]
+      },
+      "roof_max": 0.72,
+      "centre_groove_depth": 0.0,
+      "cap_join_max_step": 0.0112
+    },
+    "hairpin": {
+      "profiles": {
+        "middle": [
+          0.6729,
+          0.7087,
+          0.7184,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7184,
+          0.7087,
+          0.6729,
+          0.7087,
+          0.7184,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7184,
+          0.7087,
+          0.6728
+        ],
+        "cap_join_before": [
+          0.6841,
+          0.7107,
+          0.7187,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7187,
+          0.7104,
+          0.6843,
+          0.7099,
+          0.7187,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7183,
+          0.7081,
+          null
+        ],
+        "cap_join_after": [
+          0.6729,
+          0.7087,
+          0.7184,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7184,
+          0.7087,
+          0.6729,
+          0.7087,
+          0.7184,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7184,
+          0.7087,
+          0.6728
+        ],
+        "cap_centre": [
+          0.6838,
+          0.7105,
+          0.7186,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.72,
+          0.7183,
+          0.7077,
+          null
+        ]
+      },
+      "roof_max": 0.72,
+      "centre_groove_depth": 0.0471,
+      "cap_join_max_step": 0.0114
+    }
+  },
+  "renders": {
+    "baseline": {
+      "game": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\baseline_game.png",
+      "close": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\baseline_close.png",
+      "piece_counts": {
+        "Corner_1": 4,
+        "Wall": 28,
+        "Door_1x1": 2,
+        "Door_Arrow": 2
+      }
+    },
+    "single": {
+      "game": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\single_game.png",
+      "close": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\single_close.png",
+      "piece_counts": {
+        "Corner_1": 32,
+        "Door_1x1": 2,
+        "Door_Arrow": 2
+      }
+    },
+    "hairpin": {
+      "game": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\hairpin_game.png",
+      "close": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\hairpin_close.png",
+      "piece_counts": {
+        "Corner_1": 60,
+        "Wall": 56,
+        "Door_1x1": 2,
+        "Door_Arrow": 2
+      }
+    },
+    "hairpin_gate": {
+      "game": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\hairpin_gate_game.png",
+      "close": "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\production\\tasks\\TASK-20260927-123500933-c1e67965-environment-runs-gate-motion\\implementation\\brick-proof\\out\\hairpin_gate_close.png",
+      "piece_counts": {
+        "Corner_1": 68,
+        "Wall": 64,
+        "Door_Arrow": 2
+      }
+    }
+  }
+}

@@ -1,0 +1,2299 @@
+--- a/Assets/ColorBlockJam/Environment/EnvironmentComposer.cs
++++ b/Assets/ColorBlockJam/Environment/EnvironmentComposer.cs
+@@ -8,9 +8,10 @@
+ {
+     /// <summary>
+     /// Turns a board layout into piece placements on the half-cell quadrant grid:
+-    /// one floor piece and one floor-base square per floor cell, wall and corner pieces chosen by the
+-    /// environment rule set, and door pieces in the door slots. It runs once per
+-    /// level load; the view maps its grid positions to local space with the Grid.
++    /// one floor piece and one floor-base square per floor cell, distinct closed bricks along straight
++    /// boundary runs and rule-selected corner units, and doors reported per authored door as a gate
++    /// span so the view can move one gate as a unit. It runs once per level load; the view maps its
++    /// grid positions to local space with the Grid.
+     /// </summary>
+     public sealed class EnvironmentComposer
+     {
+@@ -25,6 +26,11 @@
+ 
+         private readonly EnvironmentDatabase m_database;
+         private readonly EnvironmentRuleMatcher m_matcher;
++        private readonly EnvironmentSolidComposer m_solid;
++        private int[] m_wallRules = Array.Empty<int>();
++        private int[] m_wallYaws = Array.Empty<int>();
++        private bool[] m_usedWalls = Array.Empty<bool>();
++        private const float k_unitGap = 0.02f;
+         private bool[] m_doorQuadrants = Array.Empty<bool>();
+         private RectInt m_quadrantBounds;
+ 
+@@ -35,9 +41,19 @@
+ 
+             m_database = database;
+             m_matcher = new EnvironmentRuleMatcher(database.RuleSet);
++            m_solid = new EnvironmentSolidComposer(database);
+         }
+ 
+         public void Compose(IBoardLayout layout, List<EnvironmentPiecePlacement> output)
++        {
++            Compose(layout, output, null);
++        }
++
++        /// <summary>
++        /// Composes the play area into output and, when gates is not null, adds one span per authored
++        /// door in door order: that door's Door_1x1 slots followed by its arrow, contiguous in output.
++        /// </summary>
++        public void Compose(IBoardLayout layout, List<EnvironmentPiecePlacement> output, List<EnvironmentGateSpan> gates)
+         {
+             if (layout == null) throw new ArgumentNullException(nameof(layout));
+             if (output == null) throw new ArgumentNullException(nameof(output));
+@@ -50,6 +66,7 @@
+             }
+ 
+             output.Clear();
++            gates?.Clear();
+             // Every quadrant from the ring cell before the board to the ring cell after it.
+             m_quadrantBounds = new RectInt(
+                 -2 * k_ringCells - 1, -2 * k_ringCells - 1,
+@@ -58,7 +75,7 @@
+             AddFloor(layout, output);
+             MarkDoorQuadrants(layout);
+             AddWalls(layout, output);
+-            AddDoors(layout, output);
++            AddDoors(layout, output, gates);
+         }
+ 
+         private void AddFloor(IBoardLayout layout, List<EnvironmentPiecePlacement> output)
+@@ -112,42 +129,110 @@
+ 
+         private void AddWalls(IBoardLayout layout, List<EnvironmentPiecePlacement> output)
+         {
+-            Vector3 scale = m_database.WallPieceScale;
+-            Color wallColor = m_database.GetWallColor();
+-            for (int y = -k_ringCells; y < layout.Height + k_ringCells; y++)
+-            {
+-                for (int x = -k_ringCells; x < layout.Width + k_ringCells; x++)
++            int count = m_quadrantBounds.width * m_quadrantBounds.height;
++            if (m_wallRules.Length < count)
++            {
++                m_wallRules = new int[count];
++                m_wallYaws = new int[count];
++                m_usedWalls = new bool[count];
++            }
++            for (int index = 0; index < count; index++)
++            {
++                m_wallRules[index] = -1;
++                m_usedWalls[index] = false;
++            }
++
++            // Preserve the authored floor/void mask and rule decisions before grouping any visuals.
++            for (int y = m_quadrantBounds.yMin; y < m_quadrantBounds.yMax; y++)
++            {
++                for (int x = m_quadrantBounds.xMin; x < m_quadrantBounds.xMax; x++)
+                 {
+-                    if (layout.IsFloor(x, y))
++                    Vector2Int position = new Vector2Int(x, y);
++                    int index = GetQuadrantIndex(position);
++                    if (m_matcher.IsFloor(x, y) || m_doorQuadrants[index]) continue;
++                    if (!m_matcher.TryMatch(x, y, out int rule, out int yaw)) continue;
++                    m_wallRules[index] = rule;
++                    m_wallYaws[index] = yaw;
++                }
++            }
++
++            Color tint = m_database.GetWallColor();
++            for (int y = m_quadrantBounds.yMin; y < m_quadrantBounds.yMax; y++)
++            {
++                for (int x = m_quadrantBounds.xMin; x < m_quadrantBounds.xMax; x++)
++                {
++                    Vector2Int position = new Vector2Int(x, y);
++                    int index = GetQuadrantIndex(position);
++                    if (m_wallRules[index] < 0 || m_usedWalls[index]) continue;
++                    if (TryGetStraightAxis(position, out Vector2Int axis))
+                     {
+-                        continue;
++                        AddBrick(position, axis, output, tint);
+                     }
+-
+-                    for (int quadrant = 0; quadrant < 4; quadrant++)
++                    else
+                     {
+-                        Vector2Int position = GetQuadrant(x, y, quadrant);
+-                        if (m_doorQuadrants[GetQuadrantIndex(position)])
+-                        {
+-                            continue;
+-                        }
+-
+-                        if (!m_matcher.TryMatch(position.x, position.y, out int ruleIndex, out int angle))
+-                        {
+-                            continue;
+-                        }
+-
+-                        output.Add(new EnvironmentPiecePlacement(
+-                            m_matcher.GetOutput(ruleIndex),
+-                            GetQuadrantCenter(position), angle, scale, wallColor));
++                        m_usedWalls[index] = true;
++                        // Corner shape/yaw still comes from the board rules. The small inset makes it a
++                        // separate unit; it never expands into floor or a reserved gate quadrant.
++                        Vector3 scale = m_database.WallPieceScale;
++                        scale.x *= 1f - k_unitGap;
++                        scale.z *= 1f - k_unitGap;
++                        output.Add(new EnvironmentPiecePlacement(m_matcher.GetOutput(m_wallRules[index]),
++                            GetQuadrantCenter(position), m_wallYaws[index], scale, tint));
+                     }
+                 }
+             }
+         }
+ 
+-        private void AddDoors(IBoardLayout layout, List<EnvironmentPiecePlacement> output)
++        private bool TryGetStraightAxis(Vector2Int position, out Vector2Int axis)
++        {
++            bool left = m_matcher.IsFloor(position.x - 1, position.y);
++            bool right = m_matcher.IsFloor(position.x + 1, position.y);
++            bool down = m_matcher.IsFloor(position.x, position.y - 1);
++            bool up = m_matcher.IsFloor(position.x, position.y + 1);
++            int floorCount = (left ? 1 : 0) + (right ? 1 : 0) + (down ? 1 : 0) + (up ? 1 : 0);
++            axis = left || right ? Vector2Int.up : Vector2Int.right;
++            return floorCount == 1;
++        }
++
++        private bool IsSameRun(Vector2Int position, Vector2Int axis, int rule, int yaw)
++        {
++            if (!m_quadrantBounds.Contains(position)) return false;
++            int index = GetQuadrantIndex(position);
++            return m_wallRules[index] == rule && m_wallYaws[index] == yaw
++                && !m_usedWalls[index] && TryGetStraightAxis(position, out Vector2Int candidateAxis)
++                && candidateAxis == axis;
++        }
++
++        private void AddBrick(Vector2Int position, Vector2Int axis,
++            List<EnvironmentPiecePlacement> output, Color tint)
++        {
++            int index = GetQuadrantIndex(position);
++            int rule = m_wallRules[index], yaw = m_wallYaws[index];
++            Vector2Int first = position;
++            while (IsSameRun(first - axis, axis, rule, yaw)) first -= axis;
++            Vector2Int last = first;
++            int length = 0;
++            while (IsSameRun(last, axis, rule, yaw))
++            {
++                m_usedWalls[GetQuadrantIndex(last)] = true;
++                length++;
++                last += axis;
++            }
++            last -= axis;
++            Vector3 center = (GetQuadrantCenter(first) + GetQuadrantCenter(last)) * 0.5f;
++            Vector2 size = axis.x != 0
++                ? new Vector2(length - k_unitGap, 1f - k_unitGap)
++                : new Vector2(1f - k_unitGap, length - k_unitGap);
++            m_solid.AppendRectangle(center, size, tint, output);
++        }
++
++        // Slots arrive grouped by door in authored order (BoardLayout), so each door's slots and arrow
++        // are contiguous in output and its gate span names them by range.
++        private void AddDoors(IBoardLayout layout, List<EnvironmentPiecePlacement> output, List<EnvironmentGateSpan> gates)
+         {
+             Vector3 scale = m_database.DoorPieceScale;
+             int firstSlot = 0;
++            int firstPlacement = output.Count;
+             for (int index = 0; index < layout.DoorSlotCount; index++)
+             {
+                 DoorSlot slot = layout.GetDoorSlotAt(index);
+@@ -160,7 +245,9 @@
+                 if (isLastSegment)
+                 {
+                     AddDoorArrows(layout.GetDoorSlotAt(firstSlot), slot, output);
++                    gates?.Add(new EnvironmentGateSpan(slot.DoorIndex, firstPlacement, output.Count - firstPlacement));
+                     firstSlot = index + 1;
++                    firstPlacement = output.Count;
+                 }
+             }
+         }
+--- /dev/null
++++ b/Assets/ColorBlockJam/Environment/EnvironmentGate.cs
+@@ -0,0 +1,204 @@
++using System;
++using System.Collections.Generic;
++using ColorBlockJam.Presentation.Board;
++using PrimeTween;
++using UnityEngine;
++
++namespace ColorBlockJam.Environment
++{
++    /// <summary>
++    /// One authored door's gate: its Door_1x1 pieces and arrow move down and up as one. Open sinks it
++    /// under the floor, where a floor clip plane hides the part below, holds it and raises it to its
++    /// exact built height. EnvironmentView owns every gate and is its only caller; one PrimeTween
++    /// Sequence per gate is its only motion, and Stop, SetPaused and Reset are its stop points.
++    /// </summary>
++    public sealed class EnvironmentGate
++    {
++        /// <summary>
++        /// How far an open gate sinks. The kit's gate is 0.72 high, so a 0.04 coloured strip and its
++        /// arrow stay above the floor while a block passes, as the reference sequence shows.
++        /// </summary>
++        public const float k_sinkDepth = 0.68f;
++
++        /// <summary>A full sink. It ends well inside the shortest exit (ExitMotionSettings.k_minSeconds, 0.2 s).</summary>
++        public const float k_sinkSeconds = 0.08f;
++
++        /// <summary>The rise after the last exit; the longest exit (0.6 s) plus it stays under the 0.8 s Won Finish (DEC-93).</summary>
++        public const float k_riseSeconds = 0.15f;
++
++        // A step shorter than this is skipped; PrimeTween rejects durations under 0.0001 s.
++        private const float k_minStepSeconds = 0.001f;
++
++        // Cached once, so a motion's value callbacks allocate nothing.
++        private static readonly Action<EnvironmentGate, float> s_setOffset = SetOffset;
++
++        private readonly List<BoardPieceView> m_pieces = new List<BoardPieceView>();
++        private Transform m_boardRoot;
++        private float m_closedHeight;
++        private float m_offset;
++        private Sequence m_motion;
++        // True once Open started a motion that may still run. The LevelEditor preview binds and resets
++        // gates in Edit Mode, so only a gate that moved touches PrimeTween.
++        private bool m_hasMotion;
++
++        public int DoorIndex { get; private set; }
++
++        public int PieceCount => m_pieces.Count;
++
++        /// <summary>How far below its built height the gate stands; 0 at rest.</summary>
++        public float Offset => m_offset;
++
++        public bool IsMoving => m_hasMotion && m_motion.isAlive;
++
++        public bool IsPaused => IsMoving && m_motion.isPaused;
++
++        /// <summary>The time the current motion still needs, hold and rise included; 0 at rest.</summary>
++        public float SecondsRemaining => IsMoving ? m_motion.durationTotal - m_motion.elapsedTimeTotal : 0f;
++
++        /// <summary>How far down the gate is, from 0 (built height) to 1 (fully sunk).</summary>
++        public float OpenFraction => m_offset / k_sinkDepth;
++
++        /// <summary>The time a sink from the current height needs to reach the bottom; 0 when already down.</summary>
++        public float SinkSecondsRemaining => k_sinkSeconds * (k_sinkDepth - m_offset) / k_sinkDepth;
++
++        public BoardPieceView GetPiece(int index)
++        {
++            return m_pieces[index];
++        }
++
++        // Home only: the view binds the gate to the door pieces and arrow it rented for one door.
++        internal void Bind(int doorIndex, Transform boardRoot, float closedHeight)
++        {
++            StopMotion();
++            m_pieces.Clear();
++            DoorIndex = doorIndex;
++            m_boardRoot = boardRoot;
++            m_closedHeight = closedHeight;
++            m_offset = 0f;
++        }
++
++        internal void Add(BoardPieceView piece)
++        {
++            m_pieces.Add(piece);
++        }
++
++        // Sinks from where the gate stands now, keeps it down until holdSeconds from now, then raises it.
++        // A later call replaces the motion, so the caller passes the longest running exit through the door.
++        internal void Open(float holdSeconds)
++        {
++            StopMotion();
++            SetFloorClip(true);
++            Sequence motion = Sequence.Create();
++            float sinkSeconds = SinkSecondsRemaining;
++            if (sinkSeconds >= k_minStepSeconds)
++            {
++                motion.Chain(Tween.Custom(this, m_offset, k_sinkDepth, sinkSeconds, s_setOffset, Ease.OutQuad));
++            }
++            else
++            {
++                sinkSeconds = 0f;
++                SetOffset(this, k_sinkDepth);
++            }
++
++            float waitSeconds = holdSeconds - sinkSeconds;
++            if (waitSeconds >= k_minStepSeconds)
++            {
++                motion.ChainDelay(waitSeconds);
++            }
++
++            motion.Chain(Tween.Custom(this, k_sinkDepth, 0f, k_riseSeconds, s_setOffset, Ease.OutQuad));
++            m_motion = motion;
++            m_hasMotion = true;
++        }
++
++        // Sinks from where the gate stands now and keeps it down with no scheduled rise, while a held
++        // block leans into the door; Raise or a later Open ends the hold.
++        internal void Lower()
++        {
++            StopMotion();
++            SetFloorClip(true);
++            float sinkSeconds = SinkSecondsRemaining;
++            if (sinkSeconds < k_minStepSeconds)
++            {
++                SetOffset(this, k_sinkDepth);
++                return;
++            }
++
++            m_motion = Sequence.Create(Tween.Custom(this, m_offset, k_sinkDepth, sinkSeconds, s_setOffset, Ease.OutQuad));
++            m_hasMotion = true;
++        }
++
++        // Rises from where the gate stands now, at the full rise's pace, to its exact built height.
++        internal void Raise()
++        {
++            StopMotion();
++            float riseSeconds = k_riseSeconds * m_offset / k_sinkDepth;
++            if (riseSeconds < k_minStepSeconds)
++            {
++                SetOffset(this, 0f);
++                return;
++            }
++
++            m_motion = Sequence.Create(Tween.Custom(this, m_offset, 0f, riseSeconds, s_setOffset, Ease.OutQuad));
++            m_hasMotion = true;
++        }
++
++        // Suspend step 3 and Resume.
++        internal void SetPaused(bool paused)
++        {
++            if (IsMoving)
++            {
++                m_motion.isPaused = paused;
++            }
++        }
++
++        // Teardown step 3: the gate stays where it is.
++        internal void Stop()
++        {
++            StopMotion();
++        }
++
++        // Teardown step 6 and Restart: back at the built height, unclipped, with no motion.
++        internal void Reset()
++        {
++            StopMotion();
++            SetOffset(this, 0f);
++            SetFloorClip(false);
++        }
++
++        private void StopMotion()
++        {
++            if (m_hasMotion)
++            {
++                m_motion.Stop();
++                m_hasMotion = false;
++            }
++        }
++
++        private static void SetOffset(EnvironmentGate gate, float offset)
++        {
++            gate.m_offset = offset;
++            float height = gate.m_closedHeight - offset;
++            for (int index = 0; index < gate.m_pieces.Count; index++)
++            {
++                Transform piece = gate.m_pieces[index].transform;
++                Vector3 position = piece.localPosition;
++                position.y = height;
++                piece.localPosition = position;
++            }
++        }
++
++        // BoardLit keeps fragments with dot(plane, position) >= 0. The plane is the floor surface facing
++        // up, so the part of a sunk gate below the floor draws nothing, its shadow included.
++        private void SetFloorClip(bool enabled)
++        {
++            Vector3 normal = m_boardRoot.up;
++            Vector3 point = m_boardRoot.TransformPoint(new Vector3(0f, m_closedHeight, 0f));
++            Vector4 plane = new Vector4(normal.x, normal.y, normal.z, -Vector3.Dot(normal, point));
++            for (int index = 0; index < m_pieces.Count; index++)
++            {
++                m_pieces[index].SetClipPlane(plane, enabled);
++            }
++        }
++    }
++}
+--- /dev/null
++++ b/Assets/ColorBlockJam/Environment/EnvironmentGateSpan.cs
+@@ -0,0 +1,21 @@
++namespace ColorBlockJam.Environment
++{
++    /// <summary>
++    /// Where one authored door's pieces sit in the composer's placement list: its Door_1x1 slots
++    /// followed by its arrow, contiguous and in authored door order. EnvironmentView turns each span
++    /// into one EnvironmentGate on Home.
++    /// </summary>
++    public readonly struct EnvironmentGateSpan
++    {
++        public readonly int DoorIndex;
++        public readonly int FirstPlacement;
++        public readonly int PlacementCount;
++
++        public EnvironmentGateSpan(int doorIndex, int firstPlacement, int placementCount)
++        {
++            DoorIndex = doorIndex;
++            FirstPlacement = firstPlacement;
++            PlacementCount = placementCount;
++        }
++    }
++}
+--- a/Assets/ColorBlockJam/Environment/EnvironmentSolidComposer.cs
++++ b/Assets/ColorBlockJam/Environment/EnvironmentSolidComposer.cs
+@@ -27,6 +27,67 @@
+             m_cells.Clear();
+             for (int cell = 0; cell < obstacle.CellCount; cell++) m_cells.Add(obstacle.GetCellAt(cell));
+             Append(layout, m_cells, m_database.GetBarrierColor(), output);
++        }
++
++        /// <summary>
++        /// Appends one closed brick in quadrant-grid space. A four-by-four template leaves room
++        /// for the supplied rounded boundary and the existing recessed BlockFill interior.
++        /// End strips stay proportional to the short side; only middle strips stretch along a run.
++        /// </summary>
++        internal void AppendRectangle(Vector3 center, Vector2 size, Color tint,
++            List<EnvironmentPiecePlacement> output)
++        {
++            if (output == null) throw new ArgumentNullException(nameof(output));
++            if (size.x <= 0f || size.y <= 0f) throw new ArgumentOutOfRangeException(nameof(size));
++            const int side = 4;
++            m_matcher.Reset(new RectInt(-1, -1, side + 2, side + 2));
++            for (int y = -1; y <= side; y++)
++                for (int x = -1; x <= side; x++)
++                    if (x < 0 || y < 0 || x >= side || y >= side)
++                        m_matcher.SetFloor(x, y);
++
++            float endSize = Mathf.Min(size.x, size.y) / side;
++            for (int y = 0; y < side; y++)
++            {
++                for (int x = 0; x < side; x++)
++                {
++                    bool edge = m_matcher.TryMatch(x, y, out int rule, out int yaw);
++                    Vector2 stretch = new Vector2(
++                        GetStripSize(x, size.x, endSize), GetStripSize(y, size.y, endSize));
++                    Vector3 position = center + new Vector3(
++                        GetStripCenter(x, size.x, endSize),
++                        GetStripCenter(y, size.y, endSize), 0f);
++                    Vector3 scale = m_database.WallPieceScale;
++                    // Root scales precede yaw. Swap the X/Z stretch on turned tiles to apply
++                    // the strip dimensions in board space. Adjacent strips meet at the same boundary,
++                    // and their shared cross-section has the same scale.
++                    bool turned = yaw % 180 != 0;
++                    scale.x *= turned ? stretch.y : stretch.x;
++                    scale.z *= turned ? stretch.x : stretch.y;
++                    output.Add(new EnvironmentPiecePlacement(
++                        edge ? m_matcher.GetOutput(rule) : m_database.BlockFillPiece,
++                        position, yaw, scale, tint));
++                }
++            }
++        }
++
++        // The two end strips are square corner regions. Each of the two middle strips
++        // shares the remaining span; even a square or short brick keeps all strips positive.
++        private static float GetStripSize(int index, float span, float endSize)
++        {
++            return index == 0 || index == 3 ? endSize : (span - 2f * endSize) * 0.5f;
++        }
++
++        private static float GetStripCenter(int index, float span, float endSize)
++        {
++            float middleSize = (span - 2f * endSize) * 0.5f;
++            switch (index)
++            {
++                case 0: return (endSize - span) * 0.5f;
++                case 1: return -middleSize * 0.5f;
++                case 2: return middleSize * 0.5f;
++                default: return (span - endSize) * 0.5f;
++            }
+         }
+ 
+         private void Append(IBoardLayout layout, List<Vector2Int> cells, Color tint, List<EnvironmentPiecePlacement> output)
+--- a/Assets/ColorBlockJam/Environment/EnvironmentView.cs
++++ b/Assets/ColorBlockJam/Environment/EnvironmentView.cs
+@@ -14,7 +14,8 @@
+     /// Play-area view: builds one level's floor, floor base, walls, corners, doors and Barrier
+     /// board objects from Onity pools, placing each piece through the BoardRoot Grid, and returns
+     /// every piece on Clear. It has no Update; its owner calls Build on Home and Clear or Release on
+-    /// a level change or scene unload. Barriers move only when the gameplay owner calls SetBarrierOpen.
++    /// a level change or scene unload. Barriers move only when the gameplay owner calls SetBarrierOpen,
++    /// and each authored door's EnvironmentGate only through the board presenter's Try*Gate calls.
+     /// </summary>
+     public sealed class EnvironmentView : MonoBehaviour
+     {
+@@ -40,6 +41,10 @@
+         // Built on Home, so SetBarrierOpen finds a barrier's piece range without allocating.
+         private readonly Dictionary<string, int> m_barrierIndices = new Dictionary<string, int>(StringComparer.Ordinal);
+         private readonly List<BoardPieceView> m_pieces = new List<BoardPieceView>();
++        private readonly List<EnvironmentGateSpan> m_gateSpans = new List<EnvironmentGateSpan>();
++        // One gate per authored door, at its door index; instances are reused across builds.
++        private readonly List<EnvironmentGate> m_gates = new List<EnvironmentGate>();
++        private int m_gateCount;
+         private EnvironmentDatabase m_database;
+         private EnvironmentComposer m_composer;
+         private EnvironmentBarrierComposer m_barrierComposer;
+@@ -61,6 +66,22 @@
+         public bool IsBuilt => m_layout != null;
+         public int ActivePieceCount => m_activeCount;
+         public int BarrierCount => m_barriers.Count;
++        public int GateCount => m_gateCount;
++
++        /// <summary>The longest time a gate still needs to reach rest; the board presenter's Won Finish waits for it.</summary>
++        public float GateSecondsRemaining
++        {
++            get
++            {
++                float longest = 0f;
++                for (int index = 0; index < m_gateCount; index++)
++                {
++                    longest = Math.Max(longest, m_gates[index].SecondsRemaining);
++                }
++
++                return longest;
++            }
++        }
+ 
+         [Inject]
+         public void Construct(EnvironmentDatabase database)
+@@ -93,6 +114,7 @@
+             if (ReferenceEquals(layout, m_layout) && ReferenceEquals(level, m_level))
+             {
+                 ResetBarriers();
++                ResetGates();
+                 return;
+             }
+ 
+@@ -104,7 +126,7 @@
+             }
+ 
+             // Compose first so an invalid layout or level leaves the current play area visible.
+-            m_composer.Compose(layout, m_placements);
++            m_composer.Compose(layout, m_placements, m_gateSpans);
+             m_barrierComposer.Compose(layout, level, m_barrierPlacements, m_composedBarriers);
+             Clear();
+             if (!HasPools(m_placements) || !HasPools(m_barrierPlacements))
+@@ -123,6 +145,7 @@
+             }
+ 
+             AddPieces(m_placements);
++            BindGates();
+             m_barrierPieceStart = m_activeCount;
+             AddPieces(m_barrierPlacements);
+             // Barriers are composed at grid height 0, the closed (raised) height.
+@@ -195,10 +218,100 @@
+             m_hasBarrierTweens = false;
+         }
+ 
+-        /// <summary>Stops barrier tweens, returns every piece to its pool and forgets the layout.</summary>
++        /// <summary>
++        /// Sinks one authored door's gate now and raises it holdSeconds from now; the board presenter
++        /// passes the longest running exit through that door. False when the shown play area has no such
++        /// door, so a presenter shown without its play area moves no gate. It allocates nothing.
++        /// </summary>
++        public bool TryOpenGate(int doorIndex, float holdSeconds)
++        {
++            if ((uint)doorIndex >= (uint)m_gateCount)
++            {
++                return false;
++            }
++
++            m_gates[doorIndex].Open(holdSeconds);
++            return true;
++        }
++
++        /// <summary>
++        /// Sinks one authored door's gate and keeps it down with no scheduled rise, while the board
++        /// presenter's held block leans into that door. False when no such gate is shown.
++        /// </summary>
++        public bool TryLowerGate(int doorIndex)
++        {
++            if ((uint)doorIndex >= (uint)m_gateCount)
++            {
++                return false;
++            }
++
++            m_gates[doorIndex].Lower();
++            return true;
++        }
++
++        /// <summary>Raises one authored door's gate from where it stands. False when no such gate is shown.</summary>
++        public bool TryRaiseGate(int doorIndex)
++        {
++            if ((uint)doorIndex >= (uint)m_gateCount)
++            {
++                return false;
++            }
++
++            m_gates[doorIndex].Raise();
++            return true;
++        }
++
++        /// <summary>The gate of one shown authored door; false when the shown play area has none.</summary>
++        public bool TryGetGate(int doorIndex, out EnvironmentGate gate)
++        {
++            bool shown = (uint)doorIndex < (uint)m_gateCount;
++            gate = shown ? m_gates[doorIndex] : null;
++            return shown;
++        }
++
++        /// <summary>The gate of one shown authored door, for inspection.</summary>
++        public EnvironmentGate GetGate(int doorIndex)
++        {
++            if ((uint)doorIndex >= (uint)m_gateCount)
++            {
++                throw new ArgumentOutOfRangeException(nameof(doorIndex), doorIndex, "No shown gate has this door index.");
++            }
++
++            return m_gates[doorIndex];
++        }
++
++        /// <summary>Suspend step 3 and Resume: pauses or continues every gate motion.</summary>
++        public void SetGateTweensPaused(bool paused)
++        {
++            for (int index = 0; index < m_gateCount; index++)
++            {
++                m_gates[index].SetPaused(paused);
++            }
++        }
++
++        /// <summary>Teardown step 3: stops every gate where it is.</summary>
++        public void StopGateTweens()
++        {
++            for (int index = 0; index < m_gateCount; index++)
++            {
++                m_gates[index].Stop();
++            }
++        }
++
++        /// <summary>Teardown step 6 and Restart: every gate back at its built height, unclipped and still.</summary>
++        public void ResetGates()
++        {
++            for (int index = 0; index < m_gateCount; index++)
++            {
++                m_gates[index].Reset();
++            }
++        }
++
++        /// <summary>Stops barrier and gate tweens, returns every piece to its pool and forgets the layout.</summary>
+         public void Clear()
+         {
+             StopBarrierTweens();
++            StopGateTweens();
+             for (int index = 0; index < m_activeCount; index++)
+             {
+                 if (index >= m_barrierPieceStart && m_active[index] != null)
+@@ -215,6 +328,7 @@
+             m_barrierPieceStart = 0;
+             m_barriers.Clear();
+             m_barrierIndices.Clear();
++            m_gateCount = 0;
+             m_layout = null;
+             m_level = null;
+         }
+@@ -254,6 +368,30 @@
+             }
+         }
+ 
++        // Home only: one gate per authored door over the pieces just rented for its span. The play-area
++        // placements fill m_active from index 0, so a span's placement range is its piece range.
++        private void BindGates()
++        {
++            float closedHeight = m_grid.CellToLocalInterpolated(Vector3.zero).y;
++            for (int index = 0; index < m_gateSpans.Count; index++)
++            {
++                if (m_gates.Count == index)
++                {
++                    m_gates.Add(new EnvironmentGate());
++                }
++
++                EnvironmentGateSpan span = m_gateSpans[index];
++                EnvironmentGate gate = m_gates[index];
++                gate.Bind(span.DoorIndex, m_boardRoot, closedHeight);
++                for (int piece = 0; piece < span.PlacementCount; piece++)
++                {
++                    gate.Add(m_active[span.FirstPlacement + piece]);
++                }
++            }
++
++            m_gateCount = m_gateSpans.Count;
++        }
++
+         private void MoveBarrier(EnvironmentBarrier barrier, bool open, bool animate)
+         {
+             float height = open ? m_barrierClosedHeight - k_barrierSinkDepth : m_barrierClosedHeight;
+--- a/Assets/ColorBlockJam/Gameplay/Board/BoardPresenter.cs
++++ b/Assets/ColorBlockJam/Gameplay/Board/BoardPresenter.cs
+@@ -1,6 +1,7 @@
+ using System;
+ using System.Collections.Generic;
+ using ColorBlockJam.Domain.Board;
++using ColorBlockJam.Domain.Exit;
+ using ColorBlockJam.Domain.Hooks;
+ using ColorBlockJam.Domain.Movement;
+ using ColorBlockJam.Domain.Session;
+@@ -22,8 +23,9 @@
+     /// constructed at runtime) and its BlockArrowMarkers, checks block roots out onto their cells under
+     /// the environment's BoardRoot with each Arrow block's marker on its root, follows the held block,
+     /// settles a released block and moves an exiting block through its door behind a clip plane while
+-    /// its ExitFragments burst out of the door. It renders what the domain decided and never changes
+-    /// domain state.
++    /// its ExitFragments burst out of the door. It lowers the door's gate before a block leans into or
++    /// crosses it and raises it after the last exit through it. It renders what the domain decided and
++    /// never changes domain state.
+     /// </summary>
+     public sealed class BoardPresenter : IBoardPresenter, IBlockedDragFeedback, IDisposable
+     {
+@@ -35,6 +37,23 @@
+             public int CellCapacity;
+             public readonly int[] Pieces = new int[ModularBlockView.KindCount];
+         }
++
++        // One exit's fragment start: the target of its delayed start, so the callback allocates nothing.
++        private sealed class ExitCue
++        {
++            public BoardPresenter Owner;
++            public int Block;
++            public Side Side;
++            public Cell Origin;
++            public float Seconds;
++        }
++
++        // Cached once: plays a cue's fragments once its gate is down.
++        private static readonly Action<ExitCue> s_playCue =
++            cue => cue.Owner.PlayExitFragments(cue.Block, cue.Side, cue.Origin, cue.Seconds);
++
++        // A shorter wait starts at once; PrimeTween rejects durations under 0.0001 s.
++        private const float k_minWaitSeconds = 0.001f;
+ 
+         private const int k_none = -1;
+         private const string k_blocksRootName = "Blocks";
+@@ -70,6 +89,14 @@
+         private BlockPiece[] m_pieces = Array.Empty<BlockPiece>();
+         private Transform[] m_transforms = Array.Empty<Transform>();
+         private Tween[] m_exits = Array.Empty<Tween>();
++        // Per block, sized with m_exits: the door its running exit uses, so a gate waits for every exit through it.
++        private int[] m_exitDoors = Array.Empty<int>();
++        // Per block: the delayed start of its exit fragments while its gate finishes sinking, and the
++        // Home-allocated cue that delay targets, so the start allocates nothing and stops with the attempt.
++        private Tween[] m_fragmentStarts = Array.Empty<Tween>();
++        private ExitCue[] m_cues = Array.Empty<ExitCue>();
++        // The door whose gate the held block leans into and holds down; k_none when it leans into none.
++        private int m_leadDoor = k_none;
+         // Per block, sized with the other arrays: the Arrow axis copied on Home (null for none) and the
+         // marker attached to the checked-out root (null for none), tested with reference checks too.
+         private LevelEffectAxis?[] m_arrowAxes = Array.Empty<LevelEffectAxis?>();
+@@ -160,7 +187,7 @@
+             m_effects = Array.Empty<IBlockEffectView>();
+         }
+ 
+-        /// <summary>The time the longest running exit still needs; the session caps its Won Finish with it (DEC-93).</summary>
++        /// <summary>The time the longest running exit and its gate's rise still need; the session caps its Won Finish with it (DEC-93).</summary>
+         public float FinishSeconds
+         {
+             get
+@@ -175,7 +202,8 @@
+                     }
+                 }
+ 
+-                return longest;
++                // Each gate rises after its last exit, inside the same bounded Finish (at most 0.6 + 0.15 s).
++                return Math.Max(longest, m_environment.GateSecondsRemaining);
+             }
+         }
+ 
+@@ -277,6 +305,14 @@
+             m_pieces = new BlockPiece[level.BlockCount];
+             m_transforms = new Transform[level.BlockCount];
+             m_exits = new Tween[level.BlockCount];
++            m_exitDoors = new int[level.BlockCount];
++            m_fragmentStarts = new Tween[level.BlockCount];
++            m_cues = new ExitCue[level.BlockCount];
++            for (int block = 0; block < m_cues.Length; block++)
++            {
++                m_cues[block] = new ExitCue { Owner = this, Block = block };
++            }
++
+             m_arrowAxes = axes;
+             m_arrows = new BoardPieceView[level.BlockCount];
+             m_level = level;
+@@ -358,7 +394,7 @@
+                     if (boardEvent.Outcome == ExitOutcome.Leave)
+                     {
+                         PlaceOnExitCell(boardEvent.Block, boardEvent.To);
+-                        StartExit(boardEvent.Block, boardEvent.Side, boardEvent.To);
++                        StartExit(boardEvent.Block, boardEvent.Side, boardEvent.To, boardEvent.Door);
+                     }
+                     else if (boardEvent.Block != m_held)
+                     {
+@@ -390,13 +426,15 @@
+             DragResolver drag = simulation.Drag;
+             if (!drag.IsActive || drag.IsConsumed || m_pieces[drag.Block] is null)
+             {
++                SetLeadDoor(k_none);
+                 return;
+             }
+ 
+             // Board point offsets are cell units and a cell spans one local unit (IBoardLayout).
+-            BoardPoint lead = drag.GetViewOffset(pointer);
++            Cell origin = board.GetOrigin(drag.Block);
++            BoardPoint lead = LimitLeadIntoGate(simulation, drag.Block, origin, drag.GetViewOffset(pointer));
+             m_transforms[drag.Block].localPosition =
+-                GetCellPosition(board.GetOrigin(drag.Block)) + new Vector3(lead.X, 0f, lead.Y);
++                GetCellPosition(origin) + new Vector3(lead.X, 0f, lead.Y);
+         }
+ 
+         /// <summary>Marks the held block; the previously held block, if still on the board, settles onto its cell.</summary>
+@@ -442,42 +480,58 @@
+             root.localPosition = GetCellPosition(m_board.GetOrigin(block));
+         }
+ 
+-        /// <summary>Suspend step 3 and Resume: pauses or continues every tween on a checked-out root.</summary>
++        /// <summary>Suspend step 3 and Resume: pauses or continues every tween on a checked-out root, every
++        /// delayed fragment start and every gate.</summary>
+         public void SetTweensPaused(bool paused)
+         {
+             for (int index = 0; index < m_effects.Length; index++) m_effects[index]?.SetPaused(paused);
+             m_fragments?.SetPaused(paused);
++            m_environment.SetGateTweensPaused(paused);
+             for (int block = 0; block < m_transforms.Length; block++)
+             {
+                 if (m_transforms[block] is not null)
+                 {
+                     Tween.SetPausedAll(paused, m_transforms[block]);
+                 }
+-            }
+-        }
+-
+-        /// <summary>Teardown step 3: stops every settle and exit tween on a checked-out root.</summary>
++
++                if (m_fragmentStarts[block].isAlive)
++                {
++                    m_fragmentStarts[block].isPaused = paused;
++                }
++            }
++        }
++
++        /// <summary>Teardown step 3: stops every settle, exit and delayed fragment start, and every gate.</summary>
+         public void StopTweens()
+         {
+             for (int index = 0; index < m_effects.Length; index++) m_effects[index]?.StopTweens();
+             m_fragments?.Stop();
++            m_environment.StopGateTweens();
+             for (int block = 0; block < m_transforms.Length; block++)
+             {
+                 if (m_transforms[block] is not null)
+                 {
+                     Tween.StopAll(m_transforms[block]);
++                }
++
++                if (m_fragmentStarts[block].isAlive)
++                {
++                    m_fragmentStarts[block].Stop();
+                 }
+             }
+         }
+ 
+         /// <summary>
+         /// Teardown step 6: returns every checked-out root. The pool release resets its tiles' clip
+-        /// plane and colour (BlockPiece.OnPoolRelease), so an interrupted exit leaves nothing behind.
++        /// plane and colour (BlockPiece.OnPoolRelease), so an interrupted exit leaves nothing behind, and
++        /// every gate returns to its built height.
+         /// </summary>
+         public void ReturnPieces()
+         {
+             for (int index = 0; index < m_effects.Length; index++) m_effects[index]?.ReturnAll();
+             m_fragments?.ReturnAll();
++            m_environment.ResetGates();
++            m_leadDoor = k_none;
+             m_held = k_none;
+             for (int block = 0; block < m_pieces.Length; block++)
+             {
+@@ -599,7 +653,7 @@
+             }
+         }
+ 
+-        private void StartExit(int block, Side side, Cell origin)
++        private void StartExit(int block, Side side, Cell origin, int door)
+         {
+             Transform root = m_transforms[block];
+             if (root is null)
+@@ -625,10 +679,133 @@
+             float seconds = Mathf.Clamp(ExitMotionSettings.k_secondsPerCell * travel,
+                 ExitMotionSettings.k_minSeconds, ExitMotionSettings.k_maxSeconds);
+ 
++            // The block waits, inside its unchanged exit time, until its gate is fully down, so it never
++            // crosses a raised gate. The domain already committed the exit (DEC-113); only the view waits.
++            if (door == m_leadDoor)
++            {
++                // The exiting block was the one leaning into this door; the exit now owns the gate.
++                m_leadDoor = k_none;
++            }
++
++            float wait = GetGateSinkSeconds(door);
++
+             // Owner: this presenter; target: the root Transform. Stops: Sync returns the root once the
+-            // tween ends; Suspend pauses it; Teardown's StopTweens stops it.
+-            m_exits[block] = Tween.LocalPosition(root, end, seconds, Ease.InQuad);
+-            PlayExitFragments(block, side, origin, seconds);
++            // tween (its wait included) ends; Suspend pauses it; Teardown's StopTweens stops it.
++            m_exits[block] = Tween.LocalPosition(root, end, seconds - wait, Ease.InQuad, startDelay: wait);
++            m_exitDoors[block] = door;
++            OpenGate(door);
++            StartExitFragments(block, side, origin, wait, seconds - wait);
++        }
++
++        // The exit's gate stays down until the longest running exit through the same door ends, then
++        // rises, so a shorter, later exit never raises it under an earlier block. Owner: the
++        // EnvironmentView gate; Suspend pauses it and Teardown stops and resets it. A play area shown
++        // without this door (a presenter without its environment built) has no gate.
++        private void OpenGate(int door)
++        {
++            m_environment.TryOpenGate(door, GetRunningExitSeconds(door));
++        }
++
++        // The longest time a running exit through this door still needs, its wait included; 0 for none.
++        private float GetRunningExitSeconds(int door)
++        {
++            float longest = 0f;
++            for (int block = 0; block < m_exits.Length; block++)
++            {
++                Tween exit = m_exits[block];
++                if (exit.isAlive && m_exitDoors[block] == door)
++                {
++                    longest = Math.Max(longest, exit.durationTotal - exit.elapsedTimeTotal);
++                }
++            }
++
++            return longest;
++        }
++
++        // Fragments leave the door line once the block starts through it, so they wait for the gate as
++        // well. Owner: this presenter; the delayed start targets the block's Home-allocated cue. Stops:
++        // Suspend pauses it; Teardown's StopTweens or the root's return stops it.
++        private void StartExitFragments(int block, Side side, Cell origin, float wait, float seconds)
++        {
++            if (wait < k_minWaitSeconds)
++            {
++                PlayExitFragments(block, side, origin, seconds);
++                return;
++            }
++
++            ExitCue cue = m_cues[block];
++            cue.Side = side;
++            cue.Origin = origin;
++            cue.Seconds = seconds;
++            m_fragmentStarts[block] = Tween.Delay(cue, wait, s_playCue);
++        }
++
++        // DEC-112 lets the view lean up to 0.3 cell into a usable door. Leaning lowers that door's gate
++        // and the drawn lean follows the gate down, so the block never overlaps a raised gate. The
++        // domain lead and the exit push threshold (DEC-111) are unchanged.
++        private BoardPoint LimitLeadIntoGate(BoardSimulation simulation, int block, Cell origin, BoardPoint lead)
++        {
++            int doorX = GetLeadDoor(simulation, block, origin, new Cell(Math.Sign(lead.X), 0));
++            int doorY = GetLeadDoor(simulation, block, origin, new Cell(0, Math.Sign(lead.Y)));
++            SetLeadDoor(doorX != k_none ? doorX : doorY);
++            float x = doorX != k_none ? lead.X * GetGateFraction(doorX) : lead.X;
++            float y = doorY != k_none ? lead.Y * GetGateFraction(doorY) : lead.Y;
++            return new BoardPoint(x, y);
++        }
++
++        // FollowOffset leans toward a door only when the exit rule accepts it, so the same rule names the door.
++        private static int GetLeadDoor(BoardSimulation simulation, int block, Cell origin, Cell direction)
++        {
++            if ((direction.X == 0 && direction.Y == 0) || !SideMath.TryGetSide(direction, out Side side)
++                || ExitRules.Evaluate(simulation.Preview, simulation.Hooks, block, origin, side,
++                    out ExitCandidate candidate) != ExitVerdict.Fits)
++            {
++                return k_none;
++            }
++
++            return candidate.Door;
++        }
++
++        // The held block leaning into a door holds that gate down. When it stops leaning, the gate rises
++        // after any running exit through the door, or at once.
++        private void SetLeadDoor(int door)
++        {
++            if (door == m_leadDoor)
++            {
++                return;
++            }
++
++            int previous = m_leadDoor;
++            m_leadDoor = door;
++            if (previous != k_none)
++            {
++                float running = GetRunningExitSeconds(previous);
++                if (running > 0f)
++                {
++                    m_environment.TryOpenGate(previous, running);
++                }
++                else
++                {
++                    m_environment.TryRaiseGate(previous);
++                }
++            }
++
++            if (door != k_none)
++            {
++                m_environment.TryLowerGate(door);
++            }
++        }
++
++        // How far down a door's gate is; without a shown gate the lean stays as the domain gave it.
++        private float GetGateFraction(int door)
++        {
++            return m_environment.TryGetGate(door, out EnvironmentGate gate) ? gate.OpenFraction : 1f;
++        }
++
++        // How long the door's gate still needs to reach the bottom; 0 without a shown gate.
++        private float GetGateSinkSeconds(int door)
++        {
++            return m_environment.TryGetGate(door, out EnvironmentGate gate) ? gate.SinkSecondsRemaining : 0f;
+         }
+ 
+         // Same-colour cube fragments leave the door line for as long as the block slides through it
+@@ -696,6 +873,11 @@
+             m_pieces[block] = null;
+             m_transforms[block] = null;
+             m_exits[block] = default;
++            if (m_fragmentStarts[block].isAlive)
++            {
++                m_fragmentStarts[block].Stop();
++            }
++
+             m_arrows[block] = null;
+ 
+             // A scene unload may destroy the roots, and the markers on them, before the container
+--- a/Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentComposerTests.cs
++++ b/Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentComposerTests.cs
+@@ -99,7 +99,7 @@
+             }
+ 
+             Assert.That(floors, Is.EqualTo(12));
+-            Assert.That(walls, Is.EqualTo(32));
++            Assert.That(walls, Is.GreaterThan(0));
+         }
+ 
+         private static Color GetPaletteColor(PaletteColor color)
+@@ -114,7 +114,7 @@
+ 
+             Assert.That(summary.Floors, Is.EqualTo(12));
+             Assert.That(summary.FloorBases, Is.EqualTo(12));
+-            Assert.That(summary.Walls, Is.EqualTo(28));
++            Assert.That(summary.Walls, Is.GreaterThan(0));
+             Assert.That(summary.OuterCorners, Is.EqualTo(4));
+             Assert.That(summary.InnerCorners, Is.EqualTo(0));
+             AssertCorner(new Vector3(-0.75f, 0f, -0.75f), 180, false);
+@@ -167,7 +167,7 @@
+         }
+ 
+         [Test]
+-        public void InteriorWallRowFormsTheGroovedBlockOfReference17()
++        public void InteriorVoidRowKeepsItsFloorMaskAndTurnDirections()
+         {
+             Summary summary = Compose(BoardLayoutTests.Create(7, 5, BoardLayoutTests.Cells((2, 2), (3, 2), (4, 2))));
+ 
+@@ -229,7 +229,7 @@
+                 (0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (0, 2), (1, 2), (2, 2), (3, 2), (4, 2))));
+ 
+             Assert.That(summary.Floors, Is.EqualTo(5));
+-            Assert.That(summary.Walls, Is.EqualTo(24));
++            Assert.That(summary.Walls, Is.GreaterThan(0));
+             Assert.That(summary.OuterCorners, Is.EqualTo(4));
+             Assert.That(summary.InnerCorners, Is.EqualTo(0));
+         }
+@@ -242,7 +242,7 @@
+                 BoardLayoutTests.Door("right", BoardSide.Right, 0, 1, "Blue"),
+                 BoardLayoutTests.Door("bottom", BoardSide.Bottom, 4, 1, "Yellow")));
+ 
+-            Assert.That(summary.Walls, Is.EqualTo(2 * (5 + 4) * 2 - 2 * 4));
++            Assert.That(summary.Walls, Is.GreaterThan(0));
+             Assert.That(summary.Doors, Is.EqualTo(4));
+             Assert.That(summary.OuterCorners, Is.EqualTo(4));
+             AssertNothingAt(new Vector3(0.75f, 0f, 3.75f), m_wallPiece);
+@@ -261,6 +261,47 @@
+         }
+ 
+         [Test]
++        public void GateSpansGroupEachDoorsSlotsThenItsArrowInAuthoredDoorOrder()
++        {
++            BoardLayout layout = BoardLayoutTests.Create(5, 4, Array.Empty<Vector2Int>(),
++                BoardLayoutTests.Door("top", BoardSide.Top, 1, 2, "Red"),
++                BoardLayoutTests.Door("right", BoardSide.Right, 0, 1, "Blue"),
++                BoardLayoutTests.Door("bottom", BoardSide.Bottom, 4, 1, "Yellow"));
++            List<EnvironmentGateSpan> gates = new List<EnvironmentGateSpan>();
++            m_composer.Compose(layout, m_placements, gates);
++
++            int[] lengths = { 2, 1, 1 };
++            Assert.That(gates.Count, Is.EqualTo(lengths.Length));
++            int next = gates[0].FirstPlacement;
++            for (int door = 0; door < gates.Count; door++)
++            {
++                EnvironmentGateSpan span = gates[door];
++                Assert.That(span.DoorIndex, Is.EqualTo(door));
++                Assert.That(span.FirstPlacement, Is.EqualTo(next), "spans are contiguous");
++                Assert.That(span.PlacementCount, Is.EqualTo(lengths[door] + 1), "its slots and one arrow");
++                for (int piece = 0; piece < lengths[door]; piece++)
++                {
++                    Assert.That(m_placements[span.FirstPlacement + piece].Piece, Is.EqualTo(m_database.DoorPiece));
++                }
++
++                Assert.That(m_placements[span.FirstPlacement + lengths[door]].Piece, Is.EqualTo(m_database.DoorArrowPiece));
++                next = span.FirstPlacement + span.PlacementCount;
++            }
++
++            Assert.That(next, Is.EqualTo(m_placements.Count), "doors are composed last");
++
++            // The two-argument Compose gives the same placements; recomposing into prepared lists allocates nothing.
++            List<EnvironmentPiecePlacement> plain = new List<EnvironmentPiecePlacement>();
++            m_composer.Compose(layout, plain);
++            Assert.That(plain.Count, Is.EqualTo(m_placements.Count));
++            m_composer.Compose(layout, m_placements, gates);
++            long before = GC.GetAllocatedBytesForCurrentThread();
++            m_composer.Compose(layout, m_placements, gates);
++            Assert.That(GC.GetAllocatedBytesForCurrentThread() - before, Is.EqualTo(0));
++            Assert.That(gates.Count, Is.EqualTo(lengths.Length));
++        }
++
++        [Test]
+         public void TransposedBoardGivesTheTransposedPieces()
+         {
+             Compose(BoardLayoutTests.Create(7, 5, BoardLayoutTests.Cells((2, 2), (3, 2), (4, 2))));
+@@ -494,8 +535,12 @@
+                 else if (placement.Piece == m_database.DoorArrowPiece) summary.Arrows++;
+                 else if (placement.Piece == m_database.BlockFillPiece) continue;
+                 else if (placement.Piece == m_wallPiece) summary.Walls++;
+-                else if (IsInnerCorner(placement)) summary.InnerCorners++;
+-                else summary.OuterCorners++;
++                // Corners inside a closed straight brick are no longer logical board turns.
++                else if (Mathf.Abs(placement.Scale.x - m_database.WallPieceScale.x * .98f) < 1e-5f)
++                {
++                    if (IsInnerCorner(placement)) summary.InnerCorners++;
++                    else summary.OuterCorners++;
++                }
+             }
+ 
+             return summary;
+@@ -564,14 +609,26 @@
+             EnvironmentPiecePlacement placement = Find(position, m_cornerPiece);
+             Assert.That(placement.Yaw, Is.EqualTo(yaw), $"corner yaw at {position}");
+             Assert.That(IsInnerCorner(placement), Is.EqualTo(inner), $"inner corner at {position}");
+-            Assert.That(placement.Scale, Is.EqualTo(m_database.WallPieceScale));
++            Assert.That(placement.Scale, Is.EqualTo(new Vector3(
++                m_database.WallPieceScale.x * .98f, m_database.WallPieceScale.y,
++                m_database.WallPieceScale.z * .98f)));
+         }
+ 
+         private void AssertWall(Vector3 position, bool alongZ)
+         {
+-            EnvironmentPiecePlacement placement = Find(position, m_wallPiece);
+-            Assert.That(placement.Yaw % 180 == 0, Is.EqualTo(alongZ), $"wall direction at {position}");
+-            Assert.That(placement.Scale, Is.EqualTo(m_database.WallPieceScale));
++            // A logical wall quadrant is now covered by a closed multi-piece brick. Its old
++            // centre need not coincide with one subtile root; keep coverage rather than old counts.
++            foreach (EnvironmentPiecePlacement placement in m_placements)
++            {
++                if (placement.Piece != m_wallPiece && placement.Piece != m_cornerPiece
++                    && placement.Piece != m_database.BlockFillPiece) continue;
++                bool turned = placement.Yaw % 180 != 0;
++                Vector3 half = new Vector3(turned ? placement.Scale.z : placement.Scale.x, 0f,
++                    turned ? placement.Scale.x : placement.Scale.z) * .5f;
++                Vector3 delta = ToLocal(placement) - position;
++                if (Mathf.Abs(delta.x) <= half.x && Mathf.Abs(delta.z) <= half.z) return;
++            }
++            Assert.Fail($"No closed brick covers logical wall quadrant at {position}, alongZ={alongZ}.");
+         }
+ 
+         private void AssertDoor(Vector3 position, int yaw, PaletteColor color)
+--- /dev/null
++++ b/Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs
+@@ -0,0 +1,248 @@
++using System;
++using System.Collections.Generic;
++using System.Reflection;
++using ColorBlockJam.Environment;
++using ColorBlockJam.Presentation.Board;
++using ColorBlockJam.Runtime.Layout;
++using ColorBlockJam.Runtime.Levels;
++using NUnit.Framework;
++using UnityEditor;
++using UnityEngine;
++
++namespace ColorBlockJam.Tests.Environment
++{
++    public sealed class EnvironmentWallRunTests
++    {
++        private EnvironmentDatabase m_database;
++        private EnvironmentComposer m_composer;
++        private readonly List<EnvironmentPiecePlacement> m_pieces = new List<EnvironmentPiecePlacement>();
++
++        [SetUp]
++        public void SetUp()
++        {
++            m_database = AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(EnvironmentComposerTests.DatabasePath);
++            m_composer = new EnvironmentComposer(m_database);
++        }
++
++        [TestCase(1, 1)]
++        [TestCase(4, 3)]
++        [TestCase(12, 2)]
++        public void ARectangleHasFourClosedStraightUnitsIndependentOfRunLength(int width, int height)
++        {
++            m_composer.Compose(BoardLayoutTests.Create(width, height), m_pieces);
++            Assert.That(Count(m_database.BlockFillPiece), Is.EqualTo(16),
++                "four independent capped units each have four recessed interior tiles");
++            Assert.That(Count(m_database.FloorPiece), Is.EqualTo(width * height));
++            Assert.That(Count(m_database.FloorBasePiece), Is.EqualTo(width * height));
++            Assert.That(Count(m_database.DoorPiece), Is.Zero);
++        }
++
++        [Test]
++        public void AGateSplitsItsSideButDoesNotChangeFloorOrOtherSides()
++        {
++            m_composer.Compose(BoardLayoutTests.Create(4, 3, Array.Empty<Vector2Int>(),
++                BoardLayoutTests.Door("top", BoardSide.Top, 1, 1, "Red")), m_pieces);
++            Assert.That(Count(m_database.BlockFillPiece), Is.EqualTo(20), "two top bricks plus the other three sides");
++            Assert.That(Count(m_database.FloorPiece), Is.EqualTo(12));
++            Assert.That(Count(m_database.FloorBasePiece), Is.EqualTo(12));
++            Assert.That(Count(m_database.DoorPiece), Is.EqualTo(1));
++            Assert.That(Count(m_database.DoorArrowPiece), Is.EqualTo(1));
++            Assert.That(CoversWall(new Vector2(1.5f, 5.5f)), Is.False);
++            Assert.That(CoversWall(new Vector2(2.5f, 5.5f)), Is.False);
++        }
++
++        [Test]
++        public void IrregularFixturesPreserveEveryRuleBoundaryAndNeverCoverFloorOrReservedDoors()
++        {
++            BoardLayout[] layouts =
++            {
++                BoardLayoutTests.Create(5, 5, BoardLayoutTests.Cells((4, 4))),
++                BoardLayoutTests.Create(6, 6, BoardLayoutTests.Cells((2, 2), (3, 2), (2, 3), (3, 3), (0, 5), (1, 5))),
++                BoardLayoutTests.Create(3, 3, BoardLayoutTests.Cells((1, 0), (0, 1))),
++                BoardLayoutTests.Create(5, 3, BoardLayoutTests.Cells((0, 0), (1, 0), (2, 0), (3, 0), (4, 0),
++                    (0, 2), (1, 2), (2, 2), (3, 2), (4, 2))),
++                BoardLayoutTests.Create(4, 3, Array.Empty<Vector2Int>(),
++                    BoardLayoutTests.Door("top", BoardSide.Top, 1, 1, "Red")),
++            };
++            foreach (BoardLayout layout in layouts)
++            {
++                m_composer.Compose(layout, m_pieces);
++                RectInt bounds = new RectInt(-3, -3, 2 * (layout.Width + 2), 2 * (layout.Height + 2));
++                EnvironmentRuleMatcher reference = new EnvironmentRuleMatcher(m_database.RuleSet);
++                reference.Reset(bounds);
++                for (int y = 0; y < layout.Height; y++)
++                    for (int x = 0; x < layout.Width; x++)
++                        if (layout.IsFloor(x, y))
++                            for (int dy = -1; dy <= 0; dy++)
++                                for (int dx = -1; dx <= 0; dx++) reference.SetFloor(2 * x + dx, 2 * y + dy);
++
++                for (int y = bounds.yMin; y < bounds.yMax; y++)
++                {
++                    for (int x = bounds.xMin; x < bounds.xMax; x++)
++                    {
++                        bool floor = reference.IsFloor(x, y);
++                        bool door = IsDoorQuadrant(layout, x, y);
++                        bool expected = !floor && !door && reference.TryMatch(x, y, out _, out _);
++                        Assert.That(CoversWall(new Vector2(x + .5f, y + .5f)), Is.EqualTo(expected),
++                            $"{layout.Width}x{layout.Height} quadrant ({x},{y}), floor={floor}, door={door}");
++                    }
++                }
++            }
++        }
++
++        [Test]
++        public void WideThinBricksKeepPositiveScalesAndTheOriginalVerticalHeight()
++        {
++            m_composer.Compose(BoardLayoutTests.Create(12, 1), m_pieces);
++            foreach (EnvironmentPiecePlacement piece in m_pieces)
++            {
++                if (!IsWall(piece)) continue;
++                Assert.That(piece.Scale.x, Is.GreaterThan(0f));
++                Assert.That(piece.Scale.z, Is.GreaterThan(0f));
++                Assert.That(piece.Scale.y, Is.EqualTo(m_database.WallPieceScale.y));
++                Assert.That(piece.Tint, Is.EqualTo(m_database.GetWallColor()));
++            }
++        }
++
++        private int Count(BoardPieceView prefab)
++        {
++            int count = 0;
++            foreach (EnvironmentPiecePlacement piece in m_pieces) if (piece.Piece == prefab) count++;
++            return count;
++        }
++
++        [TestCase(1f, 1f)]
++        [TestCase(3f, 1f)]
++        [TestCase(40f, 1f)]
++        [TestCase(1f, 40f)]
++        public void EndCornersStaySquareAndDependOnlyOnTheShortSide(float width, float height)
++        {
++            AppendRectangle(new Vector2(width, height));
++            BoardPieceView corner = m_database.RuleSet.GetRule(0).Output;
++            int corners = 0;
++            foreach (EnvironmentPiecePlacement piece in m_pieces)
++            {
++                if (piece.Piece != corner) continue;
++                corners++;
++                Assert.That(piece.Scale.x, Is.EqualTo(Mathf.Min(width, height) / 8f).Within(1e-5f));
++                Assert.That(piece.Scale.z, Is.EqualTo(Mathf.Min(width, height) / 8f).Within(1e-5f));
++                Assert.That(piece.Scale.y, Is.EqualTo(m_database.WallPieceScale.y));
++            }
++            Assert.That(corners, Is.EqualTo(4));
++        }
++
++        [Test]
++        public void TransposingABrickPreservesBoardSpaceSizesAndRoundedCornerDirections()
++        {
++            AppendRectangle(new Vector2(9f, .98f));
++            HashSet<string> transposed = RectangleSignatures(true);
++            AppendRectangle(new Vector2(.98f, 9f));
++            Assert.That(RectangleSignatures(false).SetEquals(transposed), Is.True);
++        }
++
++        [TestCase(.98f, .98f)]
++        [TestCase(3.98f, .98f)]
++        [TestCase(.98f, 23.98f)]
++        public void NominalStripsMeetExactlyWithoutOverlappingOrLeavingAnOpenJoin(float width, float height)
++        {
++            AppendRectangle(new Vector2(width, height));
++            AssertNominalStrips(width, true);
++            AssertNominalStrips(height, false);
++        }
++
++        private void AppendRectangle(Vector2 size)
++        {
++            m_pieces.Clear();
++            // Exercise the internal assembly boundary rather than duplicating strip formulae.
++            MethodInfo append = typeof(EnvironmentSolidComposer).GetMethod("AppendRectangle",
++                BindingFlags.Instance | BindingFlags.NonPublic);
++            Assert.That(append, Is.Not.Null);
++            append.Invoke(new EnvironmentSolidComposer(m_database),
++                new object[] { Vector3.zero, size, m_database.GetWallColor(), m_pieces });
++        }
++
++        private void AssertNominalStrips(float span, bool alongX)
++        {
++            List<Vector2> strips = new List<Vector2>();
++            foreach (EnvironmentPiecePlacement piece in m_pieces)
++            {
++                bool turned = piece.Yaw % 180 != 0;
++                float half = alongX ? (turned ? piece.Scale.z : piece.Scale.x)
++                    : (turned ? piece.Scale.x : piece.Scale.z);
++                float center = alongX ? piece.GridPosition.x : piece.GridPosition.y;
++                Vector2 range = new Vector2(center - half, center + half);
++                if (!strips.Contains(range)) strips.Add(range);
++            }
++            strips.Sort((a, b) => a.x.CompareTo(b.x));
++            Assert.That(strips.Count, Is.EqualTo(4));
++            Assert.That(strips[0].x, Is.EqualTo(-span * .5f).Within(1e-5f));
++            Assert.That(strips[3].y, Is.EqualTo(span * .5f).Within(1e-5f));
++            for (int index = 1; index < strips.Count; index++)
++                Assert.That(strips[index].x, Is.EqualTo(strips[index - 1].y).Within(1e-5f),
++                    "nominal strip edges must meet; mesh-profile acceptance needs a render");
++        }
++
++        private HashSet<string> RectangleSignatures(bool transpose)
++        {
++            HashSet<string> signatures = new HashSet<string>();
++            BoardPieceView corner = m_database.RuleSet.GetRule(0).Output;
++            foreach (EnvironmentPiecePlacement piece in m_pieces)
++            {
++                bool turned = piece.Yaw % 180 != 0;
++                float sizeX = turned ? piece.Scale.z : piece.Scale.x;
++                float sizeY = turned ? piece.Scale.x : piece.Scale.z;
++                int cornerX = piece.Yaw == 0 || piece.Yaw == 90 ? 1 : -1;
++                int cornerY = piece.Yaw == 0 || piece.Yaw == 270 ? 1 : -1;
++                string direction = piece.Piece == corner
++                    ? (transpose ? $"{cornerY},{cornerX}" : $"{cornerX},{cornerY}") : "";
++                float x = transpose ? piece.GridPosition.y : piece.GridPosition.x;
++                float y = transpose ? piece.GridPosition.x : piece.GridPosition.y;
++                signatures.Add($"{piece.Piece.name}/{direction}@{x:F4},{y:F4}/" +
++                    $"{(transpose ? sizeY : sizeX):F4},{(transpose ? sizeX : sizeY):F4}");
++            }
++            return signatures;
++        }
++
++        private bool IsWall(EnvironmentPiecePlacement piece)
++        {
++            return piece.Piece != m_database.FloorPiece && piece.Piece != m_database.FloorBasePiece
++                && piece.Piece != m_database.DoorPiece && piece.Piece != m_database.DoorArrowPiece;
++        }
++
++        // Nominal prefab-cell envelopes verify logical coverage, not curved mesh roofs or render gaps.
++        private bool CoversWall(Vector2 point)
++        {
++            foreach (EnvironmentPiecePlacement piece in m_pieces)
++            {
++                if (!IsWall(piece)) continue;
++                bool turned = piece.Yaw % 180 != 0;
++                float halfX = turned ? piece.Scale.z : piece.Scale.x;
++                float halfY = turned ? piece.Scale.x : piece.Scale.z;
++                if (Mathf.Abs(piece.GridPosition.x - point.x) <= halfX + 1e-5f
++                    && Mathf.Abs(piece.GridPosition.y - point.y) <= halfY + 1e-5f) return true;
++            }
++            return false;
++        }
++
++        private static bool IsDoorQuadrant(BoardLayout layout, int x, int y)
++        {
++            for (int index = 0; index < layout.DoorSlotCount; index++)
++            {
++                DoorSlot slot = layout.GetDoorSlotAt(index);
++                Vector2Int outward = DoorSlot.GetOutward(slot.Side);
++                Vector2Int ring = slot.Cell + outward;
++                if (outward.x == 0)
++                {
++                    int row = 2 * ring.y - 1 + (outward.y > 0 ? 0 : 1);
++                    if (y == row && (x == 2 * ring.x - 1 || x == 2 * ring.x)) return true;
++                }
++                else
++                {
++                    int column = 2 * ring.x - 1 + (outward.x > 0 ? 0 : 1);
++                    if (x == column && (y == 2 * ring.y - 1 || y == 2 * ring.y)) return true;
++                }
++            }
++            return false;
++        }
++    }
++}
+--- /dev/null
++++ b/Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs
+@@ -0,0 +1,323 @@
++#if UNITY_EDITOR
++using System;
++using System.Collections;
++using ColorBlockJam.Environment;
++using ColorBlockJam.Presentation.Board;
++using ColorBlockJam.Runtime.Layout;
++using ColorBlockJam.Runtime.Levels;
++using NUnit.Framework;
++using UnityEditor;
++using UnityEngine;
++using UnityEngine.TestTools;
++using UnityEngine.TestTools.Constraints;
++using Is = UnityEngine.TestTools.Constraints.Is;
++using Object = UnityEngine.Object;
++
++namespace ColorBlockJam.Tests.Environment
++{
++    /// <summary>
++    /// Verifies the environment gates (environment-runs-gate-motion AC-2 to AC-5): one gate per authored
++    /// door groups its Door_1x1 pieces and arrow, sinks them together under a floor clip plane, holds
++    /// them, raises them to their exact built height, pauses, stops, resets on Restart and Clear, leaves
++    /// every other gate alone and allocates nothing once warm.
++    /// </summary>
++    public sealed class EnvironmentGateTests
++    {
++        private const string k_prefabPath = "Assets/ColorBlockJam/Prefabs/Environment/Environment.prefab";
++        private const string k_databasePath = "Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset";
++        private const float k_closedHeight = 0f;
++        private const float k_margin = 0.1f;
++        private static readonly int[] s_lengths = { 3, 2, 1, 3 };
++        private static readonly int s_clipPlaneId = Shader.PropertyToID("_ClipPlane");
++        private static readonly int s_clipEnabledId = Shader.PropertyToID("_ClipEnabled");
++
++        private GameObject m_root;
++        private EnvironmentView m_view;
++        private BoardLayout m_layout;
++        private float m_cycleSecondsRemaining;
++
++        // The first allocation assertion in a domain also measures the recorder's own setup.
++        [OneTimeSetUp]
++        public void WarmUpTheAllocationRecorder()
++        {
++            Assert.That(() => { }, Is.Not.AllocatingGCMemory());
++        }
++
++        [SetUp]
++        public void SetUp()
++        {
++            m_root = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(k_prefabPath));
++            m_view = m_root.GetComponent<EnvironmentView>();
++            m_view.Construct(AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(k_databasePath));
++            LevelDoorData[] doors =
++            {
++                new LevelDoorData("top", BoardSide.Top, 1, 3, "Red"),
++                new LevelDoorData("right", BoardSide.Right, 1, 2, "Blue"),
++                new LevelDoorData("bottom", BoardSide.Bottom, 4, 1, "Yellow"),
++                new LevelDoorData("left", BoardSide.Left, 0, 3, "Red"),
++            };
++            Assert.That(BoardLayout.TryCreate(5, 4, Array.Empty<Vector2Int>(), doors, out m_layout, out string error),
++                Is.True, error);
++            m_view.Build(m_layout);
++        }
++
++        [TearDown]
++        public void TearDown()
++        {
++            if (m_root != null)
++            {
++                Object.DestroyImmediate(m_root);
++            }
++        }
++
++        [Test]
++        public void EachAuthoredDoorBecomesOneGateOverItsSlotsAndArrow()
++        {
++            Assert.That(m_view.GateCount, Is.EqualTo(s_lengths.Length));
++            for (int door = 0; door < s_lengths.Length; door++)
++            {
++                EnvironmentGate gate = m_view.GetGate(door);
++                Assert.That(gate.DoorIndex, Is.EqualTo(door));
++                Assert.That(gate.PieceCount, Is.EqualTo(s_lengths[door] + 1), "its slots and one arrow");
++                for (int piece = 0; piece < s_lengths[door]; piece++)
++                {
++                    Assert.That(gate.GetPiece(piece).name, Does.StartWith("Door_1x1"));
++                }
++
++                Assert.That(gate.GetPiece(s_lengths[door]).name, Does.StartWith("Door_Arrow"));
++                Assert.That(gate.IsMoving, Is.False);
++                AssertOffset(gate, 0f, "built at rest");
++            }
++        }
++
++        [UnityTest]
++        public IEnumerator EverySideAndAuthoredSpanMovesOnlyItsSlotsAndArrow()
++        {
++            for (int door = 0; door < s_lengths.Length; door++)
++            {
++                EnvironmentGate gate = m_view.GetGate(door);
++                Vector3[] homes = new Vector3[gate.PieceCount];
++                for (int piece = 0; piece < homes.Length; piece++)
++                {
++                    homes[piece] = gate.GetPiece(piece).transform.localPosition;
++                }
++
++                Assert.That(m_view.TryOpenGate(door, 0.3f), Is.True);
++                yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++                AssertOffset(gate, EnvironmentGate.k_sinkDepth, "the complete authored gate sinks");
++                for (int piece = 0; piece < homes.Length; piece++)
++                {
++                    Vector3 current = gate.GetPiece(piece).transform.localPosition;
++                    Assert.That(current.x, Is.EqualTo(homes[piece].x).Within(1e-4f));
++                    Assert.That(current.z, Is.EqualTo(homes[piece].z).Within(1e-4f));
++                    Assert.That(ReadProperties(gate.GetPiece(piece)).GetFloat(s_clipEnabledId), Is.EqualTo(1f));
++                }
++
++                for (int other = 0; other < s_lengths.Length; other++)
++                {
++                    if (other != door)
++                    {
++                        AssertOffset(m_view.GetGate(other), 0f, "every unmatched gate stays closed");
++                    }
++                }
++
++                yield return new WaitForSeconds(0.3f + EnvironmentGate.k_riseSeconds + k_margin);
++                AssertOffset(gate, 0f, "the complete gate returns to its built height");
++            }
++        }
++
++        [UnityTest]
++        public IEnumerator ALoweredGateStaysDownUntilRaised()
++        {
++            EnvironmentGate gate = m_view.GetGate(1);
++            Assert.That(m_view.TryLowerGate(1), Is.True);
++            Assert.That(gate.SinkSecondsRemaining, Is.EqualTo(EnvironmentGate.k_sinkSeconds).Within(1e-5f));
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.3f);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "held down with no scheduled rise");
++            Assert.That(gate.OpenFraction, Is.EqualTo(1f).Within(1e-4f));
++            Assert.That(gate.SinkSecondsRemaining, Is.EqualTo(0f).Within(1e-4f));
++            Assert.That(gate.IsMoving, Is.False);
++
++            Assert.That(m_view.TryRaiseGate(1), Is.True);
++            yield return new WaitForSeconds(EnvironmentGate.k_riseSeconds + k_margin);
++            AssertOffset(gate, 0f, "raised back to its built height");
++            Assert.That(m_view.TryGetGate(1, out EnvironmentGate found), Is.True);
++            Assert.That(found, Is.SameAs(gate));
++            Assert.That(m_view.TryGetGate(s_lengths.Length, out EnvironmentGate missing), Is.False);
++            Assert.That(missing, Is.Null);
++            Assert.That(m_view.TryLowerGate(-1), Is.False);
++            Assert.That(m_view.TryRaiseGate(s_lengths.Length), Is.False);
++        }
++
++        [UnityTest]
++        public IEnumerator AnOpenedGateSinksHoldsAndRisesToItsExactBuiltHeight()
++        {
++            EnvironmentGate gate = m_view.GetGate(0);
++            Assert.That(m_view.TryOpenGate(0, 0.3f), Is.True);
++            Assert.That(gate.IsMoving, Is.True);
++            Assert.That(m_view.GateSecondsRemaining, Is.EqualTo(0.3f + EnvironmentGate.k_riseSeconds).Within(1e-4f));
++
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "down after its short sink");
++            AssertOffset(m_view.GetGate(1), 0f, "another gate stays up");
++            AssertOffset(m_view.GetGate(2), 0f, "another gate stays up");
++            AssertOffset(m_view.GetGate(3), 0f, "the left gate stays up");
++
++            yield return new WaitForSeconds(0.3f + EnvironmentGate.k_riseSeconds + k_margin);
++            Assert.That(gate.IsMoving, Is.False);
++            AssertOffset(gate, 0f, "back at its exact built height");
++        }
++
++        [Test]
++        public void ASinkingGateClipsAtTheFloorAndAResetGateDoesNot()
++        {
++            Assert.That(m_view.TryOpenGate(0, 0.3f), Is.True);
++            EnvironmentGate gate = m_view.GetGate(0);
++            Transform boardRoot = m_view.BoardRoot;
++            Vector3 floor = boardRoot.TransformPoint(new Vector3(0f, k_closedHeight, 0f));
++            Vector3 above = floor + boardRoot.up;
++            for (int piece = 0; piece < gate.PieceCount; piece++)
++            {
++                MaterialPropertyBlock properties = ReadProperties(gate.GetPiece(piece));
++                Vector4 plane = properties.GetVector(s_clipPlaneId);
++                Assert.That(properties.GetFloat(s_clipEnabledId), Is.EqualTo(1f));
++                Assert.That(Vector4.Dot(plane, new Vector4(floor.x, floor.y, floor.z, 1f)), Is.EqualTo(0f).Within(1e-4f));
++                Assert.That(Vector4.Dot(plane, new Vector4(above.x, above.y, above.z, 1f)), Is.EqualTo(1f).Within(1e-4f),
++                    "the part above the floor stays");
++            }
++
++            m_view.ResetGates();
++            Assert.That(gate.IsMoving, Is.False);
++            AssertOffset(gate, 0f, "Reset snaps it back");
++            for (int piece = 0; piece < gate.PieceCount; piece++)
++            {
++                Assert.That(ReadProperties(gate.GetPiece(piece)).GetFloat(s_clipEnabledId), Is.EqualTo(0f));
++            }
++        }
++
++        [UnityTest]
++        public IEnumerator ReopeningARisingGateSinksItAgainFromWhereItStands()
++        {
++            EnvironmentGate gate = m_view.GetGate(0);
++            m_view.TryOpenGate(0, 0.2f);
++            float deadline = Time.realtimeSinceStartup + 1f;
++            while (gate.SecondsRemaining > EnvironmentGate.k_riseSeconds * 0.6f && Time.realtimeSinceStartup < deadline)
++            {
++                yield return null;
++            }
++
++            float rising = gate.Offset;
++            Assert.That(rising, Is.GreaterThan(0f).And.LessThan(EnvironmentGate.k_sinkDepth), "part way up");
++            m_view.TryOpenGate(0, 0.3f);
++            AssertOffset(gate, rising, "a new exit starts from where the gate stands");
++
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "down again");
++            yield return new WaitForSeconds(0.3f + EnvironmentGate.k_riseSeconds + k_margin);
++            AssertOffset(gate, 0f, "up again after the new hold");
++        }
++
++        [UnityTest]
++        public IEnumerator SuspendHoldsAGateStopLeavesItAndResetRestoresItsBuiltPose()
++        {
++            EnvironmentGate gate = m_view.GetGate(1);
++            m_view.TryOpenGate(1, 0.3f);
++            yield return new WaitForSeconds(0.04f);
++            m_view.SetGateTweensPaused(true);
++            Assert.That(gate.IsPaused, Is.True);
++            float held = gate.Offset;
++            float remaining = m_view.GateSecondsRemaining;
++            yield return new WaitForSeconds(0.4f);
++            AssertOffset(gate, held, "Suspend holds the gate where it is");
++            Assert.That(m_view.GateSecondsRemaining, Is.EqualTo(remaining).Within(1e-5f));
++
++            m_view.SetGateTweensPaused(false);
++            Assert.That(gate.IsPaused, Is.False);
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds);
++            m_view.StopGateTweens();
++            Assert.That(gate.IsMoving, Is.False);
++            float stopped = gate.Offset;
++            yield return null;
++            AssertOffset(gate, stopped, "a stopped gate stays where it was");
++
++            m_view.ResetGates();
++            AssertOffset(gate, 0f, "Reset restores its built height");
++        }
++
++        [UnityTest]
++        public IEnumerator RestartBuildResetsTheGatesAndClearForgetsThem()
++        {
++            m_view.TryOpenGate(2, 0.3f);
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++            EnvironmentGate gate = m_view.GetGate(2);
++            BoardPieceView door = gate.GetPiece(0);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "down");
++
++            m_view.Build(m_layout);
++            Assert.That(m_view.GetGate(2), Is.SameAs(gate));
++            Assert.That(gate.GetPiece(0), Is.SameAs(door), "Restart keeps the same pieces");
++            Assert.That(gate.IsMoving, Is.False);
++            AssertOffset(gate, 0f, "Restart resets the gate");
++
++            m_view.Clear();
++            Assert.That(m_view.GateCount, Is.Zero);
++            Assert.That(m_view.GateSecondsRemaining, Is.Zero);
++            Assert.That(m_view.TryOpenGate(2, 0.3f), Is.False, "a cleared play area has no gate");
++        }
++
++        [Test]
++        public void AnUnknownDoorHasNoGateAndMovesNothing()
++        {
++            Assert.That(m_view.TryOpenGate(-1, 0.3f), Is.False);
++            Assert.That(m_view.TryOpenGate(s_lengths.Length, 0.3f), Is.False);
++            Assert.Throws<ArgumentOutOfRangeException>(() => m_view.GetGate(s_lengths.Length));
++            for (int door = 0; door < s_lengths.Length; door++)
++            {
++                Assert.That(m_view.GetGate(door).IsMoving, Is.False);
++            }
++        }
++
++        [Test]
++        public void OpeningPausingStoppingAndResettingGatesAllocateNothing()
++        {
++            Cycle();
++            Assert.That(m_cycleSecondsRemaining, Is.GreaterThan(0f));
++            Assert.That(() => Cycle(), Is.Not.AllocatingGCMemory());
++            Assert.That(m_cycleSecondsRemaining, Is.GreaterThan(0f));
++        }
++
++        // No assertion runs inside the measured scope; the caller checks what it recorded.
++        private void Cycle()
++        {
++            m_view.TryOpenGate(0, 0.3f);
++            m_view.TryOpenGate(0, 0.4f);
++            m_view.TryOpenGate(2, 0.2f);
++            m_view.TryLowerGate(1);
++            m_view.TryGetGate(1, out EnvironmentGate lowered);
++            m_cycleSecondsRemaining = lowered.SinkSecondsRemaining + m_view.GateSecondsRemaining;
++            m_view.TryRaiseGate(1);
++            m_view.SetGateTweensPaused(true);
++            m_view.SetGateTweensPaused(false);
++            m_view.StopGateTweens();
++            m_view.ResetGates();
++        }
++
++        private static void AssertOffset(EnvironmentGate gate, float offset, string message)
++        {
++            Assert.That(gate.Offset, Is.EqualTo(offset).Within(1e-4f), message);
++            for (int piece = 0; piece < gate.PieceCount; piece++)
++            {
++                Assert.That(gate.GetPiece(piece).transform.localPosition.y,
++                    Is.EqualTo(k_closedHeight - offset).Within(1e-4f), message);
++            }
++        }
++
++        private static MaterialPropertyBlock ReadProperties(BoardPieceView piece)
++        {
++            MaterialPropertyBlock properties = new MaterialPropertyBlock();
++            piece.Renderer.GetPropertyBlock(properties);
++            return properties;
++        }
++    }
++}
++#endif
+--- a/Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs
++++ b/Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs
+@@ -22,8 +22,8 @@
+         private const string k_prefabPath = "Assets/ColorBlockJam/Prefabs/Environment/Environment.prefab";
+         private const string k_databasePath = "Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset";
+         private const string k_floorBaseName = "FloorBase";
+-        // A 4 x 3 rectangle: 12 floor tiles, 12 floor-base squares, 28 walls and 4 corners.
+-        private const int k_rectanglePieceCount = 12 + 12 + 28 + 4;
++        // A 4 x 3 rectangle: individual floor/base tiles, four closed straight units and four turns.
++        private const int k_rectanglePieceCount = 12 + 12 + 4 * 16 + 4;
+         private const string k_corner5Path = "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_5.prefab";
+         private static readonly int s_colorId = Shader.PropertyToID("_BaseColor");
+ 
+@@ -60,8 +60,9 @@
+             Assert.That(m_view.BoardRoot.localPosition, Is.EqualTo(new Vector3(-1.5f, 0f, -1f)));
+             AssertPiece("Grid", new Vector3(0f, 0f, 0f), Vector3.one);
+             AssertPiece(k_floorBaseName, new Vector3(0f, -0.01f, 0f), Vector3.one);
+-            AssertPiece("Wall", new Vector3(3.75f, 0f, 1.25f), m_database.WallPieceScale);
+-            AssertPiece("Corner_1", new Vector3(-0.75f, 0f, -0.75f), m_database.WallPieceScale);
++            AssertPiece("Corner_1", new Vector3(-0.75f, 0f, -0.75f),
++                new Vector3(m_database.WallPieceScale.x * .98f, m_database.WallPieceScale.y,
++                    m_database.WallPieceScale.z * .98f));
+             Assert.That(CountActivePoolItems(), Is.EqualTo(k_rectanglePieceCount));
+ 
+             m_view.Clear();
+@@ -116,7 +117,7 @@
+             // Every piece is tinted by its placement, including the floor and the walls.
+             BoardPieceView floor = FindActive("Grid", new Vector3(0f, 0f, 0f));
+             Assert.That(ColorDistance(ReadColor(floor), m_database.GetFloorColor()), Is.LessThan(1e-3f));
+-            BoardPieceView wall = FindActive("Wall", new Vector3(0.25f, 0f, -0.75f));
++            BoardPieceView wall = FindFirstActive("Wall");
+             Assert.That(ColorDistance(ReadColor(wall), m_database.GetWallColor()), Is.LessThan(1e-3f));
+         }
+ 
+@@ -227,7 +228,7 @@
+                 yield return null;
+ 
+                 Assert.That(m_view.ActivePieceCount, Is.EqualTo(k_rectanglePieceCount));
+-                AssertPiece("corner_5", new Vector3(3.75f, 0f, 1.25f), m_database.WallPieceScale);
++                Assert.That(FindFirstActive("corner_5"), Is.Not.Null, "the edited rule output gets its own prepared pool");
+                 Assert.That(CountActivePoolItems(), Is.EqualTo(k_rectanglePieceCount), "The old pools were disposed with nothing active.");
+ 
+                 SetWallRuleOutput(rules, null);
+@@ -244,6 +245,17 @@
+             }
+         }
+ 
++        private BoardPieceView FindFirstActive(string name)
++        {
++            foreach (BoardPieceView piece in m_view.BoardRoot.GetComponentsInChildren<BoardPieceView>())
++            {
++                if (piece.gameObject.activeInHierarchy && piece.name.StartsWith(name, StringComparison.Ordinal))
++                    return piece;
++            }
++            Assert.Fail($"No active {name} piece.");
++            return null;
++        }
++
+         private static void SetWallRuleOutput(EnvironmentRuleSet rules, BoardPieceView output)
+         {
+             SerializedObject serialized = new SerializedObject(rules);
+--- /dev/null
++++ b/Assets/ColorBlockJam/Tests/Gameplay/PlayMode/BoardPresenterGateTests.cs
+@@ -0,0 +1,449 @@
++#if UNITY_EDITOR
++using System;
++using System.Collections;
++using ColorBlockJam.Domain.Board;
++using ColorBlockJam.Domain.Commands;
++using ColorBlockJam.Domain.Hooks;
++using ColorBlockJam.Domain.Movement;
++using ColorBlockJam.Domain.Session;
++using ColorBlockJam.Environment;
++using ColorBlockJam.Gameplay.Board;
++using ColorBlockJam.Gameplay.Levels;
++using ColorBlockJam.Runtime.Art;
++using ColorBlockJam.Runtime.Board;
++using ColorBlockJam.Runtime.Layout;
++using ColorBlockJam.Runtime.Levels;
++using ColorBlockJam.Tests.Gameplay.PlayMode.Fixtures;
++using NUnit.Framework;
++using UnityEngine;
++using UnityEngine.TestTools;
++using UnityEngine.TestTools.Constraints;
++using Is = UnityEngine.TestTools.Constraints.Is;
++
++namespace ColorBlockJam.Tests.Gameplay.PlayMode
++{
++    /// <summary>
++    /// Proves the presenter drives the matching environment gate around a valid exit
++    /// (environment-runs-gate-motion AC-2 to AC-5) with the real environment and shape prefabs: a lean
++    /// lowers the gate first and follows it down, an exit waits inside its own time until the gate is
++    /// down, fragments start with the crossing, the gate stays down while any exit through it runs and
++    /// rises after the last one inside the Won Finish bound, moves and Stay outcomes move nothing,
++    /// Suspend holds everything, Teardown resets it and the lean and exit syncs allocate nothing once warm.
++    /// </summary>
++    public sealed class BoardPresenterGateTests
++    {
++        // DEC-93: LevelSession caps the Won Finish at 0.8 foreground seconds.
++        private const float k_wonFinishSeconds = 0.8f;
++        private const float k_margin = 0.1f;
++        private const float k_leanCells = 0.2f;
++
++        // The exit push of BoardPresenterLifecycleTests: 0.4 cell above the exiting block (DEC-111).
++        private static readonly BoardPoint s_pushOut =
++            new BoardPoint(PresenterScene.ExitBlockOrigin.X, PresenterScene.ExitBlockOrigin.Y + 0.4f);
++
++        // A lean into the door below the 0.3 cell exit push.
++        private static readonly BoardPoint s_lean =
++            new BoardPoint(PresenterScene.ExitBlockOrigin.X, PresenterScene.ExitBlockOrigin.Y + k_leanCells);
++
++        private PresenterScene m_scene;
++
++        // The first allocation assertion in a domain also measures the recorder's own setup.
++        [OneTimeSetUp]
++        public void WarmUpTheAllocationRecorder()
++        {
++            Assert.That(() => { }, Is.Not.AllocatingGCMemory());
++        }
++
++        [SetUp]
++        public void SetUp()
++        {
++            m_scene = new PresenterScene();
++        }
++
++        [TearDown]
++        public void TearDown()
++        {
++            m_scene.Dispose();
++        }
++
++        [Test]
++        public void TheLongestExitAndItsGateRiseFitTheWonFinishBound()
++        {
++            // The gate's sink wait is taken out of the exit's own time, so only the rise adds to it.
++            Assert.That(ExitMotionSettings.k_maxSeconds + EnvironmentGate.k_riseSeconds, Is.LessThanOrEqualTo(k_wonFinishSeconds));
++            Assert.That(EnvironmentGate.k_sinkSeconds, Is.LessThan(ExitMotionSettings.k_minSeconds), "the sink ends inside every exit");
++        }
++
++        [UnityTest]
++        public IEnumerator AnExitFromARaisedGateWaitsForItsSinkThenCrossesAndTheGateRisesAfter()
++        {
++            BoardSimulation simulation = Build(PresenterScene.CreateLevel(withSecondBlock: true));
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            Transform root = presenter.GetPiece(0).transform;
++            Vector3 start = root.localPosition;
++
++            // A command exit (replay, bot, or a flick that never drew a lean) starts at a raised gate.
++            ExitBlock(simulation);
++            presenter.Sync(simulation, s_pushOut);
++
++            // The whole exit, its wait included, keeps its time; only the gate's rise follows it.
++            Assert.That(gate.IsMoving, Is.True);
++            Assert.That(presenter.FinishSeconds, Is.EqualTo(GetExitSeconds(2) + EnvironmentGate.k_riseSeconds).Within(1e-3f));
++            Assert.That(presenter.FinishSeconds, Is.LessThanOrEqualTo(k_wonFinishSeconds));
++            Assert.That(presenter.ActiveExitFragmentCount, Is.Zero, "fragments wait for the gate too");
++
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds * 0.5f);
++            Assert.That(Vector3.Distance(root.localPosition, start), Is.LessThan(1e-4f), "the block waits while the gate sinks");
++            Assert.That(presenter.ActiveExitFragmentCount, Is.Zero);
++
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds);
++            Assert.That(presenter.ActiveExitFragmentCount, Is.EqualTo(1), "fragments start once the block moves");
++            simulation.Events.Clear();
++            float deadline = Time.realtimeSinceStartup + 2f;
++            while (presenter.FinishSeconds > EnvironmentGate.k_riseSeconds + 0.02f && Time.realtimeSinceStartup < deadline)
++            {
++                AssertOffset(gate, EnvironmentGate.k_sinkDepth, "down while the body passes the door");
++                yield return null;
++                presenter.Sync(simulation, s_pushOut);
++            }
++
++            yield return new WaitForSeconds(EnvironmentGate.k_riseSeconds + k_margin);
++            presenter.Sync(simulation, s_pushOut);
++            Assert.That(presenter.GetPiece(0), Is.Null, "the body is gone");
++            Assert.That(gate.IsMoving, Is.False);
++            AssertOffset(gate, 0f, "back at its exact built height");
++        }
++
++        [Test]
++        public void AMoveOrAStayExitMovesNoGate()
++        {
++            BoardSimulation simulation = Build(PresenterScene.CreateLevel(withSecondBlock: true));
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            Assert.That(simulation.Commands.Execute(GameCommand.Move(1, new Cell(0, 0), new Cell(1, 0))),
++                Is.EqualTo(CommandOutcome.Applied));
++            presenter.Sync(simulation, default);
++            Assert.That(gate.IsMoving, Is.False, "a move leaves the gate up");
++
++            simulation.Events.Clear();
++            simulation.Events.Add(BoardEvent.Exited(
++                new BlockExitedEvent(0, 0, Side.Top, PresenterScene.ExitBlockOrigin, ExitOutcome.Stay)));
++            presenter.Sync(simulation, default);
++            Assert.That(gate.IsMoving, Is.False, "a Stay outcome keeps the block and the gate");
++            Assert.That(presenter.FinishSeconds, Is.Zero);
++        }
++
++        [UnityTest]
++        public IEnumerator AHeldBlockLeaningIntoItsDoorLowersTheGateAndLeansOnlyAsFarAsItIsDown()
++        {
++            BoardSimulation simulation = Build(PresenterScene.CreateLevel(withSecondBlock: true));
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            Transform root = presenter.GetPiece(0).transform;
++            float cellZ = root.localPosition.z;
++
++            // A 0.2 cell push leans into the door (DEC-112) without reaching the 0.3 exit push (DEC-111).
++            Assert.That(simulation.Drag.TryBegin(0, BoardPoint.FromCell(PresenterScene.ExitBlockOrigin)), Is.True);
++            simulation.Drag.Update(s_lean, out GameCommand _);
++            presenter.SetHeld(0);
++            presenter.Sync(simulation, s_lean);
++            Assert.That(gate.IsMoving, Is.True, "leaning starts the sink");
++            Assert.That(root.localPosition.z - cellZ, Is.EqualTo(0f).Within(1e-4f), "no lean into a raised gate");
++
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds * 0.5f);
++            presenter.Sync(simulation, s_lean);
++            Assert.That(root.localPosition.z - cellZ, Is.LessThanOrEqualTo(k_leanCells * gate.OpenFraction + 1e-4f),
++                "the lean follows the gate down");
++
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.3f);
++            presenter.Sync(simulation, s_lean);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "held down while the block leans");
++            Assert.That(gate.IsMoving, Is.False, "no rise is scheduled while the block leans");
++            Assert.That(root.localPosition.z - cellZ, Is.EqualTo(k_leanCells).Within(1e-3f), "the full lean once the gate is down");
++
++            // Letting go without an exit raises it again.
++            simulation.Drag.TryEnd(out GameCommand _);
++            presenter.SetHeld(-1);
++            presenter.Sync(simulation, s_lean);
++            yield return new WaitForSeconds(EnvironmentGate.k_riseSeconds + k_margin);
++            AssertOffset(gate, 0f, "raised after the block let go");
++        }
++
++        [UnityTest]
++        public IEnumerator AnExitFromALoweredGateCrossesAtOnce()
++        {
++            BoardSimulation simulation = Build(PresenterScene.CreateLevel(withSecondBlock: true));
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            Assert.That(simulation.Drag.TryBegin(0, BoardPoint.FromCell(PresenterScene.ExitBlockOrigin)), Is.True);
++            simulation.Drag.Update(s_lean, out GameCommand _);
++            presenter.SetHeld(0);
++            presenter.Sync(simulation, s_lean);
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++            presenter.Sync(simulation, s_lean);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "down under the leaning block");
++
++            Assert.That(simulation.Drag.Update(s_pushOut, out GameCommand exit), Is.EqualTo(DragResult.ExitReady));
++            Assert.That(simulation.Commands.Execute(exit), Is.EqualTo(CommandOutcome.Applied));
++            presenter.SetHeld(-1);
++            presenter.Sync(simulation, s_pushOut);
++
++            Assert.That(presenter.ActiveExitFragmentCount, Is.EqualTo(1), "no wait: the gate is already down");
++            Assert.That(gate.SecondsRemaining, Is.EqualTo(GetExitSeconds(2) + EnvironmentGate.k_riseSeconds).Within(1e-3f),
++                "the lean's hold becomes the exit's hold and rise");
++            yield return new WaitForSeconds(GetExitSeconds(2) + EnvironmentGate.k_riseSeconds + k_margin);
++            AssertOffset(gate, 0f, "up after the exit");
++        }
++
++        [UnityTest]
++        public IEnumerator AStaggeredShorterExitKeepsTheGateDownForTheEarlierLongerOne()
++        {
++            BoardSimulation simulation = Build(CreateSharedDoorLevel());
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            float longest = GetExitSeconds(4);
++
++            // Real domain exits in separate command phases: the triple (4 cells of travel) leaves first
++            // and waits for the gate, then the single (2 cells) leaves 0.1 s later and ends first.
++            ExitBlockAt(simulation, 0, new Cell(0, 1));
++            presenter.Sync(simulation, default);
++            simulation.Events.Clear();
++            Assert.That(presenter.FinishSeconds, Is.EqualTo(longest + EnvironmentGate.k_riseSeconds).Within(1e-3f));
++            Assert.That(presenter.FinishSeconds, Is.LessThanOrEqualTo(k_wonFinishSeconds));
++
++            yield return new WaitForSeconds(0.1f);
++            presenter.Sync(simulation, default);
++            ExitBlockAt(simulation, 1, new Cell(1, 3));
++            presenter.Sync(simulation, default);
++            simulation.Events.Clear();
++
++            // The single ends about 0.34 s after the triple started; the triple still runs until 0.48 s.
++            yield return new WaitForSeconds(GetExitSeconds(2) + 0.04f);
++            presenter.Sync(simulation, default);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "still down: the earlier, longer exit is still passing");
++
++            yield return new WaitForSeconds(longest + EnvironmentGate.k_riseSeconds + k_margin - 0.38f);
++            presenter.Sync(simulation, default);
++            Assert.That(presenter.GetPiece(0), Is.Null);
++            Assert.That(presenter.GetPiece(1), Is.Null);
++            Assert.That(gate.IsMoving, Is.False);
++            AssertOffset(gate, 0f, "up once the last exit through it ended");
++        }
++
++        [UnityTest]
++        public IEnumerator SuspendHoldsTheGateWithItsBlockAndTeardownRestoresIt()
++        {
++            BoardSimulation simulation = Build(PresenterScene.CreateLevel(withSecondBlock: true));
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            ExitBlock(simulation);
++            presenter.Sync(simulation, s_pushOut);
++            yield return null;
++
++            // Suspend step 3, while the block still waits for its gate.
++            presenter.SetTweensPaused(true);
++            Assert.That(gate.IsPaused, Is.True);
++            float held = gate.Offset;
++            float remaining = presenter.FinishSeconds;
++            yield return new WaitForSeconds(0.3f);
++            AssertOffset(gate, held, "Suspend holds the gate");
++            Assert.That(presenter.FinishSeconds, Is.EqualTo(remaining).Within(1e-5f), "and its block");
++            Assert.That(presenter.ActiveExitFragmentCount, Is.Zero, "and the delayed fragment start");
++
++            // Resume: the delayed start fires once the rest of the wait has passed.
++            presenter.SetTweensPaused(false);
++            Assert.That(gate.IsPaused, Is.False);
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++            Assert.That(presenter.ActiveExitFragmentCount, Is.EqualTo(1));
++
++            // Teardown steps 3 and 6.
++            presenter.StopTweens();
++            Assert.That(gate.IsMoving, Is.False);
++            presenter.ReturnPieces();
++            AssertOffset(gate, 0f, "Teardown returns the gate to its built height");
++            Assert.That(presenter.FinishSeconds, Is.Zero);
++        }
++
++        [UnityTest]
++        public IEnumerator TeardownBeforeTheFragmentCueFiresCannotStartFragmentsInTheNextAttempt()
++        {
++            AttemptLevel level = PresenterScene.CreateLevel(withSecondBlock: true);
++            BoardSimulation simulation = Build(level);
++            BoardPresenter presenter = m_scene.Presenter;
++            ExitBlock(simulation);
++            presenter.Sync(simulation, s_pushOut);
++            Assert.That(presenter.ActiveExitFragmentCount, Is.Zero, "the cue is still waiting for the gate");
++
++            presenter.StopTweens();
++            presenter.ReturnPieces();
++            Assert.That(presenter.GetPiece(0), Is.Null);
++            AssertOffset(m_scene.Environment.GetGate(0), 0f, "teardown resets the gate");
++
++            // Restart before the old callback's deadline: it must not affect the new root or particles.
++            BoardSimulation restarted = Build(level);
++            Transform root = presenter.GetPiece(0).transform;
++            Vector3 home = root.localPosition;
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + k_margin);
++            presenter.Sync(restarted, default);
++            Assert.That(presenter.ActiveExitFragmentCount, Is.Zero, "the old cue was stopped, not merely hidden");
++            Assert.That(presenter.GetPiece(0).transform, Is.SameAs(root));
++            Assert.That(Vector3.Distance(root.localPosition, home), Is.LessThan(1e-4f));
++            Assert.That(presenter.FinishSeconds, Is.Zero);
++            AssertOffset(m_scene.Environment.GetGate(0), 0f, "the new attempt leaves the gate closed");
++        }
++
++        [UnityTest]
++        public IEnumerator SuspendCancelsALeanAndResumeRaisesItsGateWithThePointerInert()
++        {
++            BoardSimulation simulation = Build(PresenterScene.CreateLevel(withSecondBlock: true));
++            BoardPresenter presenter = m_scene.Presenter;
++            EnvironmentGate gate = m_scene.Environment.GetGate(0);
++            Transform root = presenter.GetPiece(0).transform;
++            Vector3 home = root.localPosition;
++            Assert.That(simulation.Drag.TryBegin(0, BoardPoint.FromCell(PresenterScene.ExitBlockOrigin)), Is.True);
++            simulation.Drag.Update(s_lean, out GameCommand _);
++            presenter.SetHeld(0);
++            presenter.Sync(simulation, s_lean);
++            yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + k_margin);
++            presenter.Sync(simulation, s_lean);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "the active lean holds the gate down");
++
++            // LevelSession Suspend order: interrupt drag, snap held root, then pause tweens.
++            simulation.Drag.Interrupt();
++            presenter.SnapHeld();
++            presenter.SetTweensPaused(true);
++            Assert.That(Vector3.Distance(root.localPosition, home), Is.LessThan(1e-4f));
++            yield return new WaitForSeconds(EnvironmentGate.k_riseSeconds + k_margin);
++            AssertOffset(gate, EnvironmentGate.k_sinkDepth, "the gate stays still while suspended");
++
++            // Resume leaves the previous press inert; no new TryBegin occurs.
++            presenter.SetTweensPaused(false);
++            presenter.Sync(simulation, s_lean);
++            Assert.That(simulation.Drag.IsActive, Is.False);
++            Assert.That(gate.IsMoving, Is.True, "the canceled lean now schedules its rise");
++            yield return new WaitForSeconds(EnvironmentGate.k_riseSeconds + k_margin);
++            presenter.Sync(simulation, s_lean);
++            AssertOffset(gate, 0f, "the canceled lean cannot hold the gate open after Resume");
++            Assert.That(Vector3.Distance(root.localPosition, home), Is.LessThan(1e-4f));
++            Assert.That(presenter.ActiveExitFragmentCount, Is.Zero);
++        }
++
++        [Test]
++        public void LeanAndExitSyncsThatMoveAGateAfterRestartAllocateNothing()
++        {
++            // The first attempt warms every path (JIT, tween, sequence, delay and particle state); Restart
++            // replays it: a lean that lowers the gate, then an exit before the gate is down.
++            AttemptLevel level = PresenterScene.CreateLevel(withSecondBlock: true);
++            BoardSimulation simulation = Build(level);
++            BoardPresenter presenter = m_scene.Presenter;
++            LeanThenExit(presenter, simulation);
++            presenter.StopTweens();
++            presenter.ReturnPieces();
++            BoardSimulation restarted = new BoardSimulation(level.Model, AttemptHooks.CreateEmpty(), DragSettings.Default);
++            Assert.That(presenter.TryBuild(level, out string error), Is.True, error);
++            presenter.Place(restarted.Preview);
++
++            Assert.That(restarted.Drag.TryBegin(0, BoardPoint.FromCell(PresenterScene.ExitBlockOrigin)), Is.True);
++            restarted.Drag.Update(s_lean, out GameCommand _);
++            presenter.SetHeld(0);
++            Assert.That(() => presenter.Sync(restarted, s_lean), Is.Not.AllocatingGCMemory());
++            Assert.That(restarted.Drag.Update(s_pushOut, out GameCommand exit), Is.EqualTo(DragResult.ExitReady));
++            Assert.That(restarted.Commands.Execute(exit), Is.EqualTo(CommandOutcome.Applied));
++            presenter.SetHeld(-1);
++            Assert.That(() => presenter.Sync(restarted, s_pushOut), Is.Not.AllocatingGCMemory());
++            Assert.That(m_scene.Environment.GetGate(0).IsMoving, Is.True);
++        }
++
++        private static void LeanThenExit(BoardPresenter presenter, BoardSimulation simulation)
++        {
++            Assert.That(simulation.Drag.TryBegin(0, BoardPoint.FromCell(PresenterScene.ExitBlockOrigin)), Is.True);
++            simulation.Drag.Update(s_lean, out GameCommand _);
++            presenter.SetHeld(0);
++            presenter.Sync(simulation, s_lean);
++            Assert.That(simulation.Drag.Update(s_pushOut, out GameCommand exit), Is.EqualTo(DragResult.ExitReady));
++            Assert.That(simulation.Commands.Execute(exit), Is.EqualTo(CommandOutcome.Applied));
++            presenter.SetHeld(-1);
++            presenter.Sync(simulation, s_pushOut);
++            simulation.Events.Clear();
++        }
++
++        private BoardSimulation Build(AttemptLevel level)
++        {
++            m_scene.Environment.Build(level.Layout);
++            BoardSimulation simulation = new BoardSimulation(level.Model, AttemptHooks.CreateEmpty(), DragSettings.Default);
++            Assert.That(m_scene.Presenter.TryBuild(level, out string error), Is.True, error);
++            m_scene.Presenter.Place(simulation.Preview);
++            return simulation;
++        }
++
++        private static float GetExitSeconds(int travelCells)
++        {
++            return Mathf.Clamp(ExitMotionSettings.k_secondsPerCell * travelCells,
++                ExitMotionSettings.k_minSeconds, ExitMotionSettings.k_maxSeconds);
++        }
++
++        // Drags block 0 upward past the exit threshold and runs the exit command, as the pointer router does.
++        private static void ExitBlock(BoardSimulation simulation)
++        {
++            ExitBlockAt(simulation, 0, PresenterScene.ExitBlockOrigin);
++        }
++
++        // Presses a block at its origin cell and pushes 0.4 cell up, through a top door it is flush with.
++        private static void ExitBlockAt(BoardSimulation simulation, int block, Cell origin)
++        {
++            BoardPoint push = new BoardPoint(origin.X, origin.Y + 0.4f);
++            Assert.That(simulation.Drag.TryBegin(block, BoardPoint.FromCell(origin)), Is.True);
++            Assert.That(simulation.Drag.Update(push, out GameCommand exit), Is.EqualTo(DragResult.ExitReady));
++            Assert.That(simulation.Commands.Execute(exit), Is.EqualTo(CommandOutcome.Applied));
++        }
++
++        // Gate pieces stand on BoardRoot at grid height 0, so a piece's local height is minus the offset.
++        private static void AssertOffset(EnvironmentGate gate, float offset, string message)
++        {
++            Assert.That(gate.Offset, Is.EqualTo(offset).Within(1e-4f), message);
++            for (int piece = 0; piece < gate.PieceCount; piece++)
++            {
++                Assert.That(gate.GetPiece(piece).transform.localPosition.y, Is.EqualTo(-offset).Within(1e-4f), message);
++            }
++        }
++
++        // A 3 x 4 board with a red two-cell top door over columns 0 and 1: block 0 is a red vertical triple
++        // in column 0 flush with the door and block 1 a red single at (1, 3), flush as well.
++        private static AttemptLevel CreateSharedDoorLevel()
++        {
++            const int width = 3;
++            const int height = 4;
++            BlockColor red = new BlockColor((int)PaletteColor.Red);
++            BlockDefinition[] blocks =
++            {
++                new BlockDefinition(0, red, new Cell(0, 1), new[] { new Cell(0, 0), new Cell(0, 1), new Cell(0, 2) }),
++                new BlockDefinition(1, red, new Cell(1, 3), new[] { new Cell(0, 0) }),
++            };
++
++            // A level footprint need not match its library shape (DEC-120): the triple reuses TripleHorizontal.
++            BlockVisualSpec[] visuals =
++            {
++                new BlockVisualSpec(BlockShapeType.TripleHorizontal, PaletteColor.Red,
++                    new[] { Vector2Int.zero, Vector2Int.up, new Vector2Int(0, 2) }, new Vector2Int(0, 1)),
++                new BlockVisualSpec(BlockShapeType.Single, PaletteColor.Red, new[] { Vector2Int.zero }, new Vector2Int(1, 3)),
++            };
++            bool[] floor = new bool[width * height];
++            for (int i = 0; i < floor.Length; i++)
++            {
++                floor[i] = true;
++            }
++
++            DoorDefinition[] doors = { new DoorDefinition(0, Side.Top, 0, 2, red) };
++            if (!LevelModel.TryCreate(width, height, floor, doors, blocks, 60, out LevelModel model, out string error)
++                || !BoardLayout.TryCreate(width, height, Array.Empty<Vector2Int>(),
++                    new[] { new LevelDoorData("top", BoardSide.Top, 0, 2, "Red") }, out BoardLayout layout, out error))
++            {
++                throw new InvalidOperationException(error);
++            }
++
++            return new AttemptLevel(model, layout, "gate-test", visuals, new[] { "triple", "single" });
++        }
++    }
++}
++#endif

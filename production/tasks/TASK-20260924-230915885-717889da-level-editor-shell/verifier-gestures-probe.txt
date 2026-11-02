@@ -1,0 +1,14 @@
+active json Assets/ColorBlockJam/Data/Levels/LevelDatabase.json sha 02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e
+open: status='Editing Level 1. Save Level writes the JSON source.' dirty=False restoreEnabled=True
+refresh: status='Reloaded LevelDatabase.json from disk.' shaSame=True
+plus: status='Created a valid starter level in LevelDatabase.json.' count 5->6 level-id='level-006'
+edit: timer 60->90 dirty=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+save: status='Saved Level 6 to LevelDatabase.json.' dirty=False restoreEnabled=True undoGroup='Set Level Timer'
+undo after save: timer=60 dirty=True status='Unsaved level changes. Press Save Level to write the JSON source.'
+redo: timer=90 dirty=False status='Editing Level 6. Save Level writes the JSON source.'
+close-prompt wiring: dirty=True message='The selected level has unsaved changes. Save them to the JSON source?'
+SaveChanges(): dirty=False status='Saved Level 6 to LevelDatabase.json.'
+restore: status='Restored the previous saved level JSON. The replaced version is now the backup.' timer=90
+switch 5->0 id='level-01' undo: timer 300->300 dirty=False id='level-01'
+x (dialog cancelled by batch mode): status='Editing Level 6. Save Level writes the JSON source.' count 6->6 shaSame=True
+final sha caa135c3ea9b04306915befdfee23b55138fa561fe20a39267f8fb8c23f4d952

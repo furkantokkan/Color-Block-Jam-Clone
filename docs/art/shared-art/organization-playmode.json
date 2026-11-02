@@ -1,0 +1,151 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "0aa570b0b073433988780d4f63cf856f",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1790365128366,
+      "finished_unix_ms": 1790365142453,
+      "last_update_unix_ms": 1790365142453,
+      "progress": {
+        "completed": 12,
+        "total": 12,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790365142195,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.VacuumUsesThirtyTwoSharedTextureFramesAndOneRendererWithoutRig",
+        "last_finished_unix_ms": 1790365142218,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 12,
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 4.3607634,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "ApplicationPauseLatchesSuspensionUntilOwnerResumes",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.ApplicationPauseLatchesSuspensionUntilOwnerResumes",
+            "state": "Passed",
+            "durationSeconds": 0.3957262,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DisablingRootStopsWorkAndReenablingDoesNotAutoplay",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.DisablingRootStopsWorkAndReenablingDoesNotAutoplay",
+            "state": "Passed",
+            "durationSeconds": 0.3130373,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "HammerStrikingFaceContactsRootAtImpact",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.HammerStrikingFaceContactsRootAtImpact",
+            "state": "Passed",
+            "durationSeconds": 0.0074997,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidRocketDestinationsPreserveTheCurrentFlight",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.InvalidRocketDestinationsPreserveTheCurrentFlight",
+            "state": "Passed",
+            "durationSeconds": 0.1614821,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PrefabsStayIdleUntilExplicitPlay",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.PrefabsStayIdleUntilExplicitPlay",
+            "state": "Passed",
+            "durationSeconds": 0.1597484,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RealTimeAdvancesEveryVisualAndCompletesWithinBoundedDuration",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.RealTimeAdvancesEveryVisualAndCompletesWithinBoundedDuration",
+            "state": "Passed",
+            "durationSeconds": 0.8661113,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReplayReplacesOwnedTweenAndStopRestoresRestPose",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.ReplayReplacesOwnedTweenAndStopRestoresRestPose",
+            "state": "Passed",
+            "durationSeconds": 0.4750575,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RocketTipContactsWorldDestinationWithTranslatedRotatedScaledRoot",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.RocketTipContactsWorldDestinationWithTranslatedRotatedScaledRoot",
+            "state": "Passed",
+            "durationSeconds": 0.0010556,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SuspendFreezesPoseAndSpriteUntilExplicitResume",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.SuspendFreezesPoseAndSpriteUntilExplicitResume",
+            "state": "Passed",
+            "durationSeconds": 1.8696432,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "VacuumIntakeIsDisabledDuringTurningAndResetOnStop",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.VacuumIntakeIsDisabledDuringTurningAndResetOnStop",
+            "state": "Passed",
+            "durationSeconds": 0.0010658,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "VacuumIntakeStaysCenteredAboveBodyAcrossFramesAndRootTransforms",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.VacuumIntakeStaysCenteredAboveBodyAcrossFramesAndRootTransforms",
+            "state": "Passed",
+            "durationSeconds": 0.0027627,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "VacuumUsesThirtyTwoSharedTextureFramesAndOneRendererWithoutRig",
+            "fullName": "ColorBlockJam.Tests.PlayMode.BoosterEffectViewTests.VacuumUsesThirtyTwoSharedTextureFramesAndOneRendererWithoutRig",
+            "state": "Passed",
+            "durationSeconds": 0.0226734,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

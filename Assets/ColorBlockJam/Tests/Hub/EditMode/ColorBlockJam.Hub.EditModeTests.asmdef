@@ -1,0 +1,23 @@
+{
+  "name": "ColorBlockJam.Hub.EditModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.Hub",
+  "references": [
+    "ColorBlockJam.Hub",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.UI",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "Unity.InputSystem",
+    "Unity.InputSystem.TestFramework",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ColorBlockJam.Player",
+  "rootNamespace": "ColorBlockJam.Player",
+  "references": [
+    "ColorBlockJam.Runtime",
+    "Haptics",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "ColorBlockJam.Haptics"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

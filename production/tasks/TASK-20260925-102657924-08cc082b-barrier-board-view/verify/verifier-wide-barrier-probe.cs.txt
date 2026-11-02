@@ -1,0 +1,16 @@
+var db = UnityEditor.AssetDatabase.LoadAssetAtPath<ColorBlockJam.Environment.EnvironmentDatabase>("Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset");
+var comp = new ColorBlockJam.Environment.EnvironmentBarrierComposer(db);
+var cells = new[] { new UnityEngine.Vector2Int(1,3), new UnityEngine.Vector2Int(2,3), new UnityEngine.Vector2Int(1,4), new UnityEngine.Vector2Int(2,4) };
+var bar = new ColorBlockJam.Runtime.Levels.LevelCellObjectData("wide", cells, new ColorBlockJam.Runtime.Levels.LevelEffectData("barrier",
+    new[] { new ColorBlockJam.Runtime.Levels.LevelEffectParamData("startsOpen", "false") }));
+var lvl = new ColorBlockJam.Runtime.Levels.LevelData("w", "W", 6, 7, 60, new UnityEngine.Vector2Int[0], new ColorBlockJam.Runtime.Levels.LevelDoorData[0],
+    new[] { new ColorBlockJam.Runtime.Levels.LevelBlockData("b1", "Pink", "Square", new UnityEngine.Vector2Int(4, 0),
+      new[] { new UnityEngine.Vector2Int(0,0), new UnityEngine.Vector2Int(0,1), new UnityEngine.Vector2Int(1,0), new UnityEngine.Vector2Int(1,1) }) },
+    new[] { bar });
+string err; bool valid = lvl.Validate(out err);
+ColorBlockJam.Runtime.Layout.BoardLayout layout; string lerr;
+ColorBlockJam.Runtime.Layout.BoardLayout.TryCreate(lvl, out layout, out lerr);
+var placements = new System.Collections.Generic.List<ColorBlockJam.Environment.EnvironmentPiecePlacement>();
+var barriers = new System.Collections.Generic.List<ColorBlockJam.Environment.EnvironmentBarrier>();
+comp.Compose(layout, lvl, placements, barriers);
+return "2x2 barrier: level valid=" + valid + " " + err + "; pieces=" + placements.Count + " of 16 quadrants";

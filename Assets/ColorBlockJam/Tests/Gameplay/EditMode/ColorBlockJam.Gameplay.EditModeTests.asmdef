@@ -1,0 +1,21 @@
+{
+  "name": "ColorBlockJam.Gameplay.EditModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.Gameplay",
+  "references": [
+    "ColorBlockJam.Domain",
+    "ColorBlockJam.Gameplay",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Presentation",
+    "Onity.DI",
+    "Onity.Reactive",
+    "Unity.InputSystem",
+    "Unity.InputSystem.TestFramework",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false
+}

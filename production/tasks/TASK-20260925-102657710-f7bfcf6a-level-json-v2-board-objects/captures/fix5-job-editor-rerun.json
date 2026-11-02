@@ -1,0 +1,36 @@
+{
+ "result": {
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+   "job_id": "8013a193b5a241a6bf669876e168516a",
+   "status": "failed",
+   "mode": "EditMode",
+   "started_unix_ms": 1790344415186,
+   "finished_unix_ms": 1790344486698,
+   "last_update_unix_ms": 1790344486698,
+   "progress": {
+    "completed": 46,
+    "total": 46,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1790344483453,
+    "last_finished_test_full_name": "ColorBlockJam.Tests.EditMode.ShapePrefabTests.UnrelatedUndoAfterCacheReloadCannotRestoreAnOldLibrarySnapshot",
+    "last_finished_unix_ms": 1790344485780,
+    "stuck_suspected": false,
+    "editor_is_focused": false,
+    "blocked_reason": null,
+    "failures_so_far": [
+     {
+      "full_name": "ColorBlockJam.Tests.EditMode.LevelCanvasBlockToolsTests.PlacingAShapeAddsOneBlockAndPublishesItOnce",
+      "message": "  One place reaches the preview once.\r\n  Expected: 1\r\n  But was:  0\r\n"
+     }
+    ],
+    "failures_capped": false
+   },
+   "error": null,
+   "result": null
+  },
+  "hint": null
+ }
+}

@@ -1,0 +1,5 @@
+AC1 fileFormatVersion=1 read=True levels=5 voids=0 effects=0 cellObjects=0 write=True writtenVersion=2 l0.voidCells=[] l0.cellObjects=[] l0.b0.effects=[] l0.d0.effects=[] v1ContentEqualsWrittenMinusVersionAndVoidCells=True rereadV2=True LevelDatabase.LoadJson(v1)=True count=5 LoadJson(v2 rewrite)=True count=5 fileSha16 before=02C013A54E180F95 after=02C013A54E180F95
+AC2 authoringRead=True levels=10 validLevels=10 arrowEffects=12 (Horizontal=7 Vertical=5) level09 id=level-09 voids=2 [(0, 0) (5, 0)] writeEqualsFile(DeepEquals)=True secondWriteIdentical=True runtimeGatedRead=False [Level level-07 block b1 effect arrow is not implemented in gameplay yet.]
+AC5 BoardLayout.TryCreate(level-09)=True size=6x6 floorCells=34 IsFloor(0,0)=False IsFloor(5,0)=False IsFloor(1,0)=True doorSlots=12 LevelData.IsFloor(0,0)=False
+AC3 TryWrite(closed barrier on block)=False jsonIsNull=True error=[Level bad cell object o1 effect barrier starts closed on block b1 at (0, 0).]
+PEER3 JsonUtility voids=1 b1effects=1 arrowTyped=True cellObjects=1 barrierTyped=True startsOpen=True validates=True jsonHasFields=True

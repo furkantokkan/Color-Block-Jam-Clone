@@ -1,0 +1,19 @@
+{
+  "name": "ColorBlockJam.Environment.PlayModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.Environment",
+  "references": [
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "Onity.DI",
+    "Onity.Pooling",
+    "PrimeTween.Runtime",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": [],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

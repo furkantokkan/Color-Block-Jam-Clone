@@ -1,0 +1,190 @@
+json sha256 before=02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e
+== window 960x640: canvas content=(x:0.00, y:0.00, width:680.00, height:509.33) cell=74 board=(x:192.00, y:69.00, width:296.00, height:370.00) model=4x5 blocks=2 doors=2 parent=canvas-slot
+  PASS 960x640 board centred (dx=0, dy=-0.6666718)
+  PASS 960x640 cell 74 >= 18
+  board+door bars inside canvas: True
+  PASS 960x640 level 1 is 4x5
+  PASS 960x640 two doors
+  door d1 Top 1+3 colour=LightBlue known=True
+  door d2 Bottom 0+3 colour=Pink known=True
+  PASS 960x640 d1 LightBlue, d2 Pink
+  labels: b1@(x:340.00, y:217.33, width:74.00, height:74.00) Flex; b2@(x:192.00, y:291.33, width:74.00, height:74.00) Flex; 
+  PASS 960x640 labels b1 and b2
+  PASS 960x640 label b1 sits on its block's label cell
+  PASS 960x640 label b2 sits on its block's label cell
+  captured canvas-verify-960x640-initial.png ppp=1.5
+  pixel door d1 bar (outer part) at local (303.00, 20.90) -> (0.00,0.89,0.98) expected LightBlue=(0.00,0.77,0.95) diff=0.12
+  pixel door d2 bar (outer part) at local (229.00, 487.10) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel wall ring left seg 2 at local (173.50, 254.00) -> (0.51,0.57,0.65) expected Wall=(0.22,0.29,0.38) diff=0.29
+  pixel floor cell (0,0) at local (214.20, 387.20) -> (0.67,0.73,0.83) expected Ground=(0.41,0.49,0.65) diff=0.26
+  pixel block b1 cell corner area at local (354.80, 231.80) -> (0.00,0.89,0.98) expected LightBlue=(0.00,0.77,0.95) diff=0.12
+  pixel block b2 cell corner area at local (280.80, 231.80) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel outside ring (canvas background) at local (4.00, 4.00) -> (0.49,0.49,0.49)
+  PASS 960x640 (0,0) and (1,0) are empty cells
+  hover: generate after enter=1, after 3 moves inside the cell=1; panel repaintVersion 881 -> 881; hover=Cell cell (0, 0) side Top index -1 entity -1 
+  PASS 960x640 moves inside one cell regenerate nothing
+  PASS 960x640 moves inside one cell do not bump the panel repaint version
+  hover: after entering another cell generate=2, repaintVersion 881 -> 881; hover=Cell cell (1, 0) side Top index -1 entity -1 
+  PASS 960x640 entering another cell regenerates once
+  captured canvas-verify-960x640-hover.png ppp=1.5
+  initial selection=Block/0/b1 dropdown='1. b1'
+  PASS 960x640 starts with b1 selected in both
+  after click b2 (non-label cell): selection=Block/1/b2 dropdown='2. b2' index=1
+  PASS 960x640 canvas click selects b2 in the dropdown
+  captured canvas-verify-960x640-block-selected.png ppp=1.5
+  PASS 960x640 empty cell click keeps b2
+  after dropdown '1. b1': selection=Block/0/b1 dropdown='1. b1'
+  PASS 960x640 dropdown selects b1 on the canvas
+  after click d2: selection=Door/1/d2 dropdown='Door d2' firstBlockButtonEnabled=False
+  PASS 960x640 door click selects d2
+  captured canvas-verify-960x640-door-selected.png ppp=1.5
+  PASS 960x640 corner (173.50, 50.50) hit-tests Outside (Outside)
+  PASS 960x640 corner (506.50, 50.50) hit-tests Outside (Outside)
+  PASS 960x640 corner (506.50, 457.50) hit-tests Outside (Outside)
+  PASS 960x640 corner (173.50, 457.50) hit-tests Outside (Outside)
+  PASS 960x640 corner clicks keep the door selection
+  PASS 960x640 dropdown '2. b2' replaces the door selection
+  PASS 960x640 draft never marked unsaved
+== window 1280x800: canvas content=(x:0.00, y:0.00, width:1000.00, height:669.33) cell=99 board=(x:302.00, y:87.00, width:396.00, height:495.00) model=4x5 blocks=2 doors=2 parent=canvas-slot
+  PASS 1280x800 board centred (dx=0, dy=-0.1666565)
+  PASS 1280x800 cell 99 >= 18
+  board+door bars inside canvas: True
+  PASS 1280x800 cell grows with window (74 -> 99)
+  PASS 1280x800 level 1 is 4x5
+  PASS 1280x800 two doors
+  door d1 Top 1+3 colour=LightBlue known=True
+  door d2 Bottom 0+3 colour=Pink known=True
+  PASS 1280x800 d1 LightBlue, d2 Pink
+  labels: b1@(x:500.00, y:285.33, width:99.33, height:98.67) Flex; b2@(x:302.00, y:384.00, width:99.33, height:99.33) Flex; 
+  PASS 1280x800 labels b1 and b2
+  PASS 1280x800 label b1 sits on its block's label cell
+  PASS 1280x800 label b2 sits on its block's label cell
+  captured canvas-verify-1280x800-initial.png ppp=1.5
+  pixel door d1 bar (outer part) at local (450.50, 22.65) -> (0.00,0.89,0.98) expected LightBlue=(0.00,0.77,0.95) diff=0.12
+  pixel door d2 bar (outer part) at local (351.50, 646.35) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel wall ring left seg 2 at local (277.25, 334.50) -> (0.51,0.57,0.65) expected Wall=(0.22,0.29,0.38) diff=0.29
+  pixel floor cell (0,0) at local (331.70, 512.70) -> (0.67,0.73,0.83) expected Ground=(0.41,0.49,0.65) diff=0.26
+  pixel block b1 cell corner area at local (519.80, 304.80) -> (0.00,0.89,0.98) expected LightBlue=(0.00,0.77,0.95) diff=0.12
+  pixel block b2 cell corner area at local (420.80, 304.80) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel outside ring (canvas background) at local (4.00, 4.00) -> (0.49,0.49,0.49)
+  PASS 1280x800 (0,0) and (1,0) are empty cells
+  hover: generate after enter=1, after 3 moves inside the cell=1; panel repaintVersion 886 -> 886; hover=Cell cell (0, 0) side Top index -1 entity -1 
+  PASS 1280x800 moves inside one cell regenerate nothing
+  PASS 1280x800 moves inside one cell do not bump the panel repaint version
+  hover: after entering another cell generate=2, repaintVersion 886 -> 886; hover=Cell cell (1, 0) side Top index -1 entity -1 
+  PASS 1280x800 entering another cell regenerates once
+  captured canvas-verify-1280x800-hover.png ppp=1.5
+  initial selection=Block/0/b1 dropdown='1. b1'
+  PASS 1280x800 starts with b1 selected in both
+  after click b2 (non-label cell): selection=Block/1/b2 dropdown='2. b2' index=1
+  PASS 1280x800 canvas click selects b2 in the dropdown
+  captured canvas-verify-1280x800-block-selected.png ppp=1.5
+  PASS 1280x800 empty cell click keeps b2
+  after dropdown '1. b1': selection=Block/0/b1 dropdown='1. b1'
+  PASS 1280x800 dropdown selects b1 on the canvas
+  after click d2: selection=Door/1/d2 dropdown='Door d2' firstBlockButtonEnabled=False
+  PASS 1280x800 door click selects d2
+  captured canvas-verify-1280x800-door-selected.png ppp=1.5
+  PASS 1280x800 corner (277.25, 62.25) hit-tests Outside (Outside)
+  PASS 1280x800 corner (722.75, 62.25) hit-tests Outside (Outside)
+  PASS 1280x800 corner (722.75, 606.75) hit-tests Outside (Outside)
+  PASS 1280x800 corner (277.25, 606.75) hit-tests Outside (Outside)
+  PASS 1280x800 corner clicks keep the door selection
+  PASS 1280x800 dropdown '2. b2' replaces the door selection
+  PASS 1280x800 draft never marked unsaved
+== window 1600x1000: canvas content=(x:0.00, y:0.00, width:1320.00, height:869.33) cell=130 board=(x:400.00, y:109.00, width:520.00, height:650.00) model=4x5 blocks=2 doors=2 parent=canvas-slot
+  PASS 1600x1000 board centred (dx=0, dy=-0.6666565)
+  PASS 1600x1000 cell 130 >= 18
+  board+door bars inside canvas: True
+  PASS 1600x1000 cell grows with window (99 -> 130)
+  PASS 1600x1000 level 1 is 4x5
+  PASS 1600x1000 two doors
+  door d1 Top 1+3 colour=LightBlue known=True
+  door d2 Bottom 0+3 colour=Pink known=True
+  PASS 1600x1000 d1 LightBlue, d2 Pink
+  labels: b1@(x:660.00, y:369.33, width:130.00, height:130.00) Flex; b2@(x:400.00, y:499.33, width:130.00, height:130.00) Flex; 
+  PASS 1600x1000 labels b1 and b2
+  PASS 1600x1000 label b1 sits on its block's label cell
+  PASS 1600x1000 label b2 sits on its block's label cell
+  captured canvas-verify-1600x1000-initial.png ppp=1.5
+  pixel door d1 bar (outer part) at local (595.00, 24.50) -> (0.00,0.89,0.98) expected LightBlue=(0.00,0.77,0.95) diff=0.12
+  pixel door d2 bar (outer part) at local (465.00, 843.50) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel wall ring left seg 2 at local (367.50, 434.00) -> (0.51,0.57,0.65) expected Wall=(0.22,0.29,0.38) diff=0.29
+  pixel floor cell (0,0) at local (439.00, 668.00) -> (0.67,0.73,0.83) expected Ground=(0.41,0.49,0.65) diff=0.26
+  pixel block b1 cell corner area at local (686.00, 395.00) -> (0.00,0.89,0.98) expected LightBlue=(0.00,0.77,0.95) diff=0.12
+  pixel block b2 cell corner area at local (556.00, 395.00) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel outside ring (canvas background) at local (4.00, 4.00) -> (0.49,0.49,0.49)
+  PASS 1600x1000 (0,0) and (1,0) are empty cells
+  hover: generate after enter=1, after 3 moves inside the cell=1; panel repaintVersion 886 -> 886; hover=Cell cell (0, 0) side Top index -1 entity -1 
+  PASS 1600x1000 moves inside one cell regenerate nothing
+  PASS 1600x1000 moves inside one cell do not bump the panel repaint version
+  hover: after entering another cell generate=2, repaintVersion 886 -> 886; hover=Cell cell (1, 0) side Top index -1 entity -1 
+  PASS 1600x1000 entering another cell regenerates once
+  captured canvas-verify-1600x1000-hover.png ppp=1.5
+  initial selection=Block/0/b1 dropdown='1. b1'
+  PASS 1600x1000 starts with b1 selected in both
+  after click b2 (non-label cell): selection=Block/1/b2 dropdown='2. b2' index=1
+  PASS 1600x1000 canvas click selects b2 in the dropdown
+  captured canvas-verify-1600x1000-block-selected.png ppp=1.5
+  PASS 1600x1000 empty cell click keeps b2
+  after dropdown '1. b1': selection=Block/0/b1 dropdown='1. b1'
+  PASS 1600x1000 dropdown selects b1 on the canvas
+  after click d2: selection=Door/1/d2 dropdown='Door d2' firstBlockButtonEnabled=False
+  PASS 1600x1000 door click selects d2
+  captured canvas-verify-1600x1000-door-selected.png ppp=1.5
+  PASS 1600x1000 corner (367.50, 76.50) hit-tests Outside (Outside)
+  PASS 1600x1000 corner (952.50, 76.50) hit-tests Outside (Outside)
+  PASS 1600x1000 corner (952.50, 791.50) hit-tests Outside (Outside)
+  PASS 1600x1000 corner (367.50, 791.50) hit-tests Outside (Outside)
+  PASS 1600x1000 corner clicks keep the door selection
+  PASS 1600x1000 dropdown '2. b2' replaces the door selection
+  PASS 1600x1000 draft never marked unsaved
+== window 700x420: canvas content=(x:0.00, y:0.00, width:680.00, height:509.33) cell=74 board=(x:192.00, y:69.00, width:296.00, height:370.00) model=4x5 blocks=2 doors=2 parent=canvas-slot
+  PASS 700x420 board centred (dx=0, dy=-0.6666718)
+  PASS 700x420 cell 74 >= 18
+  board+door bars inside canvas: True
+  PASS 700x420 level 1 is 4x5
+  PASS 700x420 two doors
+  door d1 Top 1+3 colour=LightBlue known=True
+  door d2 Bottom 0+3 colour=Pink known=True
+  PASS 700x420 d1 LightBlue, d2 Pink
+  labels: b1@(x:340.00, y:217.33, width:74.00, height:74.00) Flex; b2@(x:192.00, y:291.33, width:74.00, height:74.00) Flex; 
+  PASS 700x420 labels b1 and b2
+  PASS 700x420 label b1 sits on its block's label cell
+  PASS 700x420 label b2 sits on its block's label cell
+  captured canvas-verify-700x420-initial.png ppp=1.5
+  pixel door d1 bar (outer part) at local (303.00, 20.90) -> (0.93,0.56,0.91) expected LightBlue=(0.00,0.77,0.95) diff=0.93
+  pixel door d2 bar (outer part) at local (229.00, 487.10) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel wall ring left seg 2 at local (173.50, 254.00) -> (0.49,0.49,0.49) expected Wall=(0.22,0.29,0.38) diff=0.27
+  pixel floor cell (0,0) at local (214.20, 387.20) -> (0.67,0.73,0.83) expected Ground=(0.41,0.49,0.65) diff=0.26
+  pixel block b1 cell corner area at local (354.80, 231.80) -> (0.93,0.56,0.91) expected LightBlue=(0.00,0.77,0.95) diff=0.93
+  pixel block b2 cell corner area at local (280.80, 231.80) -> (0.93,0.56,0.91) expected Pink=(0.85,0.27,0.80) diff=0.29
+  pixel outside ring (canvas background) at local (4.00, 4.00) -> (0.49,0.49,0.49)
+  PASS 700x420 (0,0) and (1,0) are empty cells
+  hover: generate after enter=1, after 3 moves inside the cell=1; panel repaintVersion 886 -> 886; hover=Cell cell (0, 0) side Top index -1 entity -1 
+  PASS 700x420 moves inside one cell regenerate nothing
+  PASS 700x420 moves inside one cell do not bump the panel repaint version
+  hover: after entering another cell generate=2, repaintVersion 886 -> 886; hover=Cell cell (1, 0) side Top index -1 entity -1 
+  PASS 700x420 entering another cell regenerates once
+  captured canvas-verify-700x420-hover.png ppp=1.5
+  initial selection=Block/0/b1 dropdown='1. b1'
+  PASS 700x420 starts with b1 selected in both
+  after click b2 (non-label cell): selection=Block/1/b2 dropdown='2. b2' index=1
+  PASS 700x420 canvas click selects b2 in the dropdown
+  captured canvas-verify-700x420-block-selected.png ppp=1.5
+  PASS 700x420 empty cell click keeps b2
+  after dropdown '1. b1': selection=Block/0/b1 dropdown='1. b1'
+  PASS 700x420 dropdown selects b1 on the canvas
+  after click d2: selection=Door/1/d2 dropdown='Door d2' firstBlockButtonEnabled=False
+  PASS 700x420 door click selects d2
+  captured canvas-verify-700x420-door-selected.png ppp=1.5
+  PASS 700x420 corner (173.50, 50.50) hit-tests Outside (Outside)
+  PASS 700x420 corner (506.50, 50.50) hit-tests Outside (Outside)
+  PASS 700x420 corner (506.50, 457.50) hit-tests Outside (Outside)
+  PASS 700x420 corner (173.50, 457.50) hit-tests Outside (Outside)
+  PASS 700x420 corner clicks keep the door selection
+  PASS 700x420 dropdown '2. b2' replaces the door selection
+  PASS 700x420 draft never marked unsaved
+json sha256 after=02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e
+  PASS level JSON unchanged
+RESULT: all checks passed

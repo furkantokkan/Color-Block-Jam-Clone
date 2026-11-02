@@ -1,0 +1,115 @@
+{
+  "unityVersion": "2022.3.62f2",
+  "project": "C:/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/Assets",
+  "models": [
+    {
+      "name": "Hammer",
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 1900,
+          "vertices": 1280,
+          "submeshes": 1,
+          "readable": false,
+          "runtimeMeshBytes": 106328,
+          "boundsCenter": "(0.00, 1.07, -0.49)",
+          "boundsSize": "(2.00, 2.26, 1.30)",
+          "screenRelativeHeight": 0.18
+        },
+        {
+          "level": 1,
+          "triangles": 940,
+          "vertices": 640,
+          "submeshes": 1,
+          "readable": false,
+          "runtimeMeshBytes": 53848,
+          "boundsCenter": "(0.00, 1.07, -0.49)",
+          "boundsSize": "(2.00, 2.26, 1.30)",
+          "screenRelativeHeight": 0.015
+        }
+      ],
+      "oneSharedMaterial": true,
+      "fadeMode": "None"
+    },
+    {
+      "name": "RocketPurple",
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 2972,
+          "vertices": 1824,
+          "submeshes": 1,
+          "readable": false,
+          "runtimeMeshBytes": 154008,
+          "boundsCenter": "(0.00, 1.18, 0.00)",
+          "boundsSize": "(1.18, 2.21, 1.18)",
+          "screenRelativeHeight": 0.18
+        },
+        {
+          "level": 1,
+          "triangles": 1228,
+          "vertices": 792,
+          "submeshes": 1,
+          "readable": false,
+          "runtimeMeshBytes": 67032,
+          "boundsCenter": "(0.00, 1.19, 0.00)",
+          "boundsSize": "(1.16, 2.21, 1.16)",
+          "screenRelativeHeight": 0.015
+        }
+      ],
+      "oneSharedMaterial": true,
+      "fadeMode": "None"
+    },
+    {
+      "name": "Vacuum",
+      "lods": [
+        {
+          "level": 0,
+          "triangles": 5872,
+          "vertices": 3786,
+          "submeshes": 1,
+          "readable": false,
+          "runtimeMeshBytes": 314376,
+          "boundsCenter": "(-0.35, 1.42, 0.13)",
+          "boundsSize": "(2.23, 2.79, 1.38)",
+          "screenRelativeHeight": 0.18
+        },
+        {
+          "level": 1,
+          "triangles": 2936,
+          "vertices": 1942,
+          "submeshes": 1,
+          "readable": false,
+          "runtimeMeshBytes": 161128,
+          "boundsCenter": "(-0.35, 1.42, 0.13)",
+          "boundsSize": "(2.23, 2.79, 1.38)",
+          "screenRelativeHeight": 0.015
+        }
+      ],
+      "oneSharedMaterial": true,
+      "fadeMode": "None"
+    }
+  ],
+  "palette": {
+    "width": 128,
+    "height": 16,
+    "format": "RGB24",
+    "readable": false,
+    "runtimeBytes": 15016
+  },
+  "shader": "Universal Render Pipeline/Simple Lit",
+  "keywords": [
+    "_RECEIVE_SHADOWS_OFF",
+    "_SPECULAR_COLOR"
+  ],
+  "activeSceneDirty": false,
+  "previewFiles": [
+    "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\docs\\art\\boosters\\Unity_Hammer_LOD0.png",
+    "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\docs\\art\\boosters\\Unity_Hammer_LOD1.png",
+    "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\docs\\art\\boosters\\Unity_RocketPurple_LOD0.png",
+    "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\docs\\art\\boosters\\Unity_RocketPurple_LOD1.png",
+    "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\docs\\art\\boosters\\Unity_Vacuum_LOD0.png",
+    "C:\\Users\\e-fur\\Documents\\Repos\\ColorBlockJamCase2026\\docs\\art\\boosters\\Unity_Vacuum_LOD1.png"
+  ],
+  "verificationScope": "Editor import, asset checks, forced-LOD preview renders. No device profiling or gameplay integration."
+}

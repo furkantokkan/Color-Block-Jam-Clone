@@ -1,0 +1,2140 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "c6665636d5e743e6b267cd9f15ff1f63",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1790356371315,
+      "finished_unix_ms": 1790356387595,
+      "last_update_unix_ms": 1790356387595,
+      "progress": {
+        "completed": 233,
+        "total": 233,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790356387064,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.SolidObstacleBlocksMovementWithoutChangingVisibleFloorOrDoors",
+        "last_finished_unix_ms": 1790356387071,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 233,
+          "passed": 233,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 10.1544048,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "ACutCornerWrapsTheWallsExactlyAsTheComposerDoes",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.ACutCornerWrapsTheWallsExactlyAsTheComposerDoes",
+            "state": "Passed",
+            "durationSeconds": 0.0460507,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GlyphsMatchTheComposerOnTheFirstFiveActiveLevels",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.GlyphsMatchTheComposerOnTheFirstFiveActiveLevels",
+            "state": "Passed",
+            "durationSeconds": 0.0205797,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GlyphsMatchTheComposerWithDoorsAtTheBoardCorners",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.GlyphsMatchTheComposerWithDoorsAtTheBoardCorners",
+            "state": "Passed",
+            "durationSeconds": 0.0099767,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidDatabaseGivesItsValidationMessageAndNoWalls",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.InvalidDatabaseGivesItsValidationMessageAndNoWalls",
+            "state": "Passed",
+            "durationSeconds": 0.00243,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InvalidDoorsKeepTheirWallsAndValidDoorsStillOpenTheRing",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.InvalidDoorsKeepTheirWallsAndValidDoorsStillOpenTheRing",
+            "state": "Passed",
+            "durationSeconds": 0.0044187,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "MissingDatabaseGivesOneMessageAndNoWalls",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.MissingDatabaseGivesOneMessageAndNoWalls",
+            "state": "Passed",
+            "durationSeconds": 0.0003724,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NoLevelGivesNoWalls",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.NoLevelGivesNoWalls",
+            "state": "Passed",
+            "durationSeconds": 0.0003566,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlainBoardGetsAFullStraightRingAndFourOutwardCorners",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.PlainBoardGetsAFullStraightRingAndFourOutwardCorners",
+            "state": "Passed",
+            "durationSeconds": 0.0055772,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RoundedCornerTurnsClockwiseWithTheYaw(0,1,1)",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.RoundedCornerTurnsClockwiseWithTheYaw(0,1,1)",
+            "state": "Passed",
+            "durationSeconds": 0.0005901,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RoundedCornerTurnsClockwiseWithTheYaw(90,1,-1)",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.RoundedCornerTurnsClockwiseWithTheYaw(90,1,-1)",
+            "state": "Passed",
+            "durationSeconds": 0.000135,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RoundedCornerTurnsClockwiseWithTheYaw(180,-1,-1)",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.RoundedCornerTurnsClockwiseWithTheYaw(180,-1,-1)",
+            "state": "Passed",
+            "durationSeconds": 0.0002295,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RoundedCornerTurnsClockwiseWithTheYaw(270,-1,1)",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.RoundedCornerTurnsClockwiseWithTheYaw(270,-1,1)",
+            "state": "Passed",
+            "durationSeconds": 0.0001879,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidObstacleGlyphsIncludeInteriorFillWithoutChangingBoundary",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.SolidObstacleGlyphsIncludeInteriorFillWithoutChangingBoundary",
+            "state": "Passed",
+            "durationSeconds": 0.0120928,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SwitchingDatabasesComposesWithTheNewOne",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.SwitchingDatabasesComposesWithTheNewOne",
+            "state": "Passed",
+            "durationSeconds": 0.0081864,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TwoSegmentTopDoorHoldsFourTopWallQuadrants",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelCanvasWallsTests.TwoSegmentTopDoorHoldsFourTopWallQuadrants",
+            "state": "Passed",
+            "durationSeconds": 0.0018253,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ClosingADirtyWindowGoesThroughUnitysSavePrompt",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.ClosingADirtyWindowGoesThroughUnitysSavePrompt",
+            "state": "Passed",
+            "durationSeconds": 0.2438086,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ForcedToolsWidthDoesNotOverwriteTheSavedWidth",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.ForcedToolsWidthDoesNotOverwriteTheSavedWidth",
+            "state": "Passed",
+            "durationSeconds": 0.3232831,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "NameAndTimerShowTheDraftAfterTheGuiIsRebuilt",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.NameAndTimerShowTheDraftAfterTheGuiIsRebuilt",
+            "state": "Passed",
+            "durationSeconds": 0.2680967,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "OneFieldCommitPublishesTheDraftOnce",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.OneFieldCommitPublishesTheDraftOnce",
+            "state": "Passed",
+            "durationSeconds": 2.7416731,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReopenedWindowRestoresTheDraggedToolsWidth",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.ReopenedWindowRestoresTheDraggedToolsWidth",
+            "state": "Passed",
+            "durationSeconds": 0.4994998,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ShellSplitsToolsFromTheSelectionBarAndCanvas",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.ShellSplitsToolsFromTheSelectionBarAndCanvas",
+            "state": "Passed",
+            "durationSeconds": 0.2078138,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TimerCommitClampsAndShowsMinutes",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.TimerCommitClampsAndShowsMinutes",
+            "state": "Passed",
+            "durationSeconds": 0.1833332,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TimerTextUsesMinutesAndTwoDigitSeconds",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.TimerTextUsesMinutesAndTwoDigitSeconds",
+            "state": "Passed",
+            "durationSeconds": 0.0007216,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ToolsColumnHoldsToolsColorsBlocksObstaclesEditAndRawData",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.ToolsColumnHoldsToolsColorsBlocksObstaclesEditAndRawData",
+            "state": "Passed",
+            "durationSeconds": 0.1959248,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TopBarRowsHoldTheDatabaseSourceAndLevelControls",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.TopBarRowsHoldTheDatabaseSourceAndLevelControls",
+            "state": "Passed",
+            "durationSeconds": 0.1772738,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UndoAfterAnOutsideDatabaseSwitchKeepsUnsavedEdits",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.UndoAfterAnOutsideDatabaseSwitchKeepsUnsavedEdits",
+            "state": "Passed",
+            "durationSeconds": 0.2080904,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "UndoAndRedoOfABoardEditUpdateFieldsDirtyMarkerAndPreview",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.UndoAndRedoOfABoardEditUpdateFieldsDirtyMarkerAndPreview",
+            "state": "Passed",
+            "durationSeconds": 0.4068902,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ClonesDoNotShareEffectRecords",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.ClonesDoNotShareEffectRecords",
+            "state": "Passed",
+            "durationSeconds": 0.0076497,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_arrow",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_arrow",
+            "state": "Passed",
+            "durationSeconds": 0.0022116,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_ice",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_ice",
+            "state": "Passed",
+            "durationSeconds": 0.0007,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_star",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_star",
+            "state": "Passed",
+            "durationSeconds": 0.000457,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_combined",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_combined",
+            "state": "Passed",
+            "durationSeconds": 0.0010384,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_chained",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_chained",
+            "state": "Passed",
+            "durationSeconds": 0.0007156,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_key",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_key",
+            "state": "Passed",
+            "durationSeconds": 0.0008019,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_bomb",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_bomb",
+            "state": "Passed",
+            "durationSeconds": 0.0005201,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_scissors",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_scissors",
+            "state": "Passed",
+            "durationSeconds": 0.0004817,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_moving-obstacle",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_moving-obstacle",
+            "state": "Passed",
+            "durationSeconds": 0.0024986,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_combined-locked",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_combined-locked",
+            "state": "Passed",
+            "durationSeconds": 0.001693,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_hidden",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_hidden",
+            "state": "Passed",
+            "durationSeconds": 0.0007896,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_dynamite",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_dynamite",
+            "state": "Passed",
+            "durationSeconds": 0.0007991,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_curtain",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_curtain",
+            "state": "Passed",
+            "durationSeconds": 0.0007179,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_time-capsule",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_time-capsule",
+            "state": "Passed",
+            "durationSeconds": 0.0004866,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_color-switching",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_color-switching",
+            "state": "Passed",
+            "durationSeconds": 0.0008682,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_color-swapping",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_color-swapping",
+            "state": "Passed",
+            "durationSeconds": 0.0008407,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_turn-based-arrow",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_turn-based-arrow",
+            "state": "Passed",
+            "durationSeconds": 0.0008994,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_magnet",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_magnet",
+            "state": "Passed",
+            "durationSeconds": 0.0006087,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_contained",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_contained",
+            "state": "Passed",
+            "durationSeconds": 0.0012631,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_star-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_star-door",
+            "state": "Passed",
+            "durationSeconds": 0.0007176,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_toggle-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_toggle-door",
+            "state": "Passed",
+            "durationSeconds": 0.0011601,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_iced-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_iced-door",
+            "state": "Passed",
+            "durationSeconds": 0.0006923,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_moving-door-lock",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_moving-door-lock",
+            "state": "Passed",
+            "durationSeconds": 0.0005904,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_locked-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_locked-door",
+            "state": "Passed",
+            "durationSeconds": 0.0017506,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_color-switcher",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_color-switcher",
+            "state": "Passed",
+            "durationSeconds": 0.0010029,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_jumping-blocker",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_jumping-blocker",
+            "state": "Passed",
+            "durationSeconds": 0.0006521,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_laser-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_laser-door",
+            "state": "Passed",
+            "durationSeconds": 0.000805,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_colorful-path",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_colorful-path",
+            "state": "Passed",
+            "durationSeconds": 0.0008111,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_crate",
+            "state": "Passed",
+            "durationSeconds": 0.0011584,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_moveable-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_moveable-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0007084,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_barrier",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_barrier",
+            "state": "Passed",
+            "durationSeconds": 0.0013414,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_colorful-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_colorful-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0008925,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_colorful-moving-path",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_colorful-moving-path",
+            "state": "Passed",
+            "durationSeconds": 0.001325,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_ivy",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_ivy",
+            "state": "Passed",
+            "durationSeconds": 0.0006285,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_elevator",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_elevator",
+            "state": "Passed",
+            "durationSeconds": 0.0005647,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_chained-keys",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_chained-keys",
+            "state": "Passed",
+            "durationSeconds": 0.001312,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_moving-obstacle-only",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_moving-obstacle-only",
+            "state": "Passed",
+            "durationSeconds": 0.0010728,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_moving-door-lock-one-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_moving-door-lock-one-door",
+            "state": "Passed",
+            "durationSeconds": 0.0009519,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_colorful-path-under-block",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_colorful-path-under-block",
+            "state": "Passed",
+            "durationSeconds": 0.0016354,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_contained-crate-outside",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_contained-crate-outside",
+            "state": "Passed",
+            "durationSeconds": 0.0015771,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_contained-moveable-crate-footprint",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_contained-moveable-crate-footprint",
+            "state": "Passed",
+            "durationSeconds": 0.0009587,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_contained-elevator-stack-index",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_contained-elevator-stack-index",
+            "state": "Passed",
+            "durationSeconds": 0.000909,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_unknown",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_unknown",
+            "state": "Passed",
+            "durationSeconds": 0.0006079,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_empty",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_empty",
+            "state": "Passed",
+            "durationSeconds": 0.0004924,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_layer",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_layer",
+            "state": "Passed",
+            "durationSeconds": 0.000739,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_ropes",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_ropes",
+            "state": "Passed",
+            "durationSeconds": 0.0017559,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_colorful-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_colorful-door",
+            "state": "Passed",
+            "durationSeconds": 0.0016137,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_size-changing-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_size-changing-door",
+            "state": "Passed",
+            "durationSeconds": 0.0013563,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_colorful-jumping-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_colorful-jumping-door",
+            "state": "Passed",
+            "durationSeconds": 0.0010571,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_button-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_button-door",
+            "state": "Passed",
+            "durationSeconds": 0.0024329,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_flower-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_flower-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0012352,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_list-empty-item",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_list-empty-item",
+            "state": "Passed",
+            "durationSeconds": 0.000382,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_list-space",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_list-space",
+            "state": "Passed",
+            "durationSeconds": 0.000687,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_list-empty-value",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_list-empty-value",
+            "state": "Passed",
+            "durationSeconds": 0.0005061,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_list-integer",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_list-integer",
+            "state": "Passed",
+            "durationSeconds": 0.0009586,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_anchor-spelling",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_anchor-spelling",
+            "state": "Passed",
+            "durationSeconds": 0.0003731,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_route-too-short",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_route-too-short",
+            "state": "Passed",
+            "durationSeconds": 0.0003459,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_route-missing-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_route-missing-door",
+            "state": "Passed",
+            "durationSeconds": 0.0003436,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_cell-format",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_cell-format",
+            "state": "Passed",
+            "durationSeconds": 0.0003145,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_cell-void",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_cell-void",
+            "state": "Passed",
+            "durationSeconds": 0.000406,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_leaves-twice",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_leaves-twice",
+            "state": "Passed",
+            "durationSeconds": 0.0004001,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_leaves-missing-block",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_leaves-missing-block",
+            "state": "Passed",
+            "durationSeconds": 0.000345,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Invalid_flower-crate-content-outside",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Invalid_flower-crate-content-outside",
+            "state": "Passed",
+            "durationSeconds": 0.0004674,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ListAndCellParametersExposeTypedItemsInAuthoredOrder",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.ListAndCellParametersExposeTypedItemsInAuthoredOrder",
+            "state": "Passed",
+            "durationSeconds": 0.0195184,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RegistryHasOneDefinitionPerCatalogTypeWithItsTarget",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.RegistryHasOneDefinitionPerCatalogTypeWithItsTarget",
+            "state": "Passed",
+            "durationSeconds": 0.0021957,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_arrow",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_arrow",
+            "state": "Passed",
+            "durationSeconds": 0.0087141,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_ice",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_ice",
+            "state": "Passed",
+            "durationSeconds": 0.0038848,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_star",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_star",
+            "state": "Passed",
+            "durationSeconds": 0.0036649,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_combined",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_combined",
+            "state": "Passed",
+            "durationSeconds": 0.0046364,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_chained",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_chained",
+            "state": "Passed",
+            "durationSeconds": 0.0048451,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_key",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_key",
+            "state": "Passed",
+            "durationSeconds": 0.0036592,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_bomb",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_bomb",
+            "state": "Passed",
+            "durationSeconds": 0.0038903,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_scissors",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_scissors",
+            "state": "Passed",
+            "durationSeconds": 0.0028513,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_moving-obstacle",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_moving-obstacle",
+            "state": "Passed",
+            "durationSeconds": 0.0037023,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_combined-locked",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_combined-locked",
+            "state": "Passed",
+            "durationSeconds": 0.0039645,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_hidden",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_hidden",
+            "state": "Passed",
+            "durationSeconds": 0.0037467,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_dynamite",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_dynamite",
+            "state": "Passed",
+            "durationSeconds": 0.0040389,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_curtain",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_curtain",
+            "state": "Passed",
+            "durationSeconds": 0.0027993,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_time-capsule",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_time-capsule",
+            "state": "Passed",
+            "durationSeconds": 0.0047134,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_color-switching",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_color-switching",
+            "state": "Passed",
+            "durationSeconds": 0.004978,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_color-swapping",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_color-swapping",
+            "state": "Passed",
+            "durationSeconds": 0.0035839,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_turn-based-arrow",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_turn-based-arrow",
+            "state": "Passed",
+            "durationSeconds": 0.0038869,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_magnet",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_magnet",
+            "state": "Passed",
+            "durationSeconds": 0.0030782,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_contained",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_contained",
+            "state": "Passed",
+            "durationSeconds": 0.0043329,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_star-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_star-door",
+            "state": "Passed",
+            "durationSeconds": 0.0038257,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_toggle-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_toggle-door",
+            "state": "Passed",
+            "durationSeconds": 0.0042067,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_iced-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_iced-door",
+            "state": "Passed",
+            "durationSeconds": 0.0035927,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_moving-door-lock",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_moving-door-lock",
+            "state": "Passed",
+            "durationSeconds": 0.0039601,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_locked-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_locked-door",
+            "state": "Passed",
+            "durationSeconds": 0.0044993,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_color-switcher",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_color-switcher",
+            "state": "Passed",
+            "durationSeconds": 0.0033984,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_jumping-blocker",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_jumping-blocker",
+            "state": "Passed",
+            "durationSeconds": 0.0037034,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_laser-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_laser-door",
+            "state": "Passed",
+            "durationSeconds": 0.0031951,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-path",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-path",
+            "state": "Passed",
+            "durationSeconds": 0.0048518,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_crate",
+            "state": "Passed",
+            "durationSeconds": 0.0046281,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_moveable-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_moveable-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0042692,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_barrier",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_barrier",
+            "state": "Passed",
+            "durationSeconds": 0.004966,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0049734,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-moving-path",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-moving-path",
+            "state": "Passed",
+            "durationSeconds": 0.0032939,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_ivy",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_ivy",
+            "state": "Passed",
+            "durationSeconds": 0.0049059,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_elevator",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_elevator",
+            "state": "Passed",
+            "durationSeconds": 0.0054624,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_layer",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_layer",
+            "state": "Passed",
+            "durationSeconds": 0.0047905,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_ropes",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_ropes",
+            "state": "Passed",
+            "durationSeconds": 0.0067826,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-door",
+            "state": "Passed",
+            "durationSeconds": 0.0039292,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_size-changing-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_size-changing-door",
+            "state": "Passed",
+            "durationSeconds": 0.0032344,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-jumping-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-jumping-door",
+            "state": "Passed",
+            "durationSeconds": 0.0036174,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_button-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_button-door",
+            "state": "Passed",
+            "durationSeconds": 0.0044598,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_flower-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_flower-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0037619,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TypedAccessorsAndUnitySerializationKeepEffects",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.TypedAccessorsAndUnitySerializationKeepEffects",
+            "state": "Passed",
+            "durationSeconds": 0.0041908,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_arrow",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_arrow",
+            "state": "Passed",
+            "durationSeconds": 0.0032171,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_ice",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_ice",
+            "state": "Passed",
+            "durationSeconds": 0.0012474,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_star",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_star",
+            "state": "Passed",
+            "durationSeconds": 0.0010603,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_combined",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_combined",
+            "state": "Passed",
+            "durationSeconds": 0.0012165,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_chained",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_chained",
+            "state": "Passed",
+            "durationSeconds": 0.0028134,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_key",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_key",
+            "state": "Passed",
+            "durationSeconds": 0.0017326,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_bomb",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_bomb",
+            "state": "Passed",
+            "durationSeconds": 0.0014189,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_scissors",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_scissors",
+            "state": "Passed",
+            "durationSeconds": 0.0028453,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_moving-obstacle",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_moving-obstacle",
+            "state": "Passed",
+            "durationSeconds": 0.0018538,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_combined-locked",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_combined-locked",
+            "state": "Passed",
+            "durationSeconds": 0.0020404,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_hidden",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_hidden",
+            "state": "Passed",
+            "durationSeconds": 0.0025716,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_dynamite",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_dynamite",
+            "state": "Passed",
+            "durationSeconds": 0.0017941,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_curtain",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_curtain",
+            "state": "Passed",
+            "durationSeconds": 0.0011889,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_time-capsule",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_time-capsule",
+            "state": "Passed",
+            "durationSeconds": 0.0019085,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_color-switching",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_color-switching",
+            "state": "Passed",
+            "durationSeconds": 0.0019945,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_color-swapping",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_color-swapping",
+            "state": "Passed",
+            "durationSeconds": 0.0018875,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_turn-based-arrow",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_turn-based-arrow",
+            "state": "Passed",
+            "durationSeconds": 0.0020215,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_magnet",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_magnet",
+            "state": "Passed",
+            "durationSeconds": 0.0011947,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_contained",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_contained",
+            "state": "Passed",
+            "durationSeconds": 0.0012577,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_star-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_star-door",
+            "state": "Passed",
+            "durationSeconds": 0.0010562,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_toggle-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_toggle-door",
+            "state": "Passed",
+            "durationSeconds": 0.0017413,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_iced-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_iced-door",
+            "state": "Passed",
+            "durationSeconds": 0.0012412,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_moving-door-lock",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_moving-door-lock",
+            "state": "Passed",
+            "durationSeconds": 0.001394,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_locked-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_locked-door",
+            "state": "Passed",
+            "durationSeconds": 0.00131,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_color-switcher",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_color-switcher",
+            "state": "Passed",
+            "durationSeconds": 0.0017102,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_jumping-blocker",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_jumping-blocker",
+            "state": "Passed",
+            "durationSeconds": 0.0024244,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_laser-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_laser-door",
+            "state": "Passed",
+            "durationSeconds": 0.0013455,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-path",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-path",
+            "state": "Passed",
+            "durationSeconds": 0.0022369,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_crate",
+            "state": "Passed",
+            "durationSeconds": 0.0019151,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_moveable-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_moveable-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0013207,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_barrier",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_barrier",
+            "state": "Passed",
+            "durationSeconds": 0.0013093,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0020601,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-moving-path",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-moving-path",
+            "state": "Passed",
+            "durationSeconds": 0.0023253,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_ivy",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_ivy",
+            "state": "Passed",
+            "durationSeconds": 0.0019211,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_elevator",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_elevator",
+            "state": "Passed",
+            "durationSeconds": 0.0020547,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_layer",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_layer",
+            "state": "Passed",
+            "durationSeconds": 0.0017815,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_ropes",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_ropes",
+            "state": "Passed",
+            "durationSeconds": 0.0024458,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-door",
+            "state": "Passed",
+            "durationSeconds": 0.0015923,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_size-changing-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_size-changing-door",
+            "state": "Passed",
+            "durationSeconds": 0.0013536,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_colorful-jumping-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_colorful-jumping-door",
+            "state": "Passed",
+            "durationSeconds": 0.0024196,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_button-door",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_button-door",
+            "state": "Passed",
+            "durationSeconds": 0.0021422,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Valid_flower-crate",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.Valid_flower-crate",
+            "state": "Passed",
+            "durationSeconds": 0.0015702,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WriterOrdersParamsByDefinitionAndKeepsEffectOrder",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelEffectTests.WriterOrdersParamsByDefinitionAndKeepsEffectOrder",
+            "state": "Passed",
+            "durationSeconds": 0.0016382,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BlockStrokeKeepsBoundaryAndSupportsUndoRedoAndRightDragErase",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelObstaclesSectionTests.BlockStrokeKeepsBoundaryAndSupportsUndoRedoAndRightDragErase",
+            "state": "Passed",
+            "durationSeconds": 0.3094487,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BlockStrokePaintsTheDraftAsOneUndoStepAndNamesTheFirstRefusal",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelObstaclesSectionTests.BlockStrokePaintsTheDraftAsOneUndoStepAndNamesTheFirstRefusal",
+            "state": "Passed",
+            "durationSeconds": 0.2393483,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BlockTileArmsThePenAndAPieceSelectEraserOrTransformDisarmsIt",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelObstaclesSectionTests.BlockTileArmsThePenAndAPieceSelectEraserOrTransformDisarmsIt",
+            "state": "Passed",
+            "durationSeconds": 0.324674,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EraserAndRightDragRestoreFloorAsOneUndoStepEach",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelObstaclesSectionTests.EraserAndRightDragRestoreFloorAsOneUndoStepEach",
+            "state": "Passed",
+            "durationSeconds": 0.3363535,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ObstaclesHoldsOnlyBlockAndHasNoBoundaryOrWallControl",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelObstaclesSectionTests.ObstaclesHoldsOnlyBlockAndHasNoBoundaryOrWallControl",
+            "state": "Passed",
+            "durationSeconds": 0.3216444,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BlockRoundTripsThroughRuntimeJsonWithoutBecomingVoid",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.BlockRoundTripsThroughRuntimeJsonWithoutBecomingVoid",
+            "state": "Passed",
+            "durationSeconds": 0.0050141,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ImportedSolidBlockCannotOverlapAPieceOrGate(0,0,\"overlaps block\")",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.ImportedSolidBlockCannotOverlapAPieceOrGate(0,0,\"overlaps block\")",
+            "state": "Passed",
+            "durationSeconds": 0.0009797,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ImportedSolidBlockCannotOverlapAPieceOrGate(0,4,\"blocks gate\")",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.ImportedSolidBlockCannotOverlapAPieceOrGate(0,4,\"blocks gate\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001797,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PaintAndErasePreserveWallsOtherObjectsAndStableIds",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.PaintAndErasePreserveWallsOtherObjectsAndStableIds",
+            "state": "Passed",
+            "durationSeconds": 0.0016307,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PaintRejectsOccupiedGateVoidAndOutsideCells(0,0,\"block\")",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.PaintRejectsOccupiedGateVoidAndOutsideCells(0,0,\"block\")",
+            "state": "Passed",
+            "durationSeconds": 0.0007755,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PaintRejectsOccupiedGateVoidAndOutsideCells(0,4,\"gate\")",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.PaintRejectsOccupiedGateVoidAndOutsideCells(0,4,\"gate\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001843,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PaintRejectsOccupiedGateVoidAndOutsideCells(4,4,\"floor\")",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.PaintRejectsOccupiedGateVoidAndOutsideCells(4,4,\"floor\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001746,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PaintRejectsOccupiedGateVoidAndOutsideCells(-1,2,\"floor\")",
+            "fullName": "ColorBlockJam.Tests.EditMode.LevelSolidBlockTests.PaintRejectsOccupiedGateVoidAndOutsideCells(-1,2,\"floor\")",
+            "state": "Passed",
+            "durationSeconds": 0.0001445,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BarrierOffTheFloorOrWithARepeatedIdIsRefused",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.BarrierOffTheFloorOrWithARepeatedIdIsRefused",
+            "state": "Passed",
+            "durationSeconds": 0.007076,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BarrierPiecesAreThePiecesOfAnInteriorWallBlockOnTheSameCells",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.BarrierPiecesAreThePiecesOfAnInteriorWallBlockOnTheSameCells",
+            "state": "Passed",
+            "durationSeconds": 0.0086011,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BarriersFlushWithTheBoardEdgeOrAVoidCellWallEveryQuadrantOfTheirCells",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.BarriersFlushWithTheBoardEdgeOrAVoidCellWallEveryQuadrantOfTheirCells",
+            "state": "Passed",
+            "durationSeconds": 0.0062781,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "LevelsWithoutBarriersComposeNothing",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.LevelsWithoutBarriersComposeNothing",
+            "state": "Passed",
+            "durationSeconds": 0.0021089,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SingleStraightAndLShapedBarriersGetTheirPieceKindsPositionsAndYaws",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierComposerTests.SingleStraightAndLShapedBarriersGetTheirPieceKindsPositionsAndYaws",
+            "state": "Passed",
+            "durationSeconds": 0.0071893,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ComposeNamesARuleSetEditMadeAfterTheComposerWasCreated",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.ComposeNamesARuleSetEditMadeAfterTheComposerWasCreated",
+            "state": "Passed",
+            "durationSeconds": 0.0085311,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CornerNotchTurnsItsInnerCornerTowardTheFloor",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.CornerNotchTurnsItsInnerCornerTowardTheFloor",
+            "state": "Passed",
+            "durationSeconds": 0.0052545,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CorridorGetsWallsOnBothSidesAndOuterCornersAtItsDeadEnds",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.CorridorGetsWallsOnBothSidesAndOuterCornersAtItsDeadEnds",
+            "state": "Passed",
+            "durationSeconds": 0.0025784,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DatabaseAuthorsThreeRotatedFloorVoidRulesOnTheBoardKitPieces",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.DatabaseAuthorsThreeRotatedFloorVoidRulesOnTheBoardKitPieces",
+            "state": "Passed",
+            "durationSeconds": 0.0014883,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DoorsReplaceTheWallsBehindTheirSpanAndKeepTheirNeighbourCorners",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.DoorsReplaceTheWallsBehindTheirSpanAndKeepTheirNeighbourCorners",
+            "state": "Passed",
+            "durationSeconds": 0.0028692,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EveryFloorCellGetsOneTintedBaseSquareAtItsCentreAndVoidCellsGetNone",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.EveryFloorCellGetsOneTintedBaseSquareAtItsCentreAndVoidCellsGetNone",
+            "state": "Passed",
+            "durationSeconds": 0.0132959,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EveryPieceHasItsOwnPosition",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.EveryPieceHasItsOwnPosition",
+            "state": "Passed",
+            "durationSeconds": 0.0058724,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FloorAndWallPlacementsCarryTheDatabaseFloorAndWallColours",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.FloorAndWallPlacementsCarryTheDatabaseFloorAndWallColours",
+            "state": "Passed",
+            "durationSeconds": 0.0042732,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GridMapsCellsAndQuadrantsToTheBoardLayoutPositions",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.GridMapsCellsAndQuadrantsToTheBoardLayoutPositions",
+            "state": "Passed",
+            "durationSeconds": 0.0034204,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "HoleIsRingedByWallsAndInnerCornersAndKeepsItsCentreOpen",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.HoleIsRingedByWallsAndInnerCornersAndKeepsItsCentreOpen",
+            "state": "Passed",
+            "durationSeconds": 0.0029112,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "InteriorWallRowFormsTheGroovedBlockOfReference17",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.InteriorWallRowFormsTheGroovedBlockOfReference17",
+            "state": "Passed",
+            "durationSeconds": 0.001804,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PinchedFloorGetsTwoInnerCornersMeetingAtTheVertex",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PinchedFloorGetsTwoInnerCornersMeetingAtTheVertex",
+            "state": "Passed",
+            "durationSeconds": 0.0011371,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PlannedAndCurrentReferenceFilesDescribeTheSameBoards",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PlannedAndCurrentReferenceFilesDescribeTheSameBoards",
+            "state": "Passed",
+            "durationSeconds": 0.0711931,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PrefabHasOneGridOnBoardRootAndNoTilemap",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.PrefabHasOneGridOnBoardRootAndNoTilemap",
+            "state": "Passed",
+            "durationSeconds": 0.0037715,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RecomposingAPreparedBoardAllocatesZeroBytes",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.RecomposingAPreparedBoardAllocatesZeroBytes",
+            "state": "Passed",
+            "durationSeconds": 0.0047702,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RectangleGetsFloorAWallRingAndFourOuterCorners",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.RectangleGetsFloorAWallRingAndFourOuterCorners",
+            "state": "Passed",
+            "durationSeconds": 0.0027416,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReferenceLevelNineTurnsItsVoidNotchesIntoInnerCorners",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.ReferenceLevelNineTurnsItsVoidNotchesIntoInnerCorners",
+            "state": "Passed",
+            "durationSeconds": 0.0293125,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ReferenceLevelsLoadWithTheCurrentLoaderAndGetACompleteRing",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.ReferenceLevelsLoadWithTheCurrentLoaderAndGetACompleteRing",
+            "state": "Passed",
+            "durationSeconds": 0.0268041,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TransposedBoardGivesTheTransposedPieces",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentComposerTests.TransposedBoardGivesTheTransposedPieces",
+            "state": "Passed",
+            "durationSeconds": 0.0054829,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BoundaryAndGatesKeepTheSuppliedWallAndDoorMeshes",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.BoundaryAndGatesKeepTheSuppliedWallAndDoorMeshes",
+            "state": "Passed",
+            "durationSeconds": 0.0023384,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "FillReusesTheExistingQuadMaterialAndPoolRegistration",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.FillReusesTheExistingQuadMaterialAndPoolRegistration",
+            "state": "Passed",
+            "durationSeconds": 0.0023062,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RebuildingSolidBlocksAndBarriersAllocatesNothing",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.RebuildingSolidBlocksAndBarriersAllocatesNothing",
+            "state": "Passed",
+            "durationSeconds": 0.0025796,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidSingle",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.SolidSingle",
+            "state": "Passed",
+            "durationSeconds": 0.0033992,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidRun",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.SolidRun",
+            "state": "Passed",
+            "durationSeconds": 0.0011977,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidSquare",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.SolidSquare",
+            "state": "Passed",
+            "durationSeconds": 0.0031674,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidL",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.SolidL",
+            "state": "Passed",
+            "durationSeconds": 0.001369,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidWide",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.SolidWide",
+            "state": "Passed",
+            "durationSeconds": 0.0043792,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidWithFloorHole",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidTests.SolidWithFloorHole",
+            "state": "Passed",
+            "durationSeconds": 0.0022678,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ALayoutOfAnotherSizeFails",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.ALayoutOfAnotherSizeFails",
+            "state": "Passed",
+            "durationSeconds": 0.0081947,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AnInvalidLevelFails",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.AnInvalidLevelFails",
+            "state": "Passed",
+            "durationSeconds": 0.0064246,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AnUnknownBlockColourFails",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.AnUnknownBlockColourFails",
+            "state": "Passed",
+            "durationSeconds": 0.0069509,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AnUnknownDoorColourFails",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.AnUnknownDoorColourFails",
+            "state": "Passed",
+            "durationSeconds": 0.0051562,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AnUnknownShapeFailsWithOneError",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.AnUnknownShapeFailsWithOneError",
+            "state": "Passed",
+            "durationSeconds": 0.0046352,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ATwoBlockTwoDoorLevelConverts",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.ATwoBlockTwoDoorLevelConverts",
+            "state": "Passed",
+            "durationSeconds": 0.0151057,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ConversionLeavesTheSourceLevelUnchanged",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.ConversionLeavesTheSourceLevelUnchanged",
+            "state": "Passed",
+            "durationSeconds": 0.0081844,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SolidObstacleBlocksMovementWithoutChangingVisibleFloorOrDoors",
+            "fullName": "ColorBlockJam.Tests.Gameplay.Gameplay.AttemptLevelConverterTests.SolidObstacleBlocksMovementWithoutChangingVisibleFloorOrDoors",
+            "state": "Passed",
+            "durationSeconds": 0.0068727,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

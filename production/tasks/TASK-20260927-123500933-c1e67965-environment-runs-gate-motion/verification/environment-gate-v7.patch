@@ -1,0 +1,1349 @@
+diff --git "staging-v6\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs" "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs"
+index ca25abd..7b0ef74 100644
+--- "staging-v6\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs"
++++ "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs"
+@@ -12,9 +12,9 @@ namespace ColorBlockJam.Environment
+     /// one floor piece and one floor-base square per floor cell, wall and corner pieces chosen by the
+     /// environment rule set, and door pieces in the door slots. Compose gives exactly the rule
+     /// placements, which the Level Editor canvas draws. ComposePlayArea gives what the player sees: the
+-    /// same quadrants with each straight run of the outer boundary closed into one brick, plus one gate
+-    /// span per authored door (DEC-139). It runs once per level load; the view maps its grid positions to
+-    /// local space with the Grid.
++    /// same quadrants with each straight run of the outer boundary closed into one brick, each of its
++    /// corners a closed corner unit, a dark base under every wall and gate, plus one gate span per authored
++    /// door (DEC-139). It runs once per level load; the view maps its grid positions to local space with the Grid.
+     /// </summary>
+     public sealed class EnvironmentComposer
+     {
+@@ -28,6 +28,9 @@ namespace ColorBlockJam.Environment
+         private const float k_floorBaseDepth = 0.02f;
+         // A one-quadrant run is closed by two half-length ends, each centred a quarter quadrant off centre.
+         private const float k_halfEndOffset = 0.25f;
++        // The base under a wall quadrant stops this far short of a side that faces open void, so it never
++        // shows outside the board or inside a hole; gaps between wall units and by the floor then read dark.
++        private const float k_wallBaseInset = 0.25f;
+         private const int k_noRule = -1;
+ 
+         private readonly EnvironmentDatabase m_database;
+@@ -61,8 +64,9 @@ namespace ColorBlockJam.Environment
+         /// <summary>
+         /// The play area the player sees (DEC-139): Compose's quadrants, with every maximal straight wall
+         /// run of the outer boundary between corners and gates closed into one brick by Brick_End caps,
+-        /// interior holes kept as one continuous rule frame, and gates filled with one span per authored
+-        /// door in door order: that door's Door_1x1 slots, then its arrow, contiguous in output.
++        /// every corner of the outer boundary a Corner_End unit, interior holes kept as one continuous rule
++        /// frame, a floor-base square under every wall quadrant and door slot, and gates filled with one span
++        /// per authored door in door order: that door's Door_1x1 slots, then its arrow, contiguous in output.
+         /// </summary>
+         public void ComposePlayArea(IBoardLayout layout, List<EnvironmentPiecePlacement> output,
+             List<EnvironmentGateSpan> gates)
+@@ -128,7 +132,8 @@ namespace ColorBlockJam.Environment
+ 
+                     output.Add(new EnvironmentPiecePlacement(
+                         m_database.FloorPiece, new Vector3(2 * x, 2 * y, 0f), 0, Vector3.one, floorColor));
+-                    // Void cells get no base, so holes and notches show the background.
++                    // Void cells get no full base, so holes and notches show the background; the play area adds
++                    // a partial base under each wall and gate (AddWallBases).
+                     output.Add(new EnvironmentPiecePlacement(
+                         m_database.FloorBasePiece, new Vector3(2 * x, 2 * y, -k_floorBaseDepth), 0, Vector3.one,
+                         floorBaseColor));
+@@ -192,9 +197,9 @@ namespace ColorBlockJam.Environment
+ 
+         // DEC-139: the rule decides every wall quadrant exactly as in AddWalls. On the outer boundary, a
+         // quadrant with floor on one side only is straight; each maximal run of straight quadrants with the
+-        // same rule and yaw becomes one brick, and every other wall quadrant (a corner) keeps its rule piece
+-        // as its own unit. An interior hole keeps its rule pieces as one continuous frame, as in the reference
+-        // game (references 02 and 17) and like a Barrier.
++        // same rule and yaw becomes one brick, and a corner becomes Corner_End, Corner_1 with both arm ends
++        // rounded, so a lowered gate beside it shows a closed end. An interior hole keeps its rule pieces as
++        // one continuous frame, as in the reference game (references 02 and 17) and like a Barrier.
+         private void AddBricks(IBoardLayout layout, List<EnvironmentPiecePlacement> output)
+         {
+             MarkOuterVoid(layout);
+@@ -214,17 +219,79 @@ namespace ColorBlockJam.Environment
+ 
+                     // A run never leaves its void region: quadrants side by side belong to one cell or to
+                     // two neighbouring void cells, which the flood fill puts in the same region.
+-                    if (IsOuterQuadrant(layout, position) && TryGetStraightAxis(position, out Vector2Int axis))
++                    bool isOuter = IsOuterQuadrant(layout, position);
++                    if (isOuter && TryGetStraightAxis(position, out Vector2Int axis))
+                     {
+                         AddBrick(position, axis, scale, wallColor, output);
+                         continue;
+                     }
+ 
++                    // Corner_End keeps Corner_1's mesh space, so it takes the corner rule's yaw.
+                     m_usedWalls[index] = true;
+-                    output.Add(new EnvironmentPiecePlacement(m_matcher.GetOutput(m_wallRules[index]),
+-                        GetQuadrantCenter(position), m_wallYaws[index], scale, wallColor));
++                    BoardPieceView piece = isOuter && IsCorner(position)
++                        ? m_database.CornerEndPiece
++                        : m_matcher.GetOutput(m_wallRules[index]);
++                    output.Add(new EnvironmentPiecePlacement(piece, GetQuadrantCenter(position), m_wallYaws[index],
++                        scale, wallColor));
+                 }
+             }
++
++            AddWallBases(layout, output);
++        }
++
++        // One floor-base square under each wall quadrant and door slot, in the floor base colour. Without it
++        // the board has nothing below its walls and gates, and the background shows through the gaps between
++        // wall units, past rounded wall corners and past the floor tiles' rounded corners at the wall line.
++        private void AddWallBases(IBoardLayout layout, List<EnvironmentPiecePlacement> output)
++        {
++            Color baseColor = m_database.GetFloorBaseColor();
++            for (int y = m_quadrantBounds.yMin; y < m_quadrantBounds.yMax; y++)
++            {
++                for (int x = m_quadrantBounds.xMin; x < m_quadrantBounds.xMax; x++)
++                {
++                    Vector2Int position = new Vector2Int(x, y);
++                    int index = GetQuadrantIndex(position);
++                    if (!IsWallOrGate(index))
++                    {
++                        continue;
++                    }
++
++                    // The base reaches every side that meets floor, a wall or a gate, so no gap between them
++                    // opens onto the background.
++                    float left = IsOpenVoid(position + Vector2Int.left) ? k_wallBaseInset : 0f;
++                    float right = IsOpenVoid(position + Vector2Int.right) ? k_wallBaseInset : 0f;
++                    float down = IsOpenVoid(position + Vector2Int.down) ? k_wallBaseInset : 0f;
++                    float up = IsOpenVoid(position + Vector2Int.up) ? k_wallBaseInset : 0f;
++                    Vector3 center = GetQuadrantCenter(position)
++                        + new Vector3(0.5f * (left - right), 0.5f * (down - up), -k_floorBaseDepth);
++                    // FloorBase spans one cell (two quadrants) at scale 1, lying in local X and Z.
++                    output.Add(new EnvironmentPiecePlacement(m_database.FloorBasePiece, center, 0,
++                        new Vector3(0.5f * (1f - left - right), 1f, 0.5f * (1f - down - up)), baseColor));
++                }
++            }
++        }
++
++        private bool IsWallOrGate(int index)
++        {
++            return m_wallRules[index] != k_noRule || m_doorQuadrants[index];
++        }
++
++        // Void with no wall or gate on it: the background outside the board or inside a hole.
++        private bool IsOpenVoid(Vector2Int position)
++        {
++            return !m_matcher.IsFloor(position.x, position.y)
++                && (!m_quadrantBounds.Contains(position) || !IsWallOrGate(GetQuadrantIndex(position)));
++        }
++
++        // A corner quadrant has floor only diagonally (a ring corner) or on two adjacent sides (a notch corner).
++        private bool IsCorner(Vector2Int position)
++        {
++            bool left = m_matcher.IsFloor(position.x - 1, position.y);
++            bool right = m_matcher.IsFloor(position.x + 1, position.y);
++            bool down = m_matcher.IsFloor(position.x, position.y - 1);
++            bool up = m_matcher.IsFloor(position.x, position.y + 1);
++            int floorSides = (left ? 1 : 0) + (right ? 1 : 0) + (down ? 1 : 0) + (up ? 1 : 0);
++            return floorSides == 0 || floorSides == 2 && left != right && down != up;
+         }
+ 
+         // The same quadrants and rule decisions as AddWalls, stored so runs can be grouped before placing.
+diff --git "staging-v6\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs" "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs"
+index e258588..61f2cd7 100644
+--- "staging-v6\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs"
++++ "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs"
+@@ -19,6 +19,8 @@ namespace ColorBlockJam.Environment
+         [SerializeField] private BoardPieceView m_blockFillPiece;
+         // The Blender-authored cap in Wall's mesh space that closes both ends of a straight wall run (DEC-139).
+         [SerializeField] private BoardPieceView m_brickEndPiece;
++        // The Blender-authored corner unit in Corner_1's mesh space, both arm ends closed and rounded (DEC-139).
++        [SerializeField] private BoardPieceView m_cornerEndPiece;
+         [SerializeField] private BoardPieceView m_doorPiece;
+         [SerializeField] private BoardPieceView m_doorArrowPiece;
+         [SerializeField] private GamePalette m_palette;
+@@ -49,6 +51,7 @@ namespace ColorBlockJam.Environment
+         public BoardPieceView FloorBasePiece => m_floorBasePiece;
+         public BoardPieceView BlockFillPiece => m_blockFillPiece;
+         public BoardPieceView BrickEndPiece => m_brickEndPiece;
++        public BoardPieceView CornerEndPiece => m_cornerEndPiece;
+         public BoardPieceView DoorPiece => m_doorPiece;
+         public BoardPieceView DoorArrowPiece => m_doorArrowPiece;
+         public Vector3 WallPieceScale => m_wallPieceScale;
+@@ -85,7 +88,7 @@ namespace ColorBlockJam.Environment
+             return m_palette.GetColor(m_barrierColor);
+         }
+ 
+-        /// <summary>Adds every distinct prefab once, including the solid top and brick end, for the environment pools.</summary>
++        /// <summary>Adds every distinct prefab once, including the solid top, brick end and corner end, for the environment pools.</summary>
+         public void GetPieces(List<BoardPieceView> output)
+         {
+             output.Clear();
+@@ -93,6 +96,7 @@ namespace ColorBlockJam.Environment
+             AddDistinct(output, m_floorBasePiece);
+             AddDistinct(output, m_blockFillPiece);
+             AddDistinct(output, m_brickEndPiece);
++            AddDistinct(output, m_cornerEndPiece);
+             AddDistinct(output, m_doorPiece);
+             AddDistinct(output, m_doorArrowPiece);
+             for (int index = 0; index < m_ruleSet.RuleCount; index++)
+@@ -104,9 +108,9 @@ namespace ColorBlockJam.Environment
+         public bool Validate(out string error)
+         {
+             if (m_ruleSet == null || m_floorPiece == null || m_floorBasePiece == null || m_blockFillPiece == null
+-                || m_brickEndPiece == null || m_doorPiece == null || m_doorArrowPiece == null || m_palette == null)
++                || m_brickEndPiece == null || m_cornerEndPiece == null || m_doorPiece == null || m_doorArrowPiece == null || m_palette == null)
+             {
+-                error = "The environment database needs a rule set, floor, floor base, block fill, brick end, door and arrow pieces and a palette.";
++                error = "The environment database needs a rule set, floor, floor base, block fill, brick end, corner end, door and arrow pieces and a palette.";
+                 return false;
+             }
+ 
+diff --git "staging-v6\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs" "staging-v7\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs"
+index ce2d5cf..48e256d 100644
+--- "staging-v6\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs"
++++ "staging-v7\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs"
+@@ -7,20 +7,21 @@ using UnityEngine;
+ namespace ColorBlockJam.Editor.BoardKit
+ {
+     /// <summary>
+-    /// Imports the Blender-authored WallBrick.fbx, builds Brick_End.prefab with Wall.prefab's calibration
+-    /// and binds it in the EnvironmentDatabase (DEC-139). It writes only those three assets: the full kit
+-    /// rebuilds (BoardKitAssets.Build, SharedArtAssets) regenerate unrelated assets and stay out of it.
++    /// Imports the Blender-authored WallBrick.fbx, builds Brick_End.prefab with Wall.prefab's calibration and
++    /// Corner_End.prefab with Corner_1.prefab's, and binds both in the EnvironmentDatabase (DEC-139). It writes
++    /// only those four assets: the full kit rebuilds (BoardKitAssets.Build, SharedArtAssets) regenerate
++    /// unrelated assets and stay out of it.
+     /// </summary>
+     public static class EnvironmentWallBrickAssets
+     {
+         public const string ModelPath = BoardKitAssets.Root + "/Art/Models/WallBrick.fbx";
+         public const string PrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Brick_End.prefab";
+-        private const string k_wallModelPath = BoardKitAssets.Root + "/Art/Models/WallAndDoor.fbx";
++        public const string CornerPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Corner_End.prefab";
++        private const string k_kitModelPath = BoardKitAssets.Root + "/Art/Models/WallAndDoor.fbx";
+         private const string k_wallPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Wall.prefab";
++        private const string k_cornerPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Corner_1.prefab";
+         private const string k_databasePath = BoardKitAssets.Root + "/Data/Environment/EnvironmentDatabase.asset";
+-        private const string k_meshName = "Brick_End";
+-        private const string k_wallMeshName = "Wall";
+-        // Brick_End is authored inside Wall's exact mesh bounds (ArtSource/BoardKit/WallBrick.blend).
++        // Each piece is authored inside its source piece's exact mesh bounds (ArtSource/BoardKit/WallBrick.blend).
+         private const float k_boundsTolerance = 0.001f;
+ 
+         [MenuItem("Color Block Jam/Art/Build Wall Brick")]
+@@ -32,29 +33,24 @@ namespace ColorBlockJam.Editor.BoardKit
+             }
+ 
+             ConfigureImporter();
+-            Mesh brick = FindMesh(ModelPath, k_meshName);
+-            Mesh wall = FindMesh(k_wallModelPath, k_wallMeshName);
+-            // Equal bounds prove the brick shares Wall's mesh space, so Wall's prefab calibration fits it.
+-            if (!IsClose(brick.bounds.min, wall.bounds.min) || !IsClose(brick.bounds.max, wall.bounds.max))
+-            {
+-                throw new InvalidOperationException(
+-                    $"Brick_End bounds {brick.bounds} differ from Wall bounds {wall.bounds}; re-export WallBrick.fbx.");
+-            }
+-
+-            BoardPieceView piece = CreatePrefab(brick);
+-            BindDatabase(piece);
++            // Both meshes are checked before either prefab is written, so a bad export changes nothing.
++            Mesh brickMesh = FindCheckedMesh("Brick_End", "Wall");
++            Mesh cornerMesh = FindCheckedMesh("Corner_End", "Corner_1");
++            BoardPieceView brick = CreatePiece(brickMesh, k_wallPrefabPath, PrefabPath);
++            BoardPieceView corner = CreatePiece(cornerMesh, k_cornerPrefabPath, CornerPrefabPath);
++            BindDatabase(brick, corner);
+             AssetDatabase.SaveAssets();
+-            Debug.Log($"Wall brick built: {PrefabPath} bound in {k_databasePath}.");
++            Debug.Log($"Wall brick built: {PrefabPath} and {CornerPrefabPath} bound in {k_databasePath}.");
+         }
+ 
+         // The supplied kit's mesh-space import (WallAndDoor.fbx) with materials, animation and Read/Write off.
+         private static void ConfigureImporter()
+         {
+-            ModelImporter source = (ModelImporter)AssetImporter.GetAtPath(k_wallModelPath);
++            ModelImporter source = (ModelImporter)AssetImporter.GetAtPath(k_kitModelPath);
+             ModelImporter importer = (ModelImporter)AssetImporter.GetAtPath(ModelPath);
+             if (source == null || importer == null)
+             {
+-                throw new InvalidOperationException($"Import {ModelPath} and {k_wallModelPath} first.");
++                throw new InvalidOperationException($"Import {ModelPath} and {k_kitModelPath} first.");
+             }
+ 
+             importer.globalScale = source.globalScale;
+@@ -79,22 +75,36 @@ namespace ColorBlockJam.Editor.BoardKit
+             importer.SaveAndReimport();
+         }
+ 
+-        // Wall.prefab's root, Visual child, X180 turn, height and stretch, shared material and view fields,
++        // Equal bounds prove the new mesh shares the source mesh's space, so the source prefab's calibration fits it.
++        private static Mesh FindCheckedMesh(string meshName, string sourceMeshName)
++        {
++            Mesh mesh = FindMesh(ModelPath, meshName);
++            Mesh source = FindMesh(k_kitModelPath, sourceMeshName);
++            if (!IsClose(mesh.bounds.min, source.bounds.min) || !IsClose(mesh.bounds.max, source.bounds.max))
++            {
++                throw new InvalidOperationException(
++                    $"{meshName} bounds {mesh.bounds} differ from {sourceMeshName} bounds {source.bounds}; re-export WallBrick.fbx.");
++            }
++
++            return mesh;
++        }
++
++        // The source prefab's root, Visual child, X180 turn, height and stretch, shared material and view fields,
+         // with only the mesh replaced.
+-        private static BoardPieceView CreatePrefab(Mesh brick)
++        private static BoardPieceView CreatePiece(Mesh mesh, string sourcePrefabPath, string prefabPath)
+         {
+-            GameObject root = PrefabUtility.LoadPrefabContents(k_wallPrefabPath);
++            GameObject root = PrefabUtility.LoadPrefabContents(sourcePrefabPath);
+             try
+             {
+-                root.name = k_meshName;
++                root.name = mesh.name;
+                 BoardPieceView view = root.GetComponent<BoardPieceView>();
+                 if (view == null || view.Filter == null)
+                 {
+-                    throw new InvalidOperationException("Wall.prefab has no BoardPieceView with a mesh filter.");
++                    throw new InvalidOperationException($"{sourcePrefabPath} has no BoardPieceView with a mesh filter.");
+                 }
+ 
+-                view.Filter.sharedMesh = brick;
+-                return PrefabUtility.SaveAsPrefabAsset(root, PrefabPath).GetComponent<BoardPieceView>();
++                view.Filter.sharedMesh = mesh;
++                return PrefabUtility.SaveAsPrefabAsset(root, prefabPath).GetComponent<BoardPieceView>();
+             }
+             finally
+             {
+@@ -102,7 +112,7 @@ namespace ColorBlockJam.Editor.BoardKit
+             }
+         }
+ 
+-        private static void BindDatabase(BoardPieceView piece)
++        private static void BindDatabase(BoardPieceView brick, BoardPieceView corner)
+         {
+             EnvironmentDatabase database = AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(k_databasePath);
+             if (database == null)
+@@ -111,7 +121,8 @@ namespace ColorBlockJam.Editor.BoardKit
+             }
+ 
+             SerializedObject data = new SerializedObject(database);
+-            data.FindProperty("m_brickEndPiece").objectReferenceValue = piece;
++            data.FindProperty("m_brickEndPiece").objectReferenceValue = brick;
++            data.FindProperty("m_cornerEndPiece").objectReferenceValue = corner;
+             data.ApplyModifiedPropertiesWithoutUndo();
+             EditorUtility.SetDirty(database);
+             AssetDatabase.SaveAssetIfDirty(database);
+diff --git "staging-v6\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset" "staging-v7\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset"
+index c97ac9c..a881c1e 100644
+--- "staging-v6\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset"
++++ "staging-v7\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset"
+@@ -21,6 +21,8 @@ MonoBehaviour:
+     type: 3}
+   m_brickEndPiece: {fileID: 9105878314899585264, guid: bd74a1050ec1d9543bc2d428107ac2de,
+     type: 3}
++  m_cornerEndPiece: {fileID: 6835881837040604022, guid: 91daa45c656e6ad458aa08fe889b2f85,
++    type: 3}
+   m_doorPiece: {fileID: 1950578696897402454, guid: 163655b697ad00f41916d7a6ac835b06,
+     type: 3}
+   m_doorArrowPiece: {fileID: 6422523380051144989, guid: 1ea3802f1f9f19c479bc6c06dae4578b,
+diff --git "staging-v6\\ArtSource/BoardKit/export_wall_brick.py" "staging-v7\\ArtSource/BoardKit/export_wall_brick.py"
+index 17fadda..0e0a4b0 100644
+--- "staging-v6\\ArtSource/BoardKit/export_wall_brick.py"
++++ "staging-v7\\ArtSource/BoardKit/export_wall_brick.py"
+@@ -1,13 +1,15 @@
+-"""Exports Brick_End from WallBrick.blend to Assets/ColorBlockJam/Art/Models/WallBrick.fbx (DEC-139).
++"""Exports Brick_End and Corner_End from WallBrick.blend to Assets/ColorBlockJam/Art/Models/WallBrick.fbx (DEC-139).
+ 
+ WallBrick.blend holds Brick_End, the wall-run cap built from the supplied Wall profile inside Wall's exact
+-mesh bounds, and Wall_Reference, an unchanged copy of the supplied Wall kept only to check calibration.
+-Only Brick_End is exported, with the node transform of the approved generator
+-(production/tasks/TASK-20260927-123500933-c1e67965-environment-runs-gate-motion/implementation/
+-approved-brick/build_brick_end.py) and the supplied kit's unit convention: WallAndDoor.fbx stores its
+-units as FBX UnitScaleFactor 100, so this export writes units to the FBX scale too (FBX_SCALE_UNITS).
+-Unity then reads Brick_End in Wall's mesh space, and Wall.prefab's calibration fits it. The script
+-re-imports the file and checks the unit scale and that Brick_End kept its bounds.
++mesh bounds, Corner_End, the corner unit with Corner_1's footprint and both arm ends closed by the same
++bevel, and Wall_Reference and Corner_Reference, unchanged copies of the supplied pieces kept only to check
++calibration. Only Brick_End and Corner_End are exported, each with its source piece's node transform (the
++approved generators build_brick_end.py and build_corner_end.py in
++production/tasks/TASK-20260927-123500933-c1e67965-environment-runs-gate-motion/implementation/approved-brick)
++and the supplied kit's unit convention: WallAndDoor.fbx stores its units as FBX UnitScaleFactor 100, so
++this export writes units to the FBX scale too (FBX_SCALE_UNITS). Unity then reads each piece in its source
++piece's mesh space, and Wall.prefab's and Corner_1.prefab's calibrations fit them. The script re-imports
++the file and checks the unit scale and that both pieces kept their bounds.
+ 
+ Run from the repository root (Blender 4.1+):
+   blender --background --factory-startup ArtSource/BoardKit/WallBrick.blend --python ArtSource/BoardKit/export_wall_brick.py
+@@ -20,7 +22,7 @@ import bpy
+ 
+ HERE = os.path.dirname(os.path.abspath(__file__))
+ FBX_PATH = os.path.normpath(os.path.join(HERE, "..", "..", "Assets", "ColorBlockJam", "Art", "Models", "WallBrick.fbx"))
+-NAME = "Brick_End"
++NAMES = ("Brick_End", "Corner_End")
+ TOLERANCE = 1e-4
+ # WallAndDoor.fbx's UnitScaleFactor; the FBX binary stores it as a little-endian double after its name.
+ KIT_UNIT_SCALE = 100.0
+@@ -41,11 +43,12 @@ def unit_scale_factor(path):
+ 
+ 
+ def main():
+-    brick = bpy.data.objects[NAME]
+-    expected = local_bounds(brick)
++    pieces = [bpy.data.objects[name] for name in NAMES]
++    expected = {piece.name: local_bounds(piece) for piece in pieces}
+     bpy.ops.object.select_all(action="DESELECT")
+-    brick.select_set(True)
+-    bpy.context.view_layer.objects.active = brick
++    for piece in pieces:
++        piece.select_set(True)
++    bpy.context.view_layer.objects.active = pieces[0]
+     bpy.ops.export_scene.fbx(filepath=FBX_PATH, use_selection=True, object_types={"MESH"},
+                              apply_scale_options="FBX_SCALE_UNITS", bake_space_transform=False,
+                              mesh_smooth_type="FACE", add_leaf_bones=False, bake_anim=False)
+@@ -54,13 +57,14 @@ def main():
+ 
+     bpy.ops.wm.read_factory_settings(use_empty=True)
+     bpy.ops.import_scene.fbx(filepath=FBX_PATH)
+-    meshes = [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]
+-    if len(meshes) != 1 or not meshes[0].name.startswith(NAME):
+-        raise SystemExit(f"[wall-brick] expected only {NAME} in {FBX_PATH}, found {[obj.name for obj in meshes]}")
+-    actual = local_bounds(meshes[0])
+-    if max(abs(a - b) for a, b in zip(expected, actual)) > TOLERANCE:
+-        raise SystemExit(f"[wall-brick] round trip changed the bounds: {expected} -> {actual}")
+-    print(f"[wall-brick] exported {NAME} to {FBX_PATH}; bounds {tuple(round(v, 5) for v in actual)}")
++    meshes = {obj.name.split(".")[0]: obj for obj in bpy.context.scene.objects if obj.type == "MESH"}
++    if sorted(meshes) != sorted(NAMES):
++        raise SystemExit(f"[wall-brick] expected only {NAMES} in {FBX_PATH}, found {sorted(meshes)}")
++    for name in NAMES:
++        actual = local_bounds(meshes[name])
++        if max(abs(a - b) for a, b in zip(expected[name], actual)) > TOLERANCE:
++            raise SystemExit(f"[wall-brick] round trip changed {name}'s bounds: {expected[name]} -> {actual}")
++        print(f"[wall-brick] exported {name} to {FBX_PATH}; bounds {tuple(round(v, 5) for v in actual)}")
+ 
+ 
+ main()
+diff --git "staging-v6\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs" "staging-v7\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs"
+index d9191ca..f408702 100644
+--- "staging-v6\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs"
++++ "staging-v7\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs"
+@@ -14,15 +14,18 @@ namespace ColorBlockJam.Tests.Environment
+     /// Proves the play-area bricks of DEC-139 (environment-runs-gate-motion AC-1): ComposePlayArea keeps every
+     /// rule quadrant of Compose, closes each maximal straight run of the outer boundary between corners and
+     /// gates with Brick_End caps whose mouths face into the run, closes a one-quadrant run with two half-length
+-    /// caps, keeps interior holes as one continuous rule frame, keeps corners, floor and doors exactly, and is
+-    /// symmetric under transposition. Nominal quadrants prove topology, not the rendered roof; the portrait
+-    /// captures decide the look.
++    /// caps, turns every corner of the outer boundary into Corner_End with the corner rule's yaw, keeps interior
++    /// holes as one continuous rule frame, keeps floor and doors exactly, puts one dark base under each wall
++    /// quadrant and door slot that reaches floor, walls and gates but stops short of open void (D-002), and is
++    /// symmetric under transposition. Nominal quadrants prove topology, not the
++    /// rendered roof; the portrait captures decide the look.
+     /// </summary>
+     public sealed class EnvironmentWallRunTests
+     {
+         private EnvironmentDatabase m_database;
+         private EnvironmentComposer m_composer;
+         private BoardPieceView m_wall;
++        private BoardPieceView m_corner;
+         private readonly List<EnvironmentPiecePlacement> m_rules = new List<EnvironmentPiecePlacement>();
+         private readonly List<EnvironmentPiecePlacement> m_playArea = new List<EnvironmentPiecePlacement>();
+         private readonly List<EnvironmentGateSpan> m_gates = new List<EnvironmentGateSpan>();
+@@ -33,7 +36,10 @@ namespace ColorBlockJam.Tests.Environment
+             m_database = AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(EnvironmentComposerTests.DatabasePath);
+             m_composer = new EnvironmentComposer(m_database);
+             m_wall = m_database.RuleSet.GetRule(1).Output;
++            m_corner = m_database.RuleSet.GetRule(0).Output;
++            Assert.That(m_database.RuleSet.GetRule(2).Output, Is.SameAs(m_corner), "both corner rules place Corner_1");
+             Assert.That(m_database.BrickEndPiece, Is.Not.Null, "the database binds Brick_End");
++            Assert.That(m_database.CornerEndPiece, Is.Not.Null, "the database binds Corner_End");
+         }
+ 
+         private static IEnumerable<BoardLayout> Fixtures()
+@@ -77,7 +83,15 @@ namespace ColorBlockJam.Tests.Environment
+                         continue;
+                     }
+ 
+-                    Assert.That(piece.Piece, Is.SameAs(rule.Piece), $"{name}: {quadrant} keeps its rule piece");
++                    if (piece.Piece == m_database.CornerEndPiece)
++                    {
++                        Assert.That(rule.Piece, Is.SameAs(m_corner), $"{name}: Corner_End replaces a corner at {quadrant}");
++                    }
++                    else
++                    {
++                        Assert.That(piece.Piece, Is.SameAs(rule.Piece), $"{name}: {quadrant} keeps its rule piece");
++                    }
++
+                     Assert.That(piece.Yaw, Is.EqualTo(rule.Yaw));
+                     Assert.That(piece.Scale, Is.EqualTo(rule.Scale));
+                     Assert.That(piece.GridPosition, Is.EqualTo(rule.GridPosition));
+@@ -95,9 +109,114 @@ namespace ColorBlockJam.Tests.Environment
+             Compose(BoardLayoutTests.Create(width, height));
+             Assert.That(Count(m_database.BrickEndPiece), Is.EqualTo(8), "four runs, two caps each");
+             Assert.That(Count(m_wall), Is.EqualTo(4 * (width + height) - 8), "every other straight quadrant");
++            Assert.That(Count(m_database.CornerEndPiece), Is.EqualTo(4), "four corner units");
++            Assert.That(Count(m_corner), Is.Zero, "no rule corner is left on the outer boundary");
+             AssertCapsCloseTheirRuns("rectangle");
+         }
+ 
++        [Test]
++        public void EveryOuterCornerIsACornerEndWhileHoleCornersKeepCorner1()
++        {
++            // Cells (2..3, 2..3) are an interior hole; (0, 5) and (1, 5) are a notch open to the outer ring.
++            Compose(BoardLayoutTests.Create(6, 6, BoardLayoutTests.Cells((2, 2), (3, 2), (2, 3), (3, 3), (0, 5), (1, 5))));
++            Dictionary<Vector2Int, EnvironmentPiecePlacement> rules = GetRuleWalls();
++            int outerCorners = 0;
++            int holeCorners = 0;
++            foreach (EnvironmentPiecePlacement piece in m_playArea)
++            {
++                if (!IsWall(piece)) continue;
++                Vector2Int quadrant = GetQuadrant(piece);
++                EnvironmentPiecePlacement rule = rules[quadrant];
++                if (rule.Piece != m_corner) continue;
++                Vector2Int cell = new Vector2Int((quadrant.x + 1) >> 1, (quadrant.y + 1) >> 1);
++                bool inHole = cell.x >= 2 && cell.x <= 3 && cell.y >= 2 && cell.y <= 3;
++                Assert.That(piece.Piece, Is.SameAs(inHole ? m_corner : m_database.CornerEndPiece),
++                    $"the corner at {quadrant} {(inHole ? "keeps Corner_1 in the hole" : "is its own unit")}");
++                Assert.That(piece.Yaw, Is.EqualTo(rule.Yaw), "Corner_End shares Corner_1's mesh space");
++                Assert.That(piece.Scale, Is.EqualTo(rule.Scale));
++                Assert.That(piece.GridPosition, Is.EqualTo(rule.GridPosition));
++                if (inHole) holeCorners++; else outerCorners++;
++            }
++
++            Assert.That(holeCorners, Is.EqualTo(4), "the hole's four corners stay in its rule frame");
++            // Five convex floor corners (cells (0, 0), (5, 0), (5, 5), (2, 5) and (0, 4)) and the notch's one
++            // concave corner, in void cell (1, 5).
++            Assert.That(outerCorners, Is.EqualTo(6));
++            Assert.That(Count(m_database.CornerEndPiece), Is.EqualTo(6));
++        }
++
++        [Test]
++        public void EachWallQuadrantAndDoorSlotStandsOnOneDarkBaseThatStopsShortOfOpenVoid()
++        {
++            foreach (BoardLayout layout in Fixtures())
++            {
++                Compose(layout);
++                string name = $"{layout.Width}x{layout.Height}";
++                HashSet<Vector2Int> walls = new HashSet<Vector2Int>();
++                foreach (EnvironmentPiecePlacement piece in m_playArea)
++                {
++                    if (IsWall(piece))
++                    {
++                        walls.Add(GetQuadrant(piece));
++                    }
++                    else if (piece.Piece == m_database.DoorPiece)
++                    {
++                        // A door slot spans the two quadrants on either side of its centre along its length.
++                        Vector2 along = piece.Yaw % 180 == 0 ? new Vector2(0.5f, 0f) : new Vector2(0f, 0.5f);
++                        Vector2 center = new Vector2(piece.GridPosition.x, piece.GridPosition.y);
++                        walls.Add(Vector2Int.FloorToInt(center - along));
++                        walls.Add(Vector2Int.FloorToInt(center + along));
++                    }
++                }
++
++                Dictionary<Vector2Int, EnvironmentPiecePlacement> bases = new Dictionary<Vector2Int, EnvironmentPiecePlacement>();
++                foreach (EnvironmentPiecePlacement piece in m_playArea)
++                {
++                    if (!IsWallBase(piece)) continue;
++                    Vector2Int quadrant = GetQuadrant(piece);
++                    Assert.That(bases.ContainsKey(quadrant), Is.False, $"{name}: one base at {quadrant}");
++                    bases.Add(quadrant, piece);
++                    Assert.That(piece.Tint, Is.EqualTo(m_database.GetFloorBaseColor()), $"{name}: the base is dark");
++                    Assert.That(piece.GridPosition.z, Is.EqualTo(-0.02f).Within(1e-6f), $"{name}: at the floor base depth");
++                    Assert.That(piece.Yaw, Is.Zero);
++                    // FloorBase spans one cell (two quadrants) at scale 1: sizes here are in quadrants.
++                    Vector2 size = new Vector2(piece.Scale.x * 2f, piece.Scale.z * 2f);
++                    Vector2 low = new Vector2(piece.GridPosition.x, piece.GridPosition.y) - size * 0.5f;
++                    Vector2 high = low + size;
++                    Assert.That(low.x, Is.GreaterThanOrEqualTo(quadrant.x - 1e-5f), $"{name}: the base at {quadrant} stays inside it");
++                    Assert.That(low.y, Is.GreaterThanOrEqualTo(quadrant.y - 1e-5f));
++                    Assert.That(high.x, Is.LessThanOrEqualTo(quadrant.x + 1 + 1e-5f));
++                    Assert.That(high.y, Is.LessThanOrEqualTo(quadrant.y + 1 + 1e-5f));
++                    // A side that meets floor, a wall or a gate is covered to its edge; one that faces open void
++                    // stops a quarter quadrant short.
++                    AssertBaseSide(layout, walls, quadrant + Vector2Int.left, low.x - quadrant.x, $"{name}: {quadrant} left");
++                    AssertBaseSide(layout, walls, quadrant + Vector2Int.right, quadrant.x + 1 - high.x, $"{name}: {quadrant} right");
++                    AssertBaseSide(layout, walls, quadrant + Vector2Int.down, low.y - quadrant.y, $"{name}: {quadrant} below");
++                    AssertBaseSide(layout, walls, quadrant + Vector2Int.up, quadrant.y + 1 - high.y, $"{name}: {quadrant} above");
++                }
++
++                Assert.That(bases.Keys, Is.EquivalentTo(walls),
++                    $"{name}: exactly the wall quadrants and door slots have a base");
++            }
++        }
++
++        [Test]
++        public void AStraightWallBaseReachesTheFloorEdge()
++        {
++            Compose(BoardLayoutTests.Create(4, 3));
++            int checkedBases = 0;
++            foreach (EnvironmentPiecePlacement piece in m_playArea)
++            {
++                if (!IsWallBase(piece) || !Mathf.Approximately(Mathf.Max(piece.Scale.x, piece.Scale.z), 0.5f)) continue;
++                // A bottom-row base (quadrant row -2) reaches up to the floor at grid y = -1.
++                if (GetQuadrant(piece).y != -2) continue;
++                Assert.That(piece.GridPosition.y + piece.Scale.z, Is.EqualTo(-1f).Within(1e-5f));
++                checkedBases++;
++            }
++
++            Assert.That(checkedBases, Is.EqualTo(8), "every straight quadrant of the bottom side");
++        }
++
+         [Test]
+         public void AGateSplitsItsSideIntoTwoBricks()
+         {
+@@ -202,6 +321,8 @@ namespace ColorBlockJam.Tests.Environment
+             foreach (EnvironmentPiecePlacement piece in m_rules)
+             {
+                 Assert.That(piece.Piece, Is.Not.SameAs(m_database.BrickEndPiece), "the Level Editor canvas draws rule pieces");
++                Assert.That(piece.Piece, Is.Not.SameAs(m_database.CornerEndPiece), "the Level Editor canvas draws rule corners");
++                Assert.That(IsWallBase(piece), Is.False, "the rule placements put no base under walls");
+             }
+         }
+ 
+@@ -233,6 +354,25 @@ namespace ColorBlockJam.Tests.Environment
+             return rules.TryGetValue(quadrant, out EnvironmentPiecePlacement rule) && rule.Piece == m_wall && rule.Yaw == yaw;
+         }
+ 
++        private static void AssertBaseSide(BoardLayout layout, HashSet<Vector2Int> walls, Vector2Int neighbour,
++            float gap, string where)
++        {
++            bool open = !IsFloorAt(layout, neighbour) && !walls.Contains(neighbour);
++            Assert.That(gap, Is.EqualTo(open ? 0.25f : 0f).Within(1e-5f),
++                $"{where}: {(open ? "stops short of open void" : "reaches floor, a wall or a gate")}");
++        }
++
++        // Quadrant (2x - 1 | 2x, 2y - 1 | 2y) belongs to cell (x, y).
++        private static bool IsFloorAt(BoardLayout layout, Vector2Int quadrant)
++        {
++            return layout.IsFloor((quadrant.x + 1) >> 1, (quadrant.y + 1) >> 1);
++        }
++
++        private bool IsWallBase(EnvironmentPiecePlacement piece)
++        {
++            return piece.Piece == m_database.FloorBasePiece && piece.Scale != Vector3.one;
++        }
++
+         private bool IsHalf(EnvironmentPiecePlacement piece)
+         {
+             return !Mathf.Approximately(piece.Scale.z, m_database.WallPieceScale.z);
+@@ -290,13 +430,13 @@ namespace ColorBlockJam.Tests.Environment
+             return quadrants;
+         }
+ 
+-        // The non-wall placements, which the play area shares with the rule placements.
++        // The non-wall placements, which the play area shares with the rule placements (wall bases are its own).
+         private List<string> Describe(List<EnvironmentPiecePlacement> placements)
+         {
+             List<string> descriptions = new List<string>();
+             foreach (EnvironmentPiecePlacement piece in placements)
+             {
+-                if (IsWall(piece)) continue;
++                if (IsWall(piece) || IsWallBase(piece)) continue;
+                 descriptions.Add($"{piece.Piece.name}@{piece.GridPosition.x:F3},{piece.GridPosition.y:F3},{piece.GridPosition.z:F3}" +
+                     $"/{piece.Yaw}/{piece.Scale}/{piece.Tint}");
+             }
+diff --git "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs" "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs"
+new file mode 100644
+index 0000000..a30b846
+--- /dev/null
++++ "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs"
+@@ -0,0 +1,402 @@
++#if UNITY_EDITOR
++using System;
++using System.Collections;
++using System.Collections.Generic;
++using System.Reflection;
++using ColorBlockJam.Environment;
++using ColorBlockJam.Presentation.Board;
++using ColorBlockJam.Runtime.Art;
++using ColorBlockJam.Runtime.Layout;
++using ColorBlockJam.Runtime.Levels;
++using Onity.Pooling;
++using NUnit.Framework;
++using UnityEditor;
++using UnityEngine;
++using UnityEngine.TestTools;
++using Object = UnityEngine.Object;
++
++namespace ColorBlockJam.Tests.Environment
++{
++    public sealed class EnvironmentViewLifecycleTests
++    {
++        private const string k_prefabPath = "Assets/ColorBlockJam/Prefabs/Environment/Environment.prefab";
++        private const string k_databasePath = "Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset";
++        private const string k_floorBaseName = "FloorBase";
++        // A 4 x 3 rectangle: 12 floor tiles, 12 floor-base squares, 28 walls and 4 corners, and one
++        // floor-base square under each of those 32 wall quadrants (DEC-139, D-002).
++        private const int k_rectanglePieceCount = 12 + 12 + 28 + 4 + 32;
++        private const string k_corner5Path = "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_5.prefab";
++        private static readonly int s_colorId = Shader.PropertyToID("_BaseColor");
++
++        private GameObject m_root;
++        private EnvironmentView m_view;
++        private EnvironmentDatabase m_database;
++
++        [SetUp]
++        public void SetUp()
++        {
++            m_database = AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(k_databasePath);
++            m_root = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(k_prefabPath));
++            m_view = m_root.GetComponent<EnvironmentView>();
++            m_view.Construct(m_database);
++        }
++
++        [TearDown]
++        public void TearDown()
++        {
++            if (m_root != null)
++            {
++                Object.DestroyImmediate(m_root);
++            }
++        }
++
++        [UnityTest]
++        public IEnumerator BuildRentsEveryPieceWithItsTransformAndClearReturnsThemAll()
++        {
++            m_view.Build(Rectangle(4, 3));
++            yield return null;
++
++            Assert.That(m_view.ActivePieceCount, Is.EqualTo(k_rectanglePieceCount));
++            Assert.That(CountActivePieces(), Is.EqualTo(k_rectanglePieceCount));
++            Assert.That(m_view.BoardRoot.localPosition, Is.EqualTo(new Vector3(-1.5f, 0f, -1f)));
++            AssertPiece("Grid", new Vector3(0f, 0f, 0f), Vector3.one);
++            AssertPiece(k_floorBaseName, new Vector3(0f, -0.01f, 0f), Vector3.one);
++            AssertPiece("Wall", new Vector3(3.75f, 0f, 1.25f), m_database.WallPieceScale);
++            // The play area's corners are Corner_End units, each on a base toward the floor (DEC-139).
++            AssertPiece("Corner_End", new Vector3(-0.75f, 0f, -0.75f), m_database.WallPieceScale);
++            AssertPiece(k_floorBaseName, new Vector3(-0.6875f, -0.01f, -0.6875f), new Vector3(0.375f, 1f, 0.375f));
++            Assert.That(CountActivePoolItems(), Is.EqualTo(k_rectanglePieceCount));
++
++            m_view.Clear();
++
++            Assert.That(m_view.ActivePieceCount, Is.Zero);
++            Assert.That(m_view.IsBuilt, Is.False);
++            Assert.That(CountActivePieces(), Is.Zero);
++            Assert.That(CountActivePoolItems(), Is.Zero);
++        }
++
++        [UnityTest]
++        public IEnumerator RebuildingReusesPiecesAndOnlyALargerLevelAddsInstances()
++        {
++            BoardLayout small = Rectangle(4, 3);
++            m_view.Build(small);
++            int instances = CountAllPieces();
++            m_view.Build(small);
++            Assert.That(CountAllPieces(), Is.EqualTo(instances), "Restart of the same layout must not rebuild.");
++
++            m_view.Clear();
++            m_view.Build(Rectangle(4, 3));
++            Assert.That(CountAllPieces(), Is.EqualTo(instances), "A same-size rebuild must reuse pooled pieces.");
++
++            m_view.Build(Rectangle(8, 10));
++            int larger = CountAllPieces();
++            Assert.That(larger, Is.GreaterThan(instances));
++
++            m_view.Build(Rectangle(4, 3));
++            Assert.That(CountAllPieces(), Is.EqualTo(larger), "Shrinking keeps released pieces in the pools.");
++            Assert.That(CountActivePieces(), Is.EqualTo(k_rectanglePieceCount));
++            yield return null;
++        }
++
++        [UnityTest]
++        public IEnumerator DoorsCarryTheirPaletteColourAndPiecesResetWhenReleased()
++        {
++            m_view.Build(Create(5, 4, new LevelDoorData("top", BoardSide.Top, 1, 2, "Red")));
++            yield return null;
++
++            BoardPieceView door = FindActive("Door_1x1", new Vector3(1f, 0f, 3.75f));
++            Color red = m_database.GetDoorColor(PaletteColor.Red);
++            Assert.That(ColorDistance(ReadColor(door), red), Is.LessThan(1e-3f));
++            Assert.That(door.transform.localScale, Is.EqualTo(m_database.DoorPieceScale));
++
++            // Release makes no GPU write (DEC-123); the next build tints the reused door again.
++            m_view.Clear();
++            m_view.Build(Create(5, 4, new LevelDoorData("top", BoardSide.Top, 1, 2, "Blue")));
++            yield return null;
++            BoardPieceView reused = FindActive("Door_1x1", new Vector3(1f, 0f, 3.75f));
++            Assert.That(ColorDistance(ReadColor(reused), m_database.GetDoorColor(PaletteColor.Blue)), Is.LessThan(1e-3f));
++
++            // Every piece is tinted by its placement, including the floor and the walls.
++            BoardPieceView floor = FindActive("Grid", new Vector3(0f, 0f, 0f));
++            Assert.That(ColorDistance(ReadColor(floor), m_database.GetFloorColor()), Is.LessThan(1e-3f));
++            BoardPieceView wall = FindActive("Wall", new Vector3(0.25f, 0f, -0.75f));
++            Assert.That(ColorDistance(ReadColor(wall), m_database.GetWallColor()), Is.LessThan(1e-3f));
++        }
++
++        // The property block stores colours in the project's linear space, so a
++        // read-back differs from the palette value by float rounding only.
++        private static float ColorDistance(Color left, Color right)
++        {
++            return ((Vector4)left - (Vector4)right).magnitude;
++        }
++
++        [UnityTest]
++        public IEnumerator EachFloorCellGetsAPooledGreyBaseSquareAndNoPlaneRemains()
++        {
++            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(k_prefabPath);
++            Assert.That(prefab.GetComponentsInChildren<BoardPieceView>(true), Is.Empty,
++                "The prefab holds no permanent floor plane; every piece is pooled.");
++
++            // A database copy whose floor-base colour differs from the prefab's own
++            // reset colour (Wall), so the check proves the view applies the tint.
++            EnvironmentDatabase database = Object.Instantiate(m_database);
++            try
++            {
++                SerializedObject serializedDatabase = new SerializedObject(database);
++                serializedDatabase.FindProperty("m_floorBaseColor").intValue = (int)PaletteColor.Ground;
++                serializedDatabase.ApplyModifiedPropertiesWithoutUndo();
++                m_view.Construct(database);
++                Color floorBaseColor = database.GetFloorBaseColor();
++
++                // A 4 x 3 board with a corner notch at (3, 2): 11 floor cells.
++                m_view.Build(Create(4, 3, new[] { new Vector2Int(3, 2) }));
++                yield return null;
++
++                List<BoardPieceView> bases = FindActiveFloorBases();
++                int wallBases = 0;
++                foreach (BoardPieceView floorBase in bases)
++                {
++                    if (floorBase.transform.localScale != Vector3.one)
++                    {
++                        // A wall base (D-002): flat under a wall quadrant, never on a floor cell.
++                        wallBases++;
++                        Vector3 wallBase = floorBase.transform.localPosition;
++                        Assert.That(wallBase.y, Is.EqualTo(-0.01f).Within(1e-5f), "under the floor, like the cell bases");
++                        Assert.That(m_view.Layout.IsFloor(Mathf.RoundToInt(wallBase.x), Mathf.RoundToInt(wallBase.z)),
++                            Is.False, "a wall base stands outside the floor");
++                        Assert.That(ColorDistance(ReadColor(floorBase), floorBaseColor), Is.LessThan(1e-3f),
++                            "Tinted with the database floor-base colour.");
++                        continue;
++                    }
++
++                    Vector3 position = floorBase.transform.localPosition;
++                    Vector2Int cell = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
++                    Assert.That(position, Is.EqualTo(new Vector3(cell.x, -0.01f, cell.y)), "cell centre, under the tile");
++                    Assert.That(m_view.Layout.IsFloor(cell.x, cell.y), Is.True, $"no base on void cell {cell}");
++                    Assert.That(floorBase.transform.localScale, Is.EqualTo(Vector3.one), "one cell, not a stretched plane");
++                    Assert.That(floorBase.Renderer.transform.up.y, Is.EqualTo(0f).Within(1e-4f), "The quad lies flat.");
++                    Assert.That(floorBase.Renderer.transform.forward.y, Is.EqualTo(-1f).Within(1e-4f), "It faces up.");
++                    Assert.That(ColorDistance(ReadColor(floorBase), floorBaseColor), Is.LessThan(1e-3f),
++                        "Tinted with the database floor-base colour.");
++                }
++
++                Assert.That(bases.Count - wallBases, Is.EqualTo(11), "one base square per floor cell");
++                Assert.That(wallBases, Is.EqualTo(CountWallBases(database, m_view.Layout)), "one base per wall quadrant and door slot, as composed");
++
++                m_view.Clear();
++                Assert.That(FindActiveFloorBases(), Is.Empty);
++                Assert.That(CountActivePoolItems(), Is.Zero);
++                foreach (BoardPieceView floorBase in bases)
++                {
++                    // Release makes no GPU write (DEC-123): the hidden square keeps its last tint
++                    // until its next placement colours it again.
++                    Assert.That(floorBase.gameObject.activeSelf, Is.False, "Clear hides the square.");
++                    Assert.That(ColorDistance(ReadColor(floorBase), floorBaseColor), Is.LessThan(1e-3f),
++                        "Clear writes no property block.");
++                }
++
++                m_view.Release();
++                yield return null;
++                Assert.That(m_view.BoardRoot.GetComponentsInChildren<BoardPieceView>(true), Is.Empty,
++                    "Release destroys the pooled base squares.");
++            }
++            finally
++            {
++                m_view.Release();
++                Object.DestroyImmediate(database);
++            }
++        }
++
++        [UnityTest]
++        public IEnumerator DisablingClearsAndReleaseDestroysThePooledPieces()
++        {
++            m_view.Build(Rectangle(4, 3));
++            m_root.SetActive(false);
++            Assert.That(m_view.ActivePieceCount, Is.Zero);
++            Assert.That(m_view.IsBuilt, Is.False);
++
++            m_root.SetActive(true);
++            Assert.That(m_view.ActivePieceCount, Is.Zero, "Enabling must not rebuild on its own.");
++
++            m_view.Build(Rectangle(4, 3));
++            m_view.Release();
++            yield return null;
++
++            Assert.That(CountAllPieces(), Is.Zero);
++            Assert.That(CountActivePoolItems(), Is.Zero);
++        }
++
++        // A designer can edit the rule set while a view keeps its composer and pools
++        // (LevelEditor preview, Editor Play Mode).
++        [UnityTest]
++        public IEnumerator RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError()
++        {
++            EnvironmentRuleSet rules = Object.Instantiate(m_database.RuleSet);
++            EnvironmentDatabase database = Object.Instantiate(m_database);
++            try
++            {
++                SerializedObject serializedDatabase = new SerializedObject(database);
++                serializedDatabase.FindProperty("m_ruleSet").objectReferenceValue = rules;
++                serializedDatabase.ApplyModifiedPropertiesWithoutUndo();
++                m_view.Construct(database);
++                m_view.Build(Rectangle(4, 3));
++
++                SetWallRuleOutput(rules, AssetDatabase.LoadAssetAtPath<BoardPieceView>(k_corner5Path));
++                m_view.Build(Rectangle(4, 3));
++                yield return null;
++
++                Assert.That(m_view.ActivePieceCount, Is.EqualTo(k_rectanglePieceCount));
++                AssertPiece("corner_5", new Vector3(3.75f, 0f, 1.25f), m_database.WallPieceScale);
++                Assert.That(CountActivePoolItems(), Is.EqualTo(k_rectanglePieceCount), "The old pools were disposed with nothing active.");
++
++                SetWallRuleOutput(rules, null);
++                InvalidOperationException exception =
++                    Assert.Throws<InvalidOperationException>(() => m_view.Build(Rectangle(4, 3)));
++                StringAssert.Contains("Environment rule 1: it needs an output piece prefab.", exception.Message);
++                Assert.That(m_view.ActivePieceCount, Is.EqualTo(k_rectanglePieceCount), "A rejected build keeps the current play area.");
++            }
++            finally
++            {
++                m_view.Release();
++                Object.DestroyImmediate(database);
++                Object.DestroyImmediate(rules);
++            }
++        }
++
++        private static void SetWallRuleOutput(EnvironmentRuleSet rules, BoardPieceView output)
++        {
++            SerializedObject serialized = new SerializedObject(rules);
++            serialized.FindProperty("m_rules").GetArrayElementAtIndex(1).FindPropertyRelative("m_output")
++                .objectReferenceValue = output;
++            serialized.ApplyModifiedPropertiesWithoutUndo();
++        }
++
++        [Test]
++        public void EnvironmentComponentsNeverTick()
++        {
++            Type[] types = { typeof(EnvironmentView), typeof(EnvironmentPreview), typeof(EnvironmentSceneInstaller) };
++            string[] loops = { "Update", "LateUpdate", "FixedUpdate" };
++            foreach (Type type in types)
++            {
++                foreach (string loop in loops)
++                {
++                    MethodInfo method = type.GetMethod(loop, BindingFlags.Instance | BindingFlags.Public
++                        | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
++                    Assert.That(method, Is.Null, $"{type.Name}.{loop}");
++                }
++
++                Assert.That(type.GetInterface("IOnityTickable"), Is.Null, type.Name);
++            }
++        }
++
++        private static BoardLayout Rectangle(int width, int height)
++        {
++            return Create(width, height);
++        }
++
++        private static BoardLayout Create(int width, int height, params LevelDoorData[] doors)
++        {
++            return Create(width, height, Array.Empty<Vector2Int>(), doors);
++        }
++
++        private static BoardLayout Create(int width, int height, Vector2Int[] voidCells, params LevelDoorData[] doors)
++        {
++            Assert.That(BoardLayout.TryCreate(width, height, voidCells, doors,
++                out BoardLayout layout, out string error), Is.True, error);
++            return layout;
++        }
++
++        private int CountActivePieces()
++        {
++            return CountPieces(false);
++        }
++
++        private int CountAllPieces()
++        {
++            return CountPieces(true);
++        }
++
++        private int CountPieces(bool includeInactive)
++        {
++            int count = 0;
++            foreach (BoardPieceView piece in m_view.BoardRoot.GetComponentsInChildren<BoardPieceView>(includeInactive))
++            {
++                count++;
++            }
++
++            return count;
++        }
++
++        private static int CountWallBases(EnvironmentDatabase database, IBoardLayout layout)
++        {
++            List<EnvironmentPiecePlacement> placements = new List<EnvironmentPiecePlacement>();
++            new EnvironmentComposer(database).ComposePlayArea(layout, placements, new List<EnvironmentGateSpan>());
++            int count = 0;
++            foreach (EnvironmentPiecePlacement placement in placements)
++            {
++                if (placement.Piece == database.FloorBasePiece && placement.Scale != Vector3.one) count++;
++            }
++
++            return count;
++        }
++
++        private List<BoardPieceView> FindActiveFloorBases()
++        {
++            List<BoardPieceView> bases = new List<BoardPieceView>();
++            foreach (BoardPieceView piece in m_view.BoardRoot.GetComponentsInChildren<BoardPieceView>(false))
++            {
++                if (piece.name.StartsWith(k_floorBaseName, StringComparison.Ordinal))
++                {
++                    bases.Add(piece);
++                }
++            }
++
++            return bases;
++        }
++
++        private static int CountActivePoolItems()
++        {
++            List<OnityPoolDiagnosticsSnapshot> snapshots = new List<OnityPoolDiagnosticsSnapshot>();
++            OnityPoolDiagnosticsRegistry.GetSnapshots(snapshots);
++            int active = 0;
++            foreach (OnityPoolDiagnosticsSnapshot snapshot in snapshots)
++            {
++                if (snapshot.PoolName.StartsWith("Environment ", StringComparison.Ordinal))
++                {
++                    active += snapshot.CountActive;
++                }
++            }
++
++            return active;
++        }
++
++        private void AssertPiece(string prefabName, Vector3 localPosition, Vector3 scale)
++        {
++            BoardPieceView piece = FindActive(prefabName, localPosition);
++            Assert.That(piece.transform.localScale, Is.EqualTo(scale), $"{prefabName} scale");
++        }
++
++        private BoardPieceView FindActive(string prefabName, Vector3 localPosition)
++        {
++            foreach (BoardPieceView piece in m_view.BoardRoot.GetComponentsInChildren<BoardPieceView>(false))
++            {
++                if (piece.name.StartsWith(prefabName, StringComparison.Ordinal)
++                    && piece.transform.localPosition == localPosition)
++                {
++                    return piece;
++                }
++            }
++
++            Assert.Fail($"No active {prefabName} at {localPosition}.");
++            return null;
++        }
++
++        private static Color ReadColor(BoardPieceView piece)
++        {
++            MaterialPropertyBlock properties = new MaterialPropertyBlock();
++            piece.Renderer.GetPropertyBlock(properties);
++            return properties.GetColor(s_colorId);
++        }
++    }
++}
++#endif
+diff --git "staging-v6\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs" "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs"
+index fca18e0..b94430e 100644
+--- "staging-v6\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs"
++++ "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs"
+@@ -40,7 +40,8 @@ namespace ColorBlockJam.Tests.Environment
+         [OneTimeSetUp]
+         public void WarmUpTheAllocationRecorder()
+         {
+-            Assert.That(() => { }, Is.Not.AllocatingGCMemory());
++            // Only absorbs the recorder's one-time cost: its first run may count that cost, so it asserts nothing.
++            new AllocatingGCMemoryConstraint().ApplyTo((TestDelegate)(() => { }));
+         }
+ 
+         [SetUp]
+diff --git "staging-v6\\docs/Environment-Layout.md" "staging-v7\\docs/Environment-Layout.md"
+index 27c1b36..97d4670 100644
+--- "staging-v6\\docs/Environment-Layout.md"
++++ "staging-v7\\docs/Environment-Layout.md"
+@@ -62,9 +62,10 @@ data. The Game `SceneContext` binds it through `EnvironmentSceneInstaller`.
+ |---|---|---|
+ | Rule set | `EnvironmentRuleSet.asset` (`EnvironmentRuleSet`) | The project-owned wall and corner rules |
+ | Floor piece | `Prefabs/Board/Pieces/Grid.prefab` | One per floor cell |
+-| Floor base piece | `Prefabs/Environment/FloorBase.prefab` | One grey square per floor cell, just under its tile; void cells get none |
++| Floor base piece | `Prefabs/Environment/FloorBase.prefab` | One grey square per floor cell, just under its tile; the play area also puts one under each wall quadrant and door slot (DEC-139), and a void cell gets no full square |
+ | Block fill piece | `Prefabs/Environment/BlockFill.prefab` | Flat top for Barrier quadrants without an exposed edge (`EnvironmentSolidComposer.AppendBarrier`); reuses the floor-base quad at wall height |
+ | Brick end piece | `Prefabs/Board/Pieces/Brick_End.prefab` | Caps both ends of each straight wall run in the play area (DEC-139): `Wall.prefab` with only its mesh replaced by the Blender-authored `Art/Models/WallBrick.fbx` |
++| Corner end piece | `Prefabs/Board/Pieces/Corner_End.prefab` | Every corner of the outer boundary in the play area (DEC-139): `Corner_1.prefab` with only its mesh replaced by `Corner_End` from `WallBrick.fbx`, a Corner_1 footprint with both arm ends closed and rounded |
+ | Door piece | `Door_1x1.prefab` | One per door-covered edge segment |
+ | Door arrow piece | `Door_Arrow.prefab` | One per door, at the span centre |
+ | Palette | `Data/Art/GamePalette.asset` | Door colour from the level `colorId` |
+@@ -74,7 +75,7 @@ data. The Game `SceneContext` binds it through `EnvironmentSceneInstaller`.
+ | Arrow white blend | 0.6 | Arrows read as a light tint of the door colour |
+ | Floor colour | `PaletteColor.Ground` | Tint of the floor tiles; pieces carry no colour of their own, so every placement is tinted (DEC-123) |
+ | Wall colour | `PaletteColor.Wall` | Tint of the wall and corner pieces (DEC-123) |
+-| Floor base colour | `PaletteColor.Wall` | The grey squares under the floor tiles; they show through the gaps at the tiles' rounded corners like the darker seams in the references |
++| Floor base colour | `PaletteColor.Wall` | The grey squares under the floor tiles and, in the play area, under the walls and gates; they show through the gaps at the tiles' rounded corners and between wall units like the darker seams in the references |
+ | Barrier colour | `PaletteColor.Wall` | Tint of Barrier board-object pieces; a designer can set barriers apart from the fixed walls |
+ 
+ The floor, door, arrow and rule-output prefabs come from the board kit
+@@ -164,25 +165,39 @@ the reference game:
+   its first and last quadrant with its open mouth turned into the run, and
+   the rule's `Wall` on every quadrant between them. A one-quadrant run gets
+   two half-length caps back to back.
+-- Every other wall quadrant (a corner) keeps its rule piece as its own unit.
++- A corner of the outer boundary (floor only diagonally, or on two adjacent
++  sides at a notch) becomes `Corner_End` with the corner rule's yaw: Corner_1's
++  footprint with both arm ends closed and rounded, so it reads as its own unit
++  and a lowered gate beside it shows a rounded end, not a cut face (D-001).
+   An interior hole keeps all its rule pieces, so it stays one continuous
+   frame, as in reference 02 and like a Barrier (user decision 2026-09-27).
+   Floor, floor base, doors and arrows are Compose's placements.
++- Every wall quadrant and door slot, interior holes included, also gets one
++  `FloorBase` square in the floor-base colour, just under floor level. It
++  reaches every side of the quadrant that meets floor, another wall or a gate,
++  and stops a quarter quadrant short of a side that faces open void, so it
++  never shows outside the board or inside a hole. The gaps between wall units, beside
++  rounded wall corners and at the floor tiles' rounded corners along walls and
++  gates then read dark instead of showing the background (D-002).
+ - Every placement stays on its rule quadrant, so board topology, holes,
+   notches and door slots are unchanged; only which mesh shows a quadrant
+-  changes.
++  changes, plus the bases under walls and gates.
+ - `gates` gets one `EnvironmentGateSpan` per authored door, in door order:
+   the range of that door's `Door_1x1` slots and arrow in `output`.
+ 
+ `Brick_End` is authored in Blender inside the Wall mesh's exact bounds, so
+ Wall's prefab calibration fits it. Its mouth faces local -Z at yaw 0.
+-`ArtSource/BoardKit/WallBrick.blend` holds it next to an unchanged
+-`Wall_Reference`. `export_wall_brick.py` writes only `Brick_End` to
++`Corner_End` is authored inside Corner_1's exact bounds with Corner_1's outer
++rounded corner; every side drops with the supplied Wall bevel, as
++`Brick_End`'s closed end does. `ArtSource/BoardKit/WallBrick.blend` holds both
++next to unchanged `Wall_Reference` and `Corner_Reference` copies.
++`export_wall_brick.py` writes only `Brick_End` and `Corner_End` to
+ `Art/Models/WallBrick.fbx`, with the supplied kit's FBX unit scale (100), and
+ checks the round trip. `Color Block Jam > Art > Build Wall Brick`
+ (`EnvironmentWallBrickAssets`) then imports the FBX with the kit's settings,
+-rejects it unless its bounds equal Wall's, and saves `Brick_End.prefab` from
+-`Wall.prefab`'s contents with only the mesh replaced. It binds the prefab in
++rejects each piece unless its bounds equal its source piece's, and saves
++`Brick_End.prefab` from `Wall.prefab` and `Corner_End.prefab` from
++`Corner_1.prefab`, each with only the mesh replaced. It binds both prefabs in
+ the database and writes nothing else.
+ 
+ Examples include rounded corners, pinched floors, corridors, gates at board
+@@ -291,11 +306,12 @@ them (floor tile and floor-base square) is composed as usual. DEC-121 in
+   2026-09-25 replaced the earlier single stretched plane, so the centre of a
+   hole wider than one cell and the outer quarter of a corner notch (level 9)
+   now show the background. `Environment.prefab` holds no permanent plane.
+-  The floor-base pool grows to the floor-cell count, the same bound as the
+-  floor pool. `k_poolMaxSize` (1024) only limits how many released pieces
+-  each pool keeps: a board with more pieces still builds, and the extra
+-  pieces are destroyed on `Clear`. `LevelData.Validate` limits boards to
+-  8 x 10 (at most 80 floor cells, so 80 base squares), well under the cap.
++  The floor-base pool grows to the floor-cell count plus one base per wall
++  quadrant and door slot in the play area (DEC-139). `k_poolMaxSize` (1024)
++  only limits how many released pieces each pool keeps: a board with more
++  pieces still builds, and the extra pieces are destroyed on `Clear`.
++  `LevelData.Validate` limits boards to 8 x 10: a full 8 x 10 board has 80
++  floor-cell squares and 76 wall bases, well under the cap.
+ 
+ ## Game scene
+ 
+@@ -343,10 +359,13 @@ The Game view shows the board from the reference game's angle (DEC-103).
+   database scales to (1, 1, 1) in the same change.
+ - `corner_3` (pre-assembled Wall + Corner + Wall) and `corner_5` (denser
+   `Corner_1`) are not used.
+-- `Brick_End` shares `Wall`'s mesh space and bounds. If `Wall.prefab`'s
+-  calibration changes, run `Color Block Jam > Art > Build Wall Brick` so
+-  `Brick_End.prefab` takes the same calibration. If the brick shape changes,
+-  edit `ArtSource/BoardKit/WallBrick.blend`, then run
++- `Brick_End` shares `Wall`'s mesh space and bounds, and `Corner_End`
++  shares `Corner_1`'s. If `Wall.prefab`'s or `Corner_1.prefab`'s calibration
++  changes, run `Color Block Jam > Art > Build Wall Brick` so both prefabs take
++  the same calibration. If a shape changes, edit
++  `ArtSource/BoardKit/WallBrick.blend` (the corner generator is
++  `implementation/approved-brick/build_corner_end.py` in the DEC-139 task
++  folder), then run
+   `blender --background --factory-startup ArtSource/BoardKit/WallBrick.blend --python ArtSource/BoardKit/export_wall_brick.py`
+   before the menu item.
+ - `Door_1x1` is one cell thick in Z; the play area scales it to 0.5.
+diff --git "staging-v6\\docs/Color-Block-Jam-PRD.md" "staging-v7\\docs/Color-Block-Jam-PRD.md"
+index 79ff6c7..8582637 100644
+--- "staging-v6\\docs/Color-Block-Jam-PRD.md"
++++ "staging-v7\\docs/Color-Block-Jam-PRD.md"
+@@ -315,7 +315,7 @@ AC numbering: AC-1.x Home, AC-2.x Settings, AC-3.x HUD and board, AC-4.x popups,
+ | AC-3.11 | At 1080 x 1920 and 1080 x 2400 the largest board (8 x 10) fits the board rectangle without touching the HUD. |
+ | AC-3.12 | Backgrounding the app during `Playing` enters `Paused` through Suspend. On return the pause popup shows and no time was lost (DEC-31). |
+ | AC-3.13 | A pointer that starts on a HUD or popup element never starts a board drag. |
+-| AC-3.14 | The composer samples the four occupied quadrants at each footprint vertex. Full occupancy uses four supplied half-cell Centers; a straight boundary uses two Edges; a convex quadrant uses one OuterCorner; three occupied quadrants use one InnerCorner; opposite quadrants use two opposing OuterCorners. A gameplay cell has 2×2 studs. No new board geometry or overlapping additive tops. All reference footprints in four rotations have exact coverage; single-cell placements and both L4-minus-one-cell cases are checked. Empty, disconnected and duplicate input is rejected before replacing output. A reused composition buffer allocates 0 B. Walls/doors use calibrated original mesh prefabs, with placement driven by every floor/void boundary (RULE-3) through the RuleTile-authored environment rules (DEC-100, [Environment Layout](Environment-Layout.md)). The one wall exception is the Blender-authored `Brick_End` (DEC-139). Built from the supplied Wall profile inside Wall's mesh bounds, it caps both ends of each straight outer-boundary wall run in the play area, so walls read as separate rounded units; interior holes keep one continuous frame. |
++| AC-3.14 | The composer samples the four occupied quadrants at each footprint vertex. Full occupancy uses four supplied half-cell Centers; a straight boundary uses two Edges; a convex quadrant uses one OuterCorner; three occupied quadrants use one InnerCorner; opposite quadrants use two opposing OuterCorners. A gameplay cell has 2×2 studs. No new board geometry or overlapping additive tops. All reference footprints in four rotations have exact coverage; single-cell placements and both L4-minus-one-cell cases are checked. Empty, disconnected and duplicate input is rejected before replacing output. A reused composition buffer allocates 0 B. Walls/doors use calibrated original mesh prefabs, with placement driven by every floor/void boundary (RULE-3) through the RuleTile-authored environment rules (DEC-100, [Environment Layout](Environment-Layout.md)). The wall exceptions are the Blender-authored `Brick_End` and `Corner_End` (DEC-139). Built from the supplied Wall profile inside Wall's and Corner_1's mesh bounds, `Brick_End` caps both ends of each straight outer-boundary wall run and `Corner_End` forms each outer-boundary corner with both arm ends rounded, so walls read as separate rounded units; interior holes keep one continuous frame. |
+ | AC-3.15 | One reusable tile prefab exists per piece type, built from supplied FBX children; its children may be duplicated, disabled, re-pivoted and reordered without changing the composer. A catalog maps tiles to prefabs/calibration. Each shape library entry also references an identity-preserving derived prefab with a BlockPiece root and composed preview. No new mesh is modeled; `corner_3.002` is excluded and FBX names stay unchanged. |
+ | AC-3.16 | Board pieces come from Onity pools warmed at level load to the level's counts plus booster headroom (DEC-60). BlockPieceFactory implements Onity IFactory with PooledFactory/PrefabComponentPool per source type; Create/Return enforce ownership and refuse capacity growth. Hooks reset mutable state while retaining warm sub-pools. No Instantiate/Destroy inside an attempt; owner disposal returns outstanding roots and disposes all pools. |
+ | AC-3.17 | Selecting a block on pointer-down shows a white outline around its outer silhouette while that pointer stays held, including during dragging. Pointer-up, pointer cancel/loss, Pause, Home, Restart or terminal teardown clears it. Outline does not persist as a toggle or leak to a reused pooled block. It remains legible without internal modular-piece seams (reference 14). Frozen selection can show the outline/blocked feedback but cannot move. |
+diff --git "staging-v7\\Assets/ColorBlockJam/Prefabs/Board/Pieces/Corner_End.prefab" "staging-v7\\Assets/ColorBlockJam/Prefabs/Board/Pieces/Corner_End.prefab"
+new file mode 100644
+index 0000000..8a80c68
+--- /dev/null
++++ "staging-v7\\Assets/ColorBlockJam/Prefabs/Board/Pieces/Corner_End.prefab"
+@@ -0,0 +1,132 @@
++%YAML 1.1
++%TAG !u! tag:unity3d.com,2011:
++--- !u!1 &4711743796024663733
++GameObject:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  serializedVersion: 6
++  m_Component:
++  - component: {fileID: 8299439072379435245}
++  - component: {fileID: 7657693552345561789}
++  - component: {fileID: 3303197106808794627}
++  m_Layer: 0
++  m_Name: Visual
++  m_TagString: Untagged
++  m_Icon: {fileID: 0}
++  m_NavMeshLayer: 0
++  m_StaticEditorFlags: 0
++  m_IsActive: 1
++--- !u!4 &8299439072379435245
++Transform:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 4711743796024663733}
++  serializedVersion: 2
++  m_LocalRotation: {x: 1, y: 0, z: 0, w: -0.00000004371139}
++  m_LocalPosition: {x: -0.0083, y: 0.5970926, z: 0}
++  m_LocalScale: {x: 1.0166, y: 0.20120054, z: 1}
++  m_ConstrainProportionsScale: 0
++  m_Children: []
++  m_Father: {fileID: 5715125674044850034}
++  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
++--- !u!33 &7657693552345561789
++MeshFilter:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 4711743796024663733}
++  m_Mesh: {fileID: 9077865699996351867, guid: cf86f69df26b0c34895f789dce631056, type: 3}
++--- !u!23 &3303197106808794627
++MeshRenderer:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 4711743796024663733}
++  m_Enabled: 1
++  m_CastShadows: 1
++  m_ReceiveShadows: 1
++  m_DynamicOccludee: 1
++  m_StaticShadowCaster: 0
++  m_MotionVectors: 1
++  m_LightProbeUsage: 1
++  m_ReflectionProbeUsage: 1
++  m_RayTracingMode: 2
++  m_RayTraceProcedural: 0
++  m_RenderingLayerMask: 1
++  m_RendererPriority: 0
++  m_Materials:
++  - {fileID: 2100000, guid: 8f9ef702417920b42b63b81b2782124a, type: 2}
++  m_StaticBatchInfo:
++    firstSubMesh: 0
++    subMeshCount: 0
++  m_StaticBatchRoot: {fileID: 0}
++  m_ProbeAnchor: {fileID: 0}
++  m_LightProbeVolumeOverride: {fileID: 0}
++  m_ScaleInLightmap: 1
++  m_ReceiveGI: 1
++  m_PreserveUVs: 0
++  m_IgnoreNormalsForChartDetection: 0
++  m_ImportantGI: 0
++  m_StitchLightmapSeams: 1
++  m_SelectedEditorRenderState: 3
++  m_MinimumChartSize: 4
++  m_AutoUVMaxDistance: 0.5
++  m_AutoUVMaxAngle: 89
++  m_LightmapParameters: {fileID: 0}
++  m_SortingLayerID: 0
++  m_SortingLayer: 0
++  m_SortingOrder: 0
++  m_AdditionalVertexStreams: {fileID: 0}
++--- !u!1 &8411979552209454030
++GameObject:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  serializedVersion: 6
++  m_Component:
++  - component: {fileID: 5715125674044850034}
++  - component: {fileID: 6835881837040604022}
++  m_Layer: 0
++  m_Name: Corner_End
++  m_TagString: Untagged
++  m_Icon: {fileID: 0}
++  m_NavMeshLayer: 0
++  m_StaticEditorFlags: 0
++  m_IsActive: 1
++--- !u!4 &5715125674044850034
++Transform:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 8411979552209454030}
++  serializedVersion: 2
++  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
++  m_LocalPosition: {x: 0, y: 0, z: 0}
++  m_LocalScale: {x: 1, y: 1, z: 1}
++  m_ConstrainProportionsScale: 0
++  m_Children:
++  - {fileID: 8299439072379435245}
++  m_Father: {fileID: 0}
++  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
++--- !u!114 &6835881837040604022
++MonoBehaviour:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 8411979552209454030}
++  m_Enabled: 1
++  m_EditorHideFlags: 0
++  m_Script: {fileID: 11500000, guid: 20c98260a99a20e40825a00d2ca8b894, type: 3}
++  m_Name: 
++  m_EditorClassIdentifier: 
++  m_filter: {fileID: 7657693552345561789}
++  m_renderer: {fileID: 3303197106808794627}
+diff --git PROJECT.md "staging-v7\\PROJECT.md"
+index 5852109..78b0a7e 100644
+--- PROJECT.md
++++ "staging-v7\\PROJECT.md"
+@@ -308,11 +308,13 @@ save or Retry feedback while navigation remains gated by the save policy.
+   `WallAndDoor.fbx` supplies Wall, Corner_1, corner_3, corner_5, Door_1x1 and
+   Door_Arrow; the rounded closed surface faces source -Y, so prefab children
+   rotate X180 with their hidden underside at ground level. Do not use the
+-  defective corner_3.002. The one project-authored wall mesh is `Brick_End`
+-  in `WallBrick.fbx` (DEC-139). It is built in Blender from the supplied Wall
+-  profile inside Wall's mesh bounds and caps both ends of each straight
+-  outer-boundary wall run in the play area. The rule placements and the
+-  supplied meshes and prefabs are unchanged. `GroundGrid` spans one cell. `Arrows.fbx` supplies
++  defective corner_3.002. The project-authored wall meshes are `Brick_End`
++  and `Corner_End` in `WallBrick.fbx` (DEC-139). They are built in Blender
++  from the supplied Wall profile inside Wall's and Corner_1's mesh bounds:
++  `Brick_End` caps both ends of each straight outer-boundary wall run in the
++  play area, and `Corner_End` is each outer-boundary corner, both arm ends
++  rounded. The rule placements and the supplied meshes and prefabs are
++  unchanged. `GroundGrid` spans one cell. `Arrows.fbx` supplies
+   `Arrow_1`, `Arrow_2`, and `Arrow_3`, whole double-headed markers one, two,
+   and three cells long. Their visual prefabs are centered, face local Z and sit
+   just above the LEGO studs; horizontal placement uses a Y90 root rotation.
+@@ -662,5 +664,5 @@ Record each decision here with its reason. The README draws from this list.
+ | Shared popup assembly for Hub and Game (DEC-136) | Needed by DEC-135: Game cannot reference `ColorBlockJam.Hub`. `ColorBlockJam.UI` (`Assets/ColorBlockJam/UI`, next to `Common.uss` and the runtime theme) holds popups both scenes use: the Settings popup view, presenter and UXML/USS (with a HOME button hidden unless a host shows it), and later the booster purchase popup. It references Runtime, Player and Onity.Reactive only; Hub and, later, Gameplay reference it. Scene hosts adapt it (Hub: an `IHubOverlay` adapter; Game: the pause flow). |
+ | CBJ Template currency review (DEC-137) | User order of 2026-09-27 ("iyi olabilecek mimari olarak olanları bize geçir"). Compared with the template's Currency module: enum `CurrencyType` keys whose order must never change, a static `CurrencyController` with static events, the balance inside each `Currency`, saves keyed by `string.GetHashCode()` and no file protection. **Adopted:** the compact formatter lives with the currencies, as the template's `CurrencyHelper` does: `Runtime/Currencies/CurrencyText` (Runtime references ZString), shared by Hub, the `ColorBlockJam.UI` popups and the Game HUD. **Queued:** the template's `CurrencyAmount` (currency + amount for prices and later rewards, one-row Inspector drawer) as `TASK-20260927-141439926-2949c75f-currency-amount-price`, after the live owner of `BoosterDefinition.cs` and `PlayerSaveService.cs` releases them. **Rejected:** enum identity (DEC-128 string IDs survive reordering); static controller and events (Rule 7); balances on the definition (DEC-92 publishes only after commit); hash save keys (`GetHashCode` is no stable contract and can collide; the snapshot keys by ID and HMAC covers integrity, DEC-130); the remote-config default override and analytics source/sink tags (no server or analytics in scope; the store port of DEC-129 is the seam); change-delta events (subscribers derive them from reactive values); per-currency floating-coin settings (presentation belongs to views); TextMeshPro sprite-atlas generation (UI Toolkit). Task `TASK-20260926-235915696-6b7f82f4-player-data-currencies`. |
+ | Hub launch request and carried starting boosters (DEC-138) | User request of 2026-09-27 (whole Hub scope; references 01, 09, 10). Home's Level button opens the pre-level popup (`Hub/PreLevel`: `LEVEL N` from `PlayerProgress.GetPlayableLevelIndex`, one selector per `BoosterCatalog` entry with `PreLevel`, in catalog order). Play makes `LevelLauncher` run exactly one `OnitySceneFlow.TransitionAsync(profile, Gameplay, request)` with an immutable `LevelLaunchRequest : IOnitySceneEnterData` (`Runtime/Levels`: playable level index and the selected `BoosterId`s in selector order); a second Play, or Play while one is in flight, does nothing. `GameAttemptLoader` consumes the request once through `OnitySceneTransitionStore` before any wait; the pure `LevelLaunchResolution` chooses request, then the Level Editor's Test Level (DEC-127), then the installer's serialized index, and clamps an out-of-range request with one warning. This retires the Hub half of DEC-116 (direct Play of Game keeps the serialized index); the `NoPauseOverlay` foreground-resume half stays until the pause popup. Starting boosters are carried, not applied or spent: opening, toggling, closing and Play never debit stock, and the Game scene ignores the selection until the booster opening task prepares and commits it on Home (AC-5.7, DEC-92). Selectors are rounded squares (`Btn_settings_normal` blue with a red count badge, tinted green with a check when selected; user feedback 2026-09-27). A zero-stock selector opens the shared purchase popup (`ColorBlockJam.UI/Purchase`, DEC-136) through the Hub adapter `BoosterPurchaseOverlay`, which covers (hides) the pre-level popup until it closes so the two never overlap (reference 8); Buy calls `IBoosterShop.PurchaseAsync`, is disabled while `IsSaving`, keeps the popup open and never auto-selects (DEC-85). The pre-level presenter and the purchase adapter bind to themselves only, so `IHubOverlay` keeps one container binding; `HubScreen` registers each overlay with `HubNavigator` under its own id. `BoosterCatalog.asset` lists Extra Time first (user approval "Katalogda Extra Time'ı başa al"), so the pre-level order is Extra Time, Rocket and the in-game order stays Time Freeze, Rocket, Hammer, Vacuum. See [Hub and Player Data design](docs/Hub-And-Player-Data-Design.md) section 9. Task `TASK-20260926-235915699-78356740-hub-pre-level-launch`. |
+-| Separate wall units and gate motion (DEC-139) | User request of 2026-09-27: in the reference game the walls read as separate rounded elements; ours read as one merged frame. The matching gate must sink while a block exits and rise after it breaks up. The user also said "eğer hala gerekli olursa blenderdan edit yapma hakkın var". Existing-art composition (a 4x4 strip template of Wall, Corner_1 and BlockFill) was built and rendered first; it read as recessed trays and broke the Level Editor canvas, so the approved Blender fallback was used. `EnvironmentComposer.Compose` keeps the rule placements (one rule piece per wall quadrant) for the Level Editor canvas and barriers. `ComposePlayArea`, used only by `EnvironmentView`, closes each maximal straight run of the outer boundary (void connected to the board's ring, notches included) with `Brick_End` caps whose mouths face the run and the rule's Wall pieces between them. A one-quadrant run gets two half-length caps; corners stay their own rule units. Interior holes keep one continuous rule frame, as in references 02 and 17 (user decision). `Brick_End` comes from `ArtSource/BoardKit/WallBrick.blend` (supplied Wall profile inside Wall's exact mesh bounds, rectangular end after reference 1). `export_wall_brick.py` exports it with the kit's FBX unit scale. `Brick_End.prefab` is Wall.prefab with only the mesh replaced (`Color Block Jam > Art > Build Wall Brick`), bound in `EnvironmentDatabase` and pooled. One `EnvironmentGate` per authored door (door slots and arrow) has one PrimeTween sequence. The board presenter sinks it before a lean or exit crosses the door, holds it while any exit through that door runs, and raises it 0.15 s after the last body is gone, inside the 0.8 s Won Finish. Exits wait for the sink inside their own time; domain exit timing, events and rewards are unchanged. Suspend pauses, Teardown stops and resets, and Restart resets every gate. Supplied FBX files and the Wall, corner and door prefabs are unchanged. See [Environment Layout](docs/Environment-Layout.md). Task `TASK-20260927-123500933-c1e67965-environment-runs-gate-motion`. |
++| Separate wall units and gate motion (DEC-139) | User request of 2026-09-27: in the reference game the walls read as separate rounded elements; ours read as one merged frame. The matching gate must sink while a block exits and rise after it breaks up. The user also said "eğer hala gerekli olursa blenderdan edit yapma hakkın var". Existing-art composition (a 4x4 strip template of Wall, Corner_1 and BlockFill) was built and rendered first; it read as recessed trays and broke the Level Editor canvas, so the approved Blender fallback was used. `EnvironmentComposer.Compose` keeps the rule placements (one rule piece per wall quadrant) for the Level Editor canvas and barriers. `ComposePlayArea`, used only by `EnvironmentView`, closes each maximal straight run of the outer boundary (void connected to the board's ring, notches included) with `Brick_End` caps whose mouths face the run and the rule's Wall pieces between them. A one-quadrant run gets two half-length caps; corners are their own units. Interior holes keep one continuous rule frame, as in references 02 and 17 (user decision). `Brick_End` comes from `ArtSource/BoardKit/WallBrick.blend` (supplied Wall profile inside Wall's exact mesh bounds, rectangular end after reference 1). `export_wall_brick.py` exports it with the kit's FBX unit scale. `Brick_End.prefab` is Wall.prefab with only the mesh replaced (`Color Block Jam > Art > Build Wall Brick`), bound in `EnvironmentDatabase` and pooled. One `EnvironmentGate` per authored door (door slots and arrow) has one PrimeTween sequence. The board presenter sinks it before a lean or exit crosses the door, holds it while any exit through that door runs, and raises it 0.15 s after the last body is gone, inside the 0.8 s Won Finish. Exits wait for the sink inside their own time; domain exit timing, events and rewards are unchanged. Suspend pauses, Teardown stops and resets, and Restart resets every gate. Reopened the same day for two review notes the user asked to fix (D-001, D-002; user choice "All outer corners"): every outer-boundary corner is `Corner_End`, Corner_1's footprint with both arm ends closed and rounded (Blender, same `WallBrick.blend`/`.fbx`, `Corner_End.prefab` from Corner_1.prefab with only the mesh replaced), so a lowered gate beside it shows a rounded end; and each wall quadrant and door slot stands on a `FloorBase` square that reaches floor, walls and gates but stops a quarter quadrant short of open void, so gaps between units read dark instead of showing the background. Supplied FBX files and the Wall, corner and door prefabs are unchanged. See [Environment Layout](docs/Environment-Layout.md). Task `TASK-20260927-123500933-c1e67965-environment-runs-gate-motion`. |
+ | One startup loading screen in Init (DEC-140) | User request of 2026-09-27 ("ilk açılışta her şey hazır olana kadar sadece bir kez loading ... level geçişleri dahil loading olmayacak"), with the approved option of merging Loading into Init. `StartupLoader` (`Runtime/Startup`, an `OnitySceneInitiator` that replaces Onity's bootstrap initiator on Init) shows `StartupLoadingView` from Init's first frame, waits for `ProjectContext.ReadyTask` (level JSON, shapes, player save), loads Hub additively behind the screen, makes it the active scene, waits for Hub's `SceneContext.ReadyTask` (Home bound) plus one frame for Home's first layout, then unloads Init. A failed project scope is not rethrown: Hub shows Home with the level button disabled (AC-10) rather than leaving the player on the loading screen. The bar only moves forward: `StartupProgress` maps the project wait (time-based, below 1) and then the Hub load onto one value; the percentage text changes only when the whole percent changes (ZString). Layout follows the real game's startup screen (user reference): Home's `bg_home_screen`, a centred "Color Block Jam" title and a rounded navy bar with the percentage near the bottom (`UI/Startup/StartupLoading.uxml`). `LoadingPanelSettings` now uses the runtime theme, Expand matching and sorting order 100, so it draws above Hub's panel (0) and blocks presses while Hub builds. `Loading.unity` is deleted and removed from Build Settings, and the scene-flow profile names no Loading scene with routing through it off, so Hub, Game, Restart and next level never show a loading screen. Replaces DEC-98's "Loading appears only for actual loading". Ad-hoc change without a task contract. |

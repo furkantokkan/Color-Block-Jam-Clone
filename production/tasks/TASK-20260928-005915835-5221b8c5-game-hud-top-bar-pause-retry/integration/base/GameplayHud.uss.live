@@ -1,0 +1,389 @@
+/*
+ * Gameplay HUD (Booster-Gameplay B-21 to B-24). Sizes are panel units at the 1080 x 1920 reference. The HUD panel
+ * (BoardOverlayPanelSettings) matches width and height 0.5, so at 20:9 it is about 966 units wide: rows use flex and
+ * percentage widths, and no fixed width exceeds 966. Nine-slice values equal the Sprite Editor borders in
+ * docs/UI-Asset-Import.md (USS order left, top, right, bottom). States are classes toggled by GameplayHudView:
+ * hud--frozen, hud--targeting and hud--opening on the root, booster-button--selected, --empty and --blocked on a
+ * button; disabled buttons use Common.uss :disabled.
+ */
+
+/* ---- Root and layers ---- */
+
+/* The panel does not load the project theme, so the HUD sets the SDF font the outlined titles need (design 6.6). */
+.hud-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    -unity-font-definition: url("project://database/Assets/ColorBlockJam/Data/UI/Fonts/LiberationSans-UITK.asset");
+}
+
+.target-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* ---- Rocket reticles (B-24): the black original, slightly larger, under a white copy of the same alpha ---- */
+
+.reticle {
+    position: absolute;
+    display: none;
+}
+
+.reticle__outline {
+    position: absolute;
+    left: -8%;
+    top: -8%;
+    right: -8%;
+    bottom: -8%;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Gameplay/target.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.reticle__mark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Top area: timer band, freeze counter, targeting banner ---- */
+
+.top-area {
+    flex-shrink: 0;
+}
+
+.top-content {
+    align-items: center;
+    padding-top: 28px;
+}
+
+.timer-band {
+    align-items: center;
+}
+
+/* bg_gameplay_time_holder: border 50 on every side (B-27); the 112 unit height fits both 50 unit borders. */
+.timer-holder {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 320px;
+    height: 112px;
+    padding-left: 48px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Panels/bg_gameplay_time_holder.png");
+    -unity-slice-left: 50;
+    -unity-slice-top: 50;
+    -unity-slice-right: 50;
+    -unity-slice-bottom: 50;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    transition-property: -unity-background-image-tint-color;
+    transition-duration: 0.2s;
+}
+
+/* The clock glyph overhangs the holder's left end. */
+.timer-icon {
+    position: absolute;
+    left: -36px;
+    top: -2px;
+    width: 116px;
+    height: 116px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Gameplay/ic_time.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.timer-label.cbj-title {
+    font-size: 64px;
+    -unity-text-outline-width: 3px;
+}
+
+/* Frozen main timer: an icy tint while Time Freeze holds it (reference 04). */
+.hud--frozen .timer-holder {
+    -unity-background-image-tint-color: rgb(170, 225, 255);
+}
+
+.freeze-counter {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    height: 68px;
+}
+
+.hud--frozen .freeze-counter {
+    display: flex;
+}
+
+.freeze-icon {
+    width: 68px;
+    height: 68px;
+    margin-right: -14px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Boosters/Clock_Freeze.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.freeze-bar {
+    width: 220px;
+    height: 46px;
+    justify-content: center;
+    overflow: hidden;
+    background-color: rgba(18, 38, 104, 0.9);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(170, 230, 255);
+    border-top-color: rgb(170, 230, 255);
+    border-right-color: rgb(170, 230, 255);
+    border-bottom-color: rgb(170, 230, 255);
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+}
+
+/* GameplayHudView writes the width in whole-second steps. */
+.freeze-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(110, 200, 255);
+}
+
+.freeze-label.cbj-title {
+    font-size: 38px;
+    -unity-text-outline-width: 2px;
+}
+
+/* bg_popup: border L106 T74 R107 B104; the 196 unit banner needs slice-scale 0.5 for its 178 units of top + bottom. */
+.info-banner {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    width: 90%;
+    height: 196px;
+    margin-top: 56px;
+    padding-left: 34px;
+    padding-right: 52px;
+    padding-top: 22px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Panels/bg_popup.png");
+    -unity-slice-left: 106;
+    -unity-slice-top: 74;
+    -unity-slice-right: 107;
+    -unity-slice-bottom: 104;
+    -unity-slice-scale: 0.5px;
+}
+
+.hud--targeting .info-banner {
+    display: flex;
+}
+
+.info-icon {
+    width: 146px;
+    height: 146px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.info-text.cbj-title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 18px;
+    font-size: 44px;
+    white-space: normal;
+    -unity-text-outline-width: 2px;
+}
+
+/* The title plaque overlaps the banner's top edge, centred (references 02, 03). */
+.info-header-row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -44px;
+    align-items: center;
+}
+
+/* bg_popup_header: border L79 T90 R79 B90; slice-scale 0.4 fits its 180 units of top + bottom into 84. */
+.info-header {
+    min-width: 320px;
+    height: 84px;
+    padding-left: 44px;
+    padding-right: 44px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Panels/bg_popup_header.png");
+    -unity-slice-left: 79;
+    -unity-slice-top: 90;
+    -unity-slice-right: 79;
+    -unity-slice-bottom: 90;
+    -unity-slice-scale: 0.4px;
+}
+
+.info-title.cbj-title {
+    font-size: 46px;
+}
+
+.info-title.cbj-heavy-text__back {
+    -unity-text-outline-width: 6px;
+}
+
+.info-title.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+.unity-button.info-close {
+    position: absolute;
+    top: -30px;
+    right: -18px;
+    width: 86px;
+    height: 88px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Buttons/Popup_Close_Button.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Opening (reference 11): dims the screen and shows the starting boosters while the hold runs ---- */
+
+.opening-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(8, 16, 48, 0.35);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+}
+
+.hud--opening .opening-layer {
+    opacity: 1;
+}
+
+.opening-icon {
+    width: 260px;
+    height: 260px;
+    margin-left: 24px;
+    margin-right: 24px;
+    -unity-background-scale-mode: scale-to-fit;
+    scale: 0.6 0.6;
+    transition-property: scale;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back;
+}
+
+.hud--opening .opening-icon {
+    scale: 1 1;
+}
+
+.opening-icon--extra-time {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Gameplay/Clock.png");
+}
+
+/* ---- Booster bar (B-22): four fixed squares in catalog order ---- */
+
+.booster-bar {
+    flex-shrink: 0;
+}
+
+.booster-row {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 200px;
+    margin-top: 12px;
+    margin-bottom: 56px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+/* Btn_booster_normal is a circle: always a uniform square, never stretched (B-27). */
+.unity-button.booster-button {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Buttons/Btn_booster_normal.png");
+    -unity-background-scale-mode: scale-to-fit;
+    transition-property: scale, -unity-background-image-tint-color;
+    transition-duration: 0.08s, 0.15s;
+    transition-timing-function: ease-out, ease-out;
+}
+
+/* The targeting booster (a tap on it again cancels). */
+.unity-button.booster-button.booster-button--selected {
+    scale: 1.12 1.12;
+    -unity-background-image-tint-color: rgb(255, 250, 190);
+}
+
+/* Blocked feedback: a short red flash, removed when its transition ends. */
+.unity-button.booster-button.booster-button--blocked {
+    -unity-background-image-tint-color: rgb(255, 110, 110);
+}
+
+.booster-button__icon {
+    width: 118px;
+    height: 118px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* The stock count disc on the lower right (reference target screenshot). */
+.booster-button__count {
+    position: absolute;
+    right: 2px;
+    bottom: 4px;
+    width: 60px;
+    height: 66px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Panels/bg_popup_info_holder_2.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-button__count-label.cbj-title {
+    font-size: 36px;
+    -unity-text-outline-width: 2px;
+}
+
+/* The zero-stock plus badge, Home's recipe (Home.uss plus-button). */
+.booster-button__plus {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    width: 66px;
+    height: 68px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Buttons/Btn_circle_green_small.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-button__plus-icon {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Icons/Currency/ic_plus.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-button--empty .booster-button__count {
+    display: none;
+}
+
+.booster-button--empty .booster-button__plus {
+    display: flex;
+}

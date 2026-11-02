@@ -1,0 +1,167 @@
+using System.Collections;
+using System.Reflection;
+using ColorBlockJam.Editor.Levels;
+using ColorBlockJam.Runtime.Art;
+using ColorBlockJam.Runtime.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    public sealed class ZzBlockToolsProbe
+    {
+        [UnityTest]
+        public IEnumerator ProbeUnityBuilt()
+        {
+            var window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            window.ShowUtility();
+            window.position = new Rect(40f, 40f, 960f, 640f);
+            double end = EditorApplication.timeSinceStartup + 5;
+            while ((window.rootVisualElement.Q<LevelCanvasElement>() == null || !window.rootVisualElement.Q<LevelCanvasElement>().Geometry.IsValid) && EditorApplication.timeSinceStartup < end)
+                yield return null;
+            VisualElement root = window.rootVisualElement;
+            try
+            {
+                LevelCanvasElement canvas = root.Q<LevelCanvasElement>();
+                Debug.Log($"PROBE UB canvas geometry {canvas.Geometry.CellSize} origin {canvas.Geometry.Origin} world {canvas.worldBound}");
+                Vector2Int start = canvas.Model.GetBlock(0).GetCell(0);
+                Vector2 p0 = canvas.LocalToWorld(canvas.Geometry.GetCellRect(start).center);
+                Vector2 p1 = canvas.LocalToWorld(canvas.Geometry.GetCellRect(start + Vector2Int.left).center);
+                Send(root, EventType.MouseDown, p0, 0);
+                Debug.Log($"PROBE UB after down dragging={canvas.IsDragging} capture={canvas.HasPointerCapture(PointerId.mousePointerId)}");
+                Send(root, EventType.MouseDrag, p1, 0);
+                Debug.Log($"PROBE UB after drag dragging={canvas.IsDragging} offset={canvas.DragOffset}");
+                Send(root, EventType.MouseUp, p1, 0);
+                Debug.Log($"PROBE UB after up status={root.Q<Label>("status").text}");
+
+                int count = canvas.Model.BlockCount;
+                Vector2 pb = canvas.LocalToWorld(canvas.Geometry.GetCellRect(canvas.Model.GetBlock(count - 1).LabelCell).center);
+                Send(root, EventType.MouseDown, pb, 1);
+                Send(root, EventType.MouseUp, pb, 1);
+                Debug.Log($"PROBE UB right click count {count} -> {canvas.Model.BlockCount}");
+            }
+            finally
+            {
+                window.DiscardChanges();
+                window.Close();
+            }
+        }
+
+        [Test]
+        public void ProbeManualKeys()
+        {
+            var window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            window.ShowUtility();
+            window.position = new Rect(40f, 40f, 960f, 640f);
+            typeof(LevelDatabaseWindow).GetMethod("CreateGUI", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(window, null);
+            VisualElement root = window.rootVisualElement;
+            object panel = root.panel;
+            panel.GetType().GetMethod("ValidateLayout", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Invoke(panel, null);
+            try
+            {
+                LevelCanvasElement canvas = root.Q<LevelCanvasElement>();
+                LevelEditorToolState state = (LevelEditorToolState)typeof(LevelDatabaseWindow).GetField("m_toolState", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(window);
+                Vector2 pb = canvas.LocalToWorld(canvas.Geometry.GetCellRect(canvas.Model.GetBlock(0).LabelCell).center);
+                Send(root, EventType.MouseDown, pb, 0);
+                Send(root, EventType.MouseUp, pb, 0);
+                Key(canvas, KeyCode.UpArrow);
+                Debug.Log($"PROBE MK after up status={root.Q<Label>("status").text}");
+                LevelColorSwatches swatches = root.Q<LevelColorSwatches>();
+                Debug.Log($"PROBE MK swatch world {swatches.GetSwatch(PaletteColor.Purple).worldBound}");
+                Send(root, EventType.MouseDown, swatches.GetSwatch(PaletteColor.Purple).worldBound.center, 0);
+                Send(root, EventType.MouseUp, swatches.GetSwatch(PaletteColor.Purple).worldBound.center, 0);
+                Debug.Log($"PROBE MK colour after swatch {state.Color} tool {state.Tool}");
+                Key(canvas, KeyCode.RightBracket);
+                Debug.Log($"PROBE MK colour after ] {state.Color} status={root.Q<Label>("status").text}");
+            }
+            finally
+            {
+                window.DiscardChanges();
+                window.Close();
+            }
+        }
+
+        private static void Key(VisualElement target, KeyCode key)
+        {
+            using (KeyDownEvent down = KeyDownEvent.GetPooled('\0', key, EventModifiers.None))
+            {
+                down.target = target;
+                target.SendEvent(down);
+                Debug.Log($"PROBE key {key} propagationStopped={down.isPropagationStopped}");
+            }
+        }
+
+        private static void Send(VisualElement root, EventType type, Vector2 position, int button)
+        {
+            Event mouse = new Event { type = type, mousePosition = position, button = button, clickCount = 1 };
+            EventBase pointer = type == EventType.MouseDown ? PointerDownEvent.GetPooled(mouse)
+                : type == EventType.MouseUp ? PointerUpEvent.GetPooled(mouse)
+                : (EventBase)PointerMoveEvent.GetPooled(mouse);
+            using (pointer)
+            {
+                root.SendEvent(pointer);
+            }
+        }
+    }
+}
+using System.Collections;
+using System.Reflection;
+using ColorBlockJam.Editor.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    public sealed class ZzBlockToolsProbe
+    {
+        [UnityTest]
+        public IEnumerator ProbeEraserButton()
+        {
+            var window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            window.ShowUtility();
+            window.position = new Rect(40f, 40f, 960f, 640f);
+            double end = EditorApplication.timeSinceStartup + 5;
+            while (window.rootVisualElement.Q<LevelCanvasElement>() == null && EditorApplication.timeSinceStartup < end)
+                yield return null;
+            VisualElement root = window.rootVisualElement;
+            Validate(root);
+            try
+            {
+                Button eraser = root.Q<Button>("tool-eraser");
+                ScrollView tools = root.Q<ScrollView>("tools-pane");
+                Debug.Log($"PROBE E before eraser={eraser.worldBound} tools={tools.worldBound} offset={tools.scrollOffset} root={root.worldBound}");
+                tools.ScrollTo(eraser);
+                Debug.Log($"PROBE E after ScrollTo eraser={eraser.worldBound} offset={tools.scrollOffset}");
+                yield return null;
+                Validate(root);
+                Debug.Log($"PROBE E after validate eraser={eraser.worldBound} offset={tools.scrollOffset}");
+                VisualElement picked = root.panel.Pick(eraser.worldBound.center);
+                Debug.Log($"PROBE E picked={picked?.GetType().Name} '{picked?.name}' parent='{picked?.parent?.name}'");
+                using (NavigationSubmitEvent submit = NavigationSubmitEvent.GetPooled())
+                {
+                    submit.target = eraser;
+                    eraser.SendEvent(submit);
+                }
+
+                Debug.Log($"PROBE E tool after submit {root.Q<LevelCanvasElement>().Tool}");
+            }
+            finally
+            {
+                window.DiscardChanges();
+                window.Close();
+            }
+        }
+
+        private static void Validate(VisualElement root)
+        {
+            object panel = root.panel;
+            panel.GetType().GetMethod("ValidateLayout", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Invoke(panel, null);
+        }
+    }
+}

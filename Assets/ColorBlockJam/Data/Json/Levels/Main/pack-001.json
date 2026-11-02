@@ -1,0 +1,372 @@
+{
+  "formatVersion": 3,
+  "levels": [
+    {
+      "id": "level-001",
+      "name": "Level 1",
+      "board": {
+        "width": 4,
+        "height": 5
+      },
+      "timerSeconds": 60,
+      "doors": [
+        {
+          "id": "d2",
+          "side": "Top",
+          "start": 1,
+          "length": 3,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d1",
+          "side": "Bottom",
+          "start": 0,
+          "length": 3,
+          "colorId": "Pink"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Pink",
+          "origin": "0,1",
+          "cells": "0,0 1,0 0,1 1,1",
+          "effects": [
+            {
+              "type": "ice",
+              "params": {
+                "clearsToThaw": "1"
+              }
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "colorId": "LightBlue",
+          "origin": "2,2",
+          "cells": "0,0 1,0 0,1 1,1",
+          "effects": [
+            {
+              "type": "arrow",
+              "params": {
+                "axis": "Vertical"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "level-002",
+      "name": "Level 2",
+      "board": {
+        "width": 5,
+        "height": 5
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 2,
+          "length": 3,
+          "colorId": "LightGreen"
+        },
+        {
+          "id": "d2",
+          "side": "Bottom",
+          "start": 0,
+          "length": 3,
+          "colorId": "Orange"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "LightGreen",
+          "origin": "1,1",
+          "cells": "0,2 0,1 0,0"
+        },
+        {
+          "id": "b2",
+          "colorId": "Orange",
+          "origin": "3,1",
+          "cells": "0,2 0,1 0,0"
+        }
+      ]
+    },
+    {
+      "id": "level-003",
+      "name": "Level 3",
+      "board": {
+        "width": 5,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d2",
+          "side": "Bottom",
+          "start": 3,
+          "length": 2,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d3",
+          "side": "Left",
+          "start": 2,
+          "length": 2,
+          "colorId": "Red"
+        },
+        {
+          "id": "d4",
+          "side": "Right",
+          "start": 2,
+          "length": 2,
+          "colorId": "Red"
+        },
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 0,
+          "length": 2,
+          "colorId": "LightBlue"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "LightBlue",
+          "origin": "1,2",
+          "cells": "0,0 0,1 0,2 1,2"
+        },
+        {
+          "id": "b2",
+          "colorId": "Red",
+          "origin": "2,2",
+          "cells": "0,1 0,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "Yellow",
+          "origin": "2,1",
+          "cells": "1,2 1,1 1,0 0,0"
+        }
+      ]
+    },
+    {
+      "id": "level-004",
+      "name": "Level 4",
+      "board": {
+        "width": 5,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d2",
+          "side": "Top",
+          "start": 0,
+          "length": 2,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d1",
+          "side": "Left",
+          "start": 4,
+          "length": 2,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d3",
+          "side": "Right",
+          "start": 0,
+          "length": 2,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d4",
+          "side": "Bottom",
+          "start": 3,
+          "length": 2,
+          "colorId": "Blue"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Blue",
+          "origin": "0,3",
+          "cells": "0,0 1,0 0,1 1,1"
+        },
+        {
+          "id": "b2",
+          "colorId": "Orange",
+          "origin": "2,2",
+          "cells": "0,1 0,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "Yellow",
+          "origin": "3,1",
+          "cells": "0,0 1,0 0,1 1,1"
+        }
+      ]
+    },
+    {
+      "id": "level-005",
+      "name": "Level 5",
+      "board": {
+        "width": 5,
+        "height": 6
+      },
+      "timerSeconds": 300,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Bottom",
+          "start": 1,
+          "length": 3,
+          "colorId": "LightBlue"
+        },
+        {
+          "id": "d2",
+          "side": "Right",
+          "start": 0,
+          "length": 2,
+          "colorId": "Red"
+        },
+        {
+          "id": "d3",
+          "side": "Left",
+          "start": 0,
+          "length": 2,
+          "colorId": "Orange"
+        },
+        {
+          "id": "d4",
+          "side": "Top",
+          "start": 0,
+          "length": 2,
+          "colorId": "Purple"
+        },
+        {
+          "id": "d5",
+          "side": "Top",
+          "start": 3,
+          "length": 2,
+          "colorId": "LightGreen"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b2",
+          "colorId": "LightGreen",
+          "origin": "0,2",
+          "cells": "0,0 1,0 0,1 1,1"
+        },
+        {
+          "id": "b1",
+          "colorId": "Red",
+          "origin": "0,4",
+          "cells": "0,1 0,0"
+        },
+        {
+          "id": "b3",
+          "colorId": "LightBlue",
+          "origin": "2,3",
+          "cells": "0,2 0,1 0,0"
+        },
+        {
+          "id": "b4",
+          "colorId": "Purple",
+          "origin": "3,4",
+          "cells": "0,0 1,0 0,1 1,1"
+        },
+        {
+          "id": "b5",
+          "colorId": "Purple",
+          "origin": "3,2",
+          "cells": "0,0 1,0 0,1 1,1"
+        },
+        {
+          "id": "b6",
+          "colorId": "Orange",
+          "origin": "1,1",
+          "cells": "0,0 1,0 2,0"
+        },
+        {
+          "id": "b7",
+          "colorId": "Red",
+          "origin": "1,0",
+          "cells": "0,0 1,0 2,0"
+        }
+      ]
+    },
+    {
+      "id": "level-006",
+      "name": "Level 6",
+      "board": {
+        "width": 5,
+        "height": 5,
+        "voidCells": "0,4 4,0 4,1 4,3 0,0"
+      },
+      "timerSeconds": 60,
+      "doors": [
+        {
+          "id": "d1",
+          "side": "Top",
+          "start": 3,
+          "length": 1,
+          "colorId": "Red"
+        },
+        {
+          "id": "d2",
+          "side": "Left",
+          "start": 1,
+          "length": 2,
+          "colorId": "Yellow"
+        },
+        {
+          "id": "d3",
+          "side": "Left",
+          "start": 3,
+          "length": 1,
+          "colorId": "LightBlue"
+        }
+      ],
+      "blocks": [
+        {
+          "id": "b1",
+          "colorId": "Red",
+          "origin": "3,0",
+          "cells": "0,2 0,1 0,0 0,3"
+        },
+        {
+          "id": "b2",
+          "colorId": "Red",
+          "origin": "2,0",
+          "cells": "0,2 0,1 0,0 0,3"
+        },
+        {
+          "id": "b3",
+          "colorId": "Yellow",
+          "origin": "1,0",
+          "cells": "0,0"
+        },
+        {
+          "id": "b4",
+          "colorId": "LightBlue",
+          "origin": "4,2",
+          "cells": "0,0"
+        },
+        {
+          "id": "b5",
+          "colorId": "Red",
+          "origin": "1,1",
+          "cells": "0,0 0,1 0,2 0,3"
+        }
+      ]
+    }
+  ]
+}

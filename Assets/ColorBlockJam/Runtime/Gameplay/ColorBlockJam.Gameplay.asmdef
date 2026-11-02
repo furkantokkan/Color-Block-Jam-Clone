@@ -1,0 +1,30 @@
+{
+  "name": "ColorBlockJam.Gameplay",
+  "rootNamespace": "ColorBlockJam.Gameplay",
+  "references": [
+    "ColorBlockJam.Domain",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Haptics",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "ColorBlockJam.UI",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "Onity.Pooling",
+    "Onity.Factory",
+    "PrimeTween.Runtime",
+    "Unity.InputSystem",
+    "HighlightPlus.Runtime"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,38 @@
+valid_plain | runtime=True | authoring=True | write=True roundTripIdentical=True voids=0 objs=0 b1fx=0
+valid_arrow | runtime=False [Level vf block b1 effect arrow is not implemented in gameplay yet.] | authoring=True | write=True roundTripIdentical=True voids=0 objs=0 b1fx=1 arrowAxis=Vertical
+valid_barrier_open | runtime=False [Level vf cell object o1 effect barrier is not implemented in gameplay yet.] | authoring=True | write=True roundTripIdentical=True voids=0 objs=1 b1fx=0 barrierTyped=True StartsOpen=True
+valid_barrier_closed | runtime=False [Level vf cell object o1 effect barrier is not implemented in gameplay yet.] | authoring=True | write=True roundTripIdentical=True voids=0 objs=1 b1fx=0 barrierTyped=True StartsOpen=False
+valid_barrier_default | runtime=False [Level vf cell object o1 effect barrier is not implemented in gameplay yet.] | authoring=True | write=True roundTripIdentical=True voids=0 objs=1 b1fx=0 barrierTyped=True StartsOpen=False
+valid_void | runtime=True | authoring=True | write=True roundTripIdentical=True voids=1 objs=0 b1fx=0
+inv_unknown_type | runtime=False [Level vf block b1 effect teleport is not a known effect type.] | authoring=False [Level vf block b1 effect teleport is not a known effect type.]
+inv_wrong_target | runtime=False [Level vf door d1 effect arrow cannot be used on a door.] | authoring=False [Level vf door d1 effect arrow cannot be used on a door.]
+inv_same_type_twice | runtime=False [Level vf block b1 lists effect arrow twice.] | authoring=False [Level vf block b1 lists effect arrow twice.]
+inv_unknown_key | runtime=False [Level vf block b1 effect arrow has unknown key speed.] | authoring=False [Level vf block b1 effect arrow has unknown key speed.]
+inv_duplicate_key | runtime=False [Level vf block b1 effect arrow lists key axis twice.] | authoring=False [Level vf block b1 effect arrow lists key axis twice.]
+inv_missing_key | runtime=False [Level vf block b1 effect arrow is missing required key axis.] | authoring=False [Level vf block b1 effect arrow is missing required key axis.]
+inv_enum_value | runtime=False [Level vf block b1 effect arrow key axis has value 'Diagonal'; expected one of Horizontal, Vertical.] | authoring=False [Level vf block b1 effect arrow key axis has value 'Diagonal'; expected one of Horizontal, Vertical.]
+inv_int_range | runtime=False [Level vf block b1 effect ice key clearsToThaw has value '99'; expected an integer from 1 to 20.] | authoring=False [Level vf block b1 effect ice key clearsToThaw has value '99'; expected an integer from 1 to 20.]
+inv_missing_reference | runtime=False [Level vf block b1 effect combined key partner names missing block b9.] | authoring=False [Level vf block b1 effect combined key partner names missing block b9.]
+inv_exclusive_set | runtime=False [Level vf block b1 cannot combine effects moving-obstacle and star.] | authoring=False [Level vf block b1 cannot combine effects moving-obstacle and star.]
+inv_non_string_value | runtime=False [Level vf block b1 effect arrow parameter axis needs a JSON string key and value.] | authoring=False [Level vf block b1 effect arrow parameter axis needs a JSON string key and value.]
+inv_void_outside | runtime=False [Level vf void cell (5, 0) is outside the board.] | authoring=False [Level vf void cell (5, 0) is outside the board.]
+inv_void_duplicate | runtime=False [Level vf lists void cell (4, 0) twice.] | authoring=False [Level vf lists void cell (4, 0) twice.]
+inv_void_disconnected | runtime=False [Level vf floor cells are not four-connected.] | authoring=False [Level vf floor cells are not four-connected.]
+inv_void_no_floor | runtime=False [Level vf needs at least one block.] | authoring=False [Level vf needs at least one block.]
+inv_block_on_void | runtime=False [Level vf block b1 has a cell on void cell (0, 0).] | authoring=False [Level vf block b1 has a cell on void cell (0, 0).]
+inv_door_onto_void | runtime=False [Level vf door d1 opens onto void cell (1, 4).] | authoring=False [Level vf door d1 opens onto void cell (1, 4).]
+inv_door_colour | runtime=False [Level vf door d1 uses 'Wall', which is not a gate colour.] | authoring=False [Level vf door d1 uses 'Wall', which is not a gate colour.]
+inv_door_length_4 | runtime=False [Level vf door d1 spans 4 cells; gates span 1 to 3.] | authoring=False [Level vf door d1 spans 4 cells; gates span 1 to 3.]
+inv_obj_duplicate_id | runtime=False [Level vf has duplicate cell object ID o1.] | authoring=False [Level vf has duplicate cell object ID o1.]
+inv_obj_no_cells | runtime=False [Level vf cell object o1 has no cells.] | authoring=False [Level vf cell object o1 has no cells.]
+inv_obj_outside | runtime=False [Level vf cell object o1 has cell (5, 4) outside the board.] | authoring=False [Level vf cell object o1 has cell (5, 4) outside the board.]
+inv_obj_on_void | runtime=False [Level vf cell object o1 has cell (4, 0) on a void cell.] | authoring=False [Level vf cell object o1 has cell (4, 0) on a void cell.]
+inv_obj_shared_cell | runtime=False [Level vf cell objects o1 and o2 share cell (4, 4).] | authoring=False [Level vf cell objects o1 and o2 share cell (4, 4).]
+inv_obj_cell_twice | runtime=False [Level vf cell object o1 lists cell (4, 4) twice.] | authoring=False [Level vf cell object o1 lists cell (4, 4) twice.]
+inv_barrier_closed_on_block | runtime=False [Level vf cell object o1 effect barrier starts closed on block b1 at (0, 0).] | authoring=False [Level vf cell object o1 effect barrier starts closed on block b1 at (0, 0).]
+inv_barrier_default_on_block | runtime=False [Level vf cell object o1 effect barrier starts closed on block b1 at (0, 0).] | authoring=False [Level vf cell object o1 effect barrier starts closed on block b1 at (0, 0).]
+inv_barrier_not_connected | runtime=False [Level vf cell object o1 effect barrier cells are not four-connected.] | authoring=False [Level vf cell object o1 effect barrier cells are not four-connected.]
+inv_barrier_bad_bool | runtime=False [Level vf cell object o1 effect barrier key startsOpen has value 'yes'; expected true or false.] | authoring=False [Level vf cell object o1 effect barrier key startsOpen has value 'yes'; expected true or false.]
+inv_block_effect_on_object | runtime=False [Level vf cell object o1 effect arrow cannot be used on a cell object.] | authoring=False [Level vf cell object o1 effect arrow cannot be used on a cell object.]
+inv_v1_with_void | runtime=False [Level vf uses voidCells, effects or cellObjects, which need formatVersion 2.] | authoring=False [Level vf uses voidCells, effects or cellObjects, which need formatVersion 2.]
+inv_v1_with_object | runtime=False [Level vf uses voidCells, effects or cellObjects, which need formatVersion 2.] | authoring=False [Level vf uses voidCells, effects or cellObjects, which need formatVersion 2.]

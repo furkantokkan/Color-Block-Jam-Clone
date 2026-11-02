@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": "{ prefabPath = Assets/Art/Models/Boosters/Effects/VacuumEffect.prefab, frames = 16, intake = (0.00, 1.03, 0.00), duration = 0.75, readable = False, mipmaps = False, androidFormat = ASTC_6x6, iosFormat = ASTC_6x6, textureBytes = 936392, activeSceneDirty = False }",
+    "compiler": "roslyn"
+  }
+}

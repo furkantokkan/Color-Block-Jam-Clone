@@ -1,0 +1,6 @@
+Vulkan Vertex: success=True bytes=2420
+Vulkan Fragment: success=True bytes=0
+GLES3x Vertex: success=True bytes=5544
+GLES3x Fragment: success=True bytes=0
+Metal Vertex: success=True bytes=3177
+Metal Fragment: success=True bytes=1866

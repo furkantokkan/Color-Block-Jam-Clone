@@ -1,0 +1,250 @@
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using ColorBlockJam.Runtime.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    /// <summary>
+    /// Verifier-only probe (isolated copy, never copied back): layout rects and the Refresh/Restore/+/x/Save
+    /// gestures, undo after Save and after a level switch, and the SaveChanges path of the close prompt.
+    /// </summary>
+    public sealed class VerifierShellProbeTests
+    {
+        private const string k_out = "VerifierOut";
+        private LevelDatabaseWindow m_window;
+
+        [TearDown]
+        public void Close()
+        {
+            if (m_window != null)
+            {
+                m_window.DiscardChanges();
+                m_window.Close();
+                m_window = null;
+            }
+        }
+
+        [Test]
+        public void ProbeLayout()
+        {
+            Directory.CreateDirectory(k_out);
+            StringBuilder report = new StringBuilder();
+            foreach (Vector2 size in new[] { new Vector2(960f, 640f), new Vector2(1280f, 800f), new Vector2(1600f, 1000f) })
+            {
+                VisualElement root = Open(size.x, size.y);
+                Validate(root);
+                report.AppendLine($"== window {size.x}x{size.y} root {root.layout}");
+                string[] names =
+                {
+                    "level-editor-split", "tools-pane", "selection-pane", "top-bar", "database-row", "database-actions",
+                    "level-row", "refresh-json", "restore-backup", "create-level", "delete-level", "level-name",
+                    "canvas-slot", "bottom-bar", "save-level", "status", "colors-group", "blocks-group", "doors-group",
+                    "board-group", "mechanics-group", "edit-group", "raw-data-group", "level-id", "board-width",
+                    "board-height", "timer-seconds", "timer-text"
+                };
+                int outside = 0;
+                foreach (string name in names)
+                {
+                    VisualElement element = root.Q(name);
+                    if (element == null)
+                    {
+                        report.AppendLine($"  MISSING {name}");
+                        outside++;
+                        continue;
+                    }
+
+                    Rect bound = element.worldBound;
+                    bool inside = bound.xMin >= -0.5f && bound.xMax <= size.x + 1.5f && bound.yMin >= -0.5f
+                        && (bound.yMax <= size.y + 1.5f || name.EndsWith("-group") || IsInTools(element));
+                    if (!inside)
+                    {
+                        outside++;
+                    }
+
+                    string label = element is Button button ? $" text='{button.text}' tip='{button.tooltip}' enabled={button.enabledInHierarchy}" : "";
+                    report.AppendLine($"  {(inside ? "ok " : "OUT")} {name,-18} x {bound.xMin,7:F1}-{bound.xMax,7:F1} y {bound.yMin,7:F1}-{bound.yMax,7:F1}{label}");
+                }
+
+                report.AppendLine($"  status='{root.Q<Label>("status").text}'");
+                report.AppendLine($"  outside={outside}");
+                Assert.That(outside, Is.Zero, report.ToString());
+                Close();
+            }
+
+            File.WriteAllText(Path.Combine(k_out, "layout.txt"), report.ToString());
+        }
+
+        [UnityTest]
+        public IEnumerator ProbeGesturesAndUndo()
+        {
+            Directory.CreateDirectory(k_out);
+            StringBuilder log = new StringBuilder();
+            string path = LevelDatabaseAddressables.GetActivePath(
+                AssetDatabase.LoadAssetAtPath<LevelDatabase>(LevelDatabaseAddressables.DefaultDatabasePath));
+            log.AppendLine($"active json {path} sha {Sha(path)}");
+
+            m_window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            m_window.ShowUtility();
+            m_window.position = new Rect(40f, 40f, 960f, 640f);
+            double end = EditorApplication.timeSinceStartup + 5;
+            while (m_window.rootVisualElement.Q("top-bar") == null && EditorApplication.timeSinceStartup < end)
+            {
+                yield return null;
+            }
+
+            VisualElement root = m_window.rootVisualElement;
+            Label status = root.Q<Label>("status");
+            log.AppendLine($"open: status='{status.text}' dirty={m_window.hasUnsavedChanges} restoreEnabled={root.Q<Button>("restore-backup").enabledSelf}");
+
+            // Refresh with a clean draft: no prompt, JSON untouched.
+            string before = Sha(path);
+            Click(root.Q<Button>("refresh-json"));
+            log.AppendLine($"refresh: status='{status.text}' shaSame={before == Sha(path)}");
+            Assert.That(status.text, Does.StartWith("Reloaded "));
+            Assert.That(Sha(path), Is.EqualTo(before));
+
+            // + creates a starter level and selects it.
+            int count = Count();
+            Click(root.Q<Button>("create-level"));
+            log.AppendLine($"plus: status='{status.text}' count {count}->{Count()} level-id='{root.Q<TextField>("level-id").value}'");
+            Assert.That(Count(), Is.EqualTo(count + 1));
+            Assert.That(status.text, Does.StartWith("Created a valid starter level in "));
+
+            // Save keeps the history: edit, save, undo reverts to the pre-save value and the draft is dirty again.
+            IntegerField timer = root.Q<IntegerField>("timer-seconds");
+            int original = timer.value;
+            Undo.IncrementCurrentGroup();
+            timer.value = original == 90 ? 91 : 90;
+            int edited = timer.value;
+            log.AppendLine($"edit: timer {original}->{edited} dirty={m_window.hasUnsavedChanges} status='{status.text}'");
+            Assert.That(m_window.hasUnsavedChanges, Is.True);
+            Click(root.Q<Button>("save-level"));
+            log.AppendLine($"save: status='{status.text}' dirty={m_window.hasUnsavedChanges} restoreEnabled={root.Q<Button>("restore-backup").enabledSelf} undoGroup='{Undo.GetCurrentGroupName()}'");
+            Assert.That(m_window.hasUnsavedChanges, Is.False);
+            Assert.That(status.text, Does.StartWith("Saved "));
+            Undo.PerformUndo();
+            log.AppendLine($"undo after save: timer={timer.value} dirty={m_window.hasUnsavedChanges} status='{status.text}'");
+            Assert.That(timer.value, Is.EqualTo(original), "Save keeps the undo history of the same level.");
+            Assert.That(m_window.hasUnsavedChanges, Is.True);
+            Undo.PerformRedo();
+            log.AppendLine($"redo: timer={timer.value} dirty={m_window.hasUnsavedChanges} status='{status.text}'");
+            Assert.That(m_window.hasUnsavedChanges, Is.False);
+
+            // SaveChanges is what Unity's close prompt calls on Save.
+            timer.value = edited == 90 ? 92 : 90;
+            log.AppendLine($"close-prompt wiring: dirty={m_window.hasUnsavedChanges} message='{m_window.saveChangesMessage}'");
+            Assert.That(m_window.hasUnsavedChanges, Is.True);
+            m_window.SaveChanges();
+            log.AppendLine($"SaveChanges(): dirty={m_window.hasUnsavedChanges} status='{status.text}'");
+            Assert.That(m_window.hasUnsavedChanges, Is.False);
+
+            // Restore brings back the JSON the last save replaced.
+            Click(root.Q<Button>("restore-backup"));
+            log.AppendLine($"restore: status='{status.text}' timer={timer.value}");
+            Assert.That(status.text, Does.StartWith("Restored the previous saved level JSON."));
+
+            // Level switch clears the draft's history: an undo afterwards leaves the new level clean.
+            DropdownField targetField = FindTarget(root);
+            int selected = targetField.index;
+            timer.value = timer.value == 70 ? 71 : 70;
+            Click(root.Q<Button>("save-level"));
+            int next = selected == 0 ? 1 : 0;
+            targetField.index = next;
+            string nextId = root.Q<TextField>("level-id").value;
+            int nextTimer = timer.value;
+            Undo.PerformUndo();
+            log.AppendLine($"switch {selected}->{next} id='{nextId}' undo: timer {nextTimer}->{timer.value} dirty={m_window.hasUnsavedChanges} id='{root.Q<TextField>("level-id").value}'");
+            Assert.That(timer.value, Is.EqualTo(nextTimer));
+            Assert.That(m_window.hasUnsavedChanges, Is.False);
+
+            // x opens the Delete Level dialog; batch mode cancels every dialog, so nothing is deleted.
+            LogAssert.ignoreFailingMessages = true;
+            targetField.index = Count() - 1;
+            count = Count();
+            string beforeDelete = Sha(path);
+            Click(root.Q<Button>("delete-level"));
+            log.AppendLine($"x (dialog cancelled by batch mode): status='{status.text}' count {count}->{Count()} shaSame={beforeDelete == Sha(path)}");
+            Assert.That(Count(), Is.EqualTo(count));
+            Assert.That(Sha(path), Is.EqualTo(beforeDelete));
+            log.AppendLine($"final sha {Sha(path)}");
+            File.WriteAllText(Path.Combine(k_out, "gestures.txt"), log.ToString());
+        }
+
+        private static DropdownField FindTarget(VisualElement root)
+        {
+            foreach (DropdownField field in root.Query<DropdownField>().ToList())
+            {
+                if (field.label == "Target Level")
+                {
+                    return field;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool IsInTools(VisualElement element)
+        {
+            for (VisualElement parent = element; parent != null; parent = parent.parent)
+            {
+                if (parent.name == "tools-pane")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static int Count()
+        {
+            return AssetDatabase.LoadAssetAtPath<LevelDatabase>(LevelDatabaseAddressables.DefaultDatabasePath).Count;
+        }
+
+        private static void Click(Button button)
+        {
+            Assert.That(button, Is.Not.Null);
+            Assert.That(button.enabledInHierarchy, Is.True, button.name + " enabled");
+            using (NavigationSubmitEvent submit = NavigationSubmitEvent.GetPooled())
+            {
+                submit.target = button;
+                button.SendEvent(submit);
+            }
+        }
+
+        private static string Sha(string path)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] hash = sha.ComputeHash(File.ReadAllBytes(path));
+                return System.BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+
+        private VisualElement Open(float width, float height)
+        {
+            m_window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+            m_window.ShowUtility();
+            m_window.position = new Rect(40f, 40f, width, height);
+            typeof(LevelDatabaseWindow).GetMethod("CreateGUI", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(m_window, null);
+            return m_window.rootVisualElement;
+        }
+
+        private static void Validate(VisualElement root)
+        {
+            object panel = root.panel;
+            panel.GetType().GetMethod("ValidateLayout", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .Invoke(panel, null);
+        }
+    }
+}

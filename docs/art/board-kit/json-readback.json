@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "error": null,
+  "data": {
+    "result": {
+      "count": 34,
+      "currentPrefabs": 34,
+      "bindingCount": 34,
+      "serializedShapeDefinitions": false,
+      "jsonPath": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.json",
+      "scene": "Assets/ColorBlockJam/Scenes/Game.unity",
+      "sceneDirty": false,
+      "isPlaying": false,
+      "isCompiling": false
+    },
+    "compiler": "roslyn"
+  },
+  "hint": null
+}

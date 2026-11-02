@@ -1,0 +1,76 @@
+{
+  "mode": "EditMode",
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.1138165,
+    "resultState": "Passed"
+  },
+  "results": [
+    {
+      "name": "DisposeCancelsPendingGrantAndCannotReattach",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.DisposeCancelsPendingGrantAndCannotReattach",
+      "state": "Passed",
+      "durationSeconds": 0.0149554,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    },
+    {
+      "name": "FullLifeDoesNotGrantCoins",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.FullLifeDoesNotGrantCoins",
+      "state": "Passed",
+      "durationSeconds": 0.0029442,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    },
+    {
+      "name": "PendingGrantBlocksBothButtonsUntilSaveCompletes",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.PendingGrantBlocksBothButtonsUntilSaveCompletes",
+      "state": "Passed",
+      "durationSeconds": 0.0554935,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    },
+    {
+      "name": "PlusGrantsOnlyItsHolderCurrency(\"life\",1)",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.PlusGrantsOnlyItsHolderCurrency(\"life\",1)",
+      "state": "Passed",
+      "durationSeconds": 0.0042782,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    },
+    {
+      "name": "PlusGrantsOnlyItsHolderCurrency(\"coin\",100)",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.PlusGrantsOnlyItsHolderCurrency(\"coin\",100)",
+      "state": "Passed",
+      "durationSeconds": 0.0029787,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    },
+    {
+      "name": "ReattachDoesNotDuplicateAndDetachRemovesBothCallbacks",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.ReattachDoesNotDuplicateAndDetachRemovesBothCallbacks",
+      "state": "Passed",
+      "durationSeconds": 0.0034294,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    },
+    {
+      "name": "RoutingUsesHolderIdsAndIgnoresUnrelatedPlusButtons",
+      "fullName": "ColorBlockJam.Tests.Hub.DummyCurrencyRewardTests.RoutingUsesHolderIdsAndIgnoresUnrelatedPlusButtons",
+      "state": "Passed",
+      "durationSeconds": 0.0036525,
+      "message": null,
+      "stackTrace": null,
+      "output": ""
+    }
+  ]
+}

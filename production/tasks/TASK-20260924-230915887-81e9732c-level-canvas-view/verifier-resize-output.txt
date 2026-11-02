@@ -1,0 +1,8 @@
+start 960x640: content=(x:0.00, y:0.00, width:680.00, height:509.33) cell=74 board=(x:192.00, y:69.00, width:296.00, height:370.00)
+PASS resize to (1280.00, 800.00): window=(1280.00, 800.00) content=(x:0.00, y:0.00, width:1000.00, height:669.33) cell=99 board=(x:302.00, y:87.00, width:396.00, height:495.00) dx=0 dy=-0.1666565 labelsFollow=True doorBarsInside=True
+PASS resize to (1600.00, 1000.00): window=(1600.00, 1000.00) content=(x:0.00, y:0.00, width:1320.00, height:869.33) cell=130 board=(x:400.00, y:109.00, width:520.00, height:650.00) dx=0 dy=-0.6666565 labelsFollow=True doorBarsInside=True
+PASS resize to (1100.00, 660.00): window=(1100.00, 660.00) content=(x:0.00, y:0.00, width:820.00, height:529.33) cell=77 board=(x:256.00, y:72.00, width:308.00, height:385.00) dx=0 dy=-0.1666565 labelsFollow=True doorBarsInside=True
+PASS resize to (960.00, 640.00): window=(960.00, 640.00) content=(x:0.00, y:0.00, width:680.00, height:509.33) cell=74 board=(x:192.00, y:69.00, width:296.00, height:370.00) dx=0 dy=-0.6666718 labelsFollow=True doorBarsInside=True
+PASS resize to (2000.00, 700.00): window=(2000.00, 700.00) content=(x:0.00, y:0.00, width:1720.00, height:569.33) cell=83 board=(x:694.00, y:77.00, width:332.00, height:415.00) dx=0 dy=-0.1666565 labelsFollow=True doorBarsInside=True
+unsaved=False
+RESULT: all resize checks passed

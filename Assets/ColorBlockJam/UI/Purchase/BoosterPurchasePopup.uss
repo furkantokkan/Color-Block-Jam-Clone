@@ -1,0 +1,285 @@
+@import url("project://database/Assets/ColorBlockJam/UI/Common/Common.uss");
+
+/*
+ * Shared booster purchase popup (Hub-And-Player-Data-Design 9.2, reference 01, DEC-85, DEC-136). Sizes are reference
+ * pixels at 1080 width, measured from reference 01 scaled by 1080/946; the host panels are 1080 x 1920 Expand, so at
+ * 20:9 only the height grows and the centred popup keeps its size. Shell, header, close and holder geometry follow
+ * the shared Settings popup (SettingsPopup.uss) so both popups read as one family. Nine-slice values equal the Sprite
+ * Editor borders in docs/UI-Asset-Import.md (USS order left, top, right, bottom). Selectors on buttons carry
+ * ".unity-button" plus a parent class so they outrank the shared ".unity-button.cbj-pressable" reset in Common.uss.
+ * The bundle amount and price come from the booster definition (1 charge for 10 coins, DEC-85), not from the
+ * screenshot's x3 offer.
+ */
+
+/* ---- Overlay, scrim and safe area ---- */
+
+/* Visible as a standalone authoring document; runtime hosts start closed below. */
+.booster-purchase-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    -unity-font-definition: url("project://database/Assets/ColorBlockJam/Data/UI/Fonts/LiberationSans-UITK.asset");
+}
+
+/*
+ * Host-instance initialization, including the Game host which binds lazily on its first offer. Keep this separate
+ * from the reusable popup's standalone appearance. BoosterPurchaseView.SetVisible overrides display inline.
+ */
+#booster-purchase-instance .booster-purchase-screen,
+#life-refill-instance .booster-purchase-screen {
+    display: none;
+}
+
+/* The Settings scrim colour; over the pre-level popup it dims that popup too, as reference 01 dims the board. */
+.booster-purchase-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(11, 21, 61, 0.702);
+}
+
+.booster-purchase-safe-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Shell ---- */
+
+/*
+ * bg_popup (976 x 976, art 51..924 x 19..935) sliced at scale 1: 866 wide shows a 763 px shell, reference 01's width
+ * (x157..920). The padding places the holder 172 px below the visible shell top (reference 01) and keeps the Buy
+ * button 81 px above the visible bottom edge.
+ */
+.booster-purchase-popup {
+    width: 866px;
+    flex-shrink: 0;
+    padding-left: 107px;
+    padding-top: 190px;
+    padding-right: 108px;
+    padding-bottom: 116px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup.png");
+    -unity-slice-left: 106;
+    -unity-slice-top: 74;
+    -unity-slice-right: 107;
+    -unity-slice-bottom: 104;
+}
+
+/* ---- Header and close ---- */
+
+/* bg_popup_header sliced (L79 T90 R79 B90), the Settings header size, centred in the 866 popup. */
+.booster-purchase-header {
+    position: absolute;
+    left: 139px;
+    top: -21px;
+    width: 588px;
+    height: 204px;
+    padding-bottom: 14px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_header.png");
+    -unity-slice-left: 79;
+    -unity-slice-top: 90;
+    -unity-slice-right: 79;
+    -unity-slice-bottom: 90;
+}
+
+.booster-purchase-title {
+    font-size: 76px;
+    -unity-font-style: bold;
+}
+
+.booster-purchase-title.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.booster-purchase-title.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* Popup_Close_Button (150 x 155) at its aspect ratio, placed as on the Settings popup. */
+.booster-purchase-popup > .unity-button.booster-purchase-close {
+    position: absolute;
+    top: 0;
+    right: 28px;
+    width: 117px;
+    height: 121px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_close.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Holder: icon box and description ---- */
+
+/* bg_popup_info_holder sliced (L43 T26 R42 B35), 651 wide; the Settings tint (D-004) matches reference 01's blue. */
+.booster-purchase-holder {
+    width: 651px;
+    flex-shrink: 0;
+    padding-top: 26px;
+    padding-bottom: 30px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_info_holder.png");
+    -unity-background-image-tint-color: rgb(77, 255, 255);
+    -unity-slice-left: 43;
+    -unity-slice-top: 26;
+    -unity-slice-right: 42;
+    -unity-slice-bottom: 35;
+}
+
+/* The darker rounded box around the icon (reference 01); a plain colour, no extra sprite. */
+.booster-purchase-icon-box {
+    width: 585px;
+    height: 350px;
+    flex-shrink: 0;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    background-color: rgba(18, 52, 132, 0.55);
+}
+
+/* The booster icon (fixed art) centred in the box, with the bundle amount at its lower right. */
+.booster-purchase-icon {
+    /* Representative authoring content only; SetOffer assigns the actual offer's sprite inline. */
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Boosters/ic_rocket_purple.png");
+    position: absolute;
+    left: 132px;
+    top: 26px;
+    width: 300px;
+    height: 300px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-purchase-amount-text {
+    position: absolute;
+    left: 392px;
+    top: 214px;
+}
+
+.booster-purchase-amount {
+    font-size: 88px;
+    -unity-font-style: bold;
+}
+
+.booster-purchase-amount.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.booster-purchase-amount.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* Two centred lines at most; the container is the holder width so both layers wrap alike. */
+.booster-purchase-description-text {
+    width: 585px;
+    margin-top: 20px;
+}
+
+.booster-purchase-description {
+    font-size: 44px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.booster-purchase-description.cbj-heavy-text__back {
+    -unity-text-outline-width: 5px;
+}
+
+.booster-purchase-description.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+/* ---- Message ---- */
+
+/* A dark pill in a reserved 64 px row between the holder and Buy; hidden (keeps its space) until a result arrives. */
+.booster-purchase-message {
+    width: 600px;
+    height: 64px;
+    margin-top: 14px;
+    flex-shrink: 0;
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+    background-color: rgba(11, 21, 61, 0.9);
+    font-size: 40px;
+    -unity-font-style: bold;
+
+    /* A thin white outline thickens LiberationSans' regular strokes (D-001) on the dark pill. */
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(255, 255, 255);
+    visibility: hidden;
+}
+
+/* ---- Buy ---- */
+
+/*
+ * Btn_popup_green (425 x 316; L69 T129 R70 B128) drawn at 0.58 scale, so its borders (149 px high) fit the 164 px
+ * button: "Buy" above the coin icon and price, as in reference 01.
+ */
+.booster-purchase-popup > .unity-button.booster-purchase-buy {
+    width: 360px;
+    height: 164px;
+    margin-top: 12px;
+    padding-bottom: 12px;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_green.png");
+    -unity-slice-left: 69;
+    -unity-slice-top: 129;
+    -unity-slice-right: 70;
+    -unity-slice-bottom: 128;
+    -unity-slice-scale: 0.58px;
+}
+
+.booster-purchase-buy__price-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: -8px;
+}
+
+/* The price currency's icon (fixed art), set from the booster's purchase currency. */
+.booster-purchase-buy__price-icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png");
+    width: 62px;
+    height: 62px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* Cream fill and dark-green outline, as the Home Level button label (D-010). */
+.booster-purchase-buy__label {
+    font-size: 56px;
+    -unity-font-style: bold;
+}
+
+.booster-purchase-buy__price {
+    font-size: 60px;
+    -unity-font-style: bold;
+}
+
+.booster-purchase-buy__label.cbj-heavy-text__back,
+.booster-purchase-buy__price.cbj-heavy-text__back {
+    color: rgb(24, 81, 28);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 7px;
+}
+
+.booster-purchase-buy__label.cbj-heavy-text__front,
+.booster-purchase-buy__price.cbj-heavy-text__front {
+    color: rgb(255, 246, 214);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 2px;
+}

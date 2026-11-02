@@ -1,0 +1,15 @@
+{
+  "name": "ColorBlockJam.Editor.LevelPreview",
+  "rootNamespace": "ColorBlockJam.Editor.LevelPreview",
+  "references": [
+    "ColorBlockJam.Editor",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "Onity.Factory",
+    "Onity.Pooling",
+    "Unity.RenderPipelines.Universal.Runtime"
+  ],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

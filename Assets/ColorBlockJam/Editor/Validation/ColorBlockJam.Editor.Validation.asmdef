@@ -1,0 +1,7 @@
+{
+  "name": "ColorBlockJam.Editor.Validation",
+  "rootNamespace": "ColorBlockJam.Editor.Levels.Validation",
+  "references": ["ColorBlockJam.Domain", "ColorBlockJam.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

@@ -1,0 +1,118 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:cbj="ColorBlockJam.Presentation.UI" editor-extension-mode="False">
+    <!-- Level Complete overlay (reference 05, PRD AC-4.9 and AC-4.10, DEC-7, DEC-173), laid out from the reference at
+         20:9 without its X2 ad button: a darkened screen, the arched sticker title, a coin pile over soft rays and one
+         Btn_popup_blue button. The button reads Continue with the reward, Retry after a failed save, or Home after the
+         last level; there is no separate Home button. Element names are the contract with LevelCompleteView and the
+         tests. Draw order: later siblings draw on top, so the scrim comes first, then the confetti surface, then the
+         content; inside the coin pile the rays and the back coins come before the front coins. Only Coin_Single is
+         supplied (AF-2), so the pile is eighteen Coin_Single elements: a lying coin turns its art so the rim is at the
+         bottom and squashes it, a standing coin only tilts. Every button text is a two-layer heavy-text pair
+         (Common.uss) whose front label carries the element name. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Game/Overlays/LevelCompletePopup.uss" />
+    <ui:VisualElement name="level-complete-screen" class="level-complete-screen cbj-document" picking-mode="Ignore">
+        <!-- Full-screen dim over the torn-down board; pickable, so it blocks the top bar and every board press. A tap on
+             it does nothing: the result is left only through the button. -->
+        <ui:VisualElement name="level-complete-scrim" class="level-complete-scrim" picking-mode="Position" />
+
+        <!-- The confetti camera's image (UiParticleOverlay): full screen, behind the content, hidden between shows. -->
+        <ui:VisualElement name="level-complete-confetti" class="level-complete-confetti" picking-mode="Ignore" />
+
+        <!-- The host pads all four edges from its safe area; the content column centres inside the padding. -->
+        <ui:VisualElement name="level-complete-safe-area" class="level-complete-safe-area" picking-mode="Ignore">
+            <ui:VisualElement name="level-complete-content" class="level-complete-content" picking-mode="Ignore">
+
+                <!-- "LEVEL / COMPLETE": cream face, maroon stroke, gold rim and a darker lower edge, bent on one arc. -->
+                <ui:VisualElement name="level-complete-title" class="level-complete-title" picking-mode="Ignore">
+                    <cbj:ArcTextElement text="LEVEL" radius="2700" class="level-complete-title__line" />
+                    <cbj:ArcTextElement text="COMPLETE" radius="2700" class="level-complete-title__line level-complete-title__line--second" />
+                </ui:VisualElement>
+
+                <!-- The coin reward: rays behind a pile of Coin_Single, back coins first. As measured on the reference,
+                     each of the seven rays is a bright beam with a dim beam right beside it on its clockwise side, then
+                     a dark gap. -->
+                <ui:VisualElement name="level-complete-coins" class="level-complete-coins" picking-mode="Ignore">
+                    <cbj:SunburstElement class="level-complete-rays" ray-count="7" ray-width="27" start-angle="0" ray-color="#FFFFFF78" glow-color="#FFFFFF33" glow-radius="0.55" />
+                    <cbj:SunburstElement class="level-complete-rays" ray-count="7" ray-width="24.5" start-angle="19" ray-color="#FFFFFF25" />
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 197px; top: -30px; width: 118px; height: 118px; rotate: -6deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 62deg; -unity-background-image-tint-color: rgb(242, 242, 242);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 103px; top: 38px; width: 91px; height: 91px; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 118deg; -unity-background-image-tint-color: rgb(214, 214, 214);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 302px; top: 56px; width: 98px; height: 98px; rotate: 6deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 70deg; -unity-background-image-tint-color: rgb(214, 214, 214);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 132px; top: 16px; width: 127px; height: 127px; rotate: -8deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 110deg; -unity-background-image-tint-color: rgb(245, 245, 245);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 252px; top: 22px; width: 111px; height: 111px; rotate: 6deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 58deg; -unity-background-image-tint-color: rgb(240, 240, 240);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 62px; top: 78px; width: 102px; height: 102px; rotate: -10deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 120deg; -unity-background-image-tint-color: rgb(235, 235, 235);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 207px; top: 65px; width: 114px; height: 114px; rotate: 2deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 75deg; -unity-background-image-tint-color: rgb(247, 247, 247);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 288px; top: 100px; width: 118px; height: 118px; rotate: 8deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 55deg; -unity-background-image-tint-color: rgb(247, 247, 247);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 38px; top: 122px; width: 86px; height: 86px; rotate: -14deg; scale: 1 0.62;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 105deg; -unity-background-image-tint-color: rgb(230, 230, 230);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 108px; top: 103px; width: 121px; height: 121px; rotate: -16deg;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 92px; top: 171px; width: 114px; height: 114px; rotate: -4deg; scale: 1 0.6;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 112deg; -unity-background-image-tint-color: rgb(250, 250, 250);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 354px; top: 147px; width: 96px; height: 96px; rotate: 10deg; scale: 1 0.6;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 65deg; -unity-background-image-tint-color: rgb(237, 237, 237);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 203px; top: 142px; width: 130px; height: 130px; rotate: 2deg;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: -5px; top: 173px; width: 114px; height: 114px; rotate: -32deg; scale: 1 0.95;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 377px; top: 171px; width: 114px; height: 114px; rotate: 28deg; scale: 1 0.95;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 305px; top: 194px; width: 123px; height: 123px; rotate: 12deg; scale: 1 0.85;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 79px; top: 211px; width: 127px; height: 127px; rotate: -3deg; scale: 1 0.6;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 100deg;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="level-complete-coin" picking-mode="Ignore" style="left: 190px; top: 217px; width: 127px; height: 127px; rotate: 2deg; scale: 1 0.6;">
+                        <ui:VisualElement class="level-complete-coin__art" picking-mode="Ignore" style="rotate: 60deg;" />
+                    </ui:VisualElement>
+
+                    <!-- The save note (AC-6.14), hidden while empty: placed in the gap under the pile, so it moves nothing. -->
+                    <ui:VisualElement name="level-complete-message-box" class="level-complete-message-box cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label name="level-complete-message-back" class="level-complete-message cbj-title cbj-heavy-text__back" text="" picking-mode="Ignore" />
+                        <ui:Label name="level-complete-message" class="level-complete-message cbj-title cbj-heavy-text__front" text="" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Btn_popup_blue: Continue (Next Level) with the reward below it, as in the reference; the same button
+                     reads Retry after a failed save and Home after the last level. -->
+                <ui:Button name="level-complete-continue" class="level-complete-continue cbj-pressable">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label name="level-complete-continue-label-back" class="level-complete-continue__label cbj-title cbj-heavy-text__back" text="Continue" picking-mode="Ignore" />
+                        <ui:Label name="level-complete-continue-label" class="level-complete-continue__label cbj-title cbj-heavy-text__front" text="Continue" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="level-complete-reward" class="level-complete-reward" picking-mode="Ignore">
+                        <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label name="level-complete-reward-label-back" class="level-complete-reward__label cbj-title cbj-heavy-text__back" text="10" picking-mode="Ignore" />
+                            <ui:Label name="level-complete-reward-label" class="level-complete-reward__label cbj-title cbj-heavy-text__front" text="10" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="level-complete-reward__coin" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

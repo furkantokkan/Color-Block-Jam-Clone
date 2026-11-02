@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Hub root (design 6.1): Home below, one overlay layer above it for Settings, pre-level and purchase (tasks 3 and 4).
+         Settings and the booster purchase popup are shared popups of ColorBlockJam.UI (DEC-136). Later siblings draw
+         on top: the purchase popup opens above the pre-level popup. -->
+    <ui:Template name="Home" src="project://database/Assets/ColorBlockJam/UI/Hub/Home.uxml" />
+    <ui:Template name="SettingsPopup" src="project://database/Assets/ColorBlockJam/UI/Settings/SettingsPopup.uxml" />
+    <ui:Template name="PreLevel" src="project://database/Assets/ColorBlockJam/UI/Hub/PreLevel.uxml" />
+    <ui:Template name="BoosterPurchasePopup" src="project://database/Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uxml" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Hub/Hub.uss" />
+    <ui:Instance template="Home" name="home-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+    <ui:VisualElement name="overlay-layer" class="hub-overlays" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+        <ui:Instance template="SettingsPopup" name="settings-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+        <ui:Instance template="PreLevel" name="pre-level-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+        <ui:Instance template="BoosterPurchasePopup" name="booster-purchase-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+        <!-- Life refill popup (DEC-174): a second instance of the shared purchase popup layout, driven by LifeRefillOverlay.
+             It comes after the booster instance, so a name query for the booster popup still finds that one first. -->
+        <ui:Instance template="BoosterPurchasePopup" name="life-refill-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

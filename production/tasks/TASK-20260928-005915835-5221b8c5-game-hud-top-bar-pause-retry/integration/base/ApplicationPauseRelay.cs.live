@@ -1,0 +1,31 @@
+using ColorBlockJam.Gameplay.Session;
+using Onity.DI;
+using UnityEngine;
+
+namespace ColorBlockJam.Gameplay.Composition
+{
+    /// <summary>
+    /// Forwards OS backgrounding to the level session (AC-3.12). It is a MonoBehaviour only because
+    /// Unity reports backgrounding through OnApplicationPause; it has no per-frame code.
+    /// </summary>
+    [DisallowMultipleComponent]
+    public sealed class ApplicationPauseRelay : MonoBehaviour
+    {
+        private LevelSession m_session;
+
+        [Inject]
+        public void Construct(LevelSession session)
+        {
+            m_session = session;
+        }
+
+        // Unity can report a pause before the scene context injects this component.
+        private void OnApplicationPause(bool paused)
+        {
+            if (m_session != null)
+            {
+                m_session.NotifyBackground(paused);
+            }
+        }
+    }
+}

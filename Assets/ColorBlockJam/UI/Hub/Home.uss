@@ -1,0 +1,567 @@
+/*
+ * Home screen, reference 06 (Hub-And-Player-Data-Design 7). Sizes are reference pixels at 1080 width
+ * (reference 06 x 1080/946); the panel is 1080 x 1920 Expand, so at 20:9 only the height grows (design 6.2).
+ * Nine-slice values equal the Sprite Editor borders in docs/UI-Asset-Import.md (USS order left, top, right,
+ * bottom). -unity-slice-scale shrinks a border when the element is smaller than the sprite's two borders.
+ */
+
+/* ---- Screen, background, safe area ---- */
+
+.home-screen {
+    -unity-font-definition: url("project://database/Assets/ColorBlockJam/Data/UI/Fonts/LiberationSans-UITK.asset");
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Full-screen, outside the safe area; crops instead of stretching at 20:9 (DEC-42). */
+.home-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Backgrounds/bg_home_screen.png");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+/* SafeAreaPadding writes padding-left/top/right here from the safe area; it still must grow to fill the
+   space home-screen's column layout leaves it beside tab-bar. */
+.safe-area {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+/*
+ * D-008: an absolutely positioned child positions from its parent's border box, not its padding box, so the
+ * padding-top #safe-area receives from the safe-area inset never moved an absolute child of #safe-area
+ * itself. safe-content is #safe-area's sole normal-flow child, so it starts below that padding like every
+ * other flow child always did; it repeats #safe-area's own flex-grow/column rules (and adds no padding of its
+ * own) so its content lays out exactly as it did directly under #safe-area, and top-bar's absolute offsets
+ * now resolve against safe-content's unpadded border box, which sits at the padded position.
+ */
+.safe-content {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+/*
+ * ---- Vertical bands (reference 06, chief validator table; D-002) ----
+ * Top bar with margins 225, route, Level button 185, empty gap, tab bar 206 (6 border + 200 row). Controls keep
+ * their size; the route and the gap absorb extra height. flex-basis gives the exact 1920 bands (route 1075, gap
+ * 229, no free space) and flex-grow 2.1 : 1 shares extra height as the reference does at 2400
+ * (route +325, gap +155): the Level button top lands at y1300 at 1080 x 1920 and y1625 at 1080 x 2400.
+ * Top bar is position: absolute (D-007) so it no longer occupies flex flow itself; .level-route's own
+ * margin-top of 225 reserves that same band, so the growth math below is unchanged.
+ */
+
+/* ---- Top bar ---- */
+
+/*
+ * D-007: absolute so it paints above the level-route rails regardless of flex order (UI Toolkit has no
+ * z-index; the fix is drawing top-bar last in Home.uxml). left/right/top pin it to the safe area's top edge;
+ * margin-top folds the original 40 px offset into that position, so the band still occupies y40-y210 exactly
+ * as it did in flow. The 15 px margin-bottom it used to reserve for the next sibling is now .level-route's
+ * margin-top (225 = 40 + 170 + 15), so every band below keeps its current y position.
+ */
+.top-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    flex-direction: row;
+    align-items: center;
+    height: 170px;
+    margin-top: 40px;
+    padding-left: 36px;
+    padding-right: 32px;
+    flex-shrink: 0;
+}
+
+/*
+ * The 158 px slot stays the hit target and the press-scale anchor; bg_profile_box_blue.png has large transparent
+ * padding, so a centred 220 px visual child (chief validator D-006) shows ~150 px of visible frame instead of the
+ * ~110 px a 158 px draw would give, overflowing the slot on every side without changing its size.
+ */
+.unity-button.profile-button {
+    width: 158px;
+    height: 158px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+/* White is the element's default tint; leaving it undeclared here (as the tab icons do) keeps the
+   ".cbj-pressable:active > .cbj-press-tint" darken rule the higher-specificity winner while pressed. */
+.profile-button__frame {
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_profile_box_blue.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.currency-holders {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*
+ * Each holder repeats one rule, so N holders need no per-currency coordinates (D-001). The 48 px margin clears the
+ * previous holder's icon overhang (34 px) plus this holder's badge overhang (6 px) with 8 px to spare; at 1080 wide
+ * two holders sit at x242 and x590 and the last icon ends at x924, 8 px before the settings gear.
+ */
+.currency-holder {
+    width: 300px;
+    height: 110px;
+    margin-left: 48px;
+    flex-shrink: 0;
+    justify-content: center;
+}
+
+/*
+ * DEC-143: Home.uxml authors one CurrencyHolder instance per Home currency (currency-holder-life,
+ * currency-holder-coin) so the Editor and UI Builder show the finished icon without Play Mode. The modifier
+ * class lives on the ui:Instance element (an ancestor of holder-icon, not its direct parent), hence the
+ * descendant selector. HomePresenter overrides this background through inline style once bound (unchanged).
+ */
+.currency-holder--life .holder-icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_heart.png");
+}
+
+.currency-holder--coin .holder-icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png");
+}
+
+/* bg_home_resource_holder: border L40 T45 R40 B52; the 97 px of top + bottom border fit 90 px at 0.5. */
+.holder-pill {
+    height: 90px;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_home_resource_holder.png");
+    -unity-slice-left: 40;
+    -unity-slice-top: 45;
+    -unity-slice-right: 40;
+    -unity-slice-bottom: 52;
+    -unity-slice-scale: 0.5px;
+}
+
+.holder-text {
+    font-size: 56px;
+    padding-left: 16px;
+    padding-right: 80px;
+}
+
+/* The life countdown is wider than "Full"; shift it clear of the plus badge on the lower-left. */
+.currency-holder--life .holder-text {
+    padding-left: 48px;
+}
+
+/* The icon overlaps the pill's right end and overhangs it by 34 px (reference 06). */
+.holder-icon {
+    position: absolute;
+    right: -34px;
+    top: 1px;
+    width: 108px;
+    height: 108px;
+    align-items: center;
+    justify-content: center;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.icon-count {
+    font-size: 58px;
+    -unity-text-outline-width: 3px;
+}
+
+/* Green round badge with the plus glyph on the pill's lower-left corner, overhanging it by 6 px. */
+.unity-button.plus-button {
+    position: absolute;
+    left: -6px;
+    bottom: -14px;
+    width: 66px;
+    height: 68px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_circle_green_small.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ic_plus.png has transparent padding; 72 px draws a ~30-34 px visible cross inside the unchanged 66 x 68 badge
+   (chief validator D-005), overflowing the badge slightly rather than shrinking further. */
+.plus-button__icon {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_plus.png");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.unity-button.settings-button {
+    width: 116px;
+    height: 120px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_settings.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Decorative level route ---- */
+
+.level-route {
+    margin-top: 225px;
+    flex-basis: 1075px;
+    flex-grow: 2.1;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+/*
+ * Two gold rails with the lighter blue path between them, behind the nodes, running into the level button.
+ * top: -335px extends the rails up behind the top bar to screen y0 (chief validator D-004): the top bar's own
+ * 225 px (margin-top 40 + height 170 + margin-bottom 15) plus the largest expected safe-area inset (~110px on the
+ * notch capture) reaches y0 there; on the no-notch capture it overshoots above the screen, which only means the
+ * rail is already opaque before the visible area starts.
+ */
+.route-rails {
+    position: absolute;
+    top: -335px;
+    bottom: -60px;
+    left: 50%;
+    width: 92px;
+    translate: -46px 0;
+    flex-direction: row;
+}
+
+/*
+ * bg_home_line is a white strip fading out downwards; rotated so it is solid at the level button. The opaque
+ * #F4C542 background-color backs the sprite so its alpha gradient can no longer erase the rail toward the top
+ * (chief validator D-004), and the 1 px #936526 border gives each rail a dark-gold edge.
+ */
+.route-rail {
+    width: 12px;
+    height: 100%;
+    rotate: 180deg;
+    background-color: rgb(244, 197, 66);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-left-color: rgb(147, 101, 38);
+    border-right-color: rgb(147, 101, 38);
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Backgrounds/bg_home_line.png");
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-background-image-tint-color: rgb(244, 197, 66);
+}
+
+.route-fill {
+    flex-grow: 1;
+    height: 100%;
+    background-color: rgba(92, 150, 255, 0.85);
+}
+
+/*
+ * D-009: btn_level_green is imported nine-slice (border L97 T164 R97 B162, docs/UI-Asset-Import.md) because
+ * .level-button below draws it sliced; UI Toolkit applies that importer border to every background-image use of
+ * the same Sprite, and 164 + 162 = 326 px of border cannot fit this 220 px square, so the corner tiles
+ * overlapped into a circle. The locked nodes never showed this because btn_settings_normal.png is imported
+ * "fixed" (no border). A live Play Mode capture confirmed two things: overriding the slice to a DIFFERENT value
+ * than the sprite's own border (0, or a negligible 1) does shrink the border, but Unity logs a "Sprite borders
+ * are overridden by style slices" warning every time that element's style resolves, which fails every PlayMode
+ * test that shows Home (LogAssert's default strict mode). Declaring the SAME border the sprite already carries
+ * (97/164/97/162, matching .level-button's own values) is not a mismatch, so it draws warning-free; a
+ * "-unity-slice-scale" then downscales that declared border uniformly at render time (.level-button's own
+ * proven technique for the same sprite), landing at 163 px of vertical border for 220 px of height, comfortably
+ * under it and leaving a visible flat green centre, restoring btn_level_green's square-with-rounded-corners art.
+ * D-011: the slice-left/top/right/bottom/scale declarations above used to live on the shared ".route-node" base
+ * class, so ".route-node--locked" (which stacks on the same element, never replacing ".route-node") inherited
+ * them too. btn_settings_normal.png carries no importer border (0,0,0,0, "fixed" import class), so 97/164/97/162
+ * left only its four corner regions on screen. The slice declarations now live on ".route-node--current"
+ * (Home.uxml's slot-0 element only, always the unlocked current level per HomePresenter's `slot > 0` locked
+ * rule), so ".route-node--locked" declares no slice at all and btn_settings_normal draws with its own (absent)
+ * border, restoring the whole blue rounded square with no "Sprite borders are overridden" warning.
+ */
+.route-node {
+    width: 220px;
+    height: 220px;
+    align-items: center;
+    justify-content: center;
+}
+
+.route-node--current {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_level_green.png");
+    -unity-slice-left: 97;
+    -unity-slice-top: 164;
+    -unity-slice-right: 97;
+    -unity-slice-bottom: 162;
+    -unity-slice-scale: 0.5px;
+}
+
+/* Locked next levels: the blue rounded square btn_settings_normal plus ic_lock.png (chief validator change 4). */
+.route-node--locked {
+    width: 220px;
+    height: 228px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_settings_normal.png");
+}
+
+/*
+ * D-010: heavy two-layer numerals (Common.uss ".cbj-heavy-text", reused from the Settings popup's D-001 fix).
+ * The back layer's colour matches each node's face so the outline reads as a dark rim rather than a mismatched
+ * blob: dark green for the current (unlocked) node's green face, navy for the locked nodes' blue face. The front
+ * layer keeps the readable fill: white for the current node, light blue for locked (replacing the former single
+ * ".route-node--locked > .route-node__label" colour rule, since the label is now the front layer's grandparent).
+ */
+.route-node__label {
+    font-size: 100px;
+}
+
+.route-node__label.cbj-heavy-text__back {
+    color: rgb(24, 81, 28);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 7px;
+}
+
+.route-node__label.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.route-node--locked .route-node__label.cbj-heavy-text__back {
+    color: rgb(23, 35, 91);
+    -unity-text-outline-color: rgb(23, 35, 91);
+}
+
+.route-node--locked .route-node__label.cbj-heavy-text__front {
+    color: rgb(160, 214, 255);
+}
+
+.route-node__lock {
+    display: none;
+    position: absolute;
+    left: -18px;
+    bottom: -14px;
+    width: 88px;
+    height: 105px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_lock.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.route-node--locked > .route-node__lock {
+    display: flex;
+}
+
+/* ---- Level button ---- */
+
+/*
+ * btn_level_green sliced: border L97 T164 R97 B162; the 326 px of top + bottom border fit 185 px at 0.5. The
+ * label is a child ".cbj-heavy-text" pair (D-010) rather than the Button's own text, so it centres through flex.
+ */
+.unity-button.level-button {
+    align-self: center;
+    width: 490px;
+    height: 185px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_level_green.png");
+    -unity-slice-left: 97;
+    -unity-slice-top: 164;
+    -unity-slice-right: 97;
+    -unity-slice-bottom: 162;
+    -unity-slice-scale: 0.5px;
+}
+
+/* D-010: heavy two-layer label, same cream fill and dark-green outline the single layer used, now doubled. */
+.level-button__label {
+    font-size: 84px;
+}
+
+.level-button__label.cbj-heavy-text__back {
+    color: rgb(24, 81, 28);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 8px;
+}
+
+.level-button__label.cbj-heavy-text__front {
+    color: rgb(255, 246, 214);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 2px;
+}
+
+/* Empty band between the Level button and the tab bar (reference 06); 229 px at 1080 x 1920. */
+.home-gap {
+    flex-basis: 229px;
+    flex-grow: 1;
+}
+
+/*
+ * ---- Tab bar (DEC-169): each slot's look comes from its entry in Data/Hub/HubNavigationCatalog.asset. As shipped:
+ * Lvl 50 lock (no label), Shop (locked, no label), Home (active), Collection (locked, no label), Lvl 50 lock
+ * (DEC-141, revised 2026-09-28: only the right end keeps the "Lvl 50" label). HubTabBarView only toggles the state
+ * classes below (tab--locked, tab--lock-only, tab--no-divider) and writes the catalog icon inline; every rule a slot
+ * needs is class-based, so a new slot needs no new USS apart from its design-time icon. ----
+ */
+
+/* The fill reaches the physical bottom edge; HubScreen pads its bottom by the safe-area inset. */
+.tab-bar {
+    flex-shrink: 0;
+    background-color: rgb(96, 166, 240);
+    border-top-width: 6px;
+    border-top-color: rgb(170, 216, 255);
+}
+
+.tab-row {
+    flex-direction: row;
+    align-items: flex-start;
+    height: 200px;
+}
+
+.unity-button.tab {
+    flex-grow: 1;
+    flex-basis: 0;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    border-right-width: 3px;
+    border-right-color: rgb(58, 116, 204);
+}
+
+/*
+ * No divider after the last shown slot or beside the raised active tab (reference 06). HubTabBarView sets this class
+ * from the slots that are shown, so hiding a tab never leaves a stray divider; declared after .unity-button.tab so it
+ * wins at equal specificity. Home.uxml authors it on the shipped layout for the design-time preview.
+ */
+.unity-button.tab--no-divider {
+    border-right-width: 0;
+}
+
+/* Reference 06 icons fill most of the slot (D-003); the label overlaps the icon's lower edge. */
+.tab__icon {
+    width: 150px;
+    height: 165px;
+    margin-bottom: -22px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/*
+ * 30 px was originally sized to fit "Leaderboard" inside its 210 px slot with the outline. DEC-141 (revised
+ * 2026-09-28) removed that text and every other non-Home label except "Lvl 50", but Home's label and the
+ * three now-empty label boxes (tab-leaderboard, tab-shop, tab-collection) keep this size unchanged, so an
+ * empty ui:Label still reserves the same line height and the icons above it do not shift (contract AC-1).
+ */
+.tab__label {
+    font-size: 30px;
+    margin-top: 2px;
+    -unity-text-outline-width: 3px;
+}
+
+/*
+ * DEC-141 (revised 2026-09-28): user feedback found the "Lvl 50" outline heavier than the reference crop. A locked
+ * tab's label ("Lvl 50") drops back to cbj-title's own 2px outline (Common.uss) instead of tab__label's 3px; two
+ * classes outrank .tab__label. Fill and outline colour are unchanged (cbj-title's white fill, dark outline already
+ * match the reference).
+ */
+.tab--locked > .tab__label,
+.tab--lock-only > .tab__label {
+    -unity-text-outline-width: 2px;
+}
+
+/*
+ * Design-time icons, one per shipped slot, so the Editor and UI Builder show the bar without Play Mode. Once bound,
+ * HubTabBarView draws each tab's catalog icon inline instead.
+ */
+.tab__icon--leaderboard {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_leaderboard.png");
+}
+
+.tab__icon--support {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_support.png");
+}
+
+.tab__icon--shop {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_shop.png");
+}
+
+/*
+ * The Home icon is absolute so it can protrude about 30 px above the visible edge of the raised ActiveTab
+ * (reference 06, D-003); the active tab sets overflow visible so the button does not clip it.
+ */
+.tab__icon--home {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    width: 205px;
+    height: 224px;
+    margin-left: -102px;
+    margin-bottom: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_home.png");
+}
+
+.tab__icon--collection {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_block_collection.png");
+}
+
+/*
+ * Lock Only look (DEC-141, the reserved end slots): ic_lock.png is the whole icon, at the same 150x165 box every tab
+ * icon uses, and not dimmed, because reference 06 draws a plain icon there. Two classes outrank the one-class
+ * design-time icons above; HubTabBarView clears the inline catalog icon for this look so the lock shows.
+ */
+.tab--lock-only > .tab__icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_lock.png");
+}
+
+/* Dimmed Icon With Lock look (Shop, Collection): dimmed icon and ic_lock.png on top (DEC-86); a press gives feedback only. */
+.tab--locked > .tab__icon {
+    -unity-background-image-tint-color: rgb(110, 118, 150);
+}
+
+.tab--locked:active > .tab__icon {
+    -unity-background-image-tint-color: rgb(90, 96, 124);
+}
+
+/* Every slot authors the lock; only the Dimmed Icon With Lock look shows it. */
+.tab__lock {
+    display: none;
+    position: absolute;
+    top: 48px;
+    width: 84px;
+    height: 101px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_lock.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.tab--locked > .tab__lock {
+    display: flex;
+}
+
+/*
+ * Active Home tab raised 60 px above the bar on ActiveTab (border L33 T144 R31 B146; the 290 px of top + bottom
+ * border fit 260 px at 0.8). The two neighbours keep their dividers; the raised tab draws none.
+ */
+.unity-button.tab--active {
+    top: -60px;
+    height: 260px;
+    flex-grow: 1.15;
+    justify-content: flex-end;
+    padding-bottom: 12px;
+    overflow: visible;
+    border-right-width: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_active_tab.png");
+    -unity-slice-left: 33;
+    -unity-slice-top: 144;
+    -unity-slice-right: 31;
+    -unity-slice-bottom: 146;
+    -unity-slice-scale: 0.8px;
+}
+
+.tab__label--active {
+    font-size: 42px;
+}

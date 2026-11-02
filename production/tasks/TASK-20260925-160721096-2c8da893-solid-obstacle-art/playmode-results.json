@@ -1,0 +1,178 @@
+{
+  "result": {
+    "success": true,
+    "message": "Test job status retrieved.",
+    "error": null,
+    "data": {
+      "job_id": "b63c7ed3a00f4dda9b15c6075731e3cc",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1790355946031,
+      "finished_unix_ms": 1790355957838,
+      "last_update_unix_ms": 1790355957838,
+      "progress": {
+        "completed": 15,
+        "total": 15,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1790355957614,
+        "last_finished_test_full_name": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError",
+        "last_finished_unix_ms": 1790355957642,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 15,
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 2.6339336,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "AnimatedFlipReachesItsHeightWithinThreeTenthsOfASecond",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.AnimatedFlipReachesItsHeightWithinThreeTenthsOfASecond",
+            "state": "Passed",
+            "durationSeconds": 0.6507321,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BarrierFlipsPauseAndStopAllocateNothing",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.BarrierFlipsPauseAndStopAllocateNothing",
+            "state": "Passed",
+            "durationSeconds": 0.022991,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ClosedBarrierFlushWithTheBoardEdgeCoversEveryQuadrantOfItsCells",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.ClosedBarrierFlushWithTheBoardEdgeCoversEveryQuadrantOfItsCells",
+            "state": "Passed",
+            "durationSeconds": 0.0250935,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ClosedBarriersStandOnTheirCellsAndOpenOnesSinkUnderTheFloor",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.ClosedBarriersStandOnTheirCellsAndOpenOnesSinkUnderTheFloor",
+            "state": "Passed",
+            "durationSeconds": 0.0364249,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SnapAndRestartReturnBarriersToTheirStartStateWithoutRebuilding",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.SnapAndRestartReturnBarriersToTheirStartStateWithoutRebuilding",
+            "state": "Passed",
+            "durationSeconds": 0.0372829,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SuspendPausesTheTweenAndTeardownStopsItAndReturnsThePieces",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentBarrierViewTests.SuspendPausesTheTweenAndTeardownStopsItAndReturnsThePieces",
+            "state": "Passed",
+            "durationSeconds": 0.8261763,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "PermanentBlockStaysRaisedWhenABarrierOpensAndReusesItsPool",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidViewTests.PermanentBlockStaysRaisedWhenABarrierOpensAndReusesItsPool",
+            "state": "Passed",
+            "durationSeconds": 0.3677832,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WideBarrierFillMovesWithItsEdgesAndReturnsToThePool",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentSolidViewTests.WideBarrierFillMovesWithItsEdgesAndReturnsToThePool",
+            "state": "Passed",
+            "durationSeconds": 0.4631033,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "BuildRentsEveryPieceWithItsTransformAndClearReturnsThemAll",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.BuildRentsEveryPieceWithItsTransformAndClearReturnsThemAll",
+            "state": "Passed",
+            "durationSeconds": 0.0172536,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DisablingClearsAndReleaseDestroysThePooledPieces",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.DisablingClearsAndReleaseDestroysThePooledPieces",
+            "state": "Passed",
+            "durationSeconds": 0.014163,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "DoorsCarryTheirPaletteColourAndPiecesResetWhenReleased",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.DoorsCarryTheirPaletteColourAndPiecesResetWhenReleased",
+            "state": "Passed",
+            "durationSeconds": 0.0187092,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EachFloorCellGetsAPooledGreyBaseSquareAndNoPlaneRemains",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.EachFloorCellGetsAPooledGreyBaseSquareAndNoPlaneRemains",
+            "state": "Passed",
+            "durationSeconds": 0.0283858,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "EnvironmentComponentsNeverTick",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.EnvironmentComponentsNeverTick",
+            "state": "Passed",
+            "durationSeconds": 0.001348,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RebuildingReusesPiecesAndOnlyALargerLevelAddsInstances",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.RebuildingReusesPiecesAndOnlyALargerLevelAddsInstances",
+            "state": "Passed",
+            "durationSeconds": 0.0331348,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError",
+            "fullName": "ColorBlockJam.Tests.Environment.EnvironmentViewLifecycleTests.RuleSetEditsAfterTheFirstBuildGetNewPoolsOrAClearError",
+            "state": "Passed",
+            "durationSeconds": 0.0279239,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "hint": null
+  }
+}

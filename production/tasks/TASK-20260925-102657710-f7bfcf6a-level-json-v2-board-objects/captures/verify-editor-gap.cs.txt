@@ -1,0 +1,28 @@
+// Editor Save/Reload with a Barrier level, using only scratchpad files (no project file is written).
+var sb = new System.Text.StringBuilder();
+string dir = @"C:\Users\e-fur\AppData\Local\Temp\claude\C--Users-e-fur-Documents-Repos-ColorBlockJamCase2026\203011cf-a558-4604-982b-dc0432104f74\scratchpad\vfy_json\editor_gap";
+System.IO.Directory.CreateDirectory(dir);
+string path = System.IO.Path.Combine(dir, "levels.json");
+string backup = System.IO.Path.Combine(dir, "backup", "levels.json");
+string created; ColorBlockJam.Runtime.Levels.LevelData[] none; string err;
+ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryWrite(new ColorBlockJam.Runtime.Levels.LevelData[0], out created, out err);
+System.IO.File.WriteAllText(path, created);
+var cells = new[] { new UnityEngine.Vector2Int(0, 0), new UnityEngine.Vector2Int(0, 1) };
+var blocks = new[] { new ColorBlockJam.Runtime.Levels.LevelBlockData("b1", "Red", "DoubleVertical", new UnityEngine.Vector2Int(0, 0), cells) };
+var doors = new[] { new ColorBlockJam.Runtime.Levels.LevelDoorData("d1", ColorBlockJam.Runtime.Levels.BoardSide.Top, 1, 2, "Red") };
+var p = new[] { new ColorBlockJam.Runtime.Levels.LevelEffectParamData("startsOpen", "false") };
+var barrier = new ColorBlockJam.Runtime.Levels.LevelCellObjectData("o1", new[] { new UnityEngine.Vector2Int(4, 4) }, new ColorBlockJam.Runtime.Levels.LevelEffectData("barrier", p));
+var level = new ColorBlockJam.Runtime.Levels.LevelData("bar", "Barrier", 5, 5, 120, new UnityEngine.Vector2Int[0], doors, blocks, new[] { barrier });
+string saved;
+bool s1 = ColorBlockJam.Editor.Levels.LevelDatabaseFile.TrySave(path, created, new[] { level }, backup, out saved, out err);
+sb.Append("firstSave=").Append(s1).Append(" [").Append(err).Append("]\n");
+string json2; ColorBlockJam.Runtime.Levels.LevelData[] lv2;
+bool r2 = ColorBlockJam.Editor.Levels.LevelDatabaseFile.TryRead(path, out json2, out lv2, out err);
+sb.Append("editorReloadAfterSave=").Append(r2).Append(" [").Append(err).Append("]\n");
+string saved2;
+bool s2 = ColorBlockJam.Editor.Levels.LevelDatabaseFile.TrySave(path, saved, new[] { level }, backup, out saved2, out err);
+sb.Append("secondSave=").Append(s2).Append(" [").Append(err).Append("]\n");
+ColorBlockJam.Runtime.Levels.LevelData[] al; string ae;
+bool auth = ColorBlockJam.Runtime.Levels.LevelDatabaseJson.TryRead(System.IO.File.ReadAllText(path), ColorBlockJam.Runtime.Levels.LevelReadMode.Authoring, out al, out ae);
+sb.Append("authoringReadOfSavedFile=").Append(auth).Append("\n");
+return sb.ToString();

@@ -1,0 +1,19 @@
+{
+  "verifiedAtUtc": "2026-09-24T13:38:16.060991+00:00",
+  "source": "docs/Art-Asset-PRD-Mapping.md",
+  "audit": "docs/art/asset-import-audit.json",
+  "artFiles": 65,
+  "mappedArtFiles": 65,
+  "uiFiles": 47,
+  "definedCriteria": 226,
+  "coveredCriteria": 226,
+  "acceptanceCriteria": 188,
+  "nonFunctionalRequirements": 38,
+  "missingMappedAssets": [],
+  "uncoveredCriteria": [],
+  "undefinedCoveredCriteria": [],
+  "undefinedMappedCriteria": [],
+  "errors": [],
+  "method": "Live AssetDatabase load/reference audit plus disk/meta SHA-256 and GUID checks. All exact art file paths must appear in the map; all supplied UI file paths in the UI map. PRD definitions before section 16 compared with final Covers cells of V rows in sections 16.1-16.6, numeric ranges expanded; section 16.7 excluded.",
+  "scope": "Document/import verification only; not gameplay acceptance or device profiling."
+}

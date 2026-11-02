@@ -1,0 +1,4 @@
+firstSave=True []
+editorReloadAfterSave=False [Level bar cell object o1 effect barrier is not implemented in gameplay yet.]
+secondSave=False [Level bar cell object o1 effect barrier is not implemented in gameplay yet.]
+authoringReadOfSavedFile=True

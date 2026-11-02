@@ -1,0 +1,185 @@
+// Copy-only probe (never in the repository): drives the block tools in the real window and captures it.
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using ColorBlockJam.Runtime.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    public sealed class ZzBlockToolsCaptureProbe
+    {
+        private const BindingFlags k_all = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        private const string k_json = "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json";
+
+        [UnityTest]
+        public IEnumerator CaptureBlockTools()
+        {
+            StringBuilder text = new StringBuilder();
+            LogAssert.ignoreFailingMessages = true;
+            text.AppendLine("json sha256 before=" + Sha(k_json));
+            foreach (Vector2 size in new[] { new Vector2(960f, 640f), new Vector2(1280f, 800f), new Vector2(1600f, 1000f) })
+            {
+                LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+                window.titleContent = new GUIContent("Level Editor");
+                window.ShowUtility();
+                window.position = new Rect(40f, 40f, size.x, size.y);
+                double end = EditorApplication.timeSinceStartup + 5;
+                while (window.rootVisualElement.Q<LevelCanvasElement>() == null && EditorApplication.timeSinceStartup < end) yield return null;
+                for (int i = 0; i < 10; i++) { window.Repaint(); yield return null; }
+                VisualElement root = window.rootVisualElement;
+                Validate(root);
+                Undo.IncrementCurrentGroup();
+
+                LevelCanvasElement canvas = root.Q<LevelCanvasElement>();
+                LevelShapePalette shapes = root.Q<LevelShapePalette>();
+                Label status = root.Q<Label>("status");
+                text.AppendLine($"size={size} cell={canvas.Geometry.CellSize} model={canvas.Model.Width}x{canvas.Model.Height} blocks={canvas.Model.BlockCount} tiles={shapes.TileCount} message='{shapes.Q<Label>(LevelShapePalette.k_messageName).text}'");
+                for (int t = 0; t < shapes.TileCount; t++)
+                    text.AppendLine($"  tile {shapes.GetTile(t).name} enabled={shapes.GetTile(t).enabledSelf} world={shapes.GetTile(t).worldBound}");
+                Capture(window, size, "initial", text);
+
+                // Arm the Single shape (or the first enabled one), then hover a free and an occupied cell.
+                VisualElement tile = root.Q("shape-Single");
+                if (tile == null || !tile.enabledSelf)
+                    for (int t = 0; t < shapes.TileCount && (tile == null || !tile.enabledSelf); t++) tile = shapes.GetTile(t);
+                Click(root, tile.worldBound.center, 0);
+                text.AppendLine($"  armed tool={canvas.Tool} via {tile.name}");
+                Vector2Int free = FindCell(canvas, true);
+                Vector2Int taken = FindCell(canvas, false);
+                Send(root, EventType.MouseMove, CellCentre(canvas, free), 0);
+                Capture(window, size, "ghost-valid", text);
+                Send(root, EventType.MouseMove, CellCentre(canvas, taken), 0);
+                Capture(window, size, "ghost-invalid", text);
+                Click(root, CellCentre(canvas, taken), 0);
+                text.AppendLine($"  place on {taken}: blocks={canvas.Model.BlockCount} status='{status.text}' dirty={window.hasUnsavedChanges}");
+                Click(root, CellCentre(canvas, free), 0);
+                text.AppendLine($"  place on {free}: blocks={canvas.Model.BlockCount} status='{status.text}' dirty={window.hasUnsavedChanges}");
+                Capture(window, size, "placed", text);
+
+                // Select tool (Esc), then drag block 0 one cell towards a free place and capture mid-drag.
+                Key(canvas, KeyCode.Escape);
+                text.AppendLine($"  after Esc tool={canvas.Tool}");
+                Vector2Int start = canvas.Model.GetBlock(0).GetCell(0);
+                Send(root, EventType.MouseDown, CellCentre(canvas, start), 0);
+                Vector2Int target = start + new Vector2Int(0, 1);
+                Send(root, EventType.MouseDrag, CellCentre(canvas, target), 0);
+                text.AppendLine($"  dragging={canvas.IsDragging} offset={canvas.DragOffset}");
+                Capture(window, size, "drag-ghost", text);
+                Send(root, EventType.MouseUp, CellCentre(canvas, target), 0);
+                text.AppendLine($"  after drop: block0 cell0={canvas.Model.GetBlock(0).GetCell(0)} status='{status.text}'");
+
+                // Right click removes the last block; undo restores it.
+                int count = canvas.Model.BlockCount;
+                Click(root, CellCentre(canvas, canvas.Model.GetBlock(count - 1).LabelCell), 1);
+                text.AppendLine($"  right click: blocks {count} -> {canvas.Model.BlockCount}");
+                Undo.PerformUndo();
+                text.AppendLine($"  undo: blocks={canvas.Model.BlockCount}");
+                Capture(window, size, "after-undo", text);
+                for (int u = 0; u < 4 && window.hasUnsavedChanges; u++) Undo.PerformUndo();
+                text.AppendLine($"  undo all: blocks={canvas.Model.BlockCount} dirty={window.hasUnsavedChanges} status='{status.text}'");
+
+                window.DiscardChanges();
+                window.Close();
+                yield return null;
+            }
+
+            text.AppendLine("json sha256 after=" + Sha(k_json));
+            File.WriteAllText("blocktools-probe.txt", text.ToString());
+        }
+
+        private static Vector2Int FindCell(LevelCanvasElement canvas, bool free)
+        {
+            for (int y = 0; y < canvas.Model.Height; y++)
+                for (int x = 0; x < canvas.Model.Width; x++)
+                    if ((canvas.Model.GetBlockIndexAt(new Vector2Int(x, y)) < 0) == free) return new Vector2Int(x, y);
+            return Vector2Int.zero;
+        }
+
+        private static Vector2 CellCentre(LevelCanvasElement canvas, Vector2Int cell)
+        {
+            return canvas.LocalToWorld(canvas.Geometry.GetCellRect(cell).center);
+        }
+
+        private static void Validate(VisualElement root)
+        {
+            object panel = root.panel;
+            panel.GetType().GetMethod("ValidateLayout", k_all).Invoke(panel, null);
+        }
+
+        private static void Key(VisualElement target, KeyCode key)
+        {
+            using (KeyDownEvent down = KeyDownEvent.GetPooled('\0', key, EventModifiers.None))
+            {
+                down.target = target;
+                target.SendEvent(down);
+            }
+        }
+
+        private static void Click(VisualElement root, Vector2 position, int button)
+        {
+            Send(root, EventType.MouseDown, position, button);
+            Send(root, EventType.MouseUp, position, button);
+        }
+
+        private static void Send(VisualElement root, EventType type, Vector2 position, int button)
+        {
+            Event mouse = new Event { type = type, mousePosition = position, button = button, clickCount = 1 };
+            EventBase pointer = type == EventType.MouseDown ? PointerDownEvent.GetPooled(mouse)
+                : type == EventType.MouseUp ? PointerUpEvent.GetPooled(mouse)
+                : (EventBase)PointerMoveEvent.GetPooled(mouse);
+            using (pointer) root.SendEvent(pointer);
+        }
+
+        private static void Capture(EditorWindow window, Vector2 size, string tag, StringBuilder text)
+        {
+            window.Repaint();
+            object host = typeof(EditorWindow).GetField("m_Parent", k_all).GetValue(window);
+            host.GetType().GetMethod("RepaintImmediately", k_all, null, System.Type.EmptyTypes, null)?.Invoke(host, null);
+            float ppp = EditorGUIUtility.pixelsPerPoint;
+            int w = Mathf.RoundToInt(size.x * ppp), h = Mathf.RoundToInt(size.y * ppp);
+            RenderTexture rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32);
+            MethodInfo grab = null;
+            for (System.Type t = host.GetType(); t != null && grab == null; t = t.BaseType)
+                grab = t.GetMethod("GrabPixels", k_all | BindingFlags.DeclaredOnly);
+            try
+            {
+                grab.Invoke(host, new object[] { rt, new Rect(0, 0, w, h) });
+                RenderTexture.active = rt;
+                Texture2D tex = new Texture2D(w, h, TextureFormat.RGB24, false);
+                tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
+                tex.Apply();
+                RenderTexture.active = null;
+                // GrabPixels returns the rows bottom-up; flip them so the PNG is upright.
+                Color32[] pixels = tex.GetPixels32();
+                Color32[] flipped = new Color32[pixels.Length];
+                for (int y = 0; y < h; y++) System.Array.Copy(pixels, y * w, flipped, (h - 1 - y) * w, w);
+                tex.SetPixels32(flipped);
+                string file = $"blocktools-{(int)size.x}x{(int)size.y}-{tag}.png";
+                File.WriteAllBytes(file, tex.EncodeToPNG());
+                text.AppendLine($"  captured {file}");
+                Object.DestroyImmediate(tex);
+            }
+            catch (System.Exception e) { text.AppendLine("  capture ERR " + e.Message); }
+            rt.Release();
+        }
+
+        private static string Sha(string path)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] hash = sha.ComputeHash(File.ReadAllBytes(path));
+                StringBuilder s = new StringBuilder();
+                foreach (byte x in hash) s.Append(x.ToString("x2"));
+                return s.ToString();
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ColorBlockJam.Hub.PlayModeTests",
+  "rootNamespace": "ColorBlockJam.Tests.HubScene",
+  "references": [
+    "ColorBlockJam.Domain",
+    "ColorBlockJam.Gameplay",
+    "ColorBlockJam.Hub",
+    "ColorBlockJam.Player",
+    "ColorBlockJam.Haptics",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.UI",
+    "Onity.DI",
+    "Onity.Unity",
+    "Onity.Reactive",
+    "Unity.InputSystem",
+    "UnityEngine.UI",
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner"
+  ],
+  "includePlatforms": [],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

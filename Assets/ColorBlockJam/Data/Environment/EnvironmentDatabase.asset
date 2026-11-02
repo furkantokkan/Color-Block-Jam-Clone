@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3978f80e55d03874a8faae8698439cf2, type: 3}
+  m_Name: EnvironmentDatabase
+  m_EditorClassIdentifier: 
+  m_ruleSet: {fileID: 11400000, guid: c93ae530aacb511479300a3d3f550dd3, type: 2}
+  m_floorPiece: {fileID: 8922014976279251633, guid: 2a6abce08dc4e474397716cd57f600bd,
+    type: 3}
+  m_floorBasePiece: {fileID: 5834664667585698313, guid: 5f6c7a8404e61544aa2e7dda5d0cebf9,
+    type: 3}
+  m_blockFillPiece: {fileID: 7821789676960179, guid: 0eed1f72a3c8b2742b6f117c67e5da95,
+    type: 3}
+  m_brickEndPiece: {fileID: 9105878314899585264, guid: bd74a1050ec1d9543bc2d428107ac2de,
+    type: 3}
+  m_cornerEndPiece: {fileID: 6835881837040604022, guid: 91daa45c656e6ad458aa08fe889b2f85,
+    type: 3}
+  m_cornerJoinPiece: {fileID: 3224454094337252059, guid: aec08f71da81d9d4bb1f577ef4f484af,
+    type: 3}
+  m_doorPiece: {fileID: 1950578696897402454, guid: 163655b697ad00f41916d7a6ac835b06,
+    type: 3}
+  m_doorEndPiece: {fileID: 518767885683116055, guid: 2eac7bad446360d4faef9365bcf7d101,
+    type: 3}
+  m_doorArrowPiece: {fileID: 6422523380051144989, guid: 1ea3802f1f9f19c479bc6c06dae4578b,
+    type: 3}
+  m_palette: {fileID: 11400000, guid: e13fe037917f25e4e9b6f520b747555f, type: 2}
+  m_wallPieceScale: {x: 0.5, y: 1, z: 0.5}
+  m_doorPieceScale: {x: 1, y: 1, z: 0.5}
+  m_doorArrowScale: {x: 0.5, y: 1, z: 0.5}
+  m_doorArrowWhiteBlend: 0.6
+  m_floorColor: 12
+  m_wallColor: 11
+  m_floorBaseColor: 11
+  m_barrierColor: 11

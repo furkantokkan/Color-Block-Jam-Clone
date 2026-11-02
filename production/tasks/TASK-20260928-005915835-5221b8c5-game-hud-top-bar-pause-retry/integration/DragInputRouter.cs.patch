@@ -1,0 +1,49 @@
+--- /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/base/DragInputRouter.cs.live	2026-09-28 06:25:53.698477900 +0300
++++ /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/ours/DragInputRouter.cs	2026-09-28 06:25:53.731548800 +0300
+@@ -31,6 +31,9 @@
+         // The pointer source's Back button, when it has one (GameplayPointerInput does).
+         private readonly IBackButtonSource m_back;
+ 
++        // What Back does without a targeting mode (the in-game menu's pause, Game HUD design 5); null: nothing.
++        private IGameplayBackFallback m_backFallback;
++
+         // One press owns the pointer from Down to Up or Cancel; an inert press drives nothing.
+         private bool m_ownedUntilUp;
+         private bool m_inert = true;
+@@ -64,16 +67,33 @@
+         public BoardPoint LastPointer { get; private set; }
+ 
+         /// <summary>
++        /// Sets what Back does while no targeting mode is set; null restores doing nothing. The Game scene's HUD branch
++        /// sets the in-game menu flow once at scene build; the router keeps no other reference to it.
++        /// </summary>
++        public void SetBackFallback(IGameplayBackFallback fallback)
++        {
++            m_backFallback = fallback;
++        }
++
++        /// <summary>
+         /// Reads one pointer sample and applies it to the attempt's drag or to the targeting mode, and
+         /// polls Back once. Called only while Playing, outside the opening hold.
+         /// </summary>
+         public void Run(LevelAttempt attempt, IBoardPresenter presenter)
+         {
+-            // Back only ends a targeting mode; without one it does nothing (B-12).
++            // Back ends a targeting mode (B-12); without one it goes to the fallback, which opens the pause menu. A
++            // fallback that left Playing ends this step, as an accepted booster target does.
+             bool back = m_back != null && m_back.WasBackPressed();
+-            if (back && m_targeting != null)
++            if (back)
+             {
+-                m_targeting.Cancel();
++                if (m_targeting != null && m_targeting.IsActive)
++                {
++                    m_targeting.Cancel();
++                }
++                else if (m_backFallback != null && m_backFallback.OnBack())
++                {
++                    return;
++                }
+             }
+ 
+             PointerSample sample = m_pointer.Read();

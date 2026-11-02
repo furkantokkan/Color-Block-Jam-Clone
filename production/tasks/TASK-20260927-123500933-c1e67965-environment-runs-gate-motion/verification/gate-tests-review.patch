@@ -1,0 +1,101 @@
+--- a/Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs
++++ b/Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs
+@@ -27,13 +27,14 @@
+         private const string k_databasePath = "Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset";
+         private const float k_closedHeight = 0f;
+         private const float k_margin = 0.1f;
+-        private static readonly int[] s_lengths = { 2, 1, 1 };
++        private static readonly int[] s_lengths = { 3, 2, 1, 3 };
+         private static readonly int s_clipPlaneId = Shader.PropertyToID("_ClipPlane");
+         private static readonly int s_clipEnabledId = Shader.PropertyToID("_ClipEnabled");
+ 
+         private GameObject m_root;
+         private EnvironmentView m_view;
+         private BoardLayout m_layout;
++        private float m_cycleSecondsRemaining;
+ 
+         // The first allocation assertion in a domain also measures the recorder's own setup.
+         [OneTimeSetUp]
+@@ -50,9 +51,10 @@
+             m_view.Construct(AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(k_databasePath));
+             LevelDoorData[] doors =
+             {
+-                new LevelDoorData("top", BoardSide.Top, 1, 2, "Red"),
+-                new LevelDoorData("right", BoardSide.Right, 0, 1, "Blue"),
++                new LevelDoorData("top", BoardSide.Top, 1, 3, "Red"),
++                new LevelDoorData("right", BoardSide.Right, 1, 2, "Blue"),
+                 new LevelDoorData("bottom", BoardSide.Bottom, 4, 1, "Yellow"),
++                new LevelDoorData("left", BoardSide.Left, 0, 3, "Red"),
+             };
+             Assert.That(BoardLayout.TryCreate(5, 4, Array.Empty<Vector2Int>(), doors, out m_layout, out string error),
+                 Is.True, error);
+@@ -89,6 +91,42 @@
+         }
+ 
+         [UnityTest]
++        public IEnumerator EverySideAndAuthoredSpanMovesOnlyItsSlotsAndArrow()
++        {
++            for (int door = 0; door < s_lengths.Length; door++)
++            {
++                EnvironmentGate gate = m_view.GetGate(door);
++                Vector3[] homes = new Vector3[gate.PieceCount];
++                for (int piece = 0; piece < homes.Length; piece++)
++                {
++                    homes[piece] = gate.GetPiece(piece).transform.localPosition;
++                }
++
++                Assert.That(m_view.TryOpenGate(door, 0.3f), Is.True);
++                yield return new WaitForSeconds(EnvironmentGate.k_sinkSeconds + 0.05f);
++                AssertOffset(gate, EnvironmentGate.k_sinkDepth, "the complete authored gate sinks");
++                for (int piece = 0; piece < homes.Length; piece++)
++                {
++                    Vector3 current = gate.GetPiece(piece).transform.localPosition;
++                    Assert.That(current.x, Is.EqualTo(homes[piece].x).Within(1e-4f));
++                    Assert.That(current.z, Is.EqualTo(homes[piece].z).Within(1e-4f));
++                    Assert.That(ReadProperties(gate.GetPiece(piece)).GetFloat(s_clipEnabledId), Is.EqualTo(1f));
++                }
++
++                for (int other = 0; other < s_lengths.Length; other++)
++                {
++                    if (other != door)
++                    {
++                        AssertOffset(m_view.GetGate(other), 0f, "every unmatched gate stays closed");
++                    }
++                }
++
++                yield return new WaitForSeconds(0.3f + EnvironmentGate.k_riseSeconds + k_margin);
++                AssertOffset(gate, 0f, "the complete gate returns to its built height");
++            }
++        }
++
++        [UnityTest]
+         public IEnumerator AnOpenedGateSinksHoldsAndRisesToItsExactBuiltHeight()
+         {
+             EnvironmentGate gate = m_view.GetGate(0);
+@@ -100,6 +138,7 @@
+             AssertOffset(gate, EnvironmentGate.k_sinkDepth, "down after its short sink");
+             AssertOffset(m_view.GetGate(1), 0f, "another gate stays up");
+             AssertOffset(m_view.GetGate(2), 0f, "another gate stays up");
++            AssertOffset(m_view.GetGate(3), 0f, "the left gate stays up");
+ 
+             yield return new WaitForSeconds(0.3f + EnvironmentGate.k_riseSeconds + k_margin);
+             Assert.That(gate.IsMoving, Is.False);
+@@ -219,7 +258,9 @@
+         public void OpeningPausingStoppingAndResettingGatesAllocateNothing()
+         {
+             Cycle();
++            Assert.That(m_cycleSecondsRemaining, Is.GreaterThan(0f));
+             Assert.That(() => Cycle(), Is.Not.AllocatingGCMemory());
++            Assert.That(m_cycleSecondsRemaining, Is.GreaterThan(0f));
+         }
+ 
+         private void Cycle()
+@@ -229,7 +270,7 @@
+             m_view.TryOpenGate(2, 0.2f);
+             m_view.SetGateTweensPaused(true);
+             m_view.SetGateTweensPaused(false);
+-            Assert.That(m_view.GateSecondsRemaining, Is.GreaterThan(0f));
++            m_cycleSecondsRemaining = m_view.GateSecondsRemaining;
+             m_view.StopGateTweens();
+             m_view.ResetGates();
+         }

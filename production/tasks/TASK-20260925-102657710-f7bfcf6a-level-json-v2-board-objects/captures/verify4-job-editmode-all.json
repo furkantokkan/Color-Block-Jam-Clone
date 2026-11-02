@@ -1,0 +1,40 @@
+{
+ "result": {
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+   "job_id": "81011948a3d743a49b29c6a0b7ceba3e",
+   "status": "failed",
+   "mode": "EditMode",
+   "started_unix_ms": 1790344961742,
+   "finished_unix_ms": 1790345067154,
+   "last_update_unix_ms": 1790345067154,
+   "progress": {
+    "completed": 753,
+    "total": 753,
+    "current_test_full_name": null,
+    "current_test_started_unix_ms": 1790345066307,
+    "last_finished_test_full_name": "AddressableAssets.DocExampleCode.TestStub.RequiredTest",
+    "last_finished_unix_ms": 1790345066307,
+    "stuck_suspected": false,
+    "editor_is_focused": false,
+    "blocked_reason": null,
+    "failures_so_far": [
+     {
+      "full_name": "ColorBlockJam.Tests.EditMode.LevelCanvasBlockToolsTests.PlacingAShapeAddsOneBlockAndPublishesItOnce",
+      "message": "  One place reaches the preview once.\r\n  Expected: 1\r\n  But was:  0\r\n"
+     },
+     {
+      "full_name": "ColorBlockJam.Tests.EditMode.LevelEditorShellTests.UndoAndRedoOfABoardEditUpdateFieldsDirtyMarkerAndPreview",
+      "message": "  Undo publishes the draft to the preview.\r\n  Expected: 300\r\n  But was:  null\r\n"
+     }
+    ],
+    "failures_capped": false
+   },
+   "error": null,
+   "result": null
+  },
+  "hint": null
+ }
+}

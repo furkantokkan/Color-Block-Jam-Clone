@@ -1,0 +1,125 @@
+// Copy-only probes (not in the repository). ZzCloseProbe:
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    /// <summary>Copy-only probe: drives Unity's own close request on a dirty Level Editor.</summary>
+    public sealed class ZzCloseProbe
+    {
+        private const BindingFlags k_all = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+
+        [UnityTest]
+        public IEnumerator DirtyCloseGoesThroughUnityPrompt()
+        {
+            StringBuilder text = new StringBuilder();
+            LogAssert.ignoreFailingMessages = true;
+            Application.logMessageReceived += (c, s, t) => { if (c.Contains("DisplayDialog")) text.AppendLine("  LOG: " + c.Replace("\n", " / ")); };
+            text.AppendLine("batchMode=" + Application.isBatchMode);
+            foreach (bool docked in new[] { false, true })
+            {
+                LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+                if (docked) window.Show(); else window.ShowUtility();
+                window.position = new Rect(40f, 40f, 960f, 640f);
+                double end = EditorApplication.timeSinceStartup + 5;
+                while (window.rootVisualElement.Q("top-bar") == null && EditorApplication.timeSinceStartup < end) yield return null;
+                IntegerField timer = UQueryExtensions.Q<IntegerField>(window.rootVisualElement, "timer-seconds");
+                int original = timer.value;
+                timer.value = original == 60 ? 61 : 60;
+                object host = typeof(EditorWindow).GetField("m_Parent", k_all).GetValue(window);
+                object container = host.GetType().GetProperty("window", k_all).GetValue(host);
+                text.AppendLine($"docked={docked} host={host.GetType().Name} window.dirty={window.hasUnsavedChanges}");
+                text.AppendLine($"  container.hasUnsaved={container.GetType().GetProperty("hasUnsavedChanges", k_all).GetValue(container)}");
+                var list = (List<EditorWindow>)container.GetType().GetField("m_UnsavedEditorWindows", k_all).GetValue(container);
+                text.AppendLine($"  unsavedList.Contains={list?.Contains(window)} count={list?.Count}");
+                text.AppendLine($"  displayedTitle='{container.GetType().GetProperty("displayedTitle", k_all).GetValue(container)}' title='{window.titleContent.text}'");
+                MethodInfo request = container.GetType().GetMethod("InternalRequestClose", k_all, null, new[] { typeof(EditorWindow) }, null);
+                bool closed = (bool)request.Invoke(container, new object[] { window });
+                text.AppendLine($"  InternalRequestClose(window)={closed} after: dirty={window.hasUnsavedChanges} status='{UQueryExtensions.Q<Label>(window.rootVisualElement, "status").text}'");
+                window.DiscardChanges();
+                text.AppendLine($"  after Discard: container.hasUnsaved={container.GetType().GetProperty("hasUnsavedChanges", k_all).GetValue(container)} list.Contains={list?.Contains(window)} displayedTitle='{container.GetType().GetProperty("displayedTitle", k_all).GetValue(container)}'");
+                text.AppendLine($"  InternalRequestClose(clean)={(bool)request.Invoke(container, new object[] { window })}");
+                window.Close();
+                yield return null;
+            }
+
+            File.WriteAllText("close-probe2.txt", text.ToString());
+        }
+    }
+}
+
+// ZzCaptureProbe:
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    /// <summary>Copy-only probe: grabs the Level Editor's pixels at several window sizes.</summary>
+    public sealed class ZzCaptureProbe
+    {
+        private const BindingFlags k_all = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+
+        [UnityTest]
+        public IEnumerator CaptureWindow()
+        {
+            StringBuilder text = new StringBuilder();
+            LogAssert.ignoreFailingMessages = true;
+            foreach (Vector2 size in new[] { new Vector2(960f, 640f), new Vector2(1280f, 800f) })
+            {
+                LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+                window.titleContent = new GUIContent("Level Editor");
+                window.ShowUtility();
+                window.position = new Rect(40f, 40f, size.x, size.y);
+                double end = EditorApplication.timeSinceStartup + 5;
+                while (window.rootVisualElement.Q("top-bar") == null && EditorApplication.timeSinceStartup < end) yield return null;
+                for (int i = 0; i < 20; i++) { window.Repaint(); yield return null; }
+
+                object host = typeof(EditorWindow).GetField("m_Parent", k_all).GetValue(window);
+                host.GetType().GetMethod("RepaintImmediately", k_all, null, System.Type.EmptyTypes, null)?.Invoke(host, null);
+                float ppp = EditorGUIUtility.pixelsPerPoint; int w = Mathf.RoundToInt(size.x * ppp), h = Mathf.RoundToInt(size.y * ppp); text.AppendLine("ppp=" + ppp);
+                RenderTexture rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32);
+                MethodInfo grab = null;
+                for (System.Type t = host.GetType(); t != null && grab == null; t = t.BaseType)
+                    grab = t.GetMethod("GrabPixels", k_all | BindingFlags.DeclaredOnly);
+                text.AppendLine($"size={size} grab={grab}");
+                try
+                {
+                    grab.Invoke(host, new object[] { rt, new Rect(0, 0, w, h) });
+                    RenderTexture.active = rt;
+                    Texture2D tex = new Texture2D(w, h, TextureFormat.RGB24, false);
+                    tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
+                    tex.Apply();
+                    RenderTexture.active = null;
+                    Color c = tex.GetPixel(w / 2, h / 2);
+                    text.AppendLine($"  center={c}");
+                    File.WriteAllBytes($"capture-{w}x{h}.png", tex.EncodeToPNG());
+                    Object.DestroyImmediate(tex);
+                }
+                catch (System.Exception e) { text.AppendLine("  ERR " + e); }
+                rt.Release();
+                window.DiscardChanges();
+                window.Close();
+                yield return null;
+            }
+
+            File.WriteAllText("capture-probe.txt", text.ToString());
+        }
+    }
+}

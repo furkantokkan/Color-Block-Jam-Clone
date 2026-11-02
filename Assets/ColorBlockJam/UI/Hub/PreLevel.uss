@@ -1,0 +1,336 @@
+/*
+ * Pre-level popup (Hub-And-Player-Data-Design 9.1, references 09 and 10). Sizes are reference pixels at 1080 width,
+ * measured from reference 09 scaled by 1080/946; the Hub panel is 1080 x 1920 Expand, so at 20:9 only the height grows
+ * and the centred popup keeps its size. Shell, header, close and holder follow the shared Settings popup
+ * (UI/Settings/SettingsPopup.uss) so the Hub popups read as one family. Nine-slice values equal the Sprite Editor
+ * borders in docs/UI-Asset-Import.md (USS order left, top, right, bottom). Selectors on buttons carry ".unity-button"
+ * plus a parent class so they outrank the shared ".unity-button.cbj-pressable" reset in Common.uss.
+ */
+
+/* ---- Overlay, scrim and safe area ---- */
+
+/* Visible standalone; Hub.uss initializes embedded copies closed before binding. */
+.pre-level-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+}
+
+/* The Settings scrim colour (D-005) over Home, below every control. */
+.pre-level-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(11, 21, 61, 0.702);
+}
+
+.pre-level-safe-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Shell ---- */
+
+/*
+ * bg_popup (976 x 976, art 51..924 x 19..935) sliced at scale 1: 956 wide shows an 853 px shell, reference 09's width
+ * (x111..964). The padding places the 727 px holder 167 px below the visible shell top, as on reference 09 and the
+ * Settings popup, and keeps Play 76 px above the visible bottom edge.
+ */
+.pre-level-popup {
+    width: 956px;
+    flex-shrink: 0;
+    padding-left: 114px;
+    padding-top: 186px;
+    padding-right: 115px;
+    padding-bottom: 117px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup.png");
+    -unity-slice-left: 106;
+    -unity-slice-top: 74;
+    -unity-slice-right: 107;
+    -unity-slice-bottom: 104;
+}
+
+/* ---- Header and close ---- */
+
+/* bg_popup_header sliced (L79 T90 R79 B90), the Settings header size, centred in the 956 popup. */
+.pre-level-header {
+    position: absolute;
+    left: 184px;
+    top: -21px;
+    width: 588px;
+    height: 204px;
+    padding-bottom: 14px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_header.png");
+    -unity-slice-left: 79;
+    -unity-slice-top: 90;
+    -unity-slice-right: 79;
+    -unity-slice-bottom: 90;
+}
+
+.pre-level-title {
+    font-size: 78px;
+    -unity-font-style: bold;
+}
+
+.pre-level-title.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.pre-level-title.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* Popup_Close_Button (150 x 155) at its aspect ratio, placed as on the Settings popup. */
+.pre-level-popup > .unity-button.pre-level-close {
+    position: absolute;
+    top: 0;
+    right: 28px;
+    width: 117px;
+    height: 121px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_close.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Holder ---- */
+
+/* bg_popup_info_holder sliced (L43 T26 R42 B35), 727 wide as reference 09; the Settings tint (D-004). */
+.pre-level-holder {
+    width: 727px;
+    flex-shrink: 0;
+    padding-top: 34px;
+    padding-bottom: 40px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_info_holder.png");
+    -unity-background-image-tint-color: rgb(77, 255, 255);
+    -unity-slice-left: 43;
+    -unity-slice-top: 26;
+    -unity-slice-right: 42;
+    -unity-slice-bottom: 35;
+}
+
+.pre-level-subtitle {
+    font-size: 62px;
+    -unity-font-style: bold;
+}
+
+.pre-level-subtitle.cbj-heavy-text__back {
+    -unity-text-outline-width: 7px;
+}
+
+.pre-level-subtitle.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* ---- Selectors ---- */
+
+/* A centred row; two selectors land 272 px apart, near reference 09's x402 and x673. */
+.pre-level-selectors {
+    margin-top: 22px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.booster-selector {
+    width: 260px;
+    margin-left: 6px;
+    margin-right: 6px;
+    align-items: center;
+}
+
+/*
+ * Btn_settings_normal (fixed art, 134 x 139, no border): the blue rounded square of references 09 and 5.webp, drawn at
+ * its aspect ratio and reference 09's selector size. Overflow is visible so the badge overhanging the square's lower
+ * right corner is not clipped by the Button.
+ */
+.booster-selector > .unity-button.booster-selector__button {
+    width: 204px;
+    height: 212px;
+    flex-shrink: 0;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_settings_normal.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/*
+ * Selected: the same square tinted green (references 10 and 6.webp). The tint multiplies the cyan art (red channel
+ * near 0) into a saturated green with a darker rim; Btn_level_green was compared and rejected for its gold rim,
+ * which the reference does not have. The icon is a child element, so the tint does not touch it.
+ */
+.booster-selector--selected > .unity-button.booster-selector__button {
+    -unity-background-image-tint-color: rgb(140, 255, 26);
+}
+
+.booster-selector__icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Boosters/ic_clock_freeze.png");
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* Badges at the square's lower right corner, overhanging it slightly (reference 09). Only one shows at a time. */
+.selector-preview--rocket .booster-selector__icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Boosters/ic_rocket_purple.png");
+}
+
+/* Badges at the square's lower right corner. */
+.booster-selector__count-badge,
+.booster-selector__check-badge,
+.booster-selector__plus-badge {
+    position: absolute;
+    right: -14px;
+    bottom: -2px;
+    width: 76px;
+    height: 78px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Count: a red disc with a white rim (reference 09); no supplied sprite has this colour. */
+.booster-selector__count-badge {
+    border-top-left-radius: 39px;
+    border-top-right-radius: 39px;
+    border-bottom-left-radius: 39px;
+    border-bottom-right-radius: 39px;
+    border-left-width: 5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    background-color: rgb(222, 38, 52);
+}
+
+.booster-selector__count {
+    font-size: 44px;
+    -unity-font-style: bold;
+}
+
+.booster-selector__count.cbj-heavy-text__back {
+    color: rgb(120, 12, 24);
+    -unity-text-outline-color: rgb(120, 12, 24);
+    -unity-text-outline-width: 5px;
+}
+
+.booster-selector__count.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+/* Check: Btn_circle_green_small with a white check drawn by two borders of a rotated box (reference 10). */
+.booster-selector__check-badge {
+    display: none;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_circle_green_small.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-selector__check-mark {
+    width: 20px;
+    height: 36px;
+    margin-top: -8px;
+    border-right-width: 8px;
+    border-bottom-width: 8px;
+    border-right-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    rotate: 45deg;
+}
+
+/* Plus: Btn_circle_green_small with ic_plus, as the Home plus badges (DEC-85). */
+.booster-selector__plus-badge {
+    display: none;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_circle_green_small.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-selector__plus-icon {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_plus.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.booster-selector--selected .booster-selector__count-badge,
+.booster-selector--empty .booster-selector__count-badge {
+    display: none;
+}
+
+.booster-selector--selected .booster-selector__check-badge,
+.booster-selector--empty .booster-selector__plus-badge {
+    display: flex;
+}
+
+/* The booster's name below the square; "Extra Time" names the clock icon (DEC-47, AF-16). */
+.booster-selector__label {
+    font-size: 44px;
+    -unity-font-style: bold;
+}
+
+.booster-selector__label.cbj-heavy-text__back {
+    -unity-text-outline-width: 5px;
+}
+
+.booster-selector__label.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+.booster-selector > .cbj-heavy-text {
+    margin-top: 6px;
+}
+
+/* ---- Play ---- */
+
+/*
+ * Btn_popup_green (425 x 316; L69 T129 R70 B128) drawn at 0.63 scale as the Settings HOME button, so its borders
+ * (162 px high) fit the 169 px button; 404 wide as reference 09.
+ */
+.pre-level-popup > .unity-button.pre-level-play {
+    width: 404px;
+    height: 169px;
+    margin-top: 41px;
+    padding-bottom: 10px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_green.png");
+    -unity-slice-left: 69;
+    -unity-slice-top: 129;
+    -unity-slice-right: 70;
+    -unity-slice-bottom: 128;
+    -unity-slice-scale: 0.63px;
+}
+
+/* Cream fill and dark-green outline, as the Home Level button label (D-010). */
+.pre-level-play__label {
+    font-size: 84px;
+    -unity-font-style: bold;
+}
+
+.pre-level-play__label.cbj-heavy-text__back {
+    color: rgb(24, 81, 28);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 8px;
+}
+
+.pre-level-play__label.cbj-heavy-text__front {
+    color: rgb(255, 246, 214);
+    -unity-text-outline-color: rgb(24, 81, 28);
+    -unity-text-outline-width: 2px;
+}

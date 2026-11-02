@@ -1,0 +1,96 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!--
+      Game HUD top bar (Game HUD design 3, reference ref-hud-top-bar-level29, re-measured on 2026-09-28). Instanced
+      inside GameplayHud.uxml's top-content, so it inherits hud-root's font and Common.uss. Element names are the
+      contract with TopBarView, Booster's GameplayHudView and TimerPresenter (timer-band, timer-holder, timer-icon,
+      timer-label, freeze-counter, freeze-icon, freeze-bar, freeze-fill, freeze-label) and the HUD layout tests: every
+      container and Label is Ignore, only the Buttons are Position, so presses on empty bar areas still reach the board.
+      Every text is a Common.uss heavy-text pair (a "-back" Label under the named front Label) so it reads heavy like the
+      reference. Layout as in the reference: the Level/Time art on the left with the Time Freeze counter under its Time
+      field, and one column right beside it holding Retry, Pause and the coin holder.
+    -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Game/TopBar/GameTopBar.uss" />
+    <ui:VisualElement name="game-top-bar" class="game-top-bar cbj-document" picking-mode="Ignore">
+        <ui:VisualElement name="top-bar-main" class="game-top-bar__main" picking-mode="Ignore">
+
+            <ui:VisualElement name="top-bar-left" class="game-top-bar__left" picking-mode="Ignore">
+                <!-- Btn_levelBg_normal drawn whole: the badge circle on the left, the Time panel on the right. -->
+                <ui:VisualElement name="level-time" class="level-time" picking-mode="Ignore">
+                    <ui:VisualElement name="level-badge" class="level-badge" picking-mode="Ignore">
+                        <ui:VisualElement class="level-caption-text cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label name="level-caption-back" class="level-caption cbj-title cbj-heavy-text__back" text="Level" picking-mode="Ignore" />
+                            <ui:Label name="level-caption" class="level-caption cbj-title cbj-heavy-text__front" text="Level" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="level-number-text cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label name="level-number-back" class="level-number cbj-title cbj-heavy-text__back" text="1" picking-mode="Ignore" />
+                            <ui:Label name="level-number" class="level-number cbj-title cbj-heavy-text__front" text="1" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="time-area" class="time-area" picking-mode="Ignore">
+                        <ui:VisualElement name="time-caption-row" class="time-caption-row" picking-mode="Ignore">
+                            <ui:VisualElement name="timer-icon" class="timer-icon" picking-mode="Ignore" />
+                            <ui:VisualElement class="time-caption-text cbj-heavy-text" picking-mode="Ignore">
+                                <ui:Label name="time-caption-back" class="time-caption cbj-title cbj-heavy-text__back" text="Time" picking-mode="Ignore" />
+                                <ui:Label name="time-caption" class="time-caption cbj-title cbj-heavy-text__front" text="Time" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <!--
+                          Booster's timer: TimerPresenter writes timer-label (the front layer) from prebuilt mm:ss strings
+                          (B-9); TopBarView copies each change into timer-label-back. timer-frost lightens the field while
+                          Time Freeze holds it.
+                        -->
+                        <ui:VisualElement name="timer-band" class="timer-band" picking-mode="Ignore">
+                            <ui:VisualElement name="timer-holder" class="timer-holder" picking-mode="Ignore">
+                                <ui:VisualElement name="timer-frost" class="timer-frost" picking-mode="Ignore" />
+                                <ui:VisualElement class="timer-text cbj-heavy-text" picking-mode="Ignore">
+                                    <ui:Label name="timer-label-back" class="timer-label cbj-title cbj-heavy-text__back" text="00:00" picking-mode="Ignore" />
+                                    <ui:Label name="timer-label" class="timer-label cbj-title cbj-heavy-text__front" text="00:00" picking-mode="Ignore" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- The separate Time Freeze counter (B-9, reference 04): under the Time field, shown only while frozen. -->
+                <ui:VisualElement name="freeze-counter" class="freeze-counter" picking-mode="Ignore">
+                    <ui:VisualElement name="freeze-icon" class="freeze-icon" picking-mode="Ignore" />
+                    <ui:VisualElement name="freeze-bar" class="freeze-bar" picking-mode="Ignore">
+                        <ui:VisualElement name="freeze-fill" class="freeze-fill" picking-mode="Ignore" />
+                        <!-- GameplayHudView writes freeze-label; TopBarView copies each change into freeze-label-back. -->
+                        <ui:VisualElement class="freeze-text cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label name="freeze-label-back" class="freeze-label cbj-title cbj-heavy-text__back" text="10" picking-mode="Ignore" />
+                            <ui:Label name="freeze-label" class="freeze-label cbj-title cbj-heavy-text__front" text="10" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Retry above Pause right beside the art, and the coin holder under them, reaching past their right edge. -->
+            <ui:VisualElement name="top-buttons" class="top-buttons" picking-mode="Ignore">
+                <ui:Button name="retry-button" class="top-button top-button--retry cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement name="retry-icon" class="top-button__icon top-button__icon--retry cbj-press-tint" picking-mode="Ignore" />
+                </ui:Button>
+                <ui:Button name="pause-button" class="top-button top-button--pause cbj-pressable cbj-haptic-tap">
+                    <ui:VisualElement name="pause-icon" class="top-button__icon top-button__icon--pause cbj-press-tint" picking-mode="Ignore" />
+                </ui:Button>
+
+                <!-- bg_home_coin_holder pill: coin icon, compact amount, then the full-height green plus (press feedback only). -->
+                <ui:VisualElement name="coin-holder" class="coin-holder" picking-mode="Ignore">
+                    <ui:VisualElement name="coin-pill" class="coin-pill" picking-mode="Ignore">
+                        <ui:VisualElement name="coin-icon" class="coin-icon" picking-mode="Ignore" />
+                        <ui:VisualElement class="coin-amount-text cbj-heavy-text" picking-mode="Ignore">
+                            <ui:Label name="coin-amount-back" class="coin-amount cbj-title cbj-heavy-text__back" text="0" picking-mode="Ignore" />
+                            <ui:Label name="coin-amount" class="coin-amount cbj-title cbj-heavy-text__front" text="0" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Button name="coin-plus-button" class="coin-plus-button cbj-pressable cbj-haptic-tap">
+                        <ui:VisualElement name="coin-plus-icon" class="coin-plus-button__icon cbj-press-tint" picking-mode="Ignore" />
+                    </ui:Button>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

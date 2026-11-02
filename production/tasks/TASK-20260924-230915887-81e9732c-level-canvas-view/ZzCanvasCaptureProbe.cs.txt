@@ -1,0 +1,139 @@
+// Copy-only probe (never in the repository): captures the Level Editor with its canvas and drives the Select gestures.
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    public sealed class ZzCanvasCaptureProbe
+    {
+        private const BindingFlags k_all = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        private const string k_json = "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json";
+
+        [UnityTest]
+        public IEnumerator CaptureCanvasAndGestures()
+        {
+            StringBuilder text = new StringBuilder();
+            LogAssert.ignoreFailingMessages = true;
+            text.AppendLine("json sha256 before=" + Sha(k_json));
+            foreach (Vector2 size in new[] { new Vector2(960f, 640f), new Vector2(1280f, 800f) })
+            {
+                LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+                window.titleContent = new GUIContent("Level Editor");
+                window.ShowUtility();
+                window.position = new Rect(40f, 40f, size.x, size.y);
+                double end = EditorApplication.timeSinceStartup + 5;
+                while (window.rootVisualElement.Q("top-bar") == null && EditorApplication.timeSinceStartup < end) yield return null;
+                for (int i = 0; i < 20; i++) { window.Repaint(); yield return null; }
+
+                VisualElement root = window.rootVisualElement;
+                LevelCanvasElement canvas = root.Q<LevelCanvasElement>();
+                DropdownField blockChoice = root.Q<Foldout>("blocks-group").Query<DropdownField>().First();
+                LevelCanvasGeometry g = canvas.Geometry;
+                text.AppendLine($"size={size} canvas.world={canvas.worldBound} content={canvas.contentRect} cell={g.CellSize} board={g.BoardRect} model={canvas.Model.Width}x{canvas.Model.Height} blocks={canvas.Model.BlockCount} doors={canvas.Model.DoorCount}");
+                foreach (Label label in canvas.Query<Label>(className: LevelCanvasElement.k_labelClass).ToList())
+                    text.AppendLine($"  label '{label.text}' at {label.layout}");
+                for (int d = 0; d < canvas.Model.DoorCount; d++)
+                {
+                    LevelCanvasDoor door = canvas.Model.GetDoor(d);
+                    text.AppendLine($"  door {door.Id} {door.Side} {door.Start}+{door.Length} colour={door.Color} known={door.HasColor}");
+                }
+
+                text.AppendLine($"  initial selection={canvas.Selection.Kind}/{canvas.Selection.Index}/{canvas.Selection.Id} dropdown='{blockChoice.value}'");
+                Capture(window, size, "initial", text);
+
+                // Gesture 1: click block index 1, hover an empty cell.
+                if (canvas.Model.BlockCount > 1)
+                {
+                    Send(root, EventType.MouseDown, canvas.LocalToWorld(g.GetCellRect(canvas.Model.GetBlock(1).LabelCell).center));
+                    Send(root, EventType.MouseUp, canvas.LocalToWorld(g.GetCellRect(canvas.Model.GetBlock(1).LabelCell).center));
+                    Send(root, EventType.MouseMove, canvas.LocalToWorld(g.GetCellRect(Vector2Int.zero).center));
+                    text.AppendLine($"  after block click: selection={canvas.Selection.Kind}/{canvas.Selection.Index}/{canvas.Selection.Id} dropdown='{blockChoice.value}' hover={canvas.Hover} dirty={window.hasUnsavedChanges}");
+                    Capture(window, size, "block-selected", text);
+                }
+
+                // Gesture 2: click the first door.
+                if (canvas.Model.DoorCount > 0)
+                {
+                    LevelCanvasDoor door = canvas.Model.GetDoor(0);
+                    Vector2 at = canvas.LocalToWorld(g.GetEdgeRect(door.Side, door.Start, LevelCanvasGeometry.k_doorDepth).center);
+                    Send(root, EventType.MouseDown, at);
+                    Send(root, EventType.MouseUp, at);
+                    text.AppendLine($"  after door click: selection={canvas.Selection.Kind}/{canvas.Selection.Index}/{canvas.Selection.Id} dropdown='{blockChoice.value}' dirty={window.hasUnsavedChanges}");
+                    Capture(window, size, "door-selected", text);
+                }
+
+                // Gesture 3: dropdown picks block 0 again; a corner click changes nothing.
+                blockChoice.value = blockChoice.choices[0];
+                Rect b = g.BoardRect;
+                Vector2 corner = canvas.LocalToWorld(new Vector2(b.xMin - 0.25f * g.CellSize, b.yMin - 0.25f * g.CellSize));
+                Send(root, EventType.MouseDown, corner);
+                Send(root, EventType.MouseUp, corner);
+                text.AppendLine($"  after dropdown + corner click: selection={canvas.Selection.Kind}/{canvas.Selection.Index}/{canvas.Selection.Id} dropdown='{blockChoice.value}' dirty={window.hasUnsavedChanges}");
+
+                window.DiscardChanges();
+                window.Close();
+                yield return null;
+            }
+
+            text.AppendLine("json sha256 after=" + Sha(k_json));
+            File.WriteAllText("canvas-probe.txt", text.ToString());
+        }
+
+        private static void Send(VisualElement root, EventType type, Vector2 position)
+        {
+            Event mouse = new Event { type = type, mousePosition = position, button = 0, clickCount = 1 };
+            EventBase pointer = type == EventType.MouseDown ? PointerDownEvent.GetPooled(mouse)
+                : type == EventType.MouseUp ? PointerUpEvent.GetPooled(mouse)
+                : (EventBase)PointerMoveEvent.GetPooled(mouse);
+            using (pointer) root.SendEvent(pointer);
+        }
+
+        private static void Capture(EditorWindow window, Vector2 size, string tag, StringBuilder text)
+        {
+            window.Repaint();
+            object host = typeof(EditorWindow).GetField("m_Parent", k_all).GetValue(window);
+            host.GetType().GetMethod("RepaintImmediately", k_all, null, System.Type.EmptyTypes, null)?.Invoke(host, null);
+            float ppp = EditorGUIUtility.pixelsPerPoint;
+            int w = Mathf.RoundToInt(size.x * ppp), h = Mathf.RoundToInt(size.y * ppp);
+            RenderTexture rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32);
+            MethodInfo grab = null;
+            for (System.Type t = host.GetType(); t != null && grab == null; t = t.BaseType)
+                grab = t.GetMethod("GrabPixels", k_all | BindingFlags.DeclaredOnly);
+            try
+            {
+                grab.Invoke(host, new object[] { rt, new Rect(0, 0, w, h) });
+                RenderTexture.active = rt;
+                Texture2D tex = new Texture2D(w, h, TextureFormat.RGB24, false);
+                tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
+                tex.Apply();
+                RenderTexture.active = null;
+                string file = $"canvas-{(int)size.x}x{(int)size.y}-{tag}.png";
+                File.WriteAllBytes(file, tex.EncodeToPNG());
+                text.AppendLine($"  captured {file} ppp={ppp}");
+                Object.DestroyImmediate(tex);
+            }
+            catch (System.Exception e) { text.AppendLine("  capture ERR " + e.Message); }
+            rt.Release();
+        }
+
+        private static string Sha(string path)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] hash = sha.ComputeHash(File.ReadAllBytes(path));
+                StringBuilder s = new StringBuilder();
+                foreach (byte x in hash) s.Append(x.ToString("x2"));
+                return s.ToString();
+            }
+        }
+    }
+}

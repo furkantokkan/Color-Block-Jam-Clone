@@ -1,0 +1,397 @@
+/*
+ * Shared Settings popup (Hub-And-Player-Data-Design 8, reference 19, DEC-134, DEC-136). Sizes are reference pixels
+ * at 1080 width, measured from reference 19 scaled by 1080/904; the host panels are 1080 x 1920 Expand, so at 20:9
+ * only the height grows and the centred popup keeps its size. Nine-slice values equal the Sprite Editor borders in
+ * docs/UI-Asset-Import.md (USS order left, top, right, bottom). Selectors on buttons carry ".unity-button" plus a
+ * parent class so they outrank the shared ".unity-button.cbj-pressable" reset in Common.uss.
+ */
+
+/* ---- Overlay, scrim and safe area ---- */
+
+/* Visible standalone; Hub and GameplayHud initialize embedded copies closed before binding. */
+.settings-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+}
+
+/* #0B153DB3 over the host, below every control (first child); darkened from #0B153D80 (D-005). */
+.settings-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(11, 21, 61, 0.702);
+}
+
+/* The host writes all four paddings here from its safe area; the popup centres inside them. */
+.settings-safe-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- Shell ---- */
+
+/*
+ * bg_popup (976 x 976, art 51..924 x 19..935) sliced at scale 1: 926 wide puts the visible shell at x128..951 as in
+ * reference 19. The padding places the holder: its art starts 186 below the shell element's top, under the header.
+ * The height follows the content (1665 with HOME hidden).
+ */
+.settings-popup {
+    width: 926px;
+    flex-shrink: 0;
+    padding-left: 102px;
+    padding-top: 186px;
+    padding-right: 103px;
+    padding-bottom: 89px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup.png");
+    -unity-slice-left: 106;
+    -unity-slice-top: 74;
+    -unity-slice-right: 107;
+    -unity-slice-bottom: 104;
+}
+
+/* ---- Header and close ---- */
+
+/*
+ * bg_popup_header sliced (L79 T90 R79 B90): 588 wide, centred in the 926 popup (left (926-588)/2 = 169). Measured
+ * visible plaque width on the recaptured screen is about 546-549px (up from ~520px at the previous 532 width, left
+ * 197), close to reference 19's proportion (about 550 at 1080 width); the chief validator's 575 estimate was itself
+ * approximate (D-003).
+ */
+.settings-header {
+    position: absolute;
+    left: 169px;
+    top: -21px;
+    width: 588px;
+    height: 204px;
+    padding-bottom: 14px;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_header.png");
+    -unity-slice-left: 79;
+    -unity-slice-top: 90;
+    -unity-slice-right: 79;
+    -unity-slice-bottom: 90;
+}
+
+/*
+ * 78 px, bold (D-001). Fill, outline colour and outline width live on the ".cbj-heavy-text__back/__front" layers
+ * below: LiberationSans is regular-only, so a declared bold alone still rendered with thin white strokes (D-001
+ * recurrence, attempt 4). Both layers carry this class for the shared size/weight.
+ */
+.settings-title {
+    font-size: 78px;
+    -unity-font-style: bold;
+}
+
+/*
+ * ---- Heavy two-layer text (D-001 recurrence, attempt 4) ----
+ * The generic ".cbj-heavy-text"/"__back"/"__front" classes moved to Common.uss (D-010, shared with Home's route
+ * numerals and Level button label); only the per-usage outline widths stay here, because the title (78px) and
+ * the button labels (54/50/60px) need different weights to read the same at their sizes.
+ */
+
+.settings-title.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.settings-title.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.settings-button__label.cbj-heavy-text__back {
+    -unity-text-outline-width: 5px;
+}
+
+.settings-button__label.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+/* Popup_Close_Button (150 x 155) at its aspect ratio; overhangs the shell's visible right edge by 22 px. */
+.settings-popup > .unity-button.settings-close-button {
+    position: absolute;
+    top: 0;
+    right: 28px;
+    width: 117px;
+    height: 121px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_close.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Holder and rows ---- */
+
+/*
+ * bg_popup_info_holder sliced (L43 T26 R42 B35): 721 wide, x179..900 of 1080. Tinted toward cyan (D-004) because the
+ * plain sprite renders slate-blue; the tint pushes the rendered central fill toward the reference's #1065C5.
+ */
+.settings-holder {
+    padding-top: 26px;
+    padding-bottom: 15px;
+    align-items: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_popup_info_holder.png");
+    -unity-background-image-tint-color: rgb(77, 255, 255);
+    -unity-slice-left: 43;
+    -unity-slice-top: 26;
+    -unity-slice-right: 42;
+    -unity-slice-bottom: 35;
+}
+
+/* Rows 150 apart: icon (x334..462) then toggle (x538..750), both centred on the row. */
+.settings-row {
+    height: 150px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-row--last {
+    margin-bottom: 13px;
+}
+
+.settings-row__icon {
+    width: 128px;
+    height: 128px;
+    flex-shrink: 0;
+    margin-right: 76px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.settings-row__icon--vibration {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Settings/ic_settings_vibration.png");
+}
+
+.settings-row__icon--sound {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Settings/ic_settings_sound.png");
+}
+
+.settings-row__icon--music {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Settings/ic_settings_music.png");
+}
+
+/* ---- Toggle (DEC-134) ---- */
+
+/*
+ * 212 x 104: a 204 x 78 pill track and a 104 knob. OFF: plain light grey knob at the left on a dark navy track.
+ * ON: the btn_toggle_on knob (its baked "On" is the ON label) at the right on a dark green track. Position, knob
+ * art and track colour all differ, so the states also differ in greyscale. The Button itself stays transparent
+ * (Common.uss); overflow is visible because the ON art is slightly larger than the knob box.
+ */
+.settings-row > .unity-button.settings-toggle {
+    width: 212px;
+    height: 104px;
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+.settings-toggle__track {
+    position: absolute;
+    left: 4px;
+    top: 13px;
+    right: 4px;
+    bottom: 13px;
+    border-top-left-radius: 39px;
+    border-top-right-radius: 39px;
+    border-bottom-left-radius: 39px;
+    border-bottom-right-radius: 39px;
+    background-color: rgb(33, 57, 118);
+}
+
+.settings-toggle--on > .settings-toggle__track {
+    background-color: rgb(0, 84, 8);
+}
+
+/* The knob box moves 108 px (212 - 104) between the two ends. */
+.settings-toggle__knob {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 104px;
+    height: 104px;
+    translate: 0 0;
+}
+
+.settings-toggle--on > .settings-toggle__knob {
+    translate: 108px 0;
+}
+
+.settings-toggle__knob-off {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 52px;
+    border-top-right-radius: 52px;
+    border-bottom-left-radius: 52px;
+    border-bottom-right-radius: 52px;
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(128, 156, 204);
+    border-top-color: rgb(128, 156, 204);
+    border-right-color: rgb(128, 156, 204);
+    border-bottom-color: rgb(128, 156, 204);
+    background-color: rgb(190, 212, 240);
+    opacity: 1;
+}
+
+/* btn_toggle_on (136 x 140, art 6..129 x 4..126) sized so its art fills the 104 knob box. */
+.settings-toggle__knob-on {
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    width: 113px;
+    height: 116px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_toggle_on.png");
+    -unity-background-scale-mode: scale-to-fit;
+    opacity: 0;
+}
+
+/*
+ * Only a tap animates: the view adds settings-toggle--animated before the tapped toggle changes and removes it from
+ * every toggle when the popup shows, so a state set before opening appears at once instead of sliding in.
+ */
+.settings-toggle--animated > .settings-toggle__track {
+    transition-property: background-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+}
+
+.settings-toggle--animated > .settings-toggle__knob {
+    transition-property: translate;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+}
+
+.settings-toggle--animated .settings-toggle__knob-off,
+.settings-toggle--animated .settings-toggle__knob-on {
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+}
+
+.settings-toggle--on .settings-toggle__knob-off {
+    opacity: 0;
+}
+
+.settings-toggle--on .settings-toggle__knob-on {
+    opacity: 1;
+}
+
+/* ---- Placeholder and HOME buttons ---- */
+
+/* Btn_popup_blue sliced (L46 T69 R47 B65): 494 x 199, art x298..784, 221 apart as in reference 19. */
+.settings-holder > .unity-button.settings-button {
+    width: 494px;
+    height: 199px;
+    margin-bottom: 22px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_blue.png");
+    -unity-slice-left: 46;
+    -unity-slice-top: 69;
+    -unity-slice-right: 47;
+    -unity-slice-bottom: 65;
+}
+
+/*
+ * Btn_popup_green (425 x 316; L69 T129 R70 B128) is drawn at 0.63 scale, so its borders (162 px high) fit the
+ * same 199 px button and its rim matches the blue buttons. Hidden until a host shows it; the view writes display.
+ */
+.settings-holder > .unity-button.settings-button--home {
+    display: none;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_green.png");
+    -unity-slice-left: 69;
+    -unity-slice-top: 129;
+    -unity-slice-right: 70;
+    -unity-slice-bottom: 128;
+    -unity-slice-scale: 0.63px;
+}
+
+/*
+ * Label widths match reference 19 ("Legal Terms" x381..701, "Language" x411..671). Bold (D-001); fill, outline
+ * colour and outline width live on the ".cbj-heavy-text__back/__front" layers (see .settings-title).
+ */
+.settings-button__label {
+    padding-bottom: 8px;
+    font-size: 54px;
+    -unity-font-style: bold;
+}
+
+.settings-button__label--two-lines {
+    font-size: 50px;
+}
+
+.settings-button__label--home {
+    margin-left: 26px;
+    font-size: 60px;
+}
+
+/* Support_icon (388 x 273) at its aspect ratio, left of the label. */
+.settings-button__support-icon {
+    width: 110px;
+    height: 77px;
+    margin-right: 16px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_support.png");
+}
+
+/* home_icon (153 x 167) at its aspect ratio (reference 20). */
+.settings-button__home-icon {
+    width: 96px;
+    height: 105px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Navigation/ic_home.png");
+}
+
+/* ---- HOME variant fit (D-002) ---- */
+
+/*
+ * With HOME shown the holder gains a fifth button (221 px), which pushed the popup to about 1884 px tall and cropped
+ * the overhanging header at the top of an unnotched 1080 x 1920 host. SettingsPopupView.SetHomeVisible toggles this
+ * modifier on the screen root (an ancestor of every row and button) only while HOME is shown, tightening row height
+ * (150 to 138, saving 3 x 12) and button spacing (22 to 16, saving 5 x 6) for a combined 66 px cut: popup height
+ * 1818, centred with about 30 px of header clearance at 1080 x 1920. The hidden-HOME layout (approved) is untouched.
+ */
+.settings-screen--with-home .settings-row {
+    height: 138px;
+}
+
+.settings-screen--with-home .settings-holder > .unity-button.settings-button {
+    margin-bottom: 16px;
+}
+
+/* ---- Save-failure message ---- */
+
+/* A dark pill over the shell's bottom edge; hidden (keeps no layout space) until a save fails. */
+.settings-message {
+    position: absolute;
+    left: 150px;
+    right: 150px;
+    bottom: 24px;
+    height: 72px;
+    border-top-left-radius: 36px;
+    border-top-right-radius: 36px;
+    border-bottom-left-radius: 36px;
+    border-bottom-right-radius: 36px;
+    background-color: rgba(11, 21, 61, 0.9);
+    font-size: 38px;
+    -unity-text-outline-width: 0;
+    visibility: hidden;
+}

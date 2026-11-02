@@ -1,0 +1,164 @@
+--- a/Assets/ColorBlockJam/Gameplay/Board/BoardPresenter.cs
++++ b/Assets/ColorBlockJam/Gameplay/Board/BoardPresenter.cs
+@@ -6,6 +6,7 @@
+ using ColorBlockJam.Domain.Movement;
+ using ColorBlockJam.Domain.Session;
+ using ColorBlockJam.Environment;
++using ColorBlockJam.Gameplay.Board.Outline;
+ using ColorBlockJam.Gameplay.Levels;
+ using ColorBlockJam.Gameplay.Effects;
+ using ColorBlockJam.Gameplay.Session;
+@@ -72,6 +73,10 @@
+         private readonly BlockEffectViewContext m_effectViewContext;
+         private IBlockEffectView[] m_effects = Array.Empty<IBlockEffectView>();
+ 
++        // Owner: this presenter. Stops: every end of a hold hides it (SetHeld(-1), SnapHeld, an exit,
++        // ReturnPieces); Dispose destroys it. Null when built without one (the presenter's own tests).
++        private readonly HeldOutlineView m_outline;
++
+         private Transform m_blocksRoot;
+         private BlockPieceFactory m_factory;
+         private BlockArrowMarkers m_markers;
+@@ -122,7 +127,6 @@
+             m_shapes = art.Library;
+         }
+ 
+-        [Onity.DI.Inject]
+         public BoardPresenter(EnvironmentView environment, BoardArt art,
+             BlockEffectContextSource effects, BlockEffectViewContext viewContext) : this(environment, art)
+         {
+@@ -130,6 +134,13 @@
+             m_effectViewContext = viewContext ?? throw new ArgumentNullException(nameof(viewContext));
+         }
+ 
++        [Onity.DI.Inject]
++        public BoardPresenter(EnvironmentView environment, BoardArt art, BlockEffectContextSource effects,
++            BlockEffectViewContext viewContext, HeldOutlineView outline) : this(environment, art, effects, viewContext)
++        {
++            m_outline = outline ?? throw new ArgumentNullException(nameof(outline));
++        }
++
+         public void ReprojectEffects()
+         {
+             for (int index = 0; index < m_effects.Length; index++) m_effects[index]?.Reproject();
+@@ -291,6 +302,9 @@
+                 }
+ 
+                 m_fragments.Prepare(level.BlockCount);
++
++                // Sized on Home for the largest footprint, so a press rebuilds the outline without allocating.
++                m_outline?.Prepare(GetLargestFootprint(needs));
+             }
+             catch
+             {
+@@ -451,6 +465,12 @@
+             {
+                 // The drag follow owns the held root now, so an unfinished settle stops.
+                 Tween.StopAll(m_transforms[block]);
++                // Traced from the root's current cells, so a Rocket remainder gets its own outline (DEC-89).
++                m_outline?.Show(m_transforms[block], m_pieces[block].Cells);
++            }
++            else
++            {
++                m_outline?.Hide();
+             }
+ 
+             if (previous != k_none)
+@@ -464,6 +484,7 @@
+         {
+             int block = m_held;
+             m_held = k_none;
++            m_outline?.Hide();
+             if (block == k_none)
+             {
+                 return;
+@@ -533,6 +554,8 @@
+             m_environment.ResetGates();
+             m_leadDoor = k_none;
+             m_held = k_none;
++            // Before the roots go back, so the outline never rides into a pool.
++            m_outline?.Hide();
+             for (int block = 0; block < m_pieces.Length; block++)
+             {
+                 if (m_pieces[block] is not null)
+@@ -559,6 +582,7 @@
+             DisposeFactory();
+             m_fragments?.Dispose();
+             m_fragments = null;
++            m_outline?.Dispose();
+             if (m_blocksRoot != null)
+             {
+                 Object.Destroy(m_blocksRoot.gameObject);
+@@ -568,6 +592,18 @@
+             m_board = null;
+         }
+ 
++        // The most cells any root of the level shows; a Rocket remainder only has fewer.
++        private static int GetLargestFootprint(Dictionary<BlockShapeType, PoolNeed> needs)
++        {
++            int largest = 1;
++            foreach (KeyValuePair<BlockShapeType, PoolNeed> need in needs)
++            {
++                largest = Math.Max(largest, need.Value.CellCapacity);
++            }
++
++            return largest;
++        }
++
+         // Checks every block's shape prefab as LevelPreviewBlockMapper does, then sizes one pool per
+         // source type: its block count, its largest footprint (at least the library shape's size) and the
+         // exact reachable pieces of every resolved footprint, so a block spawns only what it can show
+@@ -662,6 +698,12 @@
+             }
+ 
+             Tween.StopAll(root);
++            // A pushed-out block leaves the hold here; the outline does not follow it through the door.
++            if (m_outline != null && m_outline.Root == root)
++            {
++                m_outline.Hide();
++            }
++
+             // The marker clips with its block. Effects that clip a block (Vacuum, Hammer) forward the
+             // same plane to its marker when they reach this presenter.
+             Vector4 clipPlane = GetClipPlane(side);
+--- a/Assets/ColorBlockJam/Gameplay/Composition/GameSceneInstaller.cs
++++ b/Assets/ColorBlockJam/Gameplay/Composition/GameSceneInstaller.cs
+@@ -2,6 +2,7 @@
+ using ColorBlockJam.Domain.Session;
+ using ColorBlockJam.Environment;
+ using ColorBlockJam.Gameplay.Board;
++using ColorBlockJam.Gameplay.Board.Outline;
+ using ColorBlockJam.Gameplay.Effects;
+ using ColorBlockJam.Gameplay.Input;
+ using ColorBlockJam.Gameplay.Session;
+@@ -34,6 +35,8 @@
+         [Tooltip("Runtime UI documents whose pickable elements block board presses.")]
+         [SerializeField] private UIDocument[] m_uiDocuments = Array.Empty<UIDocument>();
+         [SerializeField] private Material m_iceMaterial = null;
++        [Tooltip("The shared white outline around the held block (MAT_BlockOutline, DEC-89).")]
++        [SerializeField] private Material m_outlineMaterial = null;
+         [SerializeField] private UIDocument m_counterDocument = null;
+         [Tooltip("Direct Play of Game only: Hub's level launch request and the Level Editor's Test Level choose the level otherwise (design 9.3).")]
+         [SerializeField, Min(0)] private int m_levelIndex = 0;
+@@ -64,6 +67,11 @@
+                 throw new InvalidOperationException("Game scene installer: the palette or the board piece catalog is missing.");
+             }
+ 
++            if (m_outlineMaterial == null)
++            {
++                throw new InvalidOperationException("Game scene installer: the held-block outline material is missing.");
++            }
++
+             // Validation loads the shape definitions now, at scope build, before any attempt reads them.
+             BoardArt art = new BoardArt(m_palette, m_catalog, m_shapes);
+             if (!art.Validate(out string artError))
+@@ -87,6 +95,9 @@
+             container.BindInstance(new BlockEffectViewContext(art, m_environment.BoardRoot, m_camera, m_counterDocument));
+             container.BindInstance<IAttemptHookSource>(new EffectAttemptHookSource(effects));
+ 
++            // Waits hidden under BoardRoot; the presenter shows it on the held root and disposes it.
++            container.BindInstance(new HeldOutlineView(m_outlineMaterial, m_environment.BoardRoot));
++
+             // The container disposes singletons in reverse registration order, so the session is
+             // registered after everything its Teardown still calls and is disposed before them.
+             container.BindInterfacesAndSelfTo<GameplayPointerInput>().AsSingle();

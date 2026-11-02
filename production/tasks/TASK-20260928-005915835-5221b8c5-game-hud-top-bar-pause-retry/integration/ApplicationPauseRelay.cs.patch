@@ -1,0 +1,42 @@
+--- /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/base/ApplicationPauseRelay.cs.live	2026-09-28 06:25:53.803854200 +0300
++++ /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/ours/ApplicationPauseRelay.cs	2026-09-28 06:25:53.842834000 +0300
+@@ -1,3 +1,4 @@
++using ColorBlockJam.Gameplay.Hud;
+ using ColorBlockJam.Gameplay.Session;
+ using Onity.DI;
+ using UnityEngine;
+@@ -5,7 +6,8 @@
+ namespace ColorBlockJam.Gameplay.Composition
+ {
+     /// <summary>
+-    /// Forwards OS backgrounding to the level session (AC-3.12). It is a MonoBehaviour only because
++    /// Forwards OS backgrounding to the level session (AC-3.12), then to the optional in-game menu listener, which
++    /// shows the pause menu on the foreground return (Game HUD design 4). It is a MonoBehaviour only because
+     /// Unity reports backgrounding through OnApplicationPause; it has no per-frame code.
+     /// </summary>
+     [DisallowMultipleComponent]
+@@ -13,10 +15,14 @@
+     {
+         private LevelSession m_session;
+ 
++        // Bound only with the HUD; null in a HUD-less scene.
++        private IApplicationPauseListener m_listener;
++
+         [Inject]
+-        public void Construct(LevelSession session)
++        public void Construct(LevelSession session, IResolver resolver)
+         {
+             m_session = session;
++            m_listener = resolver != null && resolver.TryResolve(out IApplicationPauseListener listener) ? listener : null;
+         }
+ 
+         // Unity can report a pause before the scene context injects this component.
+@@ -26,6 +32,8 @@
+             {
+                 m_session.NotifyBackground(paused);
+             }
++
++            m_listener?.OnApplicationPauseChanged(paused);
+         }
+     }
+ }

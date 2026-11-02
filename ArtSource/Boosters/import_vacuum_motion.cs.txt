@@ -1,0 +1,4 @@
+// Execute in the pinned Editor after compilation. The import reads the current bake metadata.
+System.Type.GetType("ColorBlockJam.Editor.Boosters.VacuumMotionAssets, ColorBlockJam.Editor")
+    .GetMethod("Import").Invoke(null, null);
+return new { activeSceneDirty = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().isDirty };

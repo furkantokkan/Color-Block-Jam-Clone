@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.8730478">
+  <test-suite type="TestSuite" id="1000" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="404" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.873048" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1140" name="ColorBlockJam.Editor.EditModeTests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/CBJshellverify-5d19a4/Library/ScriptAssemblies/ColorBlockJam.Editor.EditModeTests.dll" runstate="Runnable" testcasecount="120" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.811380" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="120480" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1141" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="120" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.794409" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1142" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="120" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.774396" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1143" name="EditMode" fullname="ColorBlockJam.Tests.EditMode" runstate="Runnable" testcasecount="120" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.751425" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1137" name="VerifierShellProbeTests" fullname="ColorBlockJam.Tests.EditMode.VerifierShellProbeTests" classname="ColorBlockJam.Tests.EditMode.VerifierShellProbeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.728535" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1139" name="ProbeGesturesAndUndo" fullname="ColorBlockJam.Tests.EditMode.VerifierShellProbeTests.ProbeGesturesAndUndo" methodname="ProbeGesturesAndUndo" classname="ColorBlockJam.Tests.EditMode.VerifierShellProbeTests" runstate="Runnable" seed="1085033560" result="Passed" start-time="2026-09-25 06:00:18Z" end-time="2026-09-25 06:00:21Z" duration="2.322787" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[
+IgnoreFailingMessages:true
+Cancelling DisplayDialog: Delete Level Delete Level 6 from this database?
+This should not be called in batch mode.
+]]></output>
+              </test-case>
+              <test-case id="1138" name="ProbeLayout" fullname="ColorBlockJam.Tests.EditMode.VerifierShellProbeTests.ProbeLayout" methodname="ProbeLayout" classname="ColorBlockJam.Tests.EditMode.VerifierShellProbeTests" runstate="Runnable" seed="1530948201" result="Passed" start-time="2026-09-25 06:00:21Z" end-time="2026-09-25 06:00:21Z" duration="0.376759" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

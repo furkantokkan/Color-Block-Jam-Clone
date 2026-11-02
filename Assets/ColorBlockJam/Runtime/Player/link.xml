@@ -1,0 +1,9 @@
+<linker>
+  <assembly fullname="ColorBlockJam.Player">
+    <!-- Newtonsoft creates these player-save DTOs by reflection; IL2CPP must keep their constructors and fields. -->
+    <type fullname="ColorBlockJam.Player.Storage.PlayerSnapshotJson/SnapshotDto" preserve="all" />
+    <type fullname="ColorBlockJam.Player.Storage.PlayerSnapshotJson/SettingsDto" preserve="all" />
+    <!-- Onity constructs the service through its activator, with a reflection fallback on AOT. -->
+    <type fullname="ColorBlockJam.Player.PlayerSaveService" preserve="all" />
+  </assembly>
+</linker>

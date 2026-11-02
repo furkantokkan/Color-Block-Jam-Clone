@@ -1,0 +1,101 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!--
+      Gameplay HUD (Booster-Gameplay B-21 to B-24, references 01-04, 11, 13, 16). Element names are the contract with
+      GameplayHudView, RocketReticleView and the tests. BoardOverlayPanelSettings does not load the project theme, so the
+      shared styles are imported here and GameplayHud.uss sets the font. Every full-screen container is Ignore so board
+      presses pass through; only the booster bar, the targeting banner, the top bar's buttons and the shown popups are
+      Position.
+      Later siblings draw on top and are picked first: reticles under the bars, the booster bar, then the purchase popup.
+      The shared purchase popup (ColorBlockJam.UI, DEC-136) brings its own style sheet through its template.
+    -->
+    <ui:Template name="BoosterPurchasePopup" src="project://database/Assets/ColorBlockJam/UI/Purchase/BoosterPurchasePopup.uxml" />
+    <ui:Template name="GameTopBar" src="project://database/Assets/ColorBlockJam/UI/Game/TopBar/GameTopBar.uxml" />
+    <ui:Template name="GameOverlays" src="project://database/Assets/ColorBlockJam/UI/Game/Overlays/GameOverlays.uxml" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Game/GameplayHud.uss" />
+    <ui:VisualElement name="hud-root" class="hud-root" picking-mode="Ignore">
+
+        <!-- Rocket crosshairs, one pooled reticle per eligible cell (B-24); filled in code, all Ignore. -->
+        <ui:VisualElement name="target-layer" class="target-layer" picking-mode="Ignore" />
+
+        <!-- GameplayHud pads left, top and right from the safe area; top-content is its normal-flow child (D-008). -->
+        <ui:VisualElement name="top-area" class="top-area" picking-mode="Ignore">
+            <ui:VisualElement name="top-content" class="top-content" picking-mode="Ignore">
+                <!-- The top bar (Game HUD design 3): Level badge, Time panel with Booster's timer-band and freeze-counter,
+                     Retry, Pause and the coin holder. Stretched across top-content; hidden while targeting. -->
+                <ui:Instance template="GameTopBar" name="game-top-bar-instance" picking-mode="Ignore" style="align-self: stretch;" />
+
+                <!-- The targeting banner replaces the top bar while targeting (reference 02) and swallows taps on itself. -->
+                <ui:VisualElement name="info-banner" class="info-banner" picking-mode="Position">
+                    <ui:VisualElement name="info-icon" class="info-icon" picking-mode="Ignore" />
+                    <ui:Label name="info-text" class="info-text cbj-title" text="" picking-mode="Ignore" />
+                    <ui:VisualElement name="info-header-row" class="info-header-row" picking-mode="Ignore">
+                        <ui:VisualElement name="info-header" class="info-header" picking-mode="Ignore">
+                            <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                                <ui:Label name="info-title-back" class="info-title cbj-title cbj-heavy-text__back" text="" picking-mode="Ignore" />
+                                <ui:Label name="info-title" class="info-title cbj-title cbj-heavy-text__front" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Button name="info-close" class="info-close cbj-pressable" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- The starting-booster opening (reference 11): shown while the opening hold runs, faded by USS transitions. -->
+        <ui:VisualElement name="opening-layer" class="opening-layer" picking-mode="Ignore">
+            <ui:VisualElement name="opening-extra-time" class="opening-icon opening-icon--extra-time" picking-mode="Ignore" />
+            <ui:VisualElement name="opening-rocket" class="opening-icon" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- Drawn last and picked first; GameplayHud pads its left, right and bottom from the safe area. -->
+        <ui:VisualElement name="booster-bar" class="booster-bar" picking-mode="Position">
+            <ui:VisualElement name="booster-row" class="booster-row" picking-mode="Ignore">
+                <ui:Button name="booster-button-0" class="booster-button cbj-pressable">
+                    <ui:VisualElement name="booster-icon" class="booster-button__icon cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="booster-count" class="booster-button__count" picking-mode="Ignore">
+                        <ui:Label name="booster-count-label" class="booster-button__count-label cbj-title" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="booster-plus" class="booster-button__plus" picking-mode="Ignore">
+                        <ui:VisualElement class="booster-button__plus-icon" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="booster-button-1" class="booster-button cbj-pressable">
+                    <ui:VisualElement name="booster-icon" class="booster-button__icon cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="booster-count" class="booster-button__count" picking-mode="Ignore">
+                        <ui:Label name="booster-count-label" class="booster-button__count-label cbj-title" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="booster-plus" class="booster-button__plus" picking-mode="Ignore">
+                        <ui:VisualElement class="booster-button__plus-icon" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="booster-button-2" class="booster-button cbj-pressable">
+                    <ui:VisualElement name="booster-icon" class="booster-button__icon cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="booster-count" class="booster-button__count" picking-mode="Ignore">
+                        <ui:Label name="booster-count-label" class="booster-button__count-label cbj-title" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="booster-plus" class="booster-button__plus" picking-mode="Ignore">
+                        <ui:VisualElement class="booster-button__plus-icon" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="booster-button-3" class="booster-button cbj-pressable">
+                    <ui:VisualElement name="booster-icon" class="booster-button__icon cbj-press-tint" picking-mode="Ignore" />
+                    <ui:VisualElement name="booster-count" class="booster-button__count" picking-mode="Ignore">
+                        <ui:Label name="booster-count-label" class="booster-button__count-label cbj-title" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="booster-plus" class="booster-button__plus" picking-mode="Ignore">
+                        <ui:VisualElement class="booster-button__plus-icon" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- The zero-stock purchase popup (AC-12, B-18, B-32): hidden by its USS until InGamePurchaseHost shows it under
+             Paused(Purchase). Drawn last, so its scrim covers the bar and the banner and blocks every press. -->
+        <ui:Instance template="BoosterPurchasePopup" name="booster-purchase-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+
+        <!-- The pause menu (shared Settings popup with HOME) and the Retry confirmation (Game HUD design 6), hidden until
+             the menu flow shows one; after the purchase popup, so a pause menu shown over it after backgrounding is on top. -->
+        <ui:Instance template="GameOverlays" name="game-overlays-instance" picking-mode="Ignore" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

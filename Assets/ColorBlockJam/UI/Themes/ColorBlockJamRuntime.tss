@@ -1,0 +1,11 @@
+@import url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss");
+@import url("project://database/Assets/ColorBlockJam/UI/Common/Common.uss");
+
+/*
+ * Runtime theme for every Color Block Jam panel (Hub-And-Player-Data-Design 2, 6.2): Unity's default runtime
+ * theme, the shared styles and the default font, the UI Toolkit FontAsset made from the TextMesh Pro essentials
+ * LiberationSans.ttf (DEC-39). The font is inherited from the panel root.
+ */
+:root {
+    -unity-font-definition: url("project://database/Assets/ColorBlockJam/Data/UI/Fonts/LiberationSans-UITK.asset");
+}

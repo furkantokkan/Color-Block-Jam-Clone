@@ -1,0 +1,28 @@
+# Git normalizes line endings of text files and detects binaries.
+* text=auto
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.psd binary
+*.tga binary
+*.tif binary
+*.exr binary
+*.fbx binary
+*.blend binary
+*.mp4 binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+*.dll binary
+*.so binary
+*.a binary
+*.aar binary
+*.jar binary
+*.pdf binary
+*.zip binary

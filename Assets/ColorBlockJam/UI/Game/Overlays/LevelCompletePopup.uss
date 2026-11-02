@@ -1,0 +1,246 @@
+/*
+ * Level Complete overlay (reference 05, AC-4.9, DEC-173). Sizes are panel units measured from the reference at 20:9,
+ * where the HUD panel is 966 units wide (1 reference pixel = 1.047 units); the reference's X2 ad button is left out and
+ * the button takes its place under the coins. Nine-slice values equal the Sprite Editor borders in
+ * docs/UI-Asset-Import.md (USS order left, top, right, bottom). Button selectors carry ".unity-button" plus a parent
+ * class so they outrank the shared ".unity-button.cbj-pressable" reset in Common.uss.
+ */
+
+/* ---- Overlay, scrim, confetti and safe area ---- */
+
+/* Visible standalone; GameOverlays initializes embedded copies closed before binding. */
+.level-complete-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+}
+
+/*
+ * The reference darkens everything behind the result to a fifth of its brightness. UI Toolkit blends in linear space in
+ * this Linear project, so a fifth of the displayed (sRGB) brightness needs 97 % black: 0.03 ^ (1 / 2.2) is about 0.2.
+ */
+.level-complete-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.97);
+}
+
+/* The confetti camera's render texture, one texture pixel per screen pixel; UiParticleOverlay shows and hides it. */
+.level-complete-confetti {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    -unity-background-scale-mode: stretch-to-fill;
+}
+
+.level-complete-safe-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+ * The removed X2 button's space stays below the button as padding, so the centred column puts the title and the coin
+ * pile where the reference has them (the title top at about a fifth of the height at 20:9) and the button takes the X2
+ * button's place under the coins.
+ */
+.level-complete-content {
+    flex-shrink: 0;
+    align-items: center;
+    padding-bottom: 292px;
+}
+
+/* ---- Title ---- */
+
+/*
+ * Each line is an ArcTextElement: letters on a circle of radius 2700, whose four layers are drawn in order: a dark
+ * lower edge (shadow), the gold rim, the maroon stroke and the cream face. The letters overlap (negative margins) so
+ * the rims merge into one outline per word, as in the reference; the rim is as wide as the font's distance field
+ * holds (its padding ends about 10 units beyond a glyph at this size).
+ */
+.level-complete-title {
+    align-items: center;
+}
+
+.level-complete-title .arc-text {
+    flex-direction: row;
+}
+
+.level-complete-title__line {
+    font-size: 106px;
+    -unity-font-style: bold;
+}
+
+/* The two line centres sit 97 units apart, as in the reference. */
+.level-complete-title__line--second {
+    margin-top: -30px;
+}
+
+.level-complete-title .arc-text__letter {
+    margin-left: -6px;
+    margin-right: -6px;
+}
+
+.level-complete-title .arc-text__shadow {
+    color: rgb(128, 54, 4);
+    -unity-text-outline-color: rgb(128, 54, 4);
+    -unity-text-outline-width: 26px;
+    translate: 0 7px;
+}
+
+.level-complete-title .arc-text__rim {
+    color: rgb(251, 176, 12);
+    -unity-text-outline-color: rgb(251, 176, 12);
+    -unity-text-outline-width: 26px;
+}
+
+.level-complete-title .arc-text__stroke {
+    color: rgb(118, 36, 4);
+    -unity-text-outline-color: rgb(118, 36, 4);
+    -unity-text-outline-width: 7px;
+}
+
+.level-complete-title .arc-text__face {
+    color: rgb(255, 248, 222);
+    -unity-text-outline-color: rgb(255, 248, 222);
+    -unity-text-outline-width: 1px;
+}
+
+/* ---- Coin reward ---- */
+
+/* The pile's bounds in the reference (484 x 312 units), 133 units under the title. */
+.level-complete-coins {
+    width: 484px;
+    height: 312px;
+    margin-top: 133px;
+    flex-shrink: 0;
+}
+
+/*
+ * Both ray layers centre a little above the pile's middle (241, 125), like the reference's halo, and reach 280 units
+ * across and about 258 up and down (scale 0.92), so the tips stop under the title and above the button.
+ */
+.level-complete-rays {
+    position: absolute;
+    left: -39px;
+    top: -155px;
+    width: 560px;
+    height: 560px;
+    scale: 1 0.92;
+}
+
+/* One coin: the inline left, top, size, rotate and scale place and tilt it; a lying coin also squashes it. */
+.level-complete-coin {
+    position: absolute;
+}
+
+/* Coin_Single (512 x 512), fixed; a lying coin's inline rotate turns the art so its rim faces down before the squash. */
+.level-complete-coin__art {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ---- Message ---- */
+
+/* In the 77 unit gap under the pile, centred on it, so a note never moves the title, the pile or the button. */
+.level-complete-message-box {
+    position: absolute;
+    left: -138px;
+    top: 316px;
+    width: 760px;
+}
+
+.level-complete-message {
+    font-size: 44px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.level-complete-message.cbj-heavy-text__back {
+    -unity-text-outline-width: 7px;
+}
+
+.level-complete-message.cbj-heavy-text__front {
+    -unity-text-outline-width: 1px;
+}
+
+/* ---- Button ---- */
+
+/*
+ * Btn_popup_blue (244 x 211; L46 T69 R47 B65), sliced to the reference's 397 x 173 units; slice-scale 0.7 keeps its
+ * rounded corners and border as wide as the reference's. The bottom padding lifts the text off the art's lower band.
+ */
+.level-complete-content > .unity-button.level-complete-continue {
+    width: 397px;
+    height: 173px;
+    margin-top: 77px;
+    padding-bottom: 12px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_popup_blue.png");
+    -unity-slice-left: 46;
+    -unity-slice-top: 69;
+    -unity-slice-right: 47;
+    -unity-slice-bottom: 65;
+    -unity-slice-scale: 0.7px;
+}
+
+.level-complete-continue__label {
+    font-size: 56px;
+    -unity-font-style: bold;
+}
+
+.level-complete-continue__label.cbj-heavy-text__back {
+    -unity-text-outline-width: 9px;
+}
+
+.level-complete-continue__label.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.level-complete-reward {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: -6px;
+}
+
+.level-complete-reward__label {
+    font-size: 50px;
+    -unity-font-style: bold;
+}
+
+.level-complete-reward__label.cbj-heavy-text__back {
+    -unity-text-outline-width: 9px;
+}
+
+.level-complete-reward__label.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.level-complete-reward__coin {
+    width: 50px;
+    height: 50px;
+    margin-left: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png");
+    -unity-background-scale-mode: scale-to-fit;
+}

@@ -1,0 +1,4 @@
+/* Representative coin icon; Home's currency modifier and runtime inline icon take precedence. */
+.holder-icon {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png");
+}

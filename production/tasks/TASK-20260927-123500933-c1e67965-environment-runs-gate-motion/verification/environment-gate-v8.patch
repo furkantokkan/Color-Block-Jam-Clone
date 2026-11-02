@@ -1,0 +1,981 @@
+diff --git "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs" "staging-v8\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs"
+index 7b0ef74..0bd6343 100644
+--- "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Environment/EnvironmentComposer.cs"
+@@ -13,8 +13,8 @@ namespace ColorBlockJam.Environment
+     /// environment rule set, and door pieces in the door slots. Compose gives exactly the rule
+     /// placements, which the Level Editor canvas draws. ComposePlayArea gives what the player sees: the
+     /// same quadrants with each straight run of the outer boundary closed into one brick, each of its
+-    /// corners a closed corner unit, a dark base under every wall and gate, plus one gate span per authored
+-    /// door (DEC-139). It runs once per level load; the view maps its grid positions to local space with the Grid.
++    /// corners a closed corner unit, each gate closed by rounded ends, a dark base under every wall and gate,
++    /// plus one gate span per authored door (DEC-139). It runs once per level load; the view maps its grid positions to local space with the Grid.
+     /// </summary>
+     public sealed class EnvironmentComposer
+     {
+@@ -28,6 +28,8 @@ namespace ColorBlockJam.Environment
+         private const float k_floorBaseDepth = 0.02f;
+         // A one-quadrant run is closed by two half-length ends, each centred a quarter quadrant off centre.
+         private const float k_halfEndOffset = 0.25f;
++        // A one-slot gate is closed by two half-length Door_End pieces, each a quarter cell (half a quadrant) off centre.
++        private const float k_halfDoorOffset = 0.5f;
+         // The base under a wall quadrant stops this far short of a side that faces open void, so it never
+         // shows outside the board or inside a hole; gaps between wall units and by the floor then read dark.
+         private const float k_wallBaseInset = 0.25f;
+@@ -66,7 +68,8 @@ namespace ColorBlockJam.Environment
+         /// run of the outer boundary between corners and gates closed into one brick by Brick_End caps,
+         /// every corner of the outer boundary a Corner_End unit, interior holes kept as one continuous rule
+         /// frame, a floor-base square under every wall quadrant and door slot, and gates filled with one span
+-        /// per authored door in door order: that door's Door_1x1 slots, then its arrow, contiguous in output.
++        /// per authored door in door order: that door's slot pieces (Door_End at both ends of the span,
++        /// Door_1x1 between them), then its arrow, contiguous in output.
+         /// </summary>
+         public void ComposePlayArea(IBoardLayout layout, List<EnvironmentPiecePlacement> output,
+             List<EnvironmentGateSpan> gates)
+@@ -257,20 +260,75 @@ namespace ColorBlockJam.Environment
+                     }
+ 
+                     // The base reaches every side that meets floor, a wall or a gate, so no gap between them
+-                    // opens onto the background.
+-                    float left = IsOpenVoid(position + Vector2Int.left) ? k_wallBaseInset : 0f;
+-                    float right = IsOpenVoid(position + Vector2Int.right) ? k_wallBaseInset : 0f;
+-                    float down = IsOpenVoid(position + Vector2Int.down) ? k_wallBaseInset : 0f;
+-                    float up = IsOpenVoid(position + Vector2Int.up) ? k_wallBaseInset : 0f;
++                    // opens onto the background. A ring corner (floor only diagonally) always stops short on
++                    // its two sides away from the floor: its outer arc curves away from them, so a base there
++                    // would show past the arc even where a neighbouring wall meets that side.
++                    Vector2Int ring = GetRingCornerFloor(position);
++                    float left = ring.x > 0 || IsOpenVoid(position + Vector2Int.left) ? k_wallBaseInset : 0f;
++                    float right = ring.x < 0 || IsOpenVoid(position + Vector2Int.right) ? k_wallBaseInset : 0f;
++                    float down = ring.y > 0 || IsOpenVoid(position + Vector2Int.down) ? k_wallBaseInset : 0f;
++                    float up = ring.y < 0 || IsOpenVoid(position + Vector2Int.up) ? k_wallBaseInset : 0f;
+                     Vector3 center = GetQuadrantCenter(position)
+                         + new Vector3(0.5f * (left - right), 0.5f * (down - up), -k_floorBaseDepth);
+                     // FloorBase spans one cell (two quadrants) at scale 1, lying in local X and Z.
+                     output.Add(new EnvironmentPiecePlacement(m_database.FloorBasePiece, center, 0,
+                         new Vector3(0.5f * (1f - left - right), 1f, 0.5f * (1f - down - up)), baseColor));
++                    if (ring != Vector2Int.zero)
++                    {
++                        AddRingCornerPatches(position, ring, baseColor, output);
++                    }
+                 }
+             }
+         }
+ 
++        // Where a wall meets a ring corner on a side away from the floor, the corner's rounded end pulls away
++        // from that side next to the floor and leaves a small pocket between the two units. One inset-sized
++        // square fills it: at the end of that side toward the floor, inside the joint, never outside the board.
++        private void AddRingCornerPatches(Vector2Int position, Vector2Int ring, Color baseColor,
++            List<EnvironmentPiecePlacement> output)
++        {
++            Vector3 corner = new Vector3(position.x, position.y, -k_floorBaseDepth);
++            Vector3 scale = new Vector3(0.5f * k_wallBaseInset, 1f, 0.5f * k_wallBaseInset);
++            float near = 0.5f * k_wallBaseInset;
++            float far = 1f - near;
++            // The side away from the floor along x, patched at its end toward the floor along y.
++            if (!IsOpenVoid(position + new Vector2Int(-ring.x, 0)))
++            {
++                output.Add(new EnvironmentPiecePlacement(m_database.FloorBasePiece,
++                    corner + new Vector3(ring.x > 0 ? near : far, ring.y > 0 ? far : near, 0f), 0, scale, baseColor));
++            }
++
++            // The side away from the floor along y, patched at its end toward the floor along x.
++            if (!IsOpenVoid(position + new Vector2Int(0, -ring.y)))
++            {
++                output.Add(new EnvironmentPiecePlacement(m_database.FloorBasePiece,
++                    corner + new Vector3(ring.x > 0 ? far : near, ring.y > 0 ? near : far, 0f), 0, scale, baseColor));
++            }
++        }
++
++        // The diagonal toward the floor of a quadrant with floor only diagonally (a ring corner), else zero.
++        private Vector2Int GetRingCornerFloor(Vector2Int position)
++        {
++            if (m_matcher.IsFloor(position.x - 1, position.y) || m_matcher.IsFloor(position.x + 1, position.y)
++                || m_matcher.IsFloor(position.x, position.y - 1) || m_matcher.IsFloor(position.x, position.y + 1))
++            {
++                return Vector2Int.zero;
++            }
++
++            for (int dy = -1; dy <= 1; dy += 2)
++            {
++                for (int dx = -1; dx <= 1; dx += 2)
++                {
++                    if (m_matcher.IsFloor(position.x + dx, position.y + dy))
++                    {
++                        return new Vector2Int(dx, dy);
++                    }
++                }
++            }
++
++            return Vector2Int.zero;
++        }
++
+         private bool IsWallOrGate(int index)
+         {
+             return m_wallRules[index] != k_noRule || m_doorQuadrants[index];
+@@ -480,7 +538,9 @@ namespace ColorBlockJam.Environment
+         }
+ 
+         // Slots arrive grouped by door in authored order (BoardLayout), so each door's slots and arrow
+-        // are contiguous in output and its gate span names them by range.
++        // are contiguous in output and its gate span names them by range. In the play area (gates set) a
++        // gate is closed like a brick: Door_End at its first and last slot with the rounded end facing out
++        // of the span, and two half-length ends back to back on a one-slot gate.
+         private void AddDoors(IBoardLayout layout, List<EnvironmentPiecePlacement> output, List<EnvironmentGateSpan> gates)
+         {
+             Vector3 scale = m_database.DoorPieceScale;
+@@ -489,12 +549,18 @@ namespace ColorBlockJam.Environment
+             for (int index = 0; index < layout.DoorSlotCount; index++)
+             {
+                 DoorSlot slot = layout.GetDoorSlotAt(index);
+-                output.Add(new EnvironmentPiecePlacement(
+-                    m_database.DoorPiece, GetDoorCenter(slot), slot.Yaw, scale,
+-                    m_database.GetDoorColor(slot.Color)));
+-
+                 bool isLastSegment = index + 1 == layout.DoorSlotCount
+                     || layout.GetDoorSlotAt(index + 1).DoorIndex != slot.DoorIndex;
++                Color color = m_database.GetDoorColor(slot.Color);
++                if (gates == null)
++                {
++                    output.Add(new EnvironmentPiecePlacement(m_database.DoorPiece, GetDoorCenter(slot), slot.Yaw, scale, color));
++                }
++                else
++                {
++                    AddGatePiece(layout, firstSlot, index, isLastSegment, scale, color, output);
++                }
++
+                 if (isLastSegment)
+                 {
+                     AddDoorArrows(layout.GetDoorSlotAt(firstSlot), slot, output);
+@@ -505,6 +571,49 @@ namespace ColorBlockJam.Environment
+             }
+         }
+ 
++        // One slot of a play-area gate: Door_End on the span's first and last slot, Door_1x1 between them.
++        private void AddGatePiece(IBoardLayout layout, int firstSlot, int index, bool isLastSegment, Vector3 scale,
++            Color color, List<EnvironmentPiecePlacement> output)
++        {
++            DoorSlot slot = layout.GetDoorSlotAt(index);
++            Vector3 center = GetDoorCenter(slot);
++            // A slot spans two quadrants along its side: grid x on the top and bottom sides, grid y on the others.
++            Vector2Int along = slot.Yaw == 0 ? Vector2Int.right : Vector2Int.up;
++            BoardPieceView end = m_database.DoorEndPiece;
++            bool isFirstSegment = index == firstSlot;
++            if (isFirstSegment && isLastSegment)
++            {
++                Vector3 halfScale = new Vector3(scale.x * 0.5f, scale.y, scale.z);
++                Vector3 offset = new Vector3(along.x, along.y, 0f) * k_halfDoorOffset;
++                output.Add(new EnvironmentPiecePlacement(end, center - offset, GetDoorEndYaw(-along), halfScale, color));
++                output.Add(new EnvironmentPiecePlacement(end, center + offset, GetDoorEndYaw(along), halfScale, color));
++                return;
++            }
++
++            if (!isFirstSegment && !isLastSegment)
++            {
++                output.Add(new EnvironmentPiecePlacement(m_database.DoorPiece, center, slot.Yaw, scale, color));
++                return;
++            }
++
++            // The rounded end faces away from the rest of the span.
++            DoorSlot other = layout.GetDoorSlotAt(isFirstSegment ? index + 1 : index - 1);
++            Vector3 inward = GetDoorCenter(other) - center;
++            Vector2Int outward = Vector3.Dot(inward, new Vector3(along.x, along.y, 0f)) > 0f ? -along : along;
++            output.Add(new EnvironmentPiecePlacement(end, center, GetDoorEndYaw(outward), scale, color));
++        }
++
++        // Door_End keeps Door_1x1's mesh space. Unity mirrors the FBX's X axis on import, so at yaw 0 its rounded
++        // end faces local +X (grid +x) and its open mouth -X. The view turns a piece clockwise seen from above by
++        // its yaw.
++        private static int GetDoorEndYaw(Vector2Int rounded)
++        {
++            if (rounded.x > 0) return 0;
++            if (rounded.y < 0) return 90;
++            if (rounded.x < 0) return 180;
++            return 270;
++        }
++
+         /// <summary>
+         /// Places one arrow marker per door at the middle of its span, pointing out
+         /// of the board, as every door in the reference levels shows a single arrow.
+diff --git "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs" "staging-v8\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs"
+index 61f2cd7..f4d6ede 100644
+--- "staging-v7\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Environment/EnvironmentDatabase.cs"
+@@ -22,6 +22,8 @@ namespace ColorBlockJam.Environment
+         // The Blender-authored corner unit in Corner_1's mesh space, both arm ends closed and rounded (DEC-139).
+         [SerializeField] private BoardPieceView m_cornerEndPiece;
+         [SerializeField] private BoardPieceView m_doorPiece;
++        // The Blender-authored gate end cap in Door_1x1's mesh space that closes both ends of a gate (DEC-139).
++        [SerializeField] private BoardPieceView m_doorEndPiece;
+         [SerializeField] private BoardPieceView m_doorArrowPiece;
+         [SerializeField] private GamePalette m_palette;
+ 
+@@ -53,6 +55,7 @@ namespace ColorBlockJam.Environment
+         public BoardPieceView BrickEndPiece => m_brickEndPiece;
+         public BoardPieceView CornerEndPiece => m_cornerEndPiece;
+         public BoardPieceView DoorPiece => m_doorPiece;
++        public BoardPieceView DoorEndPiece => m_doorEndPiece;
+         public BoardPieceView DoorArrowPiece => m_doorArrowPiece;
+         public Vector3 WallPieceScale => m_wallPieceScale;
+         public Vector3 DoorPieceScale => m_doorPieceScale;
+@@ -88,7 +91,7 @@ namespace ColorBlockJam.Environment
+             return m_palette.GetColor(m_barrierColor);
+         }
+ 
+-        /// <summary>Adds every distinct prefab once, including the solid top, brick end and corner end, for the environment pools.</summary>
++        /// <summary>Adds every distinct prefab once, including the solid top, brick end, corner end and door end, for the environment pools.</summary>
+         public void GetPieces(List<BoardPieceView> output)
+         {
+             output.Clear();
+@@ -98,6 +101,7 @@ namespace ColorBlockJam.Environment
+             AddDistinct(output, m_brickEndPiece);
+             AddDistinct(output, m_cornerEndPiece);
+             AddDistinct(output, m_doorPiece);
++            AddDistinct(output, m_doorEndPiece);
+             AddDistinct(output, m_doorArrowPiece);
+             for (int index = 0; index < m_ruleSet.RuleCount; index++)
+             {
+@@ -108,9 +112,9 @@ namespace ColorBlockJam.Environment
+         public bool Validate(out string error)
+         {
+             if (m_ruleSet == null || m_floorPiece == null || m_floorBasePiece == null || m_blockFillPiece == null
+-                || m_brickEndPiece == null || m_cornerEndPiece == null || m_doorPiece == null || m_doorArrowPiece == null || m_palette == null)
++                || m_brickEndPiece == null || m_cornerEndPiece == null || m_doorPiece == null || m_doorEndPiece == null || m_doorArrowPiece == null || m_palette == null)
+             {
+-                error = "The environment database needs a rule set, floor, floor base, block fill, brick end, corner end, door and arrow pieces and a palette.";
++                error = "The environment database needs a rule set, floor, floor base, block fill, brick end, corner end, door, door end and arrow pieces and a palette.";
+                 return false;
+             }
+ 
+diff --git "staging-v7\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs" "staging-v8\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs"
+index 48e256d..53ae06b 100644
+--- "staging-v7\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Editor/BoardKit/EnvironmentWallBrickAssets.cs"
+@@ -7,19 +7,21 @@ using UnityEngine;
+ namespace ColorBlockJam.Editor.BoardKit
+ {
+     /// <summary>
+-    /// Imports the Blender-authored WallBrick.fbx, builds Brick_End.prefab with Wall.prefab's calibration and
+-    /// Corner_End.prefab with Corner_1.prefab's, and binds both in the EnvironmentDatabase (DEC-139). It writes
+-    /// only those four assets: the full kit rebuilds (BoardKitAssets.Build, SharedArtAssets) regenerate
+-    /// unrelated assets and stay out of it.
++    /// Imports the Blender-authored WallBrick.fbx, builds Brick_End.prefab with Wall.prefab's calibration,
++    /// Corner_End.prefab with Corner_1.prefab's and Door_End.prefab with Door_1x1.prefab's, and binds them in
++    /// the EnvironmentDatabase (DEC-139). It writes only those five assets: the full kit rebuilds
++    /// (BoardKitAssets.Build, SharedArtAssets) regenerate unrelated assets and stay out of it.
+     /// </summary>
+     public static class EnvironmentWallBrickAssets
+     {
+         public const string ModelPath = BoardKitAssets.Root + "/Art/Models/WallBrick.fbx";
+         public const string PrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Brick_End.prefab";
+         public const string CornerPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Corner_End.prefab";
++        public const string DoorPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Door_End.prefab";
+         private const string k_kitModelPath = BoardKitAssets.Root + "/Art/Models/WallAndDoor.fbx";
+         private const string k_wallPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Wall.prefab";
+         private const string k_cornerPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Corner_1.prefab";
++        private const string k_doorPrefabPath = BoardKitAssets.Root + "/Prefabs/Board/Pieces/Door_1x1.prefab";
+         private const string k_databasePath = BoardKitAssets.Root + "/Data/Environment/EnvironmentDatabase.asset";
+         // Each piece is authored inside its source piece's exact mesh bounds (ArtSource/BoardKit/WallBrick.blend).
+         private const float k_boundsTolerance = 0.001f;
+@@ -33,14 +35,16 @@ namespace ColorBlockJam.Editor.BoardKit
+             }
+ 
+             ConfigureImporter();
+-            // Both meshes are checked before either prefab is written, so a bad export changes nothing.
++            // Every mesh is checked before any prefab is written, so a bad export changes nothing.
+             Mesh brickMesh = FindCheckedMesh("Brick_End", "Wall");
+             Mesh cornerMesh = FindCheckedMesh("Corner_End", "Corner_1");
++            Mesh doorMesh = FindCheckedMesh("Door_End", "Door_1x1");
+             BoardPieceView brick = CreatePiece(brickMesh, k_wallPrefabPath, PrefabPath);
+             BoardPieceView corner = CreatePiece(cornerMesh, k_cornerPrefabPath, CornerPrefabPath);
+-            BindDatabase(brick, corner);
++            BoardPieceView door = CreatePiece(doorMesh, k_doorPrefabPath, DoorPrefabPath);
++            BindDatabase(brick, corner, door);
+             AssetDatabase.SaveAssets();
+-            Debug.Log($"Wall brick built: {PrefabPath} and {CornerPrefabPath} bound in {k_databasePath}.");
++            Debug.Log($"Wall brick built: {PrefabPath}, {CornerPrefabPath} and {DoorPrefabPath} bound in {k_databasePath}.");
+         }
+ 
+         // The supplied kit's mesh-space import (WallAndDoor.fbx) with materials, animation and Read/Write off.
+@@ -112,7 +116,7 @@ namespace ColorBlockJam.Editor.BoardKit
+             }
+         }
+ 
+-        private static void BindDatabase(BoardPieceView brick, BoardPieceView corner)
++        private static void BindDatabase(BoardPieceView brick, BoardPieceView corner, BoardPieceView door)
+         {
+             EnvironmentDatabase database = AssetDatabase.LoadAssetAtPath<EnvironmentDatabase>(k_databasePath);
+             if (database == null)
+@@ -123,6 +127,7 @@ namespace ColorBlockJam.Editor.BoardKit
+             SerializedObject data = new SerializedObject(database);
+             data.FindProperty("m_brickEndPiece").objectReferenceValue = brick;
+             data.FindProperty("m_cornerEndPiece").objectReferenceValue = corner;
++            data.FindProperty("m_doorEndPiece").objectReferenceValue = door;
+             data.ApplyModifiedPropertiesWithoutUndo();
+             EditorUtility.SetDirty(database);
+             AssetDatabase.SaveAssetIfDirty(database);
+diff --git "staging-v7\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset" "staging-v8\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset"
+index a881c1e..68a53ea 100644
+--- "staging-v7\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset"
++++ "staging-v8\\Assets/ColorBlockJam/Data/Environment/EnvironmentDatabase.asset"
+@@ -25,6 +25,8 @@ MonoBehaviour:
+     type: 3}
+   m_doorPiece: {fileID: 1950578696897402454, guid: 163655b697ad00f41916d7a6ac835b06,
+     type: 3}
++  m_doorEndPiece: {fileID: 518767885683116055, guid: 2eac7bad446360d4faef9365bcf7d101,
++    type: 3}
+   m_doorArrowPiece: {fileID: 6422523380051144989, guid: 1ea3802f1f9f19c479bc6c06dae4578b,
+     type: 3}
+   m_palette: {fileID: 11400000, guid: e13fe037917f25e4e9b6f520b747555f, type: 2}
+diff --git "staging-v7\\ArtSource/BoardKit/export_wall_brick.py" "staging-v8\\ArtSource/BoardKit/export_wall_brick.py"
+index 0e0a4b0..31545c4 100644
+--- "staging-v7\\ArtSource/BoardKit/export_wall_brick.py"
++++ "staging-v8\\ArtSource/BoardKit/export_wall_brick.py"
+@@ -1,15 +1,16 @@
+-"""Exports Brick_End and Corner_End from WallBrick.blend to Assets/ColorBlockJam/Art/Models/WallBrick.fbx (DEC-139).
++"""Exports Brick_End, Corner_End and Door_End from WallBrick.blend to Assets/ColorBlockJam/Art/Models/WallBrick.fbx (DEC-139).
+ 
+ WallBrick.blend holds Brick_End, the wall-run cap built from the supplied Wall profile inside Wall's exact
+-mesh bounds, Corner_End, the corner unit with Corner_1's footprint and both arm ends closed by the same
+-bevel, and Wall_Reference and Corner_Reference, unchanged copies of the supplied pieces kept only to check
+-calibration. Only Brick_End and Corner_End are exported, each with its source piece's node transform (the
+-approved generators build_brick_end.py and build_corner_end.py in
++mesh bounds, Corner_End, the corner unit with Corner_1's footprint, a large quarter-round outer arc and both arm
++ends closed by the same bevel, Door_End, the gate end cap with Door_1x1's cross-section and one rounded end, and
++Wall_Reference, Corner_Reference and Door_Reference, unchanged copies of the supplied pieces kept only to check
++calibration. Only Brick_End, Corner_End and Door_End are exported, each with its source piece's node transform
++(the approved generators build_brick_end.py, build_corner_end.py and build_door_end.py in
+ production/tasks/TASK-20260927-123500933-c1e67965-environment-runs-gate-motion/implementation/approved-brick)
+ and the supplied kit's unit convention: WallAndDoor.fbx stores its units as FBX UnitScaleFactor 100, so
+ this export writes units to the FBX scale too (FBX_SCALE_UNITS). Unity then reads each piece in its source
+-piece's mesh space, and Wall.prefab's and Corner_1.prefab's calibrations fit them. The script re-imports
+-the file and checks the unit scale and that both pieces kept their bounds.
++piece's mesh space, and Wall.prefab's, Corner_1.prefab's and Door_1x1.prefab's calibrations fit them. The script re-imports
++the file and checks the unit scale and that every piece kept its bounds.
+ 
+ Run from the repository root (Blender 4.1+):
+   blender --background --factory-startup ArtSource/BoardKit/WallBrick.blend --python ArtSource/BoardKit/export_wall_brick.py
+@@ -22,7 +23,7 @@ import bpy
+ 
+ HERE = os.path.dirname(os.path.abspath(__file__))
+ FBX_PATH = os.path.normpath(os.path.join(HERE, "..", "..", "Assets", "ColorBlockJam", "Art", "Models", "WallBrick.fbx"))
+-NAMES = ("Brick_End", "Corner_End")
++NAMES = ("Brick_End", "Corner_End", "Door_End")
+ TOLERANCE = 1e-4
+ # WallAndDoor.fbx's UnitScaleFactor; the FBX binary stores it as a little-endian double after its name.
+ KIT_UNIT_SCALE = 100.0
+diff --git "staging-v7\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs" "staging-v8\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs"
+index f408702..7c7771c 100644
+--- "staging-v7\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentWallRunTests.cs"
+@@ -16,8 +16,8 @@ namespace ColorBlockJam.Tests.Environment
+     /// gates with Brick_End caps whose mouths face into the run, closes a one-quadrant run with two half-length
+     /// caps, turns every corner of the outer boundary into Corner_End with the corner rule's yaw, keeps interior
+     /// holes as one continuous rule frame, keeps floor and doors exactly, puts one dark base under each wall
+-    /// quadrant and door slot that reaches floor, walls and gates but stops short of open void (D-002), and is
+-    /// symmetric under transposition. Nominal quadrants prove topology, not the
++    /// quadrant and door slot that reaches floor, walls and gates but stops short of open void (D-002), closes
++    /// every gate with rounded Door_End pieces facing out of the span (D-003), and is symmetric under transposition. Nominal quadrants prove topology, not the
+     /// rendered roof; the portrait captures decide the look.
+     /// </summary>
+     public sealed class EnvironmentWallRunTests
+@@ -55,6 +55,8 @@ namespace ColorBlockJam.Tests.Environment
+             yield return BoardLayoutTests.Create(4, 3, Array.Empty<Vector2Int>(),
+                 BoardLayoutTests.Door("top", BoardSide.Top, 1, 1, "Red"));
+             yield return BoardLayoutTests.Create(1, 1);
++            // One-cell stubs on the camera side: two ring corners meet side by side at each stub mouth.
++            yield return BoardLayoutTests.Create(5, 5, BoardLayoutTests.Cells((0, 0), (4, 0), (2, 0)));
+         }
+ 
+         [Test]
+@@ -65,7 +67,7 @@ namespace ColorBlockJam.Tests.Environment
+                 Compose(layout);
+                 string name = $"{layout.Width}x{layout.Height}";
+                 Assert.That(Describe(m_playArea), Is.EquivalentTo(Describe(m_rules)),
+-                    $"{name}: floor, floor base, doors and arrows are the rule placements");
++                    $"{name}: floor, floor base and arrows are the rule placements");
+ 
+                 Dictionary<Vector2Int, EnvironmentPiecePlacement> rules = GetRuleWalls();
+                 HashSet<Vector2Int> shown = new HashSet<Vector2Int>();
+@@ -159,14 +161,17 @@ namespace ColorBlockJam.Tests.Environment
+                     {
+                         walls.Add(GetQuadrant(piece));
+                     }
+-                    else if (piece.Piece == m_database.DoorPiece)
+-                    {
+-                        // A door slot spans the two quadrants on either side of its centre along its length.
+-                        Vector2 along = piece.Yaw % 180 == 0 ? new Vector2(0.5f, 0f) : new Vector2(0f, 0.5f);
+-                        Vector2 center = new Vector2(piece.GridPosition.x, piece.GridPosition.y);
+-                        walls.Add(Vector2Int.FloorToInt(center - along));
+-                        walls.Add(Vector2Int.FloorToInt(center + along));
+-                    }
++                }
++
++                // Door slots come from the rule placements: each spans the two quadrants on either side of its
++                // centre along its length.
++                foreach (EnvironmentPiecePlacement piece in m_rules)
++                {
++                    if (piece.Piece != m_database.DoorPiece) continue;
++                    Vector2 along = piece.Yaw % 180 == 0 ? new Vector2(0.5f, 0f) : new Vector2(0f, 0.5f);
++                    Vector2 center = new Vector2(piece.GridPosition.x, piece.GridPosition.y);
++                    walls.Add(Vector2Int.FloorToInt(center - along));
++                    walls.Add(Vector2Int.FloorToInt(center + along));
+                 }
+ 
+                 Dictionary<Vector2Int, EnvironmentPiecePlacement> bases = new Dictionary<Vector2Int, EnvironmentPiecePlacement>();
+@@ -174,6 +179,12 @@ namespace ColorBlockJam.Tests.Environment
+                 {
+                     if (!IsWallBase(piece)) continue;
+                     Vector2Int quadrant = GetQuadrant(piece);
++                    if (IsRingCornerPatch(piece))
++                    {
++                        AssertRingCornerPatch(layout, walls, piece, name);
++                        continue;
++                    }
++
+                     Assert.That(bases.ContainsKey(quadrant), Is.False, $"{name}: one base at {quadrant}");
+                     bases.Add(quadrant, piece);
+                     Assert.That(piece.Tint, Is.EqualTo(m_database.GetFloorBaseColor()), $"{name}: the base is dark");
+@@ -189,10 +200,10 @@ namespace ColorBlockJam.Tests.Environment
+                     Assert.That(high.y, Is.LessThanOrEqualTo(quadrant.y + 1 + 1e-5f));
+                     // A side that meets floor, a wall or a gate is covered to its edge; one that faces open void
+                     // stops a quarter quadrant short.
+-                    AssertBaseSide(layout, walls, quadrant + Vector2Int.left, low.x - quadrant.x, $"{name}: {quadrant} left");
+-                    AssertBaseSide(layout, walls, quadrant + Vector2Int.right, quadrant.x + 1 - high.x, $"{name}: {quadrant} right");
+-                    AssertBaseSide(layout, walls, quadrant + Vector2Int.down, low.y - quadrant.y, $"{name}: {quadrant} below");
+-                    AssertBaseSide(layout, walls, quadrant + Vector2Int.up, quadrant.y + 1 - high.y, $"{name}: {quadrant} above");
++                    AssertBaseSide(layout, walls, quadrant, Vector2Int.left, low.x - quadrant.x, $"{name}: {quadrant} left");
++                    AssertBaseSide(layout, walls, quadrant, Vector2Int.right, quadrant.x + 1 - high.x, $"{name}: {quadrant} right");
++                    AssertBaseSide(layout, walls, quadrant, Vector2Int.down, low.y - quadrant.y, $"{name}: {quadrant} below");
++                    AssertBaseSide(layout, walls, quadrant, Vector2Int.up, quadrant.y + 1 - high.y, $"{name}: {quadrant} above");
+                 }
+ 
+                 Assert.That(bases.Keys, Is.EquivalentTo(walls),
+@@ -200,6 +211,49 @@ namespace ColorBlockJam.Tests.Environment
+             }
+         }
+ 
++        [Test]
++        public void EveryGateIsClosedByRoundedEndsFacingOutOfItsSpan()
++        {
++            // Gates of 3, 2 and 1 slots on three sides.
++            Compose(BoardLayoutTests.Create(5, 4, Array.Empty<Vector2Int>(),
++                BoardLayoutTests.Door("top", BoardSide.Top, 1, 3, "Red"),
++                BoardLayoutTests.Door("right", BoardSide.Right, 1, 2, "Blue"),
++                BoardLayoutTests.Door("bottom", BoardSide.Bottom, 4, 1, "Yellow")));
++            Assert.That(m_gates.Count, Is.EqualTo(3));
++            int[] expected = { 3, 2, 2 };
++            for (int door = 0; door < m_gates.Count; door++)
++            {
++                EnvironmentGateSpan span = m_gates[door];
++                Assert.That(span.PlacementCount, Is.EqualTo(expected[door] + 1));
++                // The span's slot centres: the pieces must cover the same line the rule doors do.
++                Vector2 low = new Vector2(float.MaxValue, float.MaxValue);
++                Vector2 high = new Vector2(float.MinValue, float.MinValue);
++                for (int piece = 0; piece < expected[door]; piece++)
++                {
++                    Vector3 position = m_playArea[span.FirstPlacement + piece].GridPosition;
++                    low = Vector2.Min(low, new Vector2(position.x, position.y));
++                    high = Vector2.Max(high, new Vector2(position.x, position.y));
++                }
++
++                Vector2 middle = (low + high) * 0.5f;
++                for (int piece = 0; piece < expected[door]; piece++)
++                {
++                    EnvironmentPiecePlacement placement = m_playArea[span.FirstPlacement + piece];
++                    Assert.That(placement.Tint, Is.EqualTo(m_playArea[span.FirstPlacement].Tint), "one door colour");
++                    if (placement.Piece == m_database.DoorPiece) continue;
++                    Assert.That(placement.Piece, Is.SameAs(m_database.DoorEndPiece));
++                    // Door_End's rounded end faces local +X at yaw 0 (the FBX import mirrors X); each yaw turns it
++                    // clockwise seen from above.
++                    Vector2 rounded = GetDoorEndRounded(placement.Yaw);
++                    Vector2 outward = new Vector2(placement.GridPosition.x, placement.GridPosition.y) - middle;
++                    Assert.That(Vector2.Dot(rounded, outward), Is.GreaterThan(0f),
++                        $"gate {door}: the end at {placement.GridPosition} rounds away from its span");
++                    bool half = expected[door] == 2 && Mathf.Approximately(placement.Scale.x, m_database.DoorPieceScale.x * 0.5f);
++                    Assert.That(half, Is.EqualTo(door == 2), $"gate {door}: only a one-slot gate uses half-length ends");
++                }
++            }
++        }
++
+         [Test]
+         public void AStraightWallBaseReachesTheFloorEdge()
+         {
+@@ -223,7 +277,8 @@ namespace ColorBlockJam.Tests.Environment
+             Compose(BoardLayoutTests.Create(4, 3, Array.Empty<Vector2Int>(),
+                 BoardLayoutTests.Door("top", BoardSide.Top, 1, 1, "Red")));
+             Assert.That(Count(m_database.BrickEndPiece), Is.EqualTo(10), "the top side becomes two bricks");
+-            Assert.That(Count(m_database.DoorPiece), Is.EqualTo(1));
++            Assert.That(Count(m_database.DoorPiece), Is.Zero, "a one-slot gate has no middle slot");
++            Assert.That(Count(m_database.DoorEndPiece), Is.EqualTo(2), "two half-length gate ends");
+             Assert.That(Count(m_database.DoorArrowPiece), Is.EqualTo(1));
+             Assert.That(m_gates.Count, Is.EqualTo(1));
+             AssertCapsCloseTheirRuns("gate");
+@@ -354,12 +409,73 @@ namespace ColorBlockJam.Tests.Environment
+             return rules.TryGetValue(quadrant, out EnvironmentPiecePlacement rule) && rule.Piece == m_wall && rule.Yaw == yaw;
+         }
+ 
+-        private static void AssertBaseSide(BoardLayout layout, HashSet<Vector2Int> walls, Vector2Int neighbour,
+-            float gap, string where)
++        private static Vector2 GetDoorEndRounded(int yaw)
+         {
++            switch (yaw)
++            {
++                case 0: return Vector2.right;
++                case 90: return Vector2.down;
++                case 180: return Vector2.left;
++                case 270: return Vector2.up;
++                default: throw new ArgumentOutOfRangeException(nameof(yaw), yaw, "Piece yaws are 0, 90, 180 or 270.");
++            }
++        }
++
++        // A side stops a quarter quadrant short when it faces open void, or when the quadrant is a ring corner
++        // (floor only diagonally) and the side faces away from that floor, where its outer arc curves away.
++        private static void AssertBaseSide(BoardLayout layout, HashSet<Vector2Int> walls, Vector2Int quadrant,
++            Vector2Int side, float gap, string where)
++        {
++            Vector2Int neighbour = quadrant + side;
+             bool open = !IsFloorAt(layout, neighbour) && !walls.Contains(neighbour);
+-            Assert.That(gap, Is.EqualTo(open ? 0.25f : 0f).Within(1e-5f),
+-                $"{where}: {(open ? "stops short of open void" : "reaches floor, a wall or a gate")}");
++            Vector2Int diagonal = GetRingCornerFloor(layout, quadrant);
++            bool awayFromRingFloor = diagonal != Vector2Int.zero && side.x * diagonal.x + side.y * diagonal.y < 0;
++            bool shortened = open || awayFromRingFloor;
++            Assert.That(gap, Is.EqualTo(shortened ? 0.25f : 0f).Within(1e-5f),
++                $"{where}: {(shortened ? "stops short" : "reaches floor, a wall or a gate")}");
++        }
++
++        // A quarter-by-quarter base square: the pocket patch of a ring corner.
++        private static bool IsRingCornerPatch(EnvironmentPiecePlacement piece)
++        {
++            return Mathf.Approximately(piece.Scale.x, 0.125f) && Mathf.Approximately(piece.Scale.z, 0.125f);
++        }
++
++        // A patch sits in a ring corner, in the quadrant corner between a side away from the floor that meets a
++        // wall or a gate and the side toward the floor.
++        private void AssertRingCornerPatch(BoardLayout layout, HashSet<Vector2Int> walls, EnvironmentPiecePlacement piece,
++            string name)
++        {
++            Vector2Int quadrant = GetQuadrant(piece);
++            Vector2Int ring = GetRingCornerFloor(layout, quadrant);
++            Assert.That(ring, Is.Not.EqualTo(Vector2Int.zero), $"{name}: a patch at {quadrant} is in a ring corner");
++            Assert.That(walls.Contains(quadrant), Is.True, $"{name}: the patch at {quadrant} is under a wall");
++            Vector2 local = new Vector2(piece.GridPosition.x - quadrant.x, piece.GridPosition.y - quadrant.y);
++            bool onAwayX = Mathf.Approximately(local.x, ring.x > 0 ? 0.125f : 0.875f)
++                && Mathf.Approximately(local.y, ring.y > 0 ? 0.875f : 0.125f);
++            bool onAwayY = Mathf.Approximately(local.x, ring.x > 0 ? 0.875f : 0.125f)
++                && Mathf.Approximately(local.y, ring.y > 0 ? 0.125f : 0.875f);
++            Assert.That(onAwayX || onAwayY, Is.True, $"{name}: the patch at {piece.GridPosition} sits by the floor end of an away side");
++            Vector2Int side = onAwayX ? new Vector2Int(-ring.x, 0) : new Vector2Int(0, -ring.y);
++            Vector2Int neighbour = quadrant + side;
++            Assert.That(walls.Contains(neighbour) || IsFloorAt(layout, neighbour), Is.True,
++                $"{name}: the patch at {piece.GridPosition} faces a wall or a gate, not open void");
++        }
++
++        private static Vector2Int GetRingCornerFloor(BoardLayout layout, Vector2Int quadrant)
++        {
++            if (IsFloorAt(layout, quadrant + Vector2Int.left) || IsFloorAt(layout, quadrant + Vector2Int.right)
++                || IsFloorAt(layout, quadrant + Vector2Int.down) || IsFloorAt(layout, quadrant + Vector2Int.up))
++            {
++                return Vector2Int.zero;
++            }
++
++            foreach (Vector2Int diagonal in new[] { new Vector2Int(-1, -1), new Vector2Int(1, -1), new Vector2Int(-1, 1), new Vector2Int(1, 1) })
++            {
++                if (IsFloorAt(layout, quadrant + diagonal)) return diagonal;
++            }
++
++            return Vector2Int.zero;
+         }
+ 
+         // Quadrant (2x - 1 | 2x, 2y - 1 | 2y) belongs to cell (x, y).
+@@ -368,6 +484,12 @@ namespace ColorBlockJam.Tests.Environment
+             return layout.IsFloor((quadrant.x + 1) >> 1, (quadrant.y + 1) >> 1);
+         }
+ 
++        // Gate slot pieces differ by design: the play area closes each gate with Door_End pieces.
++        private bool IsGateSlot(EnvironmentPiecePlacement piece)
++        {
++            return piece.Piece == m_database.DoorPiece || piece.Piece == m_database.DoorEndPiece;
++        }
++
+         private bool IsWallBase(EnvironmentPiecePlacement piece)
+         {
+             return piece.Piece == m_database.FloorBasePiece && piece.Scale != Vector3.one;
+@@ -436,7 +558,7 @@ namespace ColorBlockJam.Tests.Environment
+             List<string> descriptions = new List<string>();
+             foreach (EnvironmentPiecePlacement piece in placements)
+             {
+-                if (IsWall(piece) || IsWallBase(piece)) continue;
++                if (IsWall(piece) || IsWallBase(piece) || IsGateSlot(piece)) continue;
+                 descriptions.Add($"{piece.Piece.name}@{piece.GridPosition.x:F3},{piece.GridPosition.y:F3},{piece.GridPosition.z:F3}" +
+                     $"/{piece.Yaw}/{piece.Scale}/{piece.Tint}");
+             }
+@@ -458,7 +580,8 @@ namespace ColorBlockJam.Tests.Environment
+         private bool IsWall(EnvironmentPiecePlacement piece)
+         {
+             return piece.Piece != m_database.FloorPiece && piece.Piece != m_database.FloorBasePiece
+-                && piece.Piece != m_database.DoorPiece && piece.Piece != m_database.DoorArrowPiece;
++                && piece.Piece != m_database.DoorPiece && piece.Piece != m_database.DoorEndPiece
++                && piece.Piece != m_database.DoorArrowPiece;
+         }
+ 
+         private static Vector2Int GetQuadrant(EnvironmentPiecePlacement piece)
+diff --git "staging-v6\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentComposerTests.cs" "staging-v8\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentComposerTests.cs"
+index 5ef2781..27cb326 100644
+--- "staging-v6\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentComposerTests.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Tests/Environment/EditMode/EnvironmentComposerTests.cs"
+@@ -320,13 +320,17 @@ namespace ColorBlockJam.Tests.Environment
+                 EnvironmentGateSpan span = gates[door];
+                 Assert.That(span.DoorIndex, Is.EqualTo(door));
+                 Assert.That(span.FirstPlacement, Is.EqualTo(next), "spans are contiguous");
+-                Assert.That(span.PlacementCount, Is.EqualTo(lengths[door] + 1), "its slots and one arrow");
+-                for (int piece = 0; piece < lengths[door]; piece++)
++                // A one-slot gate is closed by two half-length ends; a longer gate by an end on each end slot.
++                int pieces = Math.Max(lengths[door], 2);
++                Assert.That(span.PlacementCount, Is.EqualTo(pieces + 1), "its slot pieces and one arrow");
++                for (int piece = 0; piece < pieces; piece++)
+                 {
+-                    Assert.That(m_placements[span.FirstPlacement + piece].Piece, Is.EqualTo(m_database.DoorPiece));
++                    bool isEnd = piece == 0 || piece == pieces - 1;
++                    Assert.That(m_placements[span.FirstPlacement + piece].Piece,
++                        Is.EqualTo(isEnd ? m_database.DoorEndPiece : m_database.DoorPiece));
+                 }
+ 
+-                Assert.That(m_placements[span.FirstPlacement + lengths[door]].Piece, Is.EqualTo(m_database.DoorArrowPiece));
++                Assert.That(m_placements[span.FirstPlacement + pieces].Piece, Is.EqualTo(m_database.DoorArrowPiece));
+                 next = span.FirstPlacement + span.PlacementCount;
+             }
+ 
+diff --git "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs" "staging-v8\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs"
+index a30b846..d41f81a 100644
+--- "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentViewLifecycleTests.cs"
+@@ -104,7 +104,8 @@ namespace ColorBlockJam.Tests.Environment
+             m_view.Build(Create(5, 4, new LevelDoorData("top", BoardSide.Top, 1, 2, "Red")));
+             yield return null;
+ 
+-            BoardPieceView door = FindActive("Door_1x1", new Vector3(1f, 0f, 3.75f));
++            // The gate's first slot is its rounded Door_End (DEC-139); it is tinted like every door piece.
++            BoardPieceView door = FindActive("Door_End", new Vector3(1f, 0f, 3.75f));
+             Color red = m_database.GetDoorColor(PaletteColor.Red);
+             Assert.That(ColorDistance(ReadColor(door), red), Is.LessThan(1e-3f));
+             Assert.That(door.transform.localScale, Is.EqualTo(m_database.DoorPieceScale));
+@@ -113,7 +114,7 @@ namespace ColorBlockJam.Tests.Environment
+             m_view.Clear();
+             m_view.Build(Create(5, 4, new LevelDoorData("top", BoardSide.Top, 1, 2, "Blue")));
+             yield return null;
+-            BoardPieceView reused = FindActive("Door_1x1", new Vector3(1f, 0f, 3.75f));
++            BoardPieceView reused = FindActive("Door_End", new Vector3(1f, 0f, 3.75f));
+             Assert.That(ColorDistance(ReadColor(reused), m_database.GetDoorColor(PaletteColor.Blue)), Is.LessThan(1e-3f));
+ 
+             // Every piece is tinted by its placement, including the floor and the walls.
+diff --git "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs" "staging-v8\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs"
+index b94430e..7b1d46e 100644
+--- "staging-v7\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs"
++++ "staging-v8\\Assets/ColorBlockJam/Tests/Environment/PlayMode/EnvironmentGateTests.cs"
+@@ -79,13 +79,16 @@ namespace ColorBlockJam.Tests.Environment
+             {
+                 EnvironmentGate gate = m_view.GetGate(door);
+                 Assert.That(gate.DoorIndex, Is.EqualTo(door));
+-                Assert.That(gate.PieceCount, Is.EqualTo(s_lengths[door] + 1), "its slots and one arrow");
+-                for (int piece = 0; piece < s_lengths[door]; piece++)
++                // Door_End closes both ends of a gate (two half-length ends on a one-slot gate), Door_1x1 between.
++                int pieces = Math.Max(s_lengths[door], 2);
++                Assert.That(gate.PieceCount, Is.EqualTo(pieces + 1), "its slot pieces and one arrow");
++                for (int piece = 0; piece < pieces; piece++)
+                 {
+-                    Assert.That(gate.GetPiece(piece).name, Does.StartWith("Door_1x1"));
++                    bool isEnd = piece == 0 || piece == pieces - 1;
++                    Assert.That(gate.GetPiece(piece).name, Does.StartWith(isEnd ? "Door_End" : "Door_1x1"));
+                 }
+ 
+-                Assert.That(gate.GetPiece(s_lengths[door]).name, Does.StartWith("Door_Arrow"));
++                Assert.That(gate.GetPiece(pieces).name, Does.StartWith("Door_Arrow"));
+                 Assert.That(gate.IsMoving, Is.False);
+                 AssertOffset(gate, 0f, "built at rest");
+             }
+diff --git "staging-v7\\docs/Environment-Layout.md" "staging-v8\\docs/Environment-Layout.md"
+index 97d4670..b6ed46d 100644
+--- "staging-v7\\docs/Environment-Layout.md"
++++ "staging-v8\\docs/Environment-Layout.md"
+@@ -65,8 +65,9 @@ data. The Game `SceneContext` binds it through `EnvironmentSceneInstaller`.
+ | Floor base piece | `Prefabs/Environment/FloorBase.prefab` | One grey square per floor cell, just under its tile; the play area also puts one under each wall quadrant and door slot (DEC-139), and a void cell gets no full square |
+ | Block fill piece | `Prefabs/Environment/BlockFill.prefab` | Flat top for Barrier quadrants without an exposed edge (`EnvironmentSolidComposer.AppendBarrier`); reuses the floor-base quad at wall height |
+ | Brick end piece | `Prefabs/Board/Pieces/Brick_End.prefab` | Caps both ends of each straight wall run in the play area (DEC-139): `Wall.prefab` with only its mesh replaced by the Blender-authored `Art/Models/WallBrick.fbx` |
+-| Corner end piece | `Prefabs/Board/Pieces/Corner_End.prefab` | Every corner of the outer boundary in the play area (DEC-139): `Corner_1.prefab` with only its mesh replaced by `Corner_End` from `WallBrick.fbx`, a Corner_1 footprint with both arm ends closed and rounded |
+-| Door piece | `Door_1x1.prefab` | One per door-covered edge segment |
++| Corner end piece | `Prefabs/Board/Pieces/Corner_End.prefab` | Every corner of the outer boundary in the play area (DEC-139): `Corner_1.prefab` with only its mesh replaced by `Corner_End` from `WallBrick.fbx`, a Corner_1 footprint with one large quarter-round outer arc and both arm ends closed and rounded |
++| Door piece | `Door_1x1.prefab` | One per door-covered edge segment; in the play area only the slots between a gate's two ends |
++| Door end piece | `Prefabs/Board/Pieces/Door_End.prefab` | Closes both ends of each gate in the play area (DEC-139): `Door_1x1.prefab` with only its mesh replaced by `Door_End` from `WallBrick.fbx`, Door_1x1's cross-section with one rounded end |
+ | Door arrow piece | `Door_Arrow.prefab` | One per door, at the span centre |
+ | Palette | `Data/Art/GamePalette.asset` | Door colour from the level `colorId` |
+ | Wall piece scale | (0.5, 1, 0.5) | The kit prefabs are calibrated to a full cell; the play area uses half-cell pieces so rings stay thin (references 02, 17) |
+@@ -167,7 +168,8 @@ the reference game:
+   two half-length caps back to back.
+ - A corner of the outer boundary (floor only diagonally, or on two adjacent
+   sides at a notch) becomes `Corner_End` with the corner rule's yaw: Corner_1's
+-  footprint with both arm ends closed and rounded, so it reads as its own unit
++  footprint with one large quarter-round outer arc, as in the reference
++  (D-004), and both arm ends closed and rounded, so it reads as its own unit
+   and a lowered gate beside it shows a rounded end, not a cut face (D-001).
+   An interior hole keeps all its rule pieces, so it stays one continuous
+   frame, as in reference 02 and like a Barrier (user decision 2026-09-27).
+@@ -176,29 +178,42 @@ the reference game:
+   `FloorBase` square in the floor-base colour, just under floor level. It
+   reaches every side of the quadrant that meets floor, another wall or a gate,
+   and stops a quarter quadrant short of a side that faces open void, so it
+-  never shows outside the board or inside a hole. The gaps between wall units, beside
++  never shows outside the board or inside a hole. A ring corner (floor only
++  diagonally) always stops short on its two sides away from the floor, where
++  its outer arc curves away, even when another wall meets that side; where a
++  wall does meet such a side, a quarter-sized square fills the small pocket
++  at that side's floor end, inside the joint. The gaps between wall units, beside
+   rounded wall corners and at the floor tiles' rounded corners along walls and
+   gates then read dark instead of showing the background (D-002).
+ - Every placement stays on its rule quadrant, so board topology, holes,
+   notches and door slots are unchanged; only which mesh shows a quadrant
+   changes, plus the bases under walls and gates.
++- Each gate is closed like a brick (D-003): `Door_End` on its first and last
++  slot with the rounded end facing out of the span, `Door_1x1` on the slots
++  between them, and two half-length `Door_End` pieces back to back on a
++  one-slot gate. All of them keep the door colour.
+ - `gates` gets one `EnvironmentGateSpan` per authored door, in door order:
+-  the range of that door's `Door_1x1` slots and arrow in `output`.
++  the range of that door's slot pieces and arrow in `output`, so the whole
++  gate sinks and rises together.
+ 
+ `Brick_End` is authored in Blender inside the Wall mesh's exact bounds, so
+ Wall's prefab calibration fits it. Its mouth faces local -Z at yaw 0.
+-`Corner_End` is authored inside Corner_1's exact bounds with Corner_1's outer
+-rounded corner; every side drops with the supplied Wall bevel, as
+-`Brick_End`'s closed end does. `ArtSource/BoardKit/WallBrick.blend` holds both
+-next to unchanged `Wall_Reference` and `Corner_Reference` copies.
+-`export_wall_brick.py` writes only `Brick_End` and `Corner_End` to
++`Corner_End` is authored inside Corner_1's exact bounds; its outer side is one
++quarter-round arc whose radius is the piece's side minus the soft end radius,
++and every side drops with the supplied Wall bevel, as `Brick_End`'s closed end
++does. `Door_End` is authored inside Door_1x1's exact bounds with the same
++closed end; in Unity (which mirrors the FBX's X axis) its rounded end faces local +X at yaw 0.
++`ArtSource/BoardKit/WallBrick.blend` holds all three next to unchanged
++`Wall_Reference`, `Corner_Reference` and `Door_Reference` copies.
++`export_wall_brick.py` writes only `Brick_End`, `Corner_End` and `Door_End` to
+ `Art/Models/WallBrick.fbx`, with the supplied kit's FBX unit scale (100), and
+ checks the round trip. `Color Block Jam > Art > Build Wall Brick`
+ (`EnvironmentWallBrickAssets`) then imports the FBX with the kit's settings,
+ rejects each piece unless its bounds equal its source piece's, and saves
+-`Brick_End.prefab` from `Wall.prefab` and `Corner_End.prefab` from
+-`Corner_1.prefab`, each with only the mesh replaced. It binds both prefabs in
+-the database and writes nothing else.
++`Brick_End.prefab` from `Wall.prefab`, `Corner_End.prefab` from
++`Corner_1.prefab` and `Door_End.prefab` from `Door_1x1.prefab`, each with only
++the mesh replaced. It binds the three prefabs in the database and writes
++nothing else.
+ 
+ Examples include rounded corners, pinched floors, corridors, gates at board
+ corners and level 9's corner notches. Exterior walls are automatic; there
+@@ -359,13 +374,13 @@ The Game view shows the board from the reference game's angle (DEC-103).
+   database scales to (1, 1, 1) in the same change.
+ - `corner_3` (pre-assembled Wall + Corner + Wall) and `corner_5` (denser
+   `Corner_1`) are not used.
+-- `Brick_End` shares `Wall`'s mesh space and bounds, and `Corner_End`
+-  shares `Corner_1`'s. If `Wall.prefab`'s or `Corner_1.prefab`'s calibration
+-  changes, run `Color Block Jam > Art > Build Wall Brick` so both prefabs take
+-  the same calibration. If a shape changes, edit
+-  `ArtSource/BoardKit/WallBrick.blend` (the corner generator is
+-  `implementation/approved-brick/build_corner_end.py` in the DEC-139 task
+-  folder), then run
++- `Brick_End` shares `Wall`'s mesh space and bounds, `Corner_End` shares
++  `Corner_1`'s and `Door_End` shares `Door_1x1`'s. If one of those prefabs'
++  calibration changes, run `Color Block Jam > Art > Build Wall Brick` so the
++  three prefabs take the same calibration. If a shape changes, edit
++  `ArtSource/BoardKit/WallBrick.blend` (the generators are
++  `build_brick_end.py`, `build_corner_end.py` and `build_door_end.py` in the
++  DEC-139 task folder's `implementation/approved-brick`), then run
+   `blender --background --factory-startup ArtSource/BoardKit/WallBrick.blend --python ArtSource/BoardKit/export_wall_brick.py`
+   before the menu item.
+ - `Door_1x1` is one cell thick in Z; the play area scales it to 0.5.
+diff --git "staging-v7\\docs/Color-Block-Jam-PRD.md" "staging-v8\\docs/Color-Block-Jam-PRD.md"
+index 8582637..4530e58 100644
+--- "staging-v7\\docs/Color-Block-Jam-PRD.md"
++++ "staging-v8\\docs/Color-Block-Jam-PRD.md"
+@@ -315,7 +315,7 @@ AC numbering: AC-1.x Home, AC-2.x Settings, AC-3.x HUD and board, AC-4.x popups,
+ | AC-3.11 | At 1080 x 1920 and 1080 x 2400 the largest board (8 x 10) fits the board rectangle without touching the HUD. |
+ | AC-3.12 | Backgrounding the app during `Playing` enters `Paused` through Suspend. On return the pause popup shows and no time was lost (DEC-31). |
+ | AC-3.13 | A pointer that starts on a HUD or popup element never starts a board drag. |
+-| AC-3.14 | The composer samples the four occupied quadrants at each footprint vertex. Full occupancy uses four supplied half-cell Centers; a straight boundary uses two Edges; a convex quadrant uses one OuterCorner; three occupied quadrants use one InnerCorner; opposite quadrants use two opposing OuterCorners. A gameplay cell has 2×2 studs. No new board geometry or overlapping additive tops. All reference footprints in four rotations have exact coverage; single-cell placements and both L4-minus-one-cell cases are checked. Empty, disconnected and duplicate input is rejected before replacing output. A reused composition buffer allocates 0 B. Walls/doors use calibrated original mesh prefabs, with placement driven by every floor/void boundary (RULE-3) through the RuleTile-authored environment rules (DEC-100, [Environment Layout](Environment-Layout.md)). The wall exceptions are the Blender-authored `Brick_End` and `Corner_End` (DEC-139). Built from the supplied Wall profile inside Wall's and Corner_1's mesh bounds, `Brick_End` caps both ends of each straight outer-boundary wall run and `Corner_End` forms each outer-boundary corner with both arm ends rounded, so walls read as separate rounded units; interior holes keep one continuous frame. |
++| AC-3.14 | The composer samples the four occupied quadrants at each footprint vertex. Full occupancy uses four supplied half-cell Centers; a straight boundary uses two Edges; a convex quadrant uses one OuterCorner; three occupied quadrants use one InnerCorner; opposite quadrants use two opposing OuterCorners. A gameplay cell has 2×2 studs. No new board geometry or overlapping additive tops. All reference footprints in four rotations have exact coverage; single-cell placements and both L4-minus-one-cell cases are checked. Empty, disconnected and duplicate input is rejected before replacing output. A reused composition buffer allocates 0 B. Walls/doors use calibrated original mesh prefabs, with placement driven by every floor/void boundary (RULE-3) through the RuleTile-authored environment rules (DEC-100, [Environment Layout](Environment-Layout.md)). The wall exceptions are the Blender-authored `Brick_End`, `Corner_End` and `Door_End` (DEC-139). Built from the supplied Wall and door profiles inside Wall's, Corner_1's and Door_1x1's mesh bounds, `Brick_End` caps both ends of each straight outer-boundary wall run, `Corner_End` forms each outer-boundary corner with a large quarter-round outer arc and both arm ends rounded, and `Door_End` closes both ends of each gate, so walls and gates read as separate rounded units; interior holes keep one continuous frame. |
+ | AC-3.15 | One reusable tile prefab exists per piece type, built from supplied FBX children; its children may be duplicated, disabled, re-pivoted and reordered without changing the composer. A catalog maps tiles to prefabs/calibration. Each shape library entry also references an identity-preserving derived prefab with a BlockPiece root and composed preview. No new mesh is modeled; `corner_3.002` is excluded and FBX names stay unchanged. |
+ | AC-3.16 | Board pieces come from Onity pools warmed at level load to the level's counts plus booster headroom (DEC-60). BlockPieceFactory implements Onity IFactory with PooledFactory/PrefabComponentPool per source type; Create/Return enforce ownership and refuse capacity growth. Hooks reset mutable state while retaining warm sub-pools. No Instantiate/Destroy inside an attempt; owner disposal returns outstanding roots and disposes all pools. |
+ | AC-3.17 | Selecting a block on pointer-down shows a white outline around its outer silhouette while that pointer stays held, including during dragging. Pointer-up, pointer cancel/loss, Pause, Home, Restart or terminal teardown clears it. Outline does not persist as a toggle or leak to a reused pooled block. It remains legible without internal modular-piece seams (reference 14). Frozen selection can show the outline/blocked feedback but cannot move. |
+diff --git "staging-v7\\PROJECT.md" "staging-v8\\PROJECT.md"
+index 78b0a7e..787259f 100644
+--- "staging-v7\\PROJECT.md"
++++ "staging-v8\\PROJECT.md"
+@@ -308,13 +308,14 @@ save or Retry feedback while navigation remains gated by the save policy.
+   `WallAndDoor.fbx` supplies Wall, Corner_1, corner_3, corner_5, Door_1x1 and
+   Door_Arrow; the rounded closed surface faces source -Y, so prefab children
+   rotate X180 with their hidden underside at ground level. Do not use the
+-  defective corner_3.002. The project-authored wall meshes are `Brick_End`
+-  and `Corner_End` in `WallBrick.fbx` (DEC-139). They are built in Blender
+-  from the supplied Wall profile inside Wall's and Corner_1's mesh bounds:
+-  `Brick_End` caps both ends of each straight outer-boundary wall run in the
+-  play area, and `Corner_End` is each outer-boundary corner, both arm ends
+-  rounded. The rule placements and the supplied meshes and prefabs are
+-  unchanged. `GroundGrid` spans one cell. `Arrows.fbx` supplies
++  defective corner_3.002. The project-authored wall and gate meshes are
++  `Brick_End`, `Corner_End` and `Door_End` in `WallBrick.fbx` (DEC-139). They
++  are built in Blender from the supplied Wall and door profiles inside Wall's,
++  Corner_1's and Door_1x1's mesh bounds: `Brick_End` caps both ends of each
++  straight outer-boundary wall run in the play area, `Corner_End` is each
++  outer-boundary corner with a large quarter-round outer arc and both arm
++  ends rounded, and `Door_End` closes both ends of each gate. The rule
++  placements and the supplied meshes and prefabs are unchanged. `GroundGrid` spans one cell. `Arrows.fbx` supplies
+   `Arrow_1`, `Arrow_2`, and `Arrow_3`, whole double-headed markers one, two,
+   and three cells long. Their visual prefabs are centered, face local Z and sit
+   just above the LEGO studs; horizontal placement uses a Y90 root rotation.
+@@ -664,5 +665,5 @@ Record each decision here with its reason. The README draws from this list.
+ | Shared popup assembly for Hub and Game (DEC-136) | Needed by DEC-135: Game cannot reference `ColorBlockJam.Hub`. `ColorBlockJam.UI` (`Assets/ColorBlockJam/UI`, next to `Common.uss` and the runtime theme) holds popups both scenes use: the Settings popup view, presenter and UXML/USS (with a HOME button hidden unless a host shows it), and later the booster purchase popup. It references Runtime, Player and Onity.Reactive only; Hub and, later, Gameplay reference it. Scene hosts adapt it (Hub: an `IHubOverlay` adapter; Game: the pause flow). |
+ | CBJ Template currency review (DEC-137) | User order of 2026-09-27 ("iyi olabilecek mimari olarak olanları bize geçir"). Compared with the template's Currency module: enum `CurrencyType` keys whose order must never change, a static `CurrencyController` with static events, the balance inside each `Currency`, saves keyed by `string.GetHashCode()` and no file protection. **Adopted:** the compact formatter lives with the currencies, as the template's `CurrencyHelper` does: `Runtime/Currencies/CurrencyText` (Runtime references ZString), shared by Hub, the `ColorBlockJam.UI` popups and the Game HUD. **Queued:** the template's `CurrencyAmount` (currency + amount for prices and later rewards, one-row Inspector drawer) as `TASK-20260927-141439926-2949c75f-currency-amount-price`, after the live owner of `BoosterDefinition.cs` and `PlayerSaveService.cs` releases them. **Rejected:** enum identity (DEC-128 string IDs survive reordering); static controller and events (Rule 7); balances on the definition (DEC-92 publishes only after commit); hash save keys (`GetHashCode` is no stable contract and can collide; the snapshot keys by ID and HMAC covers integrity, DEC-130); the remote-config default override and analytics source/sink tags (no server or analytics in scope; the store port of DEC-129 is the seam); change-delta events (subscribers derive them from reactive values); per-currency floating-coin settings (presentation belongs to views); TextMeshPro sprite-atlas generation (UI Toolkit). Task `TASK-20260926-235915696-6b7f82f4-player-data-currencies`. |
+ | Hub launch request and carried starting boosters (DEC-138) | User request of 2026-09-27 (whole Hub scope; references 01, 09, 10). Home's Level button opens the pre-level popup (`Hub/PreLevel`: `LEVEL N` from `PlayerProgress.GetPlayableLevelIndex`, one selector per `BoosterCatalog` entry with `PreLevel`, in catalog order). Play makes `LevelLauncher` run exactly one `OnitySceneFlow.TransitionAsync(profile, Gameplay, request)` with an immutable `LevelLaunchRequest : IOnitySceneEnterData` (`Runtime/Levels`: playable level index and the selected `BoosterId`s in selector order); a second Play, or Play while one is in flight, does nothing. `GameAttemptLoader` consumes the request once through `OnitySceneTransitionStore` before any wait; the pure `LevelLaunchResolution` chooses request, then the Level Editor's Test Level (DEC-127), then the installer's serialized index, and clamps an out-of-range request with one warning. This retires the Hub half of DEC-116 (direct Play of Game keeps the serialized index); the `NoPauseOverlay` foreground-resume half stays until the pause popup. Starting boosters are carried, not applied or spent: opening, toggling, closing and Play never debit stock, and the Game scene ignores the selection until the booster opening task prepares and commits it on Home (AC-5.7, DEC-92). Selectors are rounded squares (`Btn_settings_normal` blue with a red count badge, tinted green with a check when selected; user feedback 2026-09-27). A zero-stock selector opens the shared purchase popup (`ColorBlockJam.UI/Purchase`, DEC-136) through the Hub adapter `BoosterPurchaseOverlay`, which covers (hides) the pre-level popup until it closes so the two never overlap (reference 8); Buy calls `IBoosterShop.PurchaseAsync`, is disabled while `IsSaving`, keeps the popup open and never auto-selects (DEC-85). The pre-level presenter and the purchase adapter bind to themselves only, so `IHubOverlay` keeps one container binding; `HubScreen` registers each overlay with `HubNavigator` under its own id. `BoosterCatalog.asset` lists Extra Time first (user approval "Katalogda Extra Time'ı başa al"), so the pre-level order is Extra Time, Rocket and the in-game order stays Time Freeze, Rocket, Hammer, Vacuum. See [Hub and Player Data design](docs/Hub-And-Player-Data-Design.md) section 9. Task `TASK-20260926-235915699-78356740-hub-pre-level-launch`. |
+-| Separate wall units and gate motion (DEC-139) | User request of 2026-09-27: in the reference game the walls read as separate rounded elements; ours read as one merged frame. The matching gate must sink while a block exits and rise after it breaks up. The user also said "eğer hala gerekli olursa blenderdan edit yapma hakkın var". Existing-art composition (a 4x4 strip template of Wall, Corner_1 and BlockFill) was built and rendered first; it read as recessed trays and broke the Level Editor canvas, so the approved Blender fallback was used. `EnvironmentComposer.Compose` keeps the rule placements (one rule piece per wall quadrant) for the Level Editor canvas and barriers. `ComposePlayArea`, used only by `EnvironmentView`, closes each maximal straight run of the outer boundary (void connected to the board's ring, notches included) with `Brick_End` caps whose mouths face the run and the rule's Wall pieces between them. A one-quadrant run gets two half-length caps; corners are their own units. Interior holes keep one continuous rule frame, as in references 02 and 17 (user decision). `Brick_End` comes from `ArtSource/BoardKit/WallBrick.blend` (supplied Wall profile inside Wall's exact mesh bounds, rectangular end after reference 1). `export_wall_brick.py` exports it with the kit's FBX unit scale. `Brick_End.prefab` is Wall.prefab with only the mesh replaced (`Color Block Jam > Art > Build Wall Brick`), bound in `EnvironmentDatabase` and pooled. One `EnvironmentGate` per authored door (door slots and arrow) has one PrimeTween sequence. The board presenter sinks it before a lean or exit crosses the door, holds it while any exit through that door runs, and raises it 0.15 s after the last body is gone, inside the 0.8 s Won Finish. Exits wait for the sink inside their own time; domain exit timing, events and rewards are unchanged. Suspend pauses, Teardown stops and resets, and Restart resets every gate. Reopened the same day for two review notes the user asked to fix (D-001, D-002; user choice "All outer corners"): every outer-boundary corner is `Corner_End`, Corner_1's footprint with both arm ends closed and rounded (Blender, same `WallBrick.blend`/`.fbx`, `Corner_End.prefab` from Corner_1.prefab with only the mesh replaced), so a lowered gate beside it shows a rounded end; and each wall quadrant and door slot stands on a `FloorBase` square that reaches floor, walls and gates but stops a quarter quadrant short of open void, so gaps between units read dark instead of showing the background. Supplied FBX files and the Wall, corner and door prefabs are unchanged. See [Environment Layout](docs/Environment-Layout.md). Task `TASK-20260927-123500933-c1e67965-environment-runs-gate-motion`. |
++| Separate wall units and gate motion (DEC-139) | User request of 2026-09-27: in the reference game the walls read as separate rounded elements; ours read as one merged frame. The matching gate must sink while a block exits and rise after it breaks up. The user also said "eğer hala gerekli olursa blenderdan edit yapma hakkın var". Existing-art composition (a 4x4 strip template of Wall, Corner_1 and BlockFill) was built and rendered first; it read as recessed trays and broke the Level Editor canvas, so the approved Blender fallback was used. `EnvironmentComposer.Compose` keeps the rule placements (one rule piece per wall quadrant) for the Level Editor canvas and barriers. `ComposePlayArea`, used only by `EnvironmentView`, closes each maximal straight run of the outer boundary (void connected to the board's ring, notches included) with `Brick_End` caps whose mouths face the run and the rule's Wall pieces between them. A one-quadrant run gets two half-length caps; corners are their own units. Interior holes keep one continuous rule frame, as in references 02 and 17 (user decision). `Brick_End` comes from `ArtSource/BoardKit/WallBrick.blend` (supplied Wall profile inside Wall's exact mesh bounds, rectangular end after reference 1). `export_wall_brick.py` exports it with the kit's FBX unit scale. `Brick_End.prefab` is Wall.prefab with only the mesh replaced (`Color Block Jam > Art > Build Wall Brick`), bound in `EnvironmentDatabase` and pooled. One `EnvironmentGate` per authored door (door slots and arrow) has one PrimeTween sequence. The board presenter sinks it before a lean or exit crosses the door, holds it while any exit through that door runs, and raises it 0.15 s after the last body is gone, inside the 0.8 s Won Finish. Exits wait for the sink inside their own time; domain exit timing, events and rewards are unchanged. Suspend pauses, Teardown stops and resets, and Restart resets every gate. Reopened the same day for two review notes the user asked to fix (D-001, D-002; user choice "All outer corners"): every outer-boundary corner is `Corner_End`, Corner_1's footprint with both arm ends closed and rounded (Blender, same `WallBrick.blend`/`.fbx`, `Corner_End.prefab` from Corner_1.prefab with only the mesh replaced), so a lowered gate beside it shows a rounded end; and each wall quadrant and door slot stands on a `FloorBase` square that reaches floor, walls and gates but stops a quarter quadrant short of open void, so gaps between units read dark instead of showing the background. Reopened again for the user's gate and corner request (D-003, D-004; answers "Approve gate ends" and "Reshape Corner_End"): each gate is closed by `Door_End`, Door_1x1's cross-section with one rounded end (Blender, same `WallBrick.blend`/`.fbx`, `Door_End.prefab` from Door_1x1.prefab with only the mesh replaced), on its first and last slot, with two half-length ends on a one-slot gate; the whole gate still sinks and rises as one span. `Corner_End`'s outer side became one large quarter-round arc as in the reference, since no supplied corner has one. Supplied FBX files and the Wall, corner and door prefabs are unchanged. See [Environment Layout](docs/Environment-Layout.md). Task `TASK-20260927-123500933-c1e67965-environment-runs-gate-motion`. |
+ | One startup loading screen in Init (DEC-140) | User request of 2026-09-27 ("ilk açılışta her şey hazır olana kadar sadece bir kez loading ... level geçişleri dahil loading olmayacak"), with the approved option of merging Loading into Init. `StartupLoader` (`Runtime/Startup`, an `OnitySceneInitiator` that replaces Onity's bootstrap initiator on Init) shows `StartupLoadingView` from Init's first frame, waits for `ProjectContext.ReadyTask` (level JSON, shapes, player save), loads Hub additively behind the screen, makes it the active scene, waits for Hub's `SceneContext.ReadyTask` (Home bound) plus one frame for Home's first layout, then unloads Init. A failed project scope is not rethrown: Hub shows Home with the level button disabled (AC-10) rather than leaving the player on the loading screen. The bar only moves forward: `StartupProgress` maps the project wait (time-based, below 1) and then the Hub load onto one value; the percentage text changes only when the whole percent changes (ZString). Layout follows the real game's startup screen (user reference): Home's `bg_home_screen`, a centred "Color Block Jam" title and a rounded navy bar with the percentage near the bottom (`UI/Startup/StartupLoading.uxml`). `LoadingPanelSettings` now uses the runtime theme, Expand matching and sorting order 100, so it draws above Hub's panel (0) and blocks presses while Hub builds. `Loading.unity` is deleted and removed from Build Settings, and the scene-flow profile names no Loading scene with routing through it off, so Hub, Game, Restart and next level never show a loading screen. Replaces DEC-98's "Loading appears only for actual loading". Ad-hoc change without a task contract. |
+diff --git "staging-v8\\Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_End.prefab" "staging-v8\\Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_End.prefab"
+new file mode 100644
+index 0000000..de36117
+--- /dev/null
++++ "staging-v8\\Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_End.prefab"
+@@ -0,0 +1,132 @@
++%YAML 1.1
++%TAG !u! tag:unity3d.com,2011:
++--- !u!1 &4187681475725537823
++GameObject:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  serializedVersion: 6
++  m_Component:
++  - component: {fileID: 434826841197987326}
++  - component: {fileID: 518767885683116055}
++  m_Layer: 0
++  m_Name: Door_End
++  m_TagString: Untagged
++  m_Icon: {fileID: 0}
++  m_NavMeshLayer: 0
++  m_StaticEditorFlags: 0
++  m_IsActive: 1
++--- !u!4 &434826841197987326
++Transform:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 4187681475725537823}
++  serializedVersion: 2
++  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
++  m_LocalPosition: {x: 0, y: 0, z: 0}
++  m_LocalScale: {x: 1, y: 1, z: 1}
++  m_ConstrainProportionsScale: 0
++  m_Children:
++  - {fileID: 9114586592284884638}
++  m_Father: {fileID: 0}
++  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
++--- !u!114 &518767885683116055
++MonoBehaviour:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 4187681475725537823}
++  m_Enabled: 1
++  m_EditorHideFlags: 0
++  m_Script: {fileID: 11500000, guid: 20c98260a99a20e40825a00d2ca8b894, type: 3}
++  m_Name: 
++  m_EditorClassIdentifier: 
++  m_filter: {fileID: 5875724902952986772}
++  m_renderer: {fileID: 334254124750898463}
++--- !u!1 &8919426044144174728
++GameObject:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  serializedVersion: 6
++  m_Component:
++  - component: {fileID: 9114586592284884638}
++  - component: {fileID: 5875724902952986772}
++  - component: {fileID: 334254124750898463}
++  m_Layer: 0
++  m_Name: Visual
++  m_TagString: Untagged
++  m_Icon: {fileID: 0}
++  m_NavMeshLayer: 0
++  m_StaticEditorFlags: 0
++  m_IsActive: 1
++--- !u!4 &9114586592284884638
++Transform:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 8919426044144174728}
++  serializedVersion: 2
++  m_LocalRotation: {x: 1, y: 0, z: 0, w: -0.00000004371139}
++  m_LocalPosition: {x: 0.00065355486, y: 0.5968701, z: 0}
++  m_LocalScale: {x: 0.5009517, y: 0.20135917, z: 1.02}
++  m_ConstrainProportionsScale: 0
++  m_Children: []
++  m_Father: {fileID: 434826841197987326}
++  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
++--- !u!33 &5875724902952986772
++MeshFilter:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 8919426044144174728}
++  m_Mesh: {fileID: -2058631005004680413, guid: cf86f69df26b0c34895f789dce631056, type: 3}
++--- !u!23 &334254124750898463
++MeshRenderer:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 8919426044144174728}
++  m_Enabled: 1
++  m_CastShadows: 1
++  m_ReceiveShadows: 1
++  m_DynamicOccludee: 1
++  m_StaticShadowCaster: 0
++  m_MotionVectors: 1
++  m_LightProbeUsage: 1
++  m_ReflectionProbeUsage: 1
++  m_RayTracingMode: 2
++  m_RayTraceProcedural: 0
++  m_RenderingLayerMask: 1
++  m_RendererPriority: 0
++  m_Materials:
++  - {fileID: 2100000, guid: 8f9ef702417920b42b63b81b2782124a, type: 2}
++  m_StaticBatchInfo:
++    firstSubMesh: 0
++    subMeshCount: 0
++  m_StaticBatchRoot: {fileID: 0}
++  m_ProbeAnchor: {fileID: 0}
++  m_LightProbeVolumeOverride: {fileID: 0}
++  m_ScaleInLightmap: 1
++  m_ReceiveGI: 1
++  m_PreserveUVs: 0
++  m_IgnoreNormalsForChartDetection: 0
++  m_ImportantGI: 0
++  m_StitchLightmapSeams: 1
++  m_SelectedEditorRenderState: 3
++  m_MinimumChartSize: 4
++  m_AutoUVMaxDistance: 0.5
++  m_AutoUVMaxAngle: 89
++  m_LightmapParameters: {fileID: 0}
++  m_SortingLayerID: 0
++  m_SortingLayer: 0
++  m_SortingOrder: 0
++  m_AdditionalVertexStreams: {fileID: 0}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Passed" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-27 15:56:11Z" end-time="2026-09-27 15:56:31Z" duration="20.8762734">
+  <test-suite type="TestSuite" id="1190" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="139" result="Passed" start-time="2026-09-27 15:56:11Z" end-time="2026-09-27 15:56:31Z" duration="20.876273" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1185" name="EnvGateCapture.PlayMode.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/cbj-envgate-7336b1/Library/ScriptAssemblies/EnvGateCapture.PlayMode.dll" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-27 15:56:11Z" end-time="2026-09-27 15:56:31Z" duration="20.866813" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="152596" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1186" name="EnvGateCapture" fullname="EnvGateCapture" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-27 15:56:11Z" end-time="2026-09-27 15:56:31Z" duration="20.865347" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestFixture" id="1179" name="EnvGateCaptureTests" fullname="EnvGateCapture.EnvGateCaptureTests" classname="EnvGateCapture.EnvGateCaptureTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-27 15:56:11Z" end-time="2026-09-27 15:56:31Z" duration="20.842309" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1180" name="A_LevelOneExitSequence" fullname="EnvGateCapture.EnvGateCaptureTests.A_LevelOneExitSequence" methodname="A_LevelOneExitSequence" classname="EnvGateCapture.EnvGateCaptureTests" runstate="Runnable" seed="1462580403" result="Passed" start-time="2026-09-27 15:56:11Z" end-time="2026-09-27 15:56:23Z" duration="12.340290" asserts="0">
+            <properties>
+              <property name="_JOINTYPE" value="UnityCombinatorial" />
+              <property name="Order" value="1" />
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1182" name="B_EnvironmentFixtures" fullname="EnvGateCapture.EnvGateCaptureTests.B_EnvironmentFixtures" methodname="B_EnvironmentFixtures" classname="EnvGateCapture.EnvGateCaptureTests" runstate="Runnable" seed="563511955" result="Passed" start-time="2026-09-27 15:56:23Z" end-time="2026-09-27 15:56:25Z" duration="2.189245" asserts="0">
+            <properties>
+              <property name="_JOINTYPE" value="UnityCombinatorial" />
+              <property name="Order" value="2" />
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1181" name="C_LevelOneFlickExitsFromARaisedGate" fullname="EnvGateCapture.EnvGateCaptureTests.C_LevelOneFlickExitsFromARaisedGate" methodname="C_LevelOneFlickExitsFromARaisedGate" classname="EnvGateCapture.EnvGateCaptureTests" runstate="Runnable" seed="436448641" result="Passed" start-time="2026-09-27 15:56:25Z" end-time="2026-09-27 15:56:31Z" duration="6.293651" asserts="0">
+            <properties>
+              <property name="_JOINTYPE" value="UnityCombinatorial" />
+              <property name="Order" value="3" />
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="1183" name="EnvGateDiagnosticTests" fullname="EnvGateCapture.EnvGateDiagnosticTests" classname="EnvGateCapture.EnvGateDiagnosticTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-27 15:56:31Z" end-time="2026-09-27 15:56:31Z" duration="0.020771" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1184" name="C_DumpComposition" fullname="EnvGateCapture.EnvGateDiagnosticTests.C_DumpComposition" methodname="C_DumpComposition" classname="EnvGateCapture.EnvGateDiagnosticTests" runstate="Runnable" seed="18944174" result="Passed" start-time="2026-09-27 15:56:31Z" end-time="2026-09-27 15:56:31Z" duration="0.015800" asserts="0">
+            <properties>
+              <property name="Order" value="0" />
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

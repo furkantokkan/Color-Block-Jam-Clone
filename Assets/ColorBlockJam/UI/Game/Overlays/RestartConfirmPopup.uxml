@@ -1,0 +1,57 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Retry confirmation popup (Game HUD design 6, the user's Retry reference of 2026-09-28). Element names are the
+         contract with RestartConfirmView and the tests. Draw order: later siblings draw on top, so the scrim comes
+         first; inside the popup the holder and Retry come before the header and close button, which overlap the
+         shell's top edge. Every title and button label is a two-layer ".cbj-heavy-text" pair (Common.uss): both layers
+         carry the same text; the front label carries the element name. The life copy is a placeholder: lives stay
+         static (NG-3), so no life is deducted. -->
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Game/Overlays/RestartConfirmPopup.uss" />
+    <ui:VisualElement name="restart-confirm-screen" class="restart-confirm-screen cbj-document" picking-mode="Ignore">
+        <!-- Full-screen dim over the game; pickable, so it blocks every board press, and a tap on it closes. -->
+        <ui:VisualElement name="restart-confirm-scrim" class="restart-confirm-scrim" picking-mode="Position" />
+
+        <!-- The host pads all four edges from its safe area; the popup centres inside the padding. -->
+        <ui:VisualElement name="restart-confirm-safe-area" class="restart-confirm-safe-area" picking-mode="Ignore">
+            <!-- bg_popup shell. Pickable, so a tap between the controls is not a scrim tap. -->
+            <ui:VisualElement name="restart-confirm-popup" class="restart-confirm-popup" picking-mode="Position">
+                <!-- bg_popup_info_holder inset: the icon box (heart and "-1"), then the message. -->
+                <ui:VisualElement name="restart-confirm-holder" class="restart-confirm-holder" picking-mode="Ignore">
+                    <ui:VisualElement name="restart-confirm-icon-box" class="restart-confirm-icon-box" picking-mode="Ignore">
+                        <ui:VisualElement name="restart-confirm-heart" class="restart-confirm-heart" picking-mode="Ignore" />
+                        <ui:VisualElement name="restart-confirm-penalty-box" class="restart-confirm-penalty-box" picking-mode="Ignore">
+                            <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                                <ui:Label class="restart-confirm-penalty cbj-title cbj-heavy-text__back" text="-1" picking-mode="Ignore" />
+                                <ui:Label name="restart-confirm-penalty" class="restart-confirm-penalty cbj-title cbj-heavy-text__front" text="-1" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="restart-confirm-message-text cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="restart-confirm-message cbj-title cbj-heavy-text__back" text="You will lose 1 life!" picking-mode="Ignore" />
+                        <ui:Label name="restart-confirm-message" class="restart-confirm-message cbj-title cbj-heavy-text__front" text="You will lose 1 life!" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Btn_popup_green Retry; it reads Leave when HOME opened the popup (DEC-189). -->
+                <ui:Button name="restart-confirm-retry" class="restart-confirm-retry cbj-pressable cbj-haptic-confirm">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label name="restart-confirm-retry-label-back" class="restart-confirm-retry__label cbj-title cbj-heavy-text__back" text="Retry" picking-mode="Ignore" />
+                        <ui:Label name="restart-confirm-retry-label" class="restart-confirm-retry__label cbj-title cbj-heavy-text__front" text="Retry" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+
+                <!-- bg_popup_header title tab ("Level N"), overlapping the shell's top edge. -->
+                <ui:VisualElement name="restart-confirm-header" class="restart-confirm-header" picking-mode="Position">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label name="restart-confirm-title-back" class="restart-confirm-title cbj-title cbj-heavy-text__back" text="Level" picking-mode="Ignore" />
+                        <ui:Label name="restart-confirm-title" class="restart-confirm-title cbj-title cbj-heavy-text__front" text="Level" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Popup_Close_Button at the shell's top-right corner. -->
+                <ui:Button name="restart-confirm-close" class="restart-confirm-close cbj-pressable cbj-haptic-tap" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

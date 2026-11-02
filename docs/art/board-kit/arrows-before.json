@@ -1,0 +1,38 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "error": null,
+  "data": {
+    "result": [
+      {
+        "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_1.prefab",
+        "guid": "83bb6ac167fc40148ab9fb55d0c2001b",
+        "mesh": "Arrow_1",
+        "size": "(0.9086, 1.6014, 0.3734)",
+        "center": "(0.0000, 0.0000, -0.1915)",
+        "bounds": "Center: (0.0000, 0.8519, 0.0000), Extents: (0.2181, 0.0896, 0.3843)",
+        "triangles": 394
+      },
+      {
+        "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_2.prefab",
+        "guid": "d601fcc82dfa7cb4eacf2a73fa18985c",
+        "mesh": "Arrow_2",
+        "size": "(0.9086, 3.5085, 0.3734)",
+        "center": "(0.0000, 0.0000, -0.1915)",
+        "bounds": "Center: (0.0000, 0.8519, 0.0000), Extents: (0.2181, 0.0896, 0.8420)",
+        "triangles": 394
+      },
+      {
+        "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_3.prefab",
+        "guid": "2d4152d2bfc40e04d954ce70a7c8812a",
+        "mesh": "Arrow_3",
+        "size": "(0.9086, 5.4121, 0.3734)",
+        "center": "(0.0000, 0.0000, -0.1915)",
+        "bounds": "Center: (0.0000, 0.8519, 0.0000), Extents: (0.2181, 0.0896, 1.2989)",
+        "triangles": 394
+      }
+    ],
+    "compiler": "roslyn"
+  },
+  "hint": null
+}

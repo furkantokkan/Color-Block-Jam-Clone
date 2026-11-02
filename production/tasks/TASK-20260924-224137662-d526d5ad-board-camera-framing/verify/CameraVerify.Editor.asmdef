@@ -1,0 +1,9 @@
+{
+  "name": "CameraVerify.Editor",
+  "references": [
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Environment"
+  ],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

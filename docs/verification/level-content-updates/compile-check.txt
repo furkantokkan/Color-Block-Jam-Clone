@@ -1,0 +1,27 @@
+# Roslyn compile check, 2026-09-28T11:03:29+03:00, workspace head cs:17 plus uncommitted task edits
+# python C:/Users/e-fur/.claude/skills/unity-cli/scripts/unity_compile_check.py --project <root> --files <5 changed .cs> --dependents
+unity-compile-check: ColorBlockJamCase2026, Unity 2022.3.62f2, 5 C# file(s), 23 assembly(ies) to compile (4 stale .csproj ignored)
+  ColorBlockJam.Runtime: OK in 7.6s
+  ColorBlockJam.Presentation: OK in 3.2s
+  ColorBlockJam.Environment: OK in 1.8s
+  ColorBlockJam.Editor.Validation: OK in 1.8s
+  ColorBlockJam.Editor: OK in 3.8s
+  ColorBlockJam.Editor.EditModeTests: OK in 4.8s
+  ColorBlockJam.Editor.LevelPreview: OK in 2.0s
+  ColorBlockJam.Editor.LevelPreview.Tests: OK in 1.9s
+  ColorBlockJam.Player: OK in 1.8s
+  ColorBlockJam.UI: OK in 1.8s
+  ColorBlockJam.Gameplay: OK in 1.8s
+  ColorBlockJam.Editor.Validation.EditModeTests: OK in 1.6s
+  ColorBlockJam.Environment.Editor: OK in 1.6s
+  ColorBlockJam.Environment.EditModeTests: OK in 1.6s
+  ColorBlockJam.Environment.PlayModeTests: OK in 1.4s
+  ColorBlockJam.Gameplay.EditModeTests: OK in 2.0s
+  ColorBlockJam.Gameplay.PlayModeTests: OK in 1.9s
+  ColorBlockJam.Hub: OK in 1.4s
+  ColorBlockJam.Hub.EditModeTests: OK in 1.6s
+  ColorBlockJam.Hub.PlayModeTests: OK in 1.5s
+  ColorBlockJam.Player.EditModeTests: OK in 1.6s
+  ColorBlockJam.Presentation.PlayModeTests: OK in 1.4s
+  ColorBlockJam.UI.EditModeTests: OK in 1.5s
+COMPILE_OK

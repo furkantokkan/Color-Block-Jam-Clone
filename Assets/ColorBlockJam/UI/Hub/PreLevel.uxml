@@ -1,0 +1,56 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <!-- Pre-level popup, references 09 and 10 (design 9.1). Element names are the contract with PreLevelView, HubScreen
+         and the tests. PreLevelView clones BoosterSelector.uxml per catalog item under pre-level-selectors. Draw
+         order: the scrim first; inside the popup the holder and Play come before the header and close button, which
+         overlap the shell's top edge. The level-70 reward panel of reference 09 is omitted and leaves no gap.
+         Titles and button labels are two-layer ".cbj-heavy-text" pairs (Common.uss); the front label carries the name. -->
+    <ui:Template name="BoosterSelector" src="project://database/Assets/ColorBlockJam/UI/Hub/BoosterSelector.uxml" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Common.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Common/Document.uss" />
+    <ui:Style src="project://database/Assets/ColorBlockJam/UI/Hub/PreLevel.uss" />
+    <ui:VisualElement name="pre-level-screen" class="pre-level-screen cbj-document" picking-mode="Ignore">
+        <!-- Full-screen dim over Home; pickable, so it blocks every Home press underneath (AC-2.6). -->
+        <ui:VisualElement name="pre-level-scrim" class="pre-level-scrim" picking-mode="Position" />
+
+        <!-- HubScreen pads all four edges from the safe area; the popup centres inside the padding. -->
+        <ui:VisualElement name="pre-level-safe-area" class="pre-level-safe-area" picking-mode="Ignore">
+            <!-- bg_popup shell. -->
+            <ui:VisualElement name="pre-level-popup" class="pre-level-popup" picking-mode="Position">
+                <!-- bg_popup_info_holder inset: "Select Boosters:" and the selector row. -->
+                <ui:VisualElement name="pre-level-holder" class="pre-level-holder" picking-mode="Ignore">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="pre-level-subtitle cbj-title cbj-heavy-text__back" text="Select Boosters:" picking-mode="Ignore" />
+                        <ui:Label name="pre-level-subtitle" class="pre-level-subtitle cbj-title cbj-heavy-text__front" text="Select Boosters:" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <!-- Authoring samples only; binding discards them and clones the same template for catalog items. -->
+                    <ui:VisualElement name="pre-level-selectors" class="pre-level-selectors" picking-mode="Ignore">
+                        <ui:Instance template="BoosterSelector" name="selector-preview-time" picking-mode="Ignore" />
+                        <ui:Instance template="BoosterSelector" name="selector-preview-rocket" class="selector-preview--rocket" picking-mode="Ignore">
+                            <ui:AttributeOverrides element-name="selector-label-back" text="Rocket" />
+                            <ui:AttributeOverrides element-name="selector-label" text="Rocket" />
+                        </ui:Instance>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Btn_popup_green Play. -->
+                <ui:Button name="pre-level-play" class="pre-level-play cbj-pressable cbj-haptic-confirm">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="pre-level-play__label cbj-title cbj-heavy-text__back" text="Play" picking-mode="Ignore" />
+                        <ui:Label name="pre-level-play-label" class="pre-level-play__label cbj-title cbj-heavy-text__front" text="Play" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:Button>
+
+                <!-- bg_popup_header title tab with "LEVEL N", overlapping the shell's top edge. -->
+                <ui:VisualElement name="pre-level-header" class="pre-level-header" picking-mode="Position">
+                    <ui:VisualElement class="cbj-heavy-text" picking-mode="Ignore">
+                        <ui:Label class="pre-level-title cbj-title cbj-heavy-text__back" text="LEVEL 1" picking-mode="Ignore" />
+                        <ui:Label name="pre-level-title" class="pre-level-title cbj-title cbj-heavy-text__front" text="LEVEL 1" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Popup_Close_Button at the shell's top-right corner. -->
+                <ui:Button name="pre-level-close" class="pre-level-close cbj-pressable cbj-haptic-tap" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

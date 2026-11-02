@@ -1,0 +1,10 @@
+{
+  "name": "ColorBlockJam.Hub.Editor",
+  "rootNamespace": "ColorBlockJam.Hub.Editor",
+  "references": [
+    "ColorBlockJam.Hub",
+    "ZString"
+  ],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

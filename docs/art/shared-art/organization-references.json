@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "objects": 20,
+      "missingReferences": 0,
+      "sceneDirty": false
+    },
+    "compiler": "roslyn"
+  }
+}

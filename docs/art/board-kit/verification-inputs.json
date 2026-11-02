@@ -1,0 +1,1723 @@
+{
+  "vcs": "plastic:cs:5@ColorBlockJamCase2026@efurk64@unity",
+  "algorithm": "SHA-256 of ordinal sorted path + NUL + raw bytes + NUL; lifecycle block omitted from contract",
+  "excludedInventory": "docs/art/board-kit/verification-inputs.json",
+  "files": [
+    {
+      "path": ".agents/skills/board-piece-authoring/SKILL.md",
+      "sha256": "d49428ee358f9a2d0c219b430d13d79feedc73afbbb14401a946b5daf9e5cd32",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "ArtSource/BoardKit/package_previews.py",
+      "sha256": "b93f4d2ebae749f578211c2e5506af41b1cfcdd1ba66ce459df1d68cf61b362f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "ArtSource/BoardKit/palette-export.json",
+      "sha256": "3a4b739d336eb36b7eec86f186b612f0faf1882721b566d62244c2749b5dd8a4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Materials/Board/MAT_Board.mat",
+      "sha256": "339d0ee7c9dd117bac58d90d1692b28d1d1a5d0628f358e54ef9e08d3f53171d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Materials/Board/MAT_Board.mat.meta",
+      "sha256": "629b968658867c4ffd2ae0b344a264befbaa06f6d5d642beafcb440e19eac569",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/Arrows.fbx",
+      "sha256": "8a5d34a7bf1cb16ddeac01bbe0b6fbc912560b5ea14262697d9c566ee8e8e7d6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/Arrows.fbx.meta",
+      "sha256": "e4eb45ff71d23242b962757cc1f34bc33f945645e646060ede3a4027f0b1d253",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/BlockParts.fbx",
+      "sha256": "06a0ced6b8398e86bb48bf655a73554e3e19ea648dddac7129b8006d25c67015",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/BlockParts.fbx.meta",
+      "sha256": "7d468cf1263ee45d36572ac741d3c26819fc7980c2f0b9328e976659e396bb86",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/GroundGrid.fbx",
+      "sha256": "33ead966add6b35d6f12b7d3b70c1d3a81717c98a181285cca62a8649346ba08",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/GroundGrid.fbx.meta",
+      "sha256": "3d26c0d3a9bddca627909273f7a3c5c6f1b518e8389284b185c928d3a50578c4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/WallAndDoor.fbx",
+      "sha256": "b418a5929ab1a6dbe33a23c71c4f46018b4c33e2ce84ef3bc051a6743f124418",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Models/WallAndDoor.fbx.meta",
+      "sha256": "45a82302d092de872ea6f52cbc961062423af8f3416e2e93f9cb2c69bdd08c68",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Shaders/Board/BoardLit.shader",
+      "sha256": "e35623e2fdbed20391abd95175c4c8e5a57a8694282238af433c5d0b82881bc4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Shaders/Board/BoardLit.shader.meta",
+      "sha256": "27f95d90ca1033c995e3fd075277214c54b4683ffcefd18a1c1b557f4e0bf8a0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Art/GamePalette.asset",
+      "sha256": "1d388d3a5eac15fd09ea4afc1724ba21b48642c800ffbc553a5e0ade79302e91",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Art/GamePalette.asset.meta",
+      "sha256": "77e997f39f2528b716528017c3317c36e530a4217b1e9b4916194e7c7681f332",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset",
+      "sha256": "cc741608cb1a5182d4d69c907f21674cc7b2354f8ac066c0a9953f61f23540f8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset.meta",
+      "sha256": "fc82ae8ada98436f32de92bf182011a5e063bf40d79e99cad63c7c785d9e441e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.json",
+      "sha256": "1b982572331661f1d6855ee62621550f49c5c4f8a8df711e304f7a975aa5e17a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.json.meta",
+      "sha256": "190789aecf38437e1ff238e36fcd12f3eab698c833543fad359e136affc530c6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset",
+      "sha256": "3b9a0ff3d9f7e1ffd6cb6bf011b50716c3a068378cb2831b4639295aee25b039",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset.meta",
+      "sha256": "5abb39d03f26979ee4406490adc3f1d25af75e079ea6748f864117c3a6c40de6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitAssets.cs",
+      "sha256": "a5d944eb5516f72d372b6ec788869d8bcdea3e0021a994062823863fdc5c1a58",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitAssets.cs.meta",
+      "sha256": "f8e481232674b93f4441d39d667f60d5d1ac5d0a2bac0158e3bd31314dcd4b56",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitPreview.cs",
+      "sha256": "6728ee157dcc13e2267cb7588625134fe8a6917728180f9c642c8a49b7472da8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/BoardKitPreview.cs.meta",
+      "sha256": "981956a61aa4e60fb97cd33278370c0bb65c7d061c3224331f1b7de3d2fb91e1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs",
+      "sha256": "9118349846dcc316fec9a479c31cc92ddadd540216781e587195276321b8f920",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs.meta",
+      "sha256": "13acea15e2c9f9c23612fc635b9c6a463791cf744826d3afa86b45b18afccef8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridDraft.cs",
+      "sha256": "fc42cfbe541f8a4f248aa0d124d97928e88ae0129caa4cd65b2056d5f59a73b9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridDraft.cs.meta",
+      "sha256": "a37625f57743261f7f20e56581df4909eb2c9d1315f8e0bcd8e0a3d6213e8e12",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridUndoState.cs",
+      "sha256": "ab17fe9c42e009977a05773a29c234b9e1e57a90c27f30d543318fe433fcaca1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/PieceGridUndoState.cs.meta",
+      "sha256": "f08de8af2c51dc141e708254bbf941880e12875eb44c6d100fa1270fdf6249d0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryAuthoring.cs",
+      "sha256": "2f22b4cceb250b2fa22b7b5a4ae73298c29730261456db869913369d631ed8fd",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryAuthoring.cs.meta",
+      "sha256": "4e41addee583c32fbde8612cc8c96b872f9cfa7d045004c745d049427c4a2ca5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryFile.cs",
+      "sha256": "db68717312e7904179c7162ac739f10f940e3f523b1d9661026f06bf2f2f601d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryFile.cs.meta",
+      "sha256": "5557c4da7c546179a314fbe5938ac43ca670fafd705e0ffd547715f160ff38dc",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryTransaction.cs",
+      "sha256": "92c35aaf85d5d8d981c663527d110f352a3e7fd95d94195ac40cf837e5531256",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryTransaction.cs.meta",
+      "sha256": "5db3573907db6ed9b6bbcbf00c28df175f0bce2dd1eced89fa9f8dd0dcea059c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryUndoState.cs",
+      "sha256": "93261cf0cfb0d68a1667aed68db61bc2856abf98f853f4d01b6135294215d5cd",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapeLibraryUndoState.cs.meta",
+      "sha256": "aff92d4d46ece6c057cc2ff558e59b0e947340b852168eb34818e37ec57302c2",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapePrefabAuthoring.cs",
+      "sha256": "8abcdd47f347bb5f0e1cc0ea28d7789882113724a136bc103f7d804c430980ca",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/ShapePrefabAuthoring.cs.meta",
+      "sha256": "4f311ae3c3aff8ebf82815b4e476f5d36aaaad7e5cc07bc79ca5ddb8c4ce90a9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/ColorBlockJam.Editor.asmdef",
+      "sha256": "c860fe289aa2674eae9043bc414e0f0b22136230eeac751c9f9723d8cced4bd4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Editor/ColorBlockJam.Editor.asmdef.meta",
+      "sha256": "cfca0ea49d347c9b5503c22490ff22ef5acef1595618b5b28916724ed2b71732",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/ModularBlock.prefab",
+      "sha256": "083a0812929e3d65c2de7fb3c8c392605e238f6c558562f23e0632bcabb6f499",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/ModularBlock.prefab.meta",
+      "sha256": "c79c7c4f769d354cc6f4664c6efa57b979a1793a1e39ee63461a6e5d1c9bf1df",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces.meta",
+      "sha256": "bbb6abbcadbd6a8fb5bfa4f8a1f8ea9f9c305d9dd445825766e9cb95a3d991d9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_1.prefab",
+      "sha256": "42128625e923b338abb8bd245190959e1cd39e8ad5d20f7535ef044c67d50a53",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_1.prefab.meta",
+      "sha256": "ea9b362c0e26f4fa6e27b2ef72fc14144cedf8600a9afb6ace01db0656b9e504",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_2.prefab",
+      "sha256": "a6870b7de9372bce9b8b21df8b53b2afa474803b9be0df39da528fc87089cc24",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_2.prefab.meta",
+      "sha256": "d9afb68795800d6966ac47f1c24057b0ff198de42d5365abd83288feebff6b4c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_3.prefab",
+      "sha256": "af66a8fd151a890342a43a52541c8b894c041e092c36c7ff567a934cd76ce0ff",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Arrow_3.prefab.meta",
+      "sha256": "ef4c549e41f54d6cf33ef34d12673baa461e6a939ccb37d27d12661f833320b5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Center.prefab",
+      "sha256": "3b126f7d70939c0effd97a2dc014cd33b1ebf29308ae7858f50146ad73370726",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Center.prefab.meta",
+      "sha256": "bb04c56f593048cedcf76935ba55fedfbd36addf97d4c0e0932dbdc02bb19790",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Corner_1.prefab",
+      "sha256": "be533df44285105f66a1e6f0f19904fb236987517dfe4641f2f639a93a2879cb",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Corner_1.prefab.meta",
+      "sha256": "6b67dc7aa6cff0167630c9037844877da240b90d92b701fd2b298bf53926a137",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_1x1.prefab",
+      "sha256": "35913b5a1521d1d77b5ea712e24a67fd9fc5be790cc541fed82e0d2bb3208097",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_1x1.prefab.meta",
+      "sha256": "76ed1d58d44f5d0722551b4f3f8286f0b85811bff4df2336290109f031407c10",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_Arrow.prefab",
+      "sha256": "ae3b92c93f46759e6edd52e0aa743ca14d537e8ecc72d9e1649cbbc9e987602f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Door_Arrow.prefab.meta",
+      "sha256": "cafac9df21c3d952714ae92deda77e98977558464fd117f5b33a8a8439daf617",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Edge.prefab",
+      "sha256": "da74401c8df14525caf1d8759a33925ad8f9de7085cbe70ccac1ddfd9a60c64c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Edge.prefab.meta",
+      "sha256": "1e1d77ad473013941a07a839eff5952903ac6f062b4bc7eb561a03f18e26a95b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Grid.prefab",
+      "sha256": "a9770a15c2dd750855dfd640f3cb0c0b3182be15d6e839cd2fc342ea0526dde4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Grid.prefab.meta",
+      "sha256": "0b2db1d3ce2a6a60f61c22c01cba1193753ecf70629bd2107fc3a71f2c30a86c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/InnerCorner.prefab",
+      "sha256": "315011e7d5e2cdef8061ce5f51a72171abc5c3f1f053d64d186251aaac1eef28",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/InnerCorner.prefab.meta",
+      "sha256": "8697b7cf819edbce855ca35837d72e3735271bf20ca07b84fbb6a41f0580f805",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/OuterCorner.prefab",
+      "sha256": "500182595a013afea654b15e3a977507be171bb2c70bc9a82a605bf31a02b506",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/OuterCorner.prefab.meta",
+      "sha256": "42e29f404804991723a6be44f8b780c9273a540e477a1046eac509baccfbcaa1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Wall.prefab",
+      "sha256": "5e1e99693e62eb333041ae349f3564075bd0f12354bd32b630e4a96e915c5d99",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/Wall.prefab.meta",
+      "sha256": "16f81bc778cc2fb8493e68db4f8da5fa9162b28c2492926d5267ae0190bea123",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_3.prefab",
+      "sha256": "bf63ef043db3f411d41543e4ee77a5d078b4b4bf4f034e121746b9e9a9b57cf1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_3.prefab.meta",
+      "sha256": "2c9f87275b5d1758a5932ac9bfd38c7b6dad9a1c859c7bde8ac8b5a925afb8bc",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_5.prefab",
+      "sha256": "95cb88ae7aa9eb2cc41646fddb5faa613afdb78808f1824492dbd7aca8c907d6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Pieces/corner_5.prefab.meta",
+      "sha256": "23e98b8b6b6e0a395a3e7fb02d4946c4d9eb2366a792ba3b6d059e6abc3985ac",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes.meta",
+      "sha256": "dbb2b8d7f580aa220b818f338f4b36a15cb64f319e01f178bb67e3b9d34da8e2",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_000.prefab",
+      "sha256": "81061630d36ffca6359fb957784c6a836d4cb044791ad94a1634fb42ddde7a4b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_000.prefab.meta",
+      "sha256": "b7f980f0702fc9399dafc0d168d2015d1e7104da9694f11e16f2469bfe9c7488",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_001.prefab",
+      "sha256": "c3caa1f0e089f273df3d0a9ee0a7d0a2bf5988976853ebef2c7855d4c66a8910",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_001.prefab.meta",
+      "sha256": "d073565e323203af7171d2eb615b7c826cbbe390af7373afab19a5769a51c4c8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_002.prefab",
+      "sha256": "c0d280b1aba98a0c6cf73b9095c4b6a3350c57e6d873ced19326d87aff5bc3d5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_002.prefab.meta",
+      "sha256": "949b22638ec4885f26da316c1277e02ade76d490c57c0afe638283a1c8f2bc45",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_003.prefab",
+      "sha256": "654ad37d73046e2353a86d2bcb079c073a0765100264dffbbdac71c8640ddc02",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_003.prefab.meta",
+      "sha256": "30f9ca9c0c89b09b5ea78af482cf3c783829bd7d9680127366ba6922804f15ae",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_004.prefab",
+      "sha256": "3a12bec9f017feedd9fd89de11d3bee5b1fe0c6fd608985b6d210e4c90392251",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_004.prefab.meta",
+      "sha256": "359d4e6415581e053f105188edd4be8969827d1a018aa5f0bd03400f16167adb",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_005.prefab",
+      "sha256": "b93c60a2ab41274dd87e5ef26e24d6e7ed8daadc07e8691516ae177e25d90ac8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_005.prefab.meta",
+      "sha256": "f4b06114bebbc0673c4072528e8e3695e49a398438e4e57d6e94c1646e873b33",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_006.prefab",
+      "sha256": "5c3845d527c64fda8904f65546ccdcb3aa3059c145dc9ab3030978f1e96ff2c6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_006.prefab.meta",
+      "sha256": "5947bdc38028baec07d9e6a3c513a085ec9a8429f8a78f0e7fa4443ae5525d08",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_007.prefab",
+      "sha256": "00f72b1ed25a964292c31c29b3d55e2ce95dcea550f6e2db3557a3b1c7e67531",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_007.prefab.meta",
+      "sha256": "92b6bbedb26b1a5e400bd016700b9633b5d6e452b5bc215030e29e01712fdd83",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_008.prefab",
+      "sha256": "e4b3750c0f8c974e91cb285772091a59784f479cb6169aa448632fba497158b2",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_008.prefab.meta",
+      "sha256": "77d9aa54eb5d2f9f0cb71a7958923a6dfc5c7fff1dc2ffe2f512696f5182eb3b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_009.prefab",
+      "sha256": "5e60b0c5a09ceb4b37c656a478a6f62a209ae60d28633ae3e786a0729a88795c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_009.prefab.meta",
+      "sha256": "e21d35b6c8ca5c651e33ea4056da61dbba0044c49cf3906b32221524d90e6483",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_010.prefab",
+      "sha256": "1d1fc82eb2ccf749a422572d452d901cabd0000c7a2e44e176c2797c5156d2ed",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_010.prefab.meta",
+      "sha256": "d24a2c3eab689588ed641998acde345b8a277ceaaefc2e4612c7433738520430",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_011.prefab",
+      "sha256": "b990f550130cc34db1549797fe63aa7d908fd1a5f6096f5e8a6b8cff00e1602d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_011.prefab.meta",
+      "sha256": "d65e97ad74366d61ffc54b5aeffe9817bd412ec6887bd31138f614df0f164ab5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_012.prefab",
+      "sha256": "b4765dc5882ec50b72bcc390910943df82a851ecbde0e8691061e5670f201cfc",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_012.prefab.meta",
+      "sha256": "fadd8fad470e1fbd1c0d0cb5c5e512b22038682cf5f618d88b8835de5b5fdb7f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_013.prefab",
+      "sha256": "4795e7aa3d2c470e0a5f37d1e4385657017786b6c54553da5e31620683dd1fbc",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_013.prefab.meta",
+      "sha256": "e171eee8ca27369f7eabdd01f9c3ac00c38f8045bb337cecb074253b11ab0cdb",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_014.prefab",
+      "sha256": "34992cfa502f6c5473b612b8f6587a96e1f56de067c2b20428e03dfe909eee94",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_014.prefab.meta",
+      "sha256": "30356376a48f60b9e258f4679738f39e05120b5481560ed0af82575e046f56af",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_015.prefab",
+      "sha256": "7f5460717be84d6aa0e5c34354cad99372bf2f5b01a3395ed05bcf7a4cf37318",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_015.prefab.meta",
+      "sha256": "5e3b9a8312be5367e08408b30a81392463e30c55b8fde8da49a760ba6ae28839",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_016.prefab",
+      "sha256": "c74a8122c383be6e362f815f26ea2dbf2694e23427a90ce067e65964d28f1125",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_016.prefab.meta",
+      "sha256": "7b85ce9673b840f36ca60f72f5e6c3be9c883c891de0b69d9bfd8dd2780f74a5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_017.prefab",
+      "sha256": "3815ed49d8da1be000801f81ad3ba3ec3dba05ec48e48ed06d31553f6ab2f703",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_017.prefab.meta",
+      "sha256": "290b78e2176efabc9afb2e8bc2eb4093fcad37a4936760b345e7e4408b0715f8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_018.prefab",
+      "sha256": "007331d773b45c52244121d3c5183d5f0ecaa5762e00106ab3658102479a2e6f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_018.prefab.meta",
+      "sha256": "f60d4119a5ba6f08c734c1990f7748a4e12a24129469b7fb89b2f33451977b4e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_019.prefab",
+      "sha256": "15d6408971dedbec6ced9b3745a8c65392efa9fad008d2f36140f9fe4761a55d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_019.prefab.meta",
+      "sha256": "9726ab5532d577debd090771b5e5c4a73734c3c344a16706fb66fc024f93f8d1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_020.prefab",
+      "sha256": "08e7321d15b5120bdead198d05d0724a0ea32ac59071c4450a4d0108566fba1a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_020.prefab.meta",
+      "sha256": "8024363b699552c25ee861c2f3e28e1a09fa66e28bca5f692c386a906b547093",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_021.prefab",
+      "sha256": "8166b3ab6d40d5b140ce6c43300c029171348307fe3d4d94911069b5a0959bb7",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_021.prefab.meta",
+      "sha256": "4fd399ba980222a13c83055f98877f914ef8a5d57b59f6aff3fe517b0daa036c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_022.prefab",
+      "sha256": "3c4dfe2e462007d05191f9738486b0051bcb707409c411b78786d85c374547c5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_022.prefab.meta",
+      "sha256": "0c1aaf35d8d009f7bf63237c56d40389ceff5f14cb77adbfa47580d273b3c31a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_023.prefab",
+      "sha256": "54b41c579a397a22065279340f8448d9310318b9e3fc3a3d68ae51988410ac07",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_023.prefab.meta",
+      "sha256": "20e74462a9b7979b8e868aeaa71fcc0574db5766a19e0ab234bd2c1a76e86dd1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_024.prefab",
+      "sha256": "545f04df063fb51434cdd49af7483d20f1a3c0521f601548118e0e621f1e9a1d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_024.prefab.meta",
+      "sha256": "99ccddb52d7a29bed0337b27e4c51a75d882fef21540883b78a2046c00a6fd4d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_025.prefab",
+      "sha256": "0a76c03e803013bb3bb3688ac0cd9bfcb1eecfd5178c51714d3f87c84a57bfa9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_025.prefab.meta",
+      "sha256": "e122635da641819cbaba5097ddb71e8a9822bb678368822661a39195a1d5d017",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_026.prefab",
+      "sha256": "6fe27416922abd389c49689fb8b7e53d571da4f9627edbeea6ec203a72cb4b2f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_026.prefab.meta",
+      "sha256": "2e02a394b7787e8dda44a7d9f03bd2fd01d288d65e323f6f9f09a9d23eec7fa4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_027.prefab",
+      "sha256": "91c23665c4d8cc0a53a00b8775474d53d192261dc69f7330fe906913f288d0fc",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_027.prefab.meta",
+      "sha256": "a78f7b74af221c68d98e5ecbd37174dac1fb10456ce1496cf714be8ebf78db48",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_028.prefab",
+      "sha256": "23c1cc65afd88c6dd4fb7f9595f35781863e21f74f06dbf7e92f4fd306377c38",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_028.prefab.meta",
+      "sha256": "5e326870fd2956e725deb65221fee2bfe889ca82c8e47443ad8aae66ab98a3ba",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_029.prefab",
+      "sha256": "9ddbae7dff547cc3c5ebe135577ac5b66f33d356563011f77841eac0084b5130",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_029.prefab.meta",
+      "sha256": "562c545762afec02e9f02ffc0644b7a64c61b3ec9f11e495a2dd58935314f4ef",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_030.prefab",
+      "sha256": "434305a6f68d2089467178a85deff5bc991e7f34966ef9c3dd8ea0049de35cf0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_030.prefab.meta",
+      "sha256": "2c5c26af1c915aa44d8168979ef510488e291538b201c924631191390df04b55",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_031.prefab",
+      "sha256": "34b5e9ee01523c311c220a01755ebe655a763b0cda6c83df8e4b38a9370d91d5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_031.prefab.meta",
+      "sha256": "9d0ec0350106fdef27254728e7f8253f6df919d67f834acc2e01dc698775d307",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_032.prefab",
+      "sha256": "64842ea079f9b6d1d4f42c46d9ffb88d48072911220af3b110f50651dcc6131f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_032.prefab.meta",
+      "sha256": "e5a2392572c5419a29aa8ad2e184b9d77941d8dff42eb13735b9bc65561c3a1b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_033.prefab",
+      "sha256": "66f1d9f186a702f845cc6d13508de66c163c821d2c3eeb2046362a5dcbf946e1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Prefabs/Board/Shapes/Piece_033.prefab.meta",
+      "sha256": "c321648504af5dae726876f9ad75c02b69bdf2d4cba9f6435430d0bfb7854aae",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockPiece.cs",
+      "sha256": "604090394d0aa228f25f5f6fd5eb94c9150cdfce990a442eaabcb5eec03aa94a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockPiece.cs.meta",
+      "sha256": "30493fbda3326adf8b90be56dc2580544e7cfa3a364b85f397acdb0777a4ca33",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockPieceFactory.cs",
+      "sha256": "0ff8e5ebeb7779700ba7573a1fa135a7e2241b918b732eb712452bc3c9203cc7",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockPieceFactory.cs.meta",
+      "sha256": "ca9d70ce3e28908c660a126b7de15723062636ee62f5c91579feb7a03fa1b9de",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockPieceSpawnData.cs",
+      "sha256": "f35ae6d7c771f4cac1313bb438fd0410e845b9f3a4d7fd97bc9d351a526bf572",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockPieceSpawnData.cs.meta",
+      "sha256": "4946ab97b7c22b8b5920ea5ac8e04df646a4627fe1e75a6567a57d1f357569b5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BoardPieceCatalog.cs",
+      "sha256": "7f84707ecf25b7247dda3de8eee62db0286afeaff1479a8f4637278c70de9274",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BoardPieceCatalog.cs.meta",
+      "sha256": "2d301e001ea02e78ccd2b1e0622ebf0d7dd111b4e03c07093a70026a3f636b23",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs",
+      "sha256": "4c100677428b46e3668d2aa6d656fde956510558cda8fb9b615bd9a224b725c9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs.meta",
+      "sha256": "830e9a6101f35b36aea01f6f8b158f3a7295835fac99a03c8a234be0ecfe0156",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/ModularBlockView.cs",
+      "sha256": "15de4d8cb0d9e11c1d72492e12b4c67ca1bba7318b3787e921e3c3e4af37676d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/ModularBlockView.cs.meta",
+      "sha256": "b9810e01fa58966a56580f12f9cceb135f3ba12e5a2979280553cea269640cc7",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/ColorBlockJam.Presentation.asmdef",
+      "sha256": "f927dcefa62c587c335777288c041538839536f3a6941d1ae2b6d378bc962d7e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/ColorBlockJam.Presentation.asmdef.meta",
+      "sha256": "6e935f3816aa2260b54a5211f6fc60a87993cef6f5f4625f6f592a34b23ac9d9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "sha256": "87fec6a7d8607bcaa79e39c622f234d0ba06f764ca92dc425459f15d27e05b79",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs.meta",
+      "sha256": "9ad5e52530a928a1bf6ab6c3cb6d55328e7ca3211672c634011d54cdc2d8b544",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Art/PaletteColor.cs",
+      "sha256": "eb92deaa52640454472da9dcbc0fdcd141f12bd38178c32f0a6703d7eba31de0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Art/PaletteColor.cs.meta",
+      "sha256": "7f1ce2405821502cb7df5a915702775a870db11526c2ce5253c474337eb89e50",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockPieceComposer.cs",
+      "sha256": "4a2b6405d0bcc4c58c96e6a85a977c450d618419ff181d6fdd08d4b43885bf5e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockPieceComposer.cs.meta",
+      "sha256": "8c925f0afad004947b328e411b82707289c8a63de3f71a8b74a3127f243c4a4f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockPieceState.cs",
+      "sha256": "a1369523f9e72b11f6cb13b497f41a4f87ee1101a266d90e6165773c9c11deb4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockPieceState.cs.meta",
+      "sha256": "5b45ff3adb03122d3758fd2f949c1ce25eb58ef4286203c58617c995114b4bb5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockShapeLibrary.cs",
+      "sha256": "55c92512ced31a83fe4d35125f3dc3b3fa7f035d4f8359c4b8fd4e8de0078716",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockShapeLibrary.cs.meta",
+      "sha256": "57ffbed75fa14b804e837b501ff5be44a3870b0e103fc885ae1a7df2856a8525",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockShapeLibraryJson.cs",
+      "sha256": "847da58f109de40f57660cab6b4a1d74ed9e9a1c496bc51ec28dfddcffa6f299",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockShapeLibraryJson.cs.meta",
+      "sha256": "87c0997984527dc6e840c24c5322ce0f258cf78d84e7c4526de5476f1033f274",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockShapeType.cs",
+      "sha256": "cc2849c347dcc3c13cecd6ccf707b34c67d21d09541410fe3844b281c6ad50d0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/BlockShapeType.cs.meta",
+      "sha256": "cdc0c577523ca0c9e69d400d212cf0bb6aa4c7e01dc2c0b102a803d75c8b4595",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/link.xml",
+      "sha256": "3eb26e3d92cd9ef59e16abdcb0aa174221120a7e3183b8d23e63a6128f841666",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Board/link.xml.meta",
+      "sha256": "10767a76c9f54aa8858eca477723d29f57f9de2f196f75b431641b86d4ca1c19",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/ColorBlockJam.Runtime.asmdef",
+      "sha256": "3e538c769d2456ef6c905ae99b949fb097f8acf4ff87a3b3aa69b1a9f617e6de",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/ColorBlockJam.Runtime.asmdef.meta",
+      "sha256": "f061903be55b22d1df76085df96c7d2c1766d63fe6b40dda5cbb1fd30f9c845e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/BoardKitTests.cs",
+      "sha256": "bcc4673465822e5d2c9f67c6810c266501b338d71268c798d176a8b62c24ee2d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/BoardKitTests.cs.meta",
+      "sha256": "bda40adc9f64e7d8f91589b6ae72c2c682999a47cdf4e25df7d6dddc74c4df15",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/ColorBlockJam.Editor.EditModeTests.asmdef",
+      "sha256": "ec36161a518d2d369a649aa24b4b3a14ebd784296be5d3cdda08f3a1560b1783",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/ColorBlockJam.Editor.EditModeTests.asmdef.meta",
+      "sha256": "fecc25759ebec102d526efe3b48286641a861ddfeda9d3fcb92af053fb9fab1d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/ShapeLibraryJsonTests.cs",
+      "sha256": "250092d6ae84330ac419758f43318bd20fa1f26c9d589acfb37e08aca853a058",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/ShapeLibraryJsonTests.cs.meta",
+      "sha256": "6c566875431e0c35805fb6db596da340d8fefb103508a311346a8689b78b093d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/ShapePrefabTests.cs",
+      "sha256": "488296e2da90c7a99d4272ed70f29708e6441ce8fc133a63d112685ef81d7512",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/ShapePrefabTests.cs.meta",
+      "sha256": "b97733f06e465a64ee999241f6740803c596c57c64bb1d35555785183f6557c3",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/PlayMode/BoardKitLifecycleTests.cs",
+      "sha256": "463c5dad5d804368b11bcbf17cb3bbd7c1c68ecdd4fd8614395b07d899fc58b6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/PlayMode/BoardKitLifecycleTests.cs.meta",
+      "sha256": "d124413d4a745c56f28124e2b16f2de62aa93f2f99ae5dc4c22d89cde5633030",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/PlayMode/ColorBlockJam.Presentation.PlayModeTests.asmdef",
+      "sha256": "51648cd9a037d0408d24deb52e29a284c7ccbf200a95e47689494508d3304aa9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/PlayMode/ColorBlockJam.Presentation.PlayModeTests.asmdef.meta",
+      "sha256": "bc4ee5ba469ff7529d92e5c7dba96e6bf1629c139dd270823e9fdd1bf00643b5",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Art\\Materials\\Board.meta",
+      "sha256": "50ff1705b1dd89afa20cbb7533a9f6fea25f19b5fe463023b812c9c37e6dfc82",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Art\\Shaders\\Board.meta",
+      "sha256": "d2e26facf0c107110b2630504d1d89a8d83eaa8d7c747ff0435e95630ee4f258",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Data\\Art.meta",
+      "sha256": "18cd9799315367a72b5e59208aef4adc0776726c3a667ae1eea37385fbdcf6f6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Data\\Board.meta",
+      "sha256": "f503c313cfc3f91848ccd31bfedde7afb8bd57d2050c9fb3171de699ee77b95c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Editor\\BoardKit.meta",
+      "sha256": "b5b2b8b762b16f08089de3d295cc8c75a7bd18a152361deef82efb3b04e0c350",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Prefabs\\Board.meta",
+      "sha256": "43e0656079347489033cd0fb4bf1a05fa55740557a4cda54674ea711eadfbd14",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Presentation\\Board.meta",
+      "sha256": "4e1f49d0d82fd796b50a0e68f4dd181df480ff5c56ed29c9ed48a848d4471c83",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Runtime\\Art.meta",
+      "sha256": "885765419e55f82e86d2b665bf297bc7ec398f26eaa5541de50d209c69257a3c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Assets\\ColorBlockJam\\Runtime\\Board.meta",
+      "sha256": "a875f4ca97f5618d27eef751e1f6a2a180d15fb2825e0f32abf0ed6c533bbb1b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "PROJECT.md",
+      "sha256": "638dcc4d66f137c9509f210c9d42848eecfa8a22902a452a3ecb935d06dbddbd",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Packages/manifest.json",
+      "sha256": "8e051eb2f0e6fa8f83f17bc4f4e05db57006ba7580101723513786d00fc57681",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "Packages/packages-lock.json",
+      "sha256": "e62cb3a3b7f7f3650433c0acd48c7ce736ee033f2130df612305fa4056964949",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "README.md",
+      "sha256": "f35d4aae7f96c6769ad63a904ed1baef50d493d4ecb1900046a379296ed98a5f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/Art-Asset-PRD-Mapping.md",
+      "sha256": "3a9f1db368ca27f9a2c0b1766fa1381965ddf5837bbc0f1e540f68718719c1b9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/Color-Block-Jam-PRD-Mechanics-Catalog.md",
+      "sha256": "358c4849083f823bb6d091004d6d534ea1b1738e63ab049ec775c68316ed88cd",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/Color-Block-Jam-PRD.md",
+      "sha256": "e08ac904328a4eeabeb57269c7bc5d704cfb105ea5008e00a94e3cf059070962",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/EnvironmentPalette.png",
+      "sha256": "22a660c0d05d6b0dc9d42495a04a4a5a84c092d66f92fed7271a41688d07349e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/ModularBlock_Center.png",
+      "sha256": "9eb4e2487edd388313322b027d6c35d041405281274aa7925769286fd8c72252",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/ModularBlock_Edge.png",
+      "sha256": "8e6ec2b59ffa486958046f6e517db23ad0bb648b2a085a663a7623f7a39e6f4e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/ModularBlock_InnerCorner.png",
+      "sha256": "f6bb66b1b3e4676647188e1782f76ccd38849d1f2a28be09e6e4813dd146f2b3",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/ModularBlock_OuterCorner.png",
+      "sha256": "935e0d14c6c8c84e890383d1633db542a2ef12560a771527ae60f22f6dc09ba1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/PieceEditor.png",
+      "sha256": "a55cc9b544ab5be0857dceed55026f308c2eec59d4017ccda324d31a3886d44a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/PieceEditorJson.png",
+      "sha256": "4e901a2380bbe867e1e7dae3635841ab8c9675723cba70a615b91d4745d34e12",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/README.md",
+      "sha256": "2d72355df6bcc93fe09cdc26c2dc19d664851abf4f2cb1e260a77faf1f0aad74",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/ShapeLibrary.png",
+      "sha256": "01ad4b0079e05d589f025a2e6b52a83aa2558a3e4a013f4d3bda568668b7bc95",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/SourceBlockParts.png",
+      "sha256": "f3d5cd291f0988f00799d5b7d9e8a4016e200c5429e1d8c4e369ebce25c8bfe8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Arrow_1.png",
+      "sha256": "3c29249fc6591fbfa7f434c65fa5948148b51291f2cc74c4b6dff17e2a4001ca",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Arrow_2.png",
+      "sha256": "49124a39b47e8649a870d6dba27d1f3bcbfa18579b8d977fd9bb2377ba3b2d26",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Arrow_3.png",
+      "sha256": "2d986b91ac2eb113ae6f3fc9de6f3fab188b8912c0b6ad25b32072d49a2c0555",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Corner_1.png",
+      "sha256": "c50cf485332506ac4e508d09648dec032c7c2699887efcd5458b8bc736c49750",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Door_1x1.png",
+      "sha256": "397ae7427ac17021b009ee4c7d9e70fdb5f3b631c96373f2d21bbc0d4c56fab6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Door_Arrow.png",
+      "sha256": "54101f32ad746d8e1115cde17fae57afbd6940155107029cce4c9c8d9506569b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Grid.png",
+      "sha256": "e4eb3cb1c77649545ee8844d1cdc19339ffa77642803e45b6a62521fa684c9a2",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_Blue.png",
+      "sha256": "2cc2e7be129017024fd59ffca1bdbaa58d8e3a4240cd17d2a05d9f56c9f43954",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_DarkGreen.png",
+      "sha256": "b6d666b5d653e391bfc733db8a2a32b633b91185a441259cb7fe22b60a405648",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_DarkTurquoise.png",
+      "sha256": "b0f9126a2a6dd89cc9853bff094226a55b30847e021890273ea4ae866a8f7ce8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_LightBlue.png",
+      "sha256": "6e287943bc774f10377c8e95b05e55c2153ead5cb3ce1a839b02fd8888ce2837",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_LightGreen.png",
+      "sha256": "d7973a09553ec50addfdc5d62142849103258d9198a542ddd382d565832adaf8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_LightTurquoise.png",
+      "sha256": "22f24635eacd8770bae69186f682ea352ca7476d306583d79ba6a666a80545c0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_Orange.png",
+      "sha256": "397ae7427ac17021b009ee4c7d9e70fdb5f3b631c96373f2d21bbc0d4c56fab6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_Pink.png",
+      "sha256": "23fb85096723a6ab674d670faddbce169ecf62bda22921221d3f036c5647ca12",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_Purple.png",
+      "sha256": "217baede5a026152c0826a04769627826d53660ed15dc42ca521ede96b0091b0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_Red.png",
+      "sha256": "31e518f762e0a75a3e9caa562659a75454b3c87390917d160111fd768546aa48",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Palette_Yellow.png",
+      "sha256": "b365679ad5e97a2f805e00009745c52d9d970f8c43a05c58eefa05929eecda65",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/Wall.png",
+      "sha256": "8e039d48235162ba6d18cd22e53546cae0093fbd8c99a7f1f2ea9abf5fb74899",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/corner_3.png",
+      "sha256": "5bee769076a89a1113aaea4d8645f1f6a6ad253295db95936abe98d338b396da",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/environment/corner_5.png",
+      "sha256": "b8812e15b491ea5604596a2012a2ae881af1a9eff508aa33ab3eec8dd952bb3e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/final-unity-readback.json",
+      "sha256": "88513b9f6b82853c9ed93f0becc841bc3c9730bfee55c75cbb3db2c0edc78ba0",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/json-migration-source.json",
+      "sha256": "0bb60085961cbb26396fe7a714993411789dfec9e79575057ae9d4d8d5af43ce",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/json-migration-verification.json",
+      "sha256": "548b6370337175b2928edd25ecb4e13accae04f4954b724fa52b909d3c3180cd",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/json-readback.json",
+      "sha256": "ecd66bad4dd7f4caa9bb92061c837637522932aa9b2ae5f5c6b4741b482dae15",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shape-prefabs.json",
+      "sha256": "e4e07404b73b3cb472f6516770a7f234054ebfd6e1754d6c48639ac9dda08dad",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CTypeB.png",
+      "sha256": "4119783e00098918e5ed979e1f2f8e78d0574944d24ff0c4ef960e27a1582d41",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CTypeL.png",
+      "sha256": "6bfbf9dfbb4d17ea16356aa168ee9ae8a1887b1de57185db2092b0756e7d8b7c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CTypeR.png",
+      "sha256": "e766eb3463ac4f764e0c7a51d34d359d9625861aa8ec8b6a57054391b30d8545",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CTypeT.png",
+      "sha256": "097d5097c5eca11968bcfa21e1be4db68d4b83fcf3c0a56922a5ccdebb9a9e8d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CornerLB.png",
+      "sha256": "bfb3a245775bff45bfc33eb082664532540fa13869945804291b869ba0cde1ae",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CornerLT.png",
+      "sha256": "4dec7742bd7c8b9a726fd51a5f3a139e811f72da103287fd625fc3388e7bfcce",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CornerRB.png",
+      "sha256": "b0b022577dab0261aed0025ce1254ac2fc2fb06dd8b5e8056eeca575c18a2637",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/CornerRT.png",
+      "sha256": "cd1dad706ea331b6bd89e925a22f371bad7cf59d7b775b72509fd762a432b0e8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/DoubleHorizontal.png",
+      "sha256": "e47ea37ce9e0211d401c7bc63ce556d488ac89bb92582b6597307a7eabec8c0f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/DoubleTripleHorizontal.png",
+      "sha256": "581bf215809762d8d51baa536a1260a45d1ab02cad92b27d20e1f50506e58298",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/DoubleTripleVertical.png",
+      "sha256": "200da383c7f12a8833428dbb5ba1fba2ff66d82ba7c3295125d429ed953c1d89",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/DoubleVertical.png",
+      "sha256": "2a608296f9bbd1354432c90938595b3c48e4120cbb53d0bc631a3a73b7703c62",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeB1.png",
+      "sha256": "86b385e089b3266741bf9f49a77fd554ffdf001f294072d5c2c1d771e638d1d3",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeB2.png",
+      "sha256": "9b595b03188299a11ab0320046c255348030768276fdbeddf02bf9dbf9363423",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeL1.png",
+      "sha256": "d54b57dd0afe6e9980013c0ffa85ec1eaf639556a91d3a40d7ff1fb4dbb3adfe",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeL2.png",
+      "sha256": "b7c8cf5fa1c089ddac58ee6c7859e797febdc2f032734c2cda51bd79b5ba9a8e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeR1.png",
+      "sha256": "8ac451de59bbb467939ac6edd4892edb02c77299966bf523306f76b8de4698d1",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeR2.png",
+      "sha256": "d23977767ece8a385840a75381fab96074f48b3b869bb83e35df4925e1d72521",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeT1.png",
+      "sha256": "44153dc7f0a2eebd75106aa07dbeb5d64fa328b6ac26186f9d88acee0b116c6e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/LTypeT2.png",
+      "sha256": "e741ed0d7dcadb7fe87083adcd270e819e4a51d4001e3a1c297c58d8519357a9",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/NewPiece.png",
+      "sha256": "1a83fee6f8d9e49d91e2af5ed68a2341860a65c97118540441a615d8de565a3c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/TTypeB.png",
+      "sha256": "692f46583c2366c67d870b837640b8d69ea9abf0c1a839446496c9e1d53e38d8",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/TTypeL.png",
+      "sha256": "7e446856c9ec367dc94c0a0b24146b7485386ededaf6df4735a3275eb07dc60b",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/TTypeR.png",
+      "sha256": "f816e6ac92186cd55c1d86d3838f1b73d5a71bccc5f01b4c555bbdaa21369a16",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/TTypeT.png",
+      "sha256": "80bde88862b020e5eb31f7e2e493e563363d9fd9c5195321da42d80d30f0ef0c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/TripleHorizontal.png",
+      "sha256": "f6bbef4ba3513cca8719aab55bf2aa339d567de27832f4f661322c03c983358f",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/TripleVertical.png",
+      "sha256": "c86589e1e0f29a22fe4d1c0087cb58e40ad1cfae5bba3838f1575a546cc15358",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/ZTypeHorizL.png",
+      "sha256": "297b070da160f18c3d2d94506b56d4836e344da9e30fa64ebe329745483183f3",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/ZTypeHorizR.png",
+      "sha256": "c5d45343e51d742190db9216fe1c07dd1eca6f997f1ae1d228aa4914dc1b163e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/ZTypeVertL.png",
+      "sha256": "cd66e105534a66dfbb1641a347f5053e0cbd4f1f2add79f3ac04017c3c00c7b4",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/ZTypeVertR.png",
+      "sha256": "2051e2a61578d92e70f6c659abb49ddaf675b5e01945f5bbf4276bcdbe53b21e",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/cross.png",
+      "sha256": "77ca86ada64514604ebee345d42eb31289faac1088ebf1f4d7286af50c9e5841",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/single.png",
+      "sha256": "1a83fee6f8d9e49d91e2af5ed68a2341860a65c97118540441a615d8de565a3c",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/shapes/square.png",
+      "sha256": "3e4f0aa66174d2ef93b0c5c9bad1631b57e8f4eb2b5d6fbcc9310d9565df2c71",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/source-preservation.json",
+      "sha256": "e8d24cd990c367800ad7223943195fb41c86d92b4182ec96df4f64e557a1ef02",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/README.md",
+      "sha256": "fe24b669b5a1f380fbaedad4a52e514502d1ee6ba3fa962e798734215098701a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/editmode.json",
+      "sha256": "01d92fd775dcef05c99fa297cce26653f13a3085d6da49e7698da1b507049ab6",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/factory-playmode.json",
+      "sha256": "07dff709c77ee072e46d18b313baf685af440a1d1f6cf0446366861b6244ef3a",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/final-console.json",
+      "sha256": "4e97cbfb97c78ba4503db06c47269bd1055bd69f2b0cda3f887fc8b7bc2bc069",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/historical-console-before-final.json",
+      "sha256": "f3a74654e72440388f0aaf0c632cebe7f0a992a9fd2586301e07ac6fda5a4fe3",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/json-console.json",
+      "sha256": "894bef0ecb7b37451ffa341aae72a1a00e5b7e520245903ac177deeeea04c70d",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/json-editmode.json",
+      "sha256": "9ca25333635a50c581cc5354b73b7dcaa965d22573c333ea85cf6588a032c203",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/json-playmode.json",
+      "sha256": "08c99febe5a11b45b05665955ade5e6e20e3641e2dd421527fb1025d66aa40b2",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "docs/art/board-kit/test-results/playmode.json",
+      "sha256": "80ef144dd85813ec97c789c7f49cf5b5c0011640c385a0bb556f2650c1834a61",
+      "exists": true,
+      "contractAuthorityOnly": false
+    },
+    {
+      "path": "production/tasks/TASK-20260924-191842745-88e64a0d-board-kit/contract.md",
+      "sha256": "2270b85c0d06fccf83f5a73c80d5a43919c69c6fb3b17df9eba99afe2d7952b4",
+      "exists": true,
+      "contractAuthorityOnly": true
+    }
+  ]
+}

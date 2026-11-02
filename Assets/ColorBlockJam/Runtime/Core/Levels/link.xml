@@ -1,0 +1,32 @@
+<linker>
+  <assembly fullname="ColorBlockJam.Runtime">
+    <!-- Level database manifest formatVersion 1 (DEC-196): the database name and each pack's file and level IDs. -->
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelManifestJson/ManifestDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelManifestJson/PackDto" preserve="all" />
+    <!-- Level JSON formatVersion 3 (DEC-193), one document per pack: cells are CellText strings and effect params one JObject. -->
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/DatabaseDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/LevelDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/BoardDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/DoorDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/BlockDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/CellObjectDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/EffectDto" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelDatabaseJson/PieceDto" preserve="all" />
+    <!-- Serialized level records and the typed effect parameters the registry converts to. -->
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelEffectData" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelEffectParamData" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelCellObjectData" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.LevelEffectParameters" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.ArrowEffect" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.FlowerCrateObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.IceEffect" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.ColorfulPathObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.CrateObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.MoveableCrateObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.BarrierObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.ColorfulCrateObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.ColorfulMovingPathObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.IvyObject" preserve="all" />
+    <type fullname="ColorBlockJam.Runtime.Levels.ElevatorObject" preserve="all" />
+  </assembly>
+</linker>

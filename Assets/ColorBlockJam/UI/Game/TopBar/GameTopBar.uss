@@ -1,0 +1,423 @@
+/*
+ * Game HUD top bar (Game HUD design 3, reference ref-hud-top-bar-level29). Sizes are panel units at the 1080 x 1920
+ * reference. They were re-measured from the reference on 2026-09-28 at the device's 20:9 aspect, where the HUD panel
+ * (BoardOverlayPanelSettings, match 0.5) is about 966 units wide (reference pixels x 1.047): the Level/Time art spans
+ * 720 units, Retry and Pause sit 25 units beside it and the coin holder hangs under them, reaching past their right edge.
+ * The group (855 units) is centred in the bar with a 4 % right padding, so at 966 units it lands where the reference
+ * puts it (36 left, 75 right) and on 16:9 it stays together instead of drifting apart. Fixed-class sprites keep their
+ * pixel aspect (scale-to-fit, uniform boxes); only the nine-slice sprites stretch, with the Sprite Editor borders of
+ * docs/UI-Asset-Import.md in USS order left, top, right, bottom. Booster's state classes on hud-root keep their meaning
+ * here: hud--frozen ices the timer and shows the freeze counter, hud--targeting hides the whole bar so the info banner
+ * rises to the top (reference 02).
+ */
+
+/* ---- Bar ---- */
+
+.game-top-bar {
+    flex-shrink: 0;
+    padding-right: 4%;
+}
+
+.hud--targeting .game-top-bar {
+    display: none;
+}
+
+.game-top-bar__main {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.game-top-bar__left {
+    flex-shrink: 0;
+}
+
+/* ---- Level badge and Time panel: Btn_levelBg_normal (883 x 325) whole, uniform 0.815 scale ---- */
+
+.level-time {
+    width: 720px;
+    height: 265px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_level_bg_normal.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* Over the circle (source x35..323, y14..311); the inner disc sits slightly above the 3D rim. */
+.level-badge {
+    position: absolute;
+    left: 29px;
+    top: 12px;
+    width: 235px;
+    height: 242px;
+    padding-bottom: 13px;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+ * Heavy text (chief visual C1): every top-bar text is a Common.uss .cbj-heavy-text pair, a dark back layer with a wide
+ * outline under a white front layer with a thin white outline, as the Level number and this task's popups use.
+ * LiberationSans is regular-only, so "bold" alone renders thin strokes. Margins sit on the pair's container, because
+ * the back layer fills that container.
+ */
+.level-caption-text {
+    margin-bottom: -11px;
+}
+
+.level-caption {
+    font-size: 42px;
+    -unity-font-style: bold;
+}
+
+.level-caption.cbj-heavy-text__back {
+    -unity-text-outline-width: 7px;
+}
+
+.level-caption.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.level-number {
+    font-size: 84px;
+    -unity-font-style: bold;
+}
+
+.level-number.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.level-number.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/*
+ * Over the bar to the right of the circle. The reference centres "Time" and the field about 17 units left of the
+ * panel's middle and 11 units above it, so the box is offset rather than the exact panel face.
+ */
+.time-area {
+    position: absolute;
+    left: 264px;
+    top: 13px;
+    right: 75px;
+    bottom: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-caption-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* ic_time (512 x 527), fixed. */
+.timer-icon {
+    width: 47px;
+    height: 48px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Gameplay/ic_time.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.time-caption-text {
+    margin-left: 6px;
+}
+
+.time-caption {
+    font-size: 47px;
+    -unity-font-style: bold;
+}
+
+.time-caption.cbj-heavy-text__back {
+    -unity-text-outline-width: 7px;
+}
+
+.time-caption.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.timer-band {
+    align-items: center;
+    margin-top: 4px;
+}
+
+/*
+ * bg_gameplay_time_holder: border 50 on every side (B-27). Slice scale 0.62 draws the borders at 31 units, so the
+ * 86 unit field keeps its rounded ends (top + bottom 62). 272 units wide as the reference's field, for "02:55".
+ */
+.timer-holder {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 272px;
+    height: 86px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_gameplay_time_holder.png");
+    -unity-slice-left: 50;
+    -unity-slice-top: 50;
+    -unity-slice-right: 50;
+    -unity-slice-bottom: 50;
+    -unity-slice-scale: 0.62px;
+}
+
+/*
+ * Frozen main timer (reference 04, chief visual C2): a multiply tint cannot lighten the navy field, so a pale ice layer
+ * inside its 31 unit rounded rim is shown over the sprite while Time Freeze holds the clock, and the digits turn ice.
+ */
+.timer-frost {
+    display: none;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    right: 4px;
+    bottom: 4px;
+    background-color: rgba(170, 228, 255, 0.55);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(225, 247, 255);
+    border-top-color: rgb(225, 247, 255);
+    border-right-color: rgb(225, 247, 255);
+    border-bottom-color: rgb(225, 247, 255);
+    border-top-left-radius: 27px;
+    border-top-right-radius: 27px;
+    border-bottom-left-radius: 27px;
+    border-bottom-right-radius: 27px;
+}
+
+.hud--frozen .timer-frost {
+    display: flex;
+}
+
+.timer-label {
+    font-size: 62px;
+    -unity-font-style: bold;
+}
+
+.timer-label.cbj-heavy-text__back {
+    -unity-text-outline-width: 8px;
+}
+
+.timer-label.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+.hud--frozen .timer-label.cbj-heavy-text__front {
+    color: rgb(215, 245, 255);
+    -unity-text-outline-color: rgb(215, 245, 255);
+}
+
+/* ---- Right column: Retry, Pause and the coin holder ---- */
+
+/* 25 units beside the art; the Retry/Pause stack is centred on the art's height, as in the reference. */
+.top-buttons {
+    width: 112px;
+    margin-left: 25px;
+    margin-top: 14px;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+/* Btn_square_retry (512 x 531) and Btn_settings_normal (134 x 139) at their aspect. */
+.top-buttons > .unity-button.top-button {
+    width: 112px;
+    height: 116px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/*
+ * The reference's Retry is a darker golden brown than the supplied orange sprite (sampled face 192/153/44 against the
+ * sprite's 255/190/49), so its background is multiplied down; the cream arrow keeps its colour. Pressed, it darkens by
+ * the shared press tint (0.8).
+ */
+.top-buttons > .unity-button.top-button--retry {
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_square_retry.png");
+    -unity-background-image-tint-color: rgb(195, 186, 215);
+}
+
+.top-buttons > .unity-button.top-button--retry:active {
+    -unity-background-image-tint-color: rgb(156, 149, 172);
+}
+
+.top-buttons > .unity-button.top-button--pause {
+    margin-top: 8px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_settings_normal.png");
+}
+
+.top-button__icon {
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ic_restart (350 x 350, arrow 198 x 234): a 112 box shows a 63 x 75 arrow. */
+.top-button__icon--retry {
+    width: 112px;
+    height: 112px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Gameplay/ic_restart.png");
+}
+
+/* ic_pause (128 x 132), fully opaque bars. */
+.top-button__icon--pause {
+    width: 52px;
+    height: 54px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Gameplay/ic_pause.png");
+}
+
+/* ---- Time Freeze counter (B-9): under the Time field, shown only while frozen ---- */
+
+/* 317 units centre it under the Time field (level-time x 454); icon 68 - 14 + bar 220 = 274 wide. */
+.freeze-counter {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    height: 68px;
+    margin-top: 6px;
+    margin-left: 317px;
+    flex-shrink: 0;
+}
+
+.hud--frozen .freeze-counter {
+    display: flex;
+}
+
+.freeze-icon {
+    width: 68px;
+    height: 68px;
+    margin-right: -14px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Boosters/ic_clock_freeze.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.freeze-bar {
+    width: 220px;
+    height: 46px;
+    justify-content: center;
+    overflow: hidden;
+    background-color: rgba(18, 38, 104, 0.9);
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(170, 230, 255);
+    border-top-color: rgb(170, 230, 255);
+    border-right-color: rgb(170, 230, 255);
+    border-bottom-color: rgb(170, 230, 255);
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+}
+
+/* GameplayHudView drains the fill with a horizontal scale from the left edge, so the drain never re-runs layout. */
+.freeze-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: left;
+    background-color: rgb(110, 200, 255);
+}
+
+.freeze-label {
+    font-size: 38px;
+    -unity-font-style: bold;
+}
+
+.freeze-label.cbj-heavy-text__back {
+    -unity-text-outline-width: 6px;
+}
+
+.freeze-label.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* ---- Coin holder: icon, amount, full-height green plus on the right ---- */
+
+/*
+ * Under Pause, right-aligned 57 units past the buttons' right edge as in the reference; a longer amount grows the pill
+ * to the left, so the plus stays put.
+ */
+.coin-holder {
+    flex-direction: row;
+    align-items: center;
+    align-self: flex-end;
+    height: 66px;
+    margin-top: 22px;
+    margin-right: -57px;
+    flex-shrink: 0;
+}
+
+/*
+ * bg_home_coin_holder (101 x 84), nine-slice L24 T24 R25 B24; the plus overlaps its right end. The right padding
+ * covers the plus overlap (26) plus the back layer's 8 unit outline and the synthetic bold of the regular-only font,
+ * which the label's measured width leaves out.
+ */
+.coin-pill {
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+    padding-left: 4px;
+    padding-right: 54px;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Panels/bg_home_coin_holder.png");
+    -unity-slice-left: 24;
+    -unity-slice-top: 24;
+    -unity-slice-right: 25;
+    -unity-slice-bottom: 24;
+}
+
+/* Coin_Single (512 x 512), fixed. */
+.coin-icon {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_coin_single.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/*
+ * White fill with a near-black navy outline, left after the coin as in the reference ("1.52k"). LiberationSans runs
+ * wider than the reference font, so 50 units match its digit height and nearly its width.
+ */
+.coin-amount-text {
+    margin-left: 4px;
+}
+
+.coin-amount {
+    min-width: 40px;
+    font-size: 50px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+}
+
+.coin-amount.cbj-heavy-text__back {
+    color: rgb(10, 13, 21);
+    -unity-text-outline-width: 8px;
+    -unity-text-outline-color: rgb(10, 13, 21);
+}
+
+.coin-amount.cbj-heavy-text__front {
+    -unity-text-outline-width: 2px;
+}
+
+/* Btn_circle_green_small (139 x 143), fixed; press feedback only (Shop locked, RULE-24). */
+.coin-holder > .unity-button.coin-plus-button {
+    width: 62px;
+    height: 64px;
+    margin-left: -26px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Buttons/btn_circle_green_small.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ic_plus (152 x 152, cross 65 x 69): a 68 box shows a 29 x 31 cross. */
+.coin-plus-button__icon {
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Icons/Currency/ic_plus.png");
+    -unity-background-scale-mode: scale-to-fit;
+}

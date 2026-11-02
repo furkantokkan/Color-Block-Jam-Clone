@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": {
+      "hasBoundaryGroup": false,
+      "hasWallBrush": false,
+      "hasBlockBrush": true,
+      "isCompiling": false,
+      "sceneDirty": false
+    },
+    "compiler": "roslyn"
+  }
+}

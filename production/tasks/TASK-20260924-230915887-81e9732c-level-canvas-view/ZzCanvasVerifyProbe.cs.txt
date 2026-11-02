@@ -1,0 +1,306 @@
+// Copy-only verifier probe (never in the repository): drives the Level Editor canvas with real pointer events,
+// counts canvas content regenerations, samples captured pixels and records the level JSON hash.
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using ColorBlockJam.Editor.Levels;
+using ColorBlockJam.Runtime.Art;
+using ColorBlockJam.Runtime.Levels;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+
+namespace ColorBlockJam.Tests.EditMode
+{
+    public sealed class ZzCanvasVerifyProbe
+    {
+        private const BindingFlags k_all = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        private const string k_json = "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json";
+        private static int s_generated;
+        private static readonly StringBuilder s_fail = new StringBuilder();
+
+        [UnityTest]
+        public IEnumerator VerifyCanvasAcceptance()
+        {
+            StringBuilder text = new StringBuilder();
+            LogAssert.ignoreFailingMessages = true;
+            string before = Sha(k_json);
+            text.AppendLine("json sha256 before=" + before);
+            GamePalette palette = AssetDatabase.LoadAssetAtPath<GamePalette>("Assets/ColorBlockJam/Data/Art/GamePalette.asset");
+            Vector2[] sizes = { new Vector2(960f, 640f), new Vector2(1280f, 800f), new Vector2(1600f, 1000f), new Vector2(700f, 420f) };
+            float previousCell = 0f;
+            foreach (Vector2 size in sizes)
+            {
+                LevelDatabaseWindow window = ScriptableObject.CreateInstance<LevelDatabaseWindow>();
+                window.titleContent = new GUIContent("Level Editor");
+                window.ShowUtility();
+                window.position = new Rect(40f, 40f, size.x, size.y);
+                double end = EditorApplication.timeSinceStartup + 5;
+                while (window.rootVisualElement.Q("top-bar") == null && EditorApplication.timeSinceStartup < end) yield return null;
+                for (int i = 0; i < 20; i++) { window.Repaint(); yield return null; }
+
+                VisualElement root = window.rootVisualElement;
+                LevelCanvasElement canvas = root.Q<LevelCanvasElement>();
+                DropdownField blockChoice = root.Q<Foldout>("blocks-group").Query<DropdownField>().First();
+                LevelCanvasGeometry g = canvas.Geometry;
+                Rect content = canvas.contentRect;
+                string tag = $"{(int)size.x}x{(int)size.y}";
+                text.AppendLine($"== window {tag}: canvas content={content} cell={g.CellSize} board={g.BoardRect} model={canvas.Model.Width}x{canvas.Model.Height} blocks={canvas.Model.BlockCount} doors={canvas.Model.DoorCount} parent={canvas.parent?.name}");
+
+                // AC-2: centred, cell >= 18 px, larger window -> cell not smaller.
+                float dx = g.BoardRect.center.x - content.width * 0.5f;
+                float dy = g.BoardRect.center.y - content.height * 0.5f;
+                Check(Mathf.Abs(dx) <= 1f && Mathf.Abs(dy) <= 1f, $"{tag} board centred (dx={dx}, dy={dy})", text);
+                Check(g.CellSize >= 18f, $"{tag} cell {g.CellSize} >= 18", text);
+                float ringOut = LevelCanvasGeometry.k_doorDepth * g.CellSize;
+                bool fits = g.BoardRect.xMin - ringOut >= 0f && g.BoardRect.xMax + ringOut <= content.width
+                    && g.BoardRect.yMin - ringOut >= 0f && g.BoardRect.yMax + ringOut <= content.height;
+                text.AppendLine($"  board+door bars inside canvas: {fits}");
+                if (size.x > 960f && size.x <= 1600f) Check(g.CellSize >= previousCell, $"{tag} cell grows with window ({previousCell} -> {g.CellSize})", text);
+                if (size.x >= 960f) previousCell = g.CellSize;
+
+                // AC-1: level 1 content.
+                LevelCanvasModel m = canvas.Model;
+                Check(m.Width == 4 && m.Height == 5, $"{tag} level 1 is 4x5", text);
+                Check(m.DoorCount == 2, $"{tag} two doors", text);
+                for (int d = 0; d < m.DoorCount; d++)
+                {
+                    LevelCanvasDoor door = m.GetDoor(d);
+                    text.AppendLine($"  door {door.Id} {door.Side} {door.Start}+{door.Length} colour={door.Color} known={door.HasColor}");
+                }
+                Check(m.DoorCount == 2 && m.GetDoor(0).Id == "d1" && m.GetDoor(0).Color == PaletteColor.LightBlue && m.GetDoor(0).HasColor
+                      && m.GetDoor(1).Id == "d2" && m.GetDoor(1).Color == PaletteColor.Pink && m.GetDoor(1).HasColor, $"{tag} d1 LightBlue, d2 Pink", text);
+                var labels = canvas.Query<Label>(className: LevelCanvasElement.k_labelClass).ToList();
+                StringBuilder labelText = new StringBuilder();
+                foreach (Label label in labels) labelText.Append(label.text).Append('@').Append(label.layout).Append(' ').Append(label.resolvedStyle.display).Append("; ");
+                text.AppendLine("  labels: " + labelText);
+                Check(labels.Count == 2 && labels[0].text == "b1" && labels[1].text == "b2", $"{tag} labels b1 and b2", text);
+                for (int b = 0; b < labels.Count && b < m.BlockCount; b++)
+                {
+                    Rect cellRect = g.GetCellRect(m.GetBlock(b).LabelCell);
+                    bool inside = Contains(g.BoardRect, labels[b].layout.center) && Vector2.Distance(labels[b].layout.center, cellRect.center) < 2f;
+                    Check(inside, $"{tag} label {labels[b].text} sits on its block's label cell", text);
+                }
+
+                Texture2D shot = Capture(window, size, tag + "-initial", text);
+                if (shot != null)
+                {
+                    SamplePixels(shot, canvas, g, m, palette, text);
+                    Object.DestroyImmediate(shot);
+                }
+
+                // AC-3: hover inside one cell regenerates nothing; another cell regenerates once.
+                s_generated = 0;
+                canvas.generateVisualContent += Count;
+                object panel = root.panel;
+                Vector2Int emptyCell = new Vector2Int(0, 0);
+                Vector2Int otherEmpty = new Vector2Int(1, 0);
+                Check(m.GetBlockIndexAt(emptyCell) < 0 && m.GetBlockIndexAt(otherEmpty) < 0, $"{tag} (0,0) and (1,0) are empty cells", text);
+                Rect c0 = g.GetCellRect(emptyCell);
+                Send(root, EventType.MouseMove, canvas.LocalToWorld(c0.min + Vector2.one * 3f));
+                RepaintNow(window);
+                int afterEnter = s_generated;
+                uint v0 = GetRepaintVersion(panel);
+                Send(root, EventType.MouseMove, canvas.LocalToWorld(c0.center));
+                Send(root, EventType.MouseMove, canvas.LocalToWorld(c0.max - Vector2.one * 3f));
+                Send(root, EventType.MouseMove, canvas.LocalToWorld(new Vector2(c0.xMax - 3f, c0.yMin + 3f)));
+                uint v1 = GetRepaintVersion(panel);
+                RepaintNow(window);
+                int afterInside = s_generated;
+                text.AppendLine($"  hover: generate after enter={afterEnter}, after 3 moves inside the cell={afterInside}; panel repaintVersion {v0} -> {v1}; hover={canvas.Hover}");
+                Check(afterInside == afterEnter, $"{tag} moves inside one cell regenerate nothing", text);
+                Check(v0 == v1, $"{tag} moves inside one cell do not bump the panel repaint version", text);
+                Send(root, EventType.MouseMove, canvas.LocalToWorld(g.GetCellRect(otherEmpty).center));
+                uint v2 = GetRepaintVersion(panel);
+                RepaintNow(window);
+                int afterOther = s_generated;
+                text.AppendLine($"  hover: after entering another cell generate={afterOther}, repaintVersion {v1} -> {v2}; hover={canvas.Hover}");
+                Check(afterOther == afterInside + 1, $"{tag} entering another cell regenerates once", text);
+                Texture2D hoverShot = Capture(window, size, tag + "-hover", text);
+                if (hoverShot != null) Object.DestroyImmediate(hoverShot);
+                canvas.generateVisualContent -= Count;
+
+                // AC-4: canvas -> dropdown and dropdown -> canvas.
+                text.AppendLine($"  initial selection={Sel(canvas)} dropdown='{blockChoice.value}'");
+                Check(canvas.Selection.Kind == LevelCanvasSelectionKind.Block && canvas.Selection.Index == 0 && blockChoice.value == "1. b1", $"{tag} starts with b1 selected in both", text);
+                Click(root, canvas.LocalToWorld(g.GetCellRect(m.GetBlock(1).GetCell(0)).center));
+                text.AppendLine($"  after click b2 (non-label cell): selection={Sel(canvas)} dropdown='{blockChoice.value}' index={blockChoice.index}");
+                Check(canvas.Selection.Kind == LevelCanvasSelectionKind.Block && canvas.Selection.Id == "b2" && blockChoice.value == "2. b2", $"{tag} canvas click selects b2 in the dropdown", text);
+                Texture2D selShot = Capture(window, size, tag + "-block-selected", text);
+                if (selShot != null) Object.DestroyImmediate(selShot);
+
+                Click(root, canvas.LocalToWorld(g.GetCellRect(emptyCell).center));
+                Check(canvas.Selection.Id == "b2" && blockChoice.value == "2. b2", $"{tag} empty cell click keeps b2", text);
+
+                blockChoice.value = blockChoice.choices[0];
+                text.AppendLine($"  after dropdown '1. b1': selection={Sel(canvas)} dropdown='{blockChoice.value}'");
+                Check(canvas.Selection.Kind == LevelCanvasSelectionKind.Block && canvas.Selection.Id == "b1", $"{tag} dropdown selects b1 on the canvas", text);
+
+                LevelCanvasDoor d2 = m.GetDoor(1);
+                Click(root, canvas.LocalToWorld(g.GetEdgeRect(d2.Side, d2.Start, LevelCanvasGeometry.k_doorDepth).center));
+                Button rotate = root.Q<Foldout>("blocks-group").Query<Button>().First();
+                text.AppendLine($"  after click d2: selection={Sel(canvas)} dropdown='{blockChoice.value}' firstBlockButtonEnabled={rotate?.enabledSelf}");
+                Check(canvas.Selection.Kind == LevelCanvasSelectionKind.Door && canvas.Selection.Id == "d2" && blockChoice.value == "Door d2", $"{tag} door click selects d2", text);
+                Texture2D doorShot = Capture(window, size, tag + "-door-selected", text);
+                if (doorShot != null) Object.DestroyImmediate(doorShot);
+
+                Rect bd = g.BoardRect;
+                float q = 0.25f * g.CellSize;
+                Vector2[] corners =
+                {
+                    new Vector2(bd.xMin - q, bd.yMin - q), new Vector2(bd.xMax + q, bd.yMin - q),
+                    new Vector2(bd.xMax + q, bd.yMax + q), new Vector2(bd.xMin - q, bd.yMax + q)
+                };
+                foreach (Vector2 corner in corners)
+                {
+                    LevelCanvasHit hit = canvas.HitTest(corner);
+                    Check(hit.Kind == LevelCanvasHitKind.Outside, $"{tag} corner {corner} hit-tests Outside ({hit.Kind})", text);
+                    Click(root, canvas.LocalToWorld(corner));
+                }
+                Check(canvas.Selection.Kind == LevelCanvasSelectionKind.Door && canvas.Selection.Id == "d2", $"{tag} corner clicks keep the door selection", text);
+
+                blockChoice.value = blockChoice.choices[1];
+                Check(canvas.Selection.Kind == LevelCanvasSelectionKind.Block && canvas.Selection.Id == "b2", $"{tag} dropdown '2. b2' replaces the door selection", text);
+                Check(!window.hasUnsavedChanges, $"{tag} draft never marked unsaved", text);
+
+                window.DiscardChanges();
+                window.Close();
+                yield return null;
+            }
+
+            string after = Sha(k_json);
+            text.AppendLine("json sha256 after=" + after);
+            Check(before == after, "level JSON unchanged", text);
+            text.AppendLine(s_fail.Length == 0 ? "RESULT: all checks passed" : "RESULT: FAILURES\n" + s_fail);
+            File.WriteAllText("canvas-verify-probe.txt", text.ToString());
+            Assert.That(s_fail.Length, Is.EqualTo(0), s_fail.ToString());
+        }
+
+        private static void Count(MeshGenerationContext _) { s_generated++; }
+
+        private static string Sel(LevelCanvasElement canvas) => $"{canvas.Selection.Kind}/{canvas.Selection.Index}/{canvas.Selection.Id}";
+
+        private static bool Contains(Rect rect, Vector2 point) => rect.Contains(point);
+
+        private static void Check(bool ok, string what, StringBuilder text)
+        {
+            text.AppendLine((ok ? "  PASS " : "  FAIL ") + what);
+            if (!ok) s_fail.AppendLine(what);
+        }
+
+        private static uint GetRepaintVersion(object panel)
+        {
+            for (System.Type t = panel.GetType(); t != null; t = t.BaseType)
+            {
+                PropertyInfo p = t.GetProperty("repaintVersion", k_all | BindingFlags.DeclaredOnly);
+                if (p != null) return (uint)p.GetValue(panel);
+            }
+            return uint.MaxValue;
+        }
+
+        private static void RepaintNow(EditorWindow window)
+        {
+            window.Repaint();
+            object host = typeof(EditorWindow).GetField("m_Parent", k_all).GetValue(window);
+            host.GetType().GetMethod("RepaintImmediately", k_all, null, System.Type.EmptyTypes, null)?.Invoke(host, null);
+        }
+
+        private static void Click(VisualElement root, Vector2 position)
+        {
+            Send(root, EventType.MouseDown, position);
+            Send(root, EventType.MouseUp, position);
+        }
+
+        private static void Send(VisualElement root, EventType type, Vector2 position)
+        {
+            Event mouse = new Event { type = type, mousePosition = position, button = 0, clickCount = 1 };
+            EventBase pointer = type == EventType.MouseDown ? PointerDownEvent.GetPooled(mouse)
+                : type == EventType.MouseUp ? PointerUpEvent.GetPooled(mouse)
+                : (EventBase)PointerMoveEvent.GetPooled(mouse);
+            using (pointer) root.SendEvent(pointer);
+        }
+
+        // Samples captured pixels (image rows top-down after the flip) at known canvas features.
+        private static void SamplePixels(Texture2D shot, LevelCanvasElement canvas, LevelCanvasGeometry g, LevelCanvasModel m, GamePalette palette, StringBuilder text)
+        {
+            float ppp = EditorGUIUtility.pixelsPerPoint;
+            void Sample(string what, Vector2 local, PaletteColor? expected)
+            {
+                Vector2 world = canvas.LocalToWorld(local);
+                int x = Mathf.RoundToInt(world.x * ppp);
+                int yTop = Mathf.RoundToInt(world.y * ppp);
+                Color got = shot.GetPixel(x, shot.height - 1 - yTop);
+                string exp = "";
+                if (expected.HasValue && palette != null)
+                {
+                    for (int i = 0; i < palette.Colors.Count; i++)
+                        if (palette.Colors[i].Type == expected.Value) { Color e = palette.Colors[i].Color; exp = $" expected {expected.Value}=({e.r:F2},{e.g:F2},{e.b:F2}) diff={Mathf.Max(Mathf.Abs(e.r - got.r), Mathf.Max(Mathf.Abs(e.g - got.g), Mathf.Abs(e.b - got.b))):F2}"; }
+                }
+                text.AppendLine($"  pixel {what} at local {local} -> ({got.r:F2},{got.g:F2},{got.b:F2}){exp}");
+            }
+
+            LevelCanvasDoor d1 = m.GetDoor(0);
+            LevelCanvasDoor d2 = m.GetDoor(1);
+            Rect d1Bar = g.GetEdgeRect(d1.Side, d1.Start, LevelCanvasGeometry.k_doorDepth);
+            Rect d2Bar = g.GetEdgeRect(d2.Side, d2.Start, LevelCanvasGeometry.k_doorDepth);
+            Sample("door d1 bar (outer part)", new Vector2(d1Bar.center.x, d1Bar.yMin + 0.1f * g.CellSize), PaletteColor.LightBlue);
+            Sample("door d2 bar (outer part)", new Vector2(d2Bar.center.x, d2Bar.yMax - 0.1f * g.CellSize), PaletteColor.Pink);
+            Rect left = g.GetEdgeRect(BoardSide.Left, 2, LevelCanvasGeometry.k_ringDepth);
+            Sample("wall ring left seg 2", left.center, PaletteColor.Wall);
+            Sample("floor cell (0,0)", g.GetCellRect(new Vector2Int(0, 0)).min + Vector2.one * (0.3f * g.CellSize), PaletteColor.Ground);
+            Rect b1Cell = g.GetCellRect(m.GetBlock(0).GetCell(0));
+            Sample("block b1 cell corner area", b1Cell.min + Vector2.one * (0.2f * g.CellSize), PaletteColor.LightBlue);
+            Rect b2Cell = g.GetCellRect(m.GetBlock(1).GetCell(3));
+            Sample("block b2 cell corner area", b2Cell.min + Vector2.one * (0.2f * g.CellSize), PaletteColor.Pink);
+            Sample("outside ring (canvas background)", new Vector2(4f, 4f), null);
+        }
+
+        private static Texture2D Capture(EditorWindow window, Vector2 size, string tag, StringBuilder text)
+        {
+            RepaintNow(window);
+            object host = typeof(EditorWindow).GetField("m_Parent", k_all).GetValue(window);
+            float ppp = EditorGUIUtility.pixelsPerPoint;
+            int w = Mathf.RoundToInt(size.x * ppp), h = Mathf.RoundToInt(size.y * ppp);
+            RenderTexture rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32);
+            MethodInfo grab = null;
+            for (System.Type t = host.GetType(); t != null && grab == null; t = t.BaseType)
+                grab = t.GetMethod("GrabPixels", k_all | BindingFlags.DeclaredOnly);
+            Texture2D upright = null;
+            try
+            {
+                grab.Invoke(host, new object[] { rt, new Rect(0, 0, w, h) });
+                RenderTexture.active = rt;
+                Texture2D tex = new Texture2D(w, h, TextureFormat.RGB24, false);
+                tex.ReadPixels(new Rect(0, 0, w, h), 0, 0);
+                tex.Apply();
+                RenderTexture.active = null;
+                // GrabPixels returns the window upside down; flip rows so the PNG reads upright.
+                upright = new Texture2D(w, h, TextureFormat.RGB24, false);
+                for (int y = 0; y < h; y++) upright.SetPixels(0, y, w, 1, tex.GetPixels(0, h - 1 - y, w, 1));
+                upright.Apply();
+                Object.DestroyImmediate(tex);
+                string file = $"canvas-verify-{tag}.png";
+                File.WriteAllBytes(file, upright.EncodeToPNG());
+                text.AppendLine($"  captured {file} ppp={ppp}");
+            }
+            catch (System.Exception e) { text.AppendLine("  capture ERR " + e); }
+            rt.Release();
+            return upright;
+        }
+
+        private static string Sha(string path)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] hash = sha.ComputeHash(File.ReadAllBytes(path));
+                StringBuilder s = new StringBuilder();
+                foreach (byte x in hash) s.Append(x.ToString("x2"));
+                return s.ToString();
+            }
+        }
+    }
+}

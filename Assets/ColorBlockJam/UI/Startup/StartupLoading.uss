@@ -1,0 +1,81 @@
+/*
+ * Startup loading screen (DEC-140). Reference pixels at 1080 width; the panel is 1080 x 1920 Expand, so at 20:9
+ * only the height grows. Home's background art is reused so the handoff to Home does not flash.
+ */
+
+.startup-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Full-screen, crops instead of stretching at 20:9 (DEC-42). */
+.startup-loading__background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/ColorBlockJam/Art/UI/Supplied/Backgrounds/bg_home_screen.png");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.startup-loading__title {
+    align-items: center;
+    margin-bottom: 120px;
+}
+
+.startup-loading__title-line {
+    margin: -30px 0 -30px 0;
+    padding: 0;
+    font-size: 210px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 6px;
+    -unity-text-outline-color: rgb(30, 70, 205);
+    text-shadow: 0 12px 0 rgb(24, 52, 170);
+}
+
+/* Rounded navy bar about three quarters of the width, near the bottom as in the reference. */
+.startup-loading__bar {
+    position: absolute;
+    bottom: 15%;
+    width: 74%;
+    height: 84px;
+    border-width: 5px;
+    border-color: rgb(24, 32, 140);
+    border-radius: 42px;
+    background-color: rgba(24, 32, 140, 0.35);
+    overflow: hidden;
+}
+
+/* StartupLoadingView sets the width in percent; the track's overflow keeps the rounded ends. */
+.startup-loading__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background-color: rgb(30, 40, 165);
+}
+
+.startup-loading__percent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 52px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(10, 14, 70);
+}

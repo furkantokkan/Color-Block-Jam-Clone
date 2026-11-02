@@ -1,0 +1,139 @@
+{
+  "generatedUtc": "2026-09-27T10:42:46.4849013Z",
+  "observedEditorUtc": "2026-09-27T10:42:06.0886039Z",
+  "session": "fda0e3f3-01d8-4a21-accd-5f652fa89c51",
+  "scene": "Assets/ColorBlockJam/Scenes/LevelEditor.unity",
+  "sceneDirty": false,
+  "play": false,
+  "tests": false,
+  "helperCaptured": false,
+  "ownedRuntimeDatabase": false,
+  "gameViewPreset": 28,
+  "draft": "level-01: b1 LightBlue Square(2,3); b2 Pink Square(0,1) Ice1",
+  "draftUnsaved": true,
+  "suppliedTexture": "Assets/ColorBlockJam/Art/Textures/icetexture.jpg",
+  "effectiveTextureMax": 1024,
+  "importedDimensions": [
+    1024,
+    1024
+  ],
+  "mobileMax": 1024,
+  "shaderHasError": false,
+  "protectedInputs": [
+    {
+      "path": "Assets/ColorBlockJam/Art/Textures/icetexture.jpg",
+      "sha256": "6669d7e7adf6c94f74bdeaece4e4d6a2e598dec0a6913b836a5117da7b8cfd63",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset",
+      "sha256": "dfc483ba8f6218ec8aca878dd9df2c5f5f13f8e5608d23c2c64d224a10107541",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BlockShapeLibrary.asset.meta",
+      "sha256": "fc82ae8ada98436f32de92bf182011a5e063bf40d79e99cad63c7c785d9e441e",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset",
+      "sha256": "3b9a0ff3d9f7e1ffd6cb6bf011b50716c3a068378cb2831b4639295aee25b039",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/BoardPieceCatalog.asset.meta",
+      "sha256": "5abb39d03f26979ee4406490adc3f1d25af75e079ea6748f864117c3a6c40de6",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/PieceDatabases.meta",
+      "sha256": "e54b5471a00f019f2017de9ef879120ba3f9cc1d48b1e319067fd23ad2b8feec",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/PieceDatabases/BlockShapeLibrary.json",
+      "sha256": "c4661086572b591374de7774b72b97960fb6dd75748f7bbcf3bfadb67f13a439",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Board/PieceDatabases/BlockShapeLibrary.json.meta",
+      "sha256": "190789aecf38437e1ff238e36fcd12f3eab698c833543fad359e136affc530c6",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.asset",
+      "sha256": "3dabc1522269d447c11113a7dea03c1bd06041d6b328e4888f6eb1b9d453b521",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.asset.meta",
+      "sha256": "091ef1da4f1ea4c59bde06ed956d98a3c6b2804a5a2cedadd774dbac5a72f2c5",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json",
+      "sha256": "02c013a54e180f9570daf142505e018e28564ca4f7ab91bad847b35d8f3ecd6e",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json.meta",
+      "sha256": "3158f02d79e08cc8e29f0f5c89bdd776f237740acd4b4676d91dbbdfd67ca226",
+      "baselineMatches": true
+    },
+    {
+      "path": "Assets/ColorBlockJam/Scenes/LevelEditor.unity",
+      "sha256": "729984d8618e6dc14e993a3033f390f186401dcf025c8c7133529c049c3d3115",
+      "baselineMatches": true
+    }
+  ],
+  "reviewInputs": [
+    {
+      "path": "Assets/ColorBlockJam/Editor/BoardKit/BoardIceAssets.cs",
+      "sha256": "214a2d2ad0e3c1fba152afbcfa5414bf037e7f009ed215d7957b765328f87895"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/BlockIceOverlay.cs",
+      "sha256": "670c2472fb2870f51d859733315a19c594b2580ec898650924b764aa2564a7a9"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Presentation/Board/IceCounterLabels.cs",
+      "sha256": "dc060ebf53062b1faaaa4b0f4d3ebf680f41870cde8715a136ed9481a55a72bf"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/EditMode/IceAuthoringTests.cs",
+      "sha256": "3cea6babc45069d10b2638006277a2ab05d1e8058ccaaab7a3504595ce6bd3f1"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/PlayMode/BlockIcePresentationTests.cs",
+      "sha256": "78037708e751a29b0ddfadb765d471dfa4c4fbb4ac04a28e9fb8682f269ad1d1"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Tests/Gameplay/PlayMode/GameSceneIceTests.cs",
+      "sha256": "0c3787829aecb8a46fe7c0b401fd54a1f31b63e0c6c9656bc6e0f56fd723ff21"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Shaders/Ice.shadergraph",
+      "sha256": "17df7edfbb394a921e30096842005d141cc146a9c4111cb12dbe814ed65e3987"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Art/Materials/Effects/MAT_Ice.mat",
+      "sha256": "44ff47c2ecdb476b8af0eb5ce7a9d2f103969063a6e10fc74bb2e0e7ccfa9e69"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Resources/Onity/ProjectContext.prefab",
+      "sha256": "433f417332c359440b76014975f25b5f24bbb2328bcc0fdfb7b3847432373d90"
+    },
+    {
+      "path": "Assets/ColorBlockJam/Runtime/Composition/ProjectScopeInstaller.cs",
+      "sha256": "6be587a35264f24df5fe29193089d48faf2d6e9c851ab56a745086f7baffbefd"
+    },
+    {
+      "path": "Packages/manifest.json",
+      "sha256": "6d81ba96fc86a8d72a3d3c0d0704e3380edcf63e2375c61e3e75fede2775f577"
+    },
+    {
+      "path": "Packages/packages-lock.json",
+      "sha256": "e67403030db3a0c120f1126830e16d1b2f17bf49556e04f1a9c73c1f767c201c"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "frames": 32,
+  "cell_pixels": 192,
+  "atlas_width": 768,
+  "atlas_height": 1536,
+  "duration_seconds": 0.75,
+  "pixels_per_unit": 75,
+  "intake_local": [
+    -0.0003638458251953125,
+    0.9815936279296875,
+    0
+  ],
+  "body_center_local": [
+    0.0,
+    -0.5644560241699219,
+    0
+  ],
+  "runtime": "One SpriteRenderer; no Animator, SkinnedMeshRenderer, or render camera.",
+  "authoring": "Upright gameplay pose; localized Blender Swallow shape keys on hose only.",
+  "reference": "Reference 18: body below, rigid intake above, hose bulge during suction; colors retained.",
+  "motion_inference": "One upper-to-lower bulge; exact timing authored, not measured from stills.",
+  "entry_exit": "Baked 180-degree turn-in and turn-out; existing Unity scale tween retained.",
+  "suction_frames": [
+    4,
+    27
+  ],
+  "turn_degrees": [
+    180,
+    151.875,
+    90.0,
+    28.125,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    28.125,
+    90.0,
+    151.875,
+    180
+  ],
+  "palette_authority": "Assets/ColorBlockJam/Data/Art/GamePalette.asset via exported JSON",
+  "astc_6x6_bytes": 524288
+}

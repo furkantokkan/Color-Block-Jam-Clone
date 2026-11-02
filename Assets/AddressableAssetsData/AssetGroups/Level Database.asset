@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Level Database
+  m_EditorClassIdentifier: 
+  m_GroupName: Level Database
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2336affebdf2d1a4eadff05623fc29f1
+  m_SerializeEntries:
+  - m_GUID: 7c8ba63bb26458c41b6f539a4ff19da7
+    m_Address: LevelDatabase/Main/pack-001.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level-json
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b93477650b31db14b8d2e3b792a56b08
+    m_Address: LevelDatabase/Main/manifest.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - level-json
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a7274985f03c24f41abdf9b5c1c09c7d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8773e5b5b41cf4f4f90b1e03e4166808, type: 2}
+    - {fileID: 11400000, guid: 6d5429ef31b0ec3439649d477f1f98b8, type: 2}

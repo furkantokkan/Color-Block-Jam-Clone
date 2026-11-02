@@ -1,0 +1,6 @@
+/* Embedded overlays start closed even before a presenter binds. Inline Show wins. */
+.hub-overlays .settings-screen,
+.hub-overlays .pre-level-screen,
+.hub-overlays .booster-purchase-screen {
+    display: none;
+}

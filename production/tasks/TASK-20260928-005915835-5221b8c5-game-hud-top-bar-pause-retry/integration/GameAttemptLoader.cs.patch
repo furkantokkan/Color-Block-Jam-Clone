@@ -1,0 +1,23 @@
+--- /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/base/GameAttemptLoader.cs.live	2026-09-28 06:25:53.585301500 +0300
++++ /c/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260928-005915835-5221b8c5-game-hud-top-bar-pause-retry/integration/ours/GameAttemptLoader.cs	2026-09-28 06:25:53.623418700 +0300
+@@ -7,6 +7,7 @@
+ using ColorBlockJam.Gameplay.Board;
+ using ColorBlockJam.Gameplay.Boosters;
+ using ColorBlockJam.Gameplay.Effects;
++using ColorBlockJam.Gameplay.Hud.TopBar;
+ using ColorBlockJam.Gameplay.Session;
+ using ColorBlockJam.Gameplay.UI;
+ using ColorBlockJam.Runtime.Board;
+@@ -240,6 +241,12 @@
+                 hud.Show(level);
+             }
+ 
++            // The top bar's Level badge, Retry, Pause and coin holder; bound only with the HUD (Game HUD design 8).
++            if (resolver.TryResolve(out IGameTopBar topBar))
++            {
++                topBar.Show(level);
++            }
++
+             return true;
+         }
+ 

@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "name": "Main",
+  "packs": [
+    {
+      "file": "pack-001.json",
+      "levels": [
+        "level-001",
+        "level-002",
+        "level-003",
+        "level-004",
+        "level-005",
+        "level-006"
+      ]
+    }
+  ]
+}

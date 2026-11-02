@@ -1,0 +1,80 @@
+// Execute as a method body in the pinned Unity Editor. Only new booster assets are owned.
+var folder = "Assets/ColorBlockJam/Art/Models/Boosters";
+// Rebuild the runtime atlas from GamePalette and preserve the common opaque material.
+System.Type.GetType("ColorBlockJam.Editor.BoardKit.SharedArtAssets, ColorBlockJam.Editor")
+    .GetMethod("Build").Invoke(null, null);
+var texture = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Texture2D>("Assets/ColorBlockJam/Art/Textures/Atlases/T_GameplayPalette.png");
+var materialPath = "Assets/ColorBlockJam/Art/Materials/Shared/MAT_Gameplay.mat";
+var material = UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(materialPath);
+var report = new System.Collections.Generic.List<object>();
+foreach (var name in new[] { "Hammer", "RocketPurple", "Vacuum" })
+{
+    var path = folder + "/" + name + ".fbx";
+    UnityEditor.AssetDatabase.ImportAsset(path, UnityEditor.ImportAssetOptions.ForceSynchronousImport);
+    var importer = (UnityEditor.ModelImporter)UnityEditor.AssetImporter.GetAtPath(path);
+    importer.importAnimation = false;
+    importer.animationType = UnityEditor.ModelImporterAnimationType.None;
+    importer.materialImportMode = UnityEditor.ModelImporterMaterialImportMode.None;
+    importer.isReadable = false;
+    importer.addCollider = false;
+    importer.importCameras = false;
+    importer.importLights = false;
+    importer.generateSecondaryUV = false;
+    importer.importNormals = UnityEditor.ModelImporterNormals.Import;
+    importer.importTangents = UnityEditor.ModelImporterTangents.None;
+    importer.meshCompression = UnityEditor.ModelImporterMeshCompression.Off;
+    importer.optimizeMeshPolygons = true;
+    importer.optimizeMeshVertices = true;
+    importer.globalScale = 1f;
+    importer.SaveAndReimport();
+    var meshes = new UnityEngine.Mesh[2];
+    foreach (var asset in UnityEditor.AssetDatabase.LoadAllAssetsAtPath(path))
+    {
+        var mesh = asset as UnityEngine.Mesh;
+        if (mesh == null) continue;
+        if (mesh.name.EndsWith("_LOD0")) meshes[0] = mesh;
+        if (mesh.name.EndsWith("_LOD1")) meshes[1] = mesh;
+    }
+    if (meshes[0] == null || meshes[1] == null) throw new System.InvalidOperationException("Missing LOD mesh: " + name);
+    var preview = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+    try
+    {
+        var root = new UnityEngine.GameObject(name);
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root, preview);
+        var renderers = new UnityEngine.Renderer[2];
+        for (int index = 0; index < 2; index++)
+        {
+            var child = new UnityEngine.GameObject("SM_" + name + "_LOD" + index);
+            child.transform.SetParent(root.transform, false);
+            child.AddComponent<UnityEngine.MeshFilter>().sharedMesh = meshes[index];
+            var renderer = child.AddComponent<UnityEngine.MeshRenderer>();
+            renderer.sharedMaterial = material;
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            renderer.receiveShadows = true;
+            renderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
+            renderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
+            renderers[index] = renderer;
+        }
+        var group = root.AddComponent<UnityEngine.LODGroup>();
+        group.fadeMode = UnityEngine.LODFadeMode.None;
+        group.SetLODs(new[] {
+            new UnityEngine.LOD(0.025f, new[] { renderers[0] }),
+            new UnityEngine.LOD(0.001f, new[] { renderers[1] })
+        });
+        group.RecalculateBounds();
+        UnityEditor.PrefabUtility.SaveAsPrefabAsset(root, "Assets/ColorBlockJam/Prefabs/Boosters/Models/" + name + ".prefab");
+        report.Add(new {
+            name,
+            lod0 = new { vertices = meshes[0].vertexCount, triangles = meshes[0].GetIndexCount(0) / 3, submeshes = meshes[0].subMeshCount, bounds = meshes[0].bounds.ToString(), readable = meshes[0].isReadable },
+            lod1 = new { vertices = meshes[1].vertexCount, triangles = meshes[1].GetIndexCount(0) / 3, submeshes = meshes[1].subMeshCount, bounds = meshes[1].bounds.ToString(), readable = meshes[1].isReadable },
+            materialSlotsPerRenderer = 1,
+            lodCount = group.lodCount,
+            fadeMode = group.fadeMode.ToString()
+        });
+    }
+    finally
+    {
+        UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(preview);
+    }
+}
+return new { models = report, palette = new { texture.width, texture.height, format = texture.format.ToString(), readable = texture.isReadable }, material = material.shader.name };

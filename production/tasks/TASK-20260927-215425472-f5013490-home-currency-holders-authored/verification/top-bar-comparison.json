@@ -1,0 +1,36 @@
+[
+  {
+    "file": "home-1080x1920.png",
+    "crop": [
+      0,
+      0,
+      1080,
+      240
+    ],
+    "diff_bbox": [
+      37,
+      48,
+      1048,
+      199
+    ],
+    "changed_pixels": 64869,
+    "total_pixels": 259200
+  },
+  {
+    "file": "home-1080x2400-notch.png",
+    "crop": [
+      0,
+      110,
+      1080,
+      350
+    ],
+    "diff_bbox": [
+      37,
+      48,
+      1048,
+      199
+    ],
+    "changed_pixels": 64846,
+    "total_pixels": 259200
+  }
+]

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1030" viewBox="0 0 1440 1030" role="img" aria-labelledby="title desc">
+  <title id="title">Level validation: bounded breadth-first search</title>
+  <desc id="desc">An illustrative search frontier, not a captured level. The solver expands queued board states, skips previously visited states, and tries legal one-cell slides and exits. Clearing the board proves solvability; exhausting the queue proves impossibility; a budget limit means unknown. Solution listing is a separate bounded pass.</desc>
+  <defs>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #17283d; }
+      .eyebrow { font-size: 17px; font-weight: 700; letter-spacing: 2px; fill: #47728b; }
+      .title { font-size: 42px; font-weight: 700; }
+      .sub { font-size: 23px; fill: #526578; }
+      .heading { font-size: 26px; font-weight: 700; }
+      .body { font-size: 23px; }
+      .small { font-size: 21px; fill: #526578; }
+      .node { font-size: 22px; font-weight: 700; text-anchor: middle; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 1 L8 5 L0 9" fill="none" stroke="#6b8298" stroke-width="1.7"/></marker>
+  </defs>
+  <rect width="1440" height="1030" rx="24" fill="#f5f7fb"/>
+  <text x="48" y="48" class="eyebrow">COLOR BLOCK JAM / LEVEL EDITOR</text>
+  <text x="48" y="103" class="title">BFS explores positions, not player skill.</text>
+  <text x="48" y="143" class="sub">Copy the draft → check supported rules → search on a worker thread.</text>
+
+  <rect x="48" y="182" width="793" height="471" rx="18" fill="#ffffff" stroke="#b8c8d9" stroke-width="2"/>
+  <text x="72" y="222" class="heading">Illustrative frontier</text>
+  <text x="72" y="254" class="small">Nodes are board states; arrows are legal search actions.</text>
+  <g fill="none" stroke="#6b8298" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M440 332 L290 378"/>
+    <path d="M440 332 L590 378"/>
+    <path d="M290 435 L153 484"/>
+    <path d="M290 435 L343 484"/>
+    <path d="M590 435 L530 484"/>
+    <path d="M590 435 L700 484"/>
+  </g>
+  <rect x="385" y="284" width="110" height="48" rx="12" fill="#e9f1f8" stroke="#9fb6ce"/>
+  <text x="440" y="316" class="node">Start</text>
+  <rect x="235" y="387" width="110" height="48" rx="12" fill="#e9f1f8" stroke="#9fb6ce"/>
+  <text x="290" y="419" class="node">S1</text>
+  <rect x="535" y="387" width="110" height="48" rx="12" fill="#e9f1f8" stroke="#9fb6ce"/>
+  <text x="590" y="419" class="node">S2</text>
+  <rect x="98" y="493" width="110" height="48" rx="12" fill="#e9f1f8" stroke="#9fb6ce"/>
+  <text x="153" y="525" class="node">S3</text>
+  <rect x="273" y="493" width="140" height="48" rx="12" fill="#f1f3f6" stroke="#aebbc8" stroke-dasharray="5 4"/>
+  <text x="343" y="525" class="node" fill="#69798b">Seen → skip</text>
+  <rect x="475" y="493" width="110" height="48" rx="12" fill="#e9f1f8" stroke="#9fb6ce"/>
+  <text x="530" y="525" class="node">S4</text>
+  <rect x="628" y="493" width="144" height="48" rx="12" fill="#e8f6f0" stroke="#83bba4"/>
+  <text x="700" y="525" class="node">Cleared</text>
+  <text x="72" y="591" class="small">FIFO queue + visited keys + predecessor links</text>
+  <text x="72" y="625" class="small">Reconstruct one solution from the cleared state.</text>
+
+  <rect x="874" y="182" width="518" height="471" rx="18" fill="#e9f1f8" stroke="#a8bdd2" stroke-width="2"/>
+  <text x="900" y="222" class="heading">What a state represents</text>
+  <text x="900" y="269" class="body">Block positions + which blocks exited</text>
+  <text x="900" y="312" class="small">Fixed level data supplies shapes, gates,</text>
+  <text x="900" y="342" class="small">Arrow axes and Ice thaw thresholds.</text>
+  <line x1="900" y1="371" x2="1366" y2="371" stroke="#b8c8d9"/>
+  <text x="900" y="411" class="heading">Supported search actions</text>
+  <text x="900" y="454" class="body">One-cell slides and block exits</text>
+  <text x="900" y="497" class="small">Cached legality from Domain rules.</text>
+  <text x="900" y="532" class="small">Available exits prune slide alternatives</text>
+  <text x="900" y="562" class="small">for the supported Arrow / Ice rules.</text>
+  <text x="900" y="619" class="small">No boosters; no gameplay timer simulation.</text>
+
+  <rect x="48" y="683" width="424" height="132" rx="14" fill="#e8f6f0" stroke="#83bba4"/>
+  <rect x="508" y="683" width="424" height="132" rx="14" fill="#fff1ed" stroke="#d4a394"/>
+  <rect x="968" y="683" width="424" height="132" rx="14" fill="#fff3d7" stroke="#d6b16a"/>
+  <text x="72" y="725" class="heading">Solvable</text>
+  <text x="72" y="763" class="small">Found a path that clears the board.</text>
+  <text x="532" y="725" class="heading">Cannot be solved</text>
+  <text x="532" y="763" class="small">Proven dead end or queue exhausted.</text>
+  <text x="992" y="725" class="heading">Not confirmed</text>
+  <text x="992" y="763" class="small">Budget reached; no impossibility proof.</text>
+
+  <text x="48" y="867" class="body" font-weight="600">Main verdict: up to 16 blocks · 15 s default · no practical position cap</text>
+  <text x="48" y="909" class="body">Separate listing: up to 20 exit orders · 10 s / 1,000,000 positions</text>
+  <text x="48" y="956" class="small">Listed player moves merge consecutive steps of one block. Their count is not the BFS depth.</text>
+  <text x="48" y="991" class="small">Unsupported rules are Not checked; neither pass guarantees a globally shortest player solution.</text>
+</svg>

@@ -1,0 +1,255 @@
+using System;
+using ColorBlockJam.Domain.Board;
+using ColorBlockJam.Domain.Commands;
+using ColorBlockJam.Domain.Movement;
+using ColorBlockJam.Domain.Picking;
+using ColorBlockJam.Domain.Session;
+using ColorBlockJam.Gameplay.Boosters;
+using ColorBlockJam.Gameplay.Input;
+using Onity.DI;
+using UnityEngine;
+
+namespace ColorBlockJam.Gameplay.Session
+{
+    /// <summary>
+    /// The pointer's part of the tick's command phase: it turns pointer samples into one pick per
+    /// press and drag updates, and executes the move command a release or a push-out produces
+    /// (DEC-122). While a booster targeting mode is set, a board press starts no drag; its release
+    /// hands the directly hit cell to the targeting sink, and an empty or off-board press cancels
+    /// the mode (B-12). A press over UI, off the board plane, outside the interaction area or on
+    /// nothing stays inert until it is released (AC-3.13, AC-3.21, DEC-91).
+    /// </summary>
+    public sealed class DragInputRouter
+    {
+        private readonly IPointerSource m_pointer;
+        private readonly IUiPointerFilter m_ui;
+        private readonly IBoardProjector m_projector;
+
+        // Null when targeting is disabled; then every board press picks and drags.
+        private readonly BoosterTargeting m_targeting;
+
+        // The pointer source's Back button, when it has one (GameplayPointerInput does).
+        private readonly IBackButtonSource m_back;
+
+        // What Back does without a targeting mode (the in-game menu's pause, Game HUD design 5); null: nothing.
+        private IGameplayBackFallback m_backFallback;
+
+        // One press owns the pointer from Down to Up or Cancel; an inert press drives nothing.
+        private bool m_ownedUntilUp;
+        private bool m_inert = true;
+
+        // A board press taken while targeting: its press position is resolved when it is released.
+        private bool m_targetPress;
+        private Vector2 m_targetPressPosition;
+
+        /// <summary>A router without booster targeting: every board press picks and drags.</summary>
+        public DragInputRouter(IPointerSource pointer, IUiPointerFilter ui, IBoardProjector projector)
+            : this(pointer, ui, projector, null)
+        {
+        }
+
+        /// <summary>
+        /// The Game scene's router: presses follow the targeting mode (B-12). A null targeting disables it,
+        /// as the three-argument constructor does.
+        /// </summary>
+        [Inject]
+        public DragInputRouter(IPointerSource pointer, IUiPointerFilter ui, IBoardProjector projector,
+            BoosterTargeting targeting)
+        {
+            m_pointer = pointer ?? throw new ArgumentNullException(nameof(pointer));
+            m_ui = ui ?? throw new ArgumentNullException(nameof(ui));
+            m_projector = projector ?? throw new ArgumentNullException(nameof(projector));
+            m_targeting = targeting;
+            m_back = pointer as IBackButtonSource;
+        }
+
+        /// <summary>The last pointer position on the board plane; the view follows it and keeps it when the ray misses.</summary>
+        public BoardPoint LastPointer { get; private set; }
+
+        /// <summary>
+        /// Sets what Back does while no targeting mode is set; null restores doing nothing. The Game scene's HUD branch
+        /// sets the in-game menu flow once at scene build; the router keeps no other reference to it.
+        /// </summary>
+        public void SetBackFallback(IGameplayBackFallback fallback)
+        {
+            m_backFallback = fallback;
+        }
+
+        /// <summary>
+        /// Reads one pointer sample and applies it to the attempt's drag or to the targeting mode, and
+        /// polls Back once. Called only while Playing, outside the opening hold.
+        /// </summary>
+        public void Run(LevelAttempt attempt, IBoardPresenter presenter)
+        {
+            // Back ends a targeting mode (B-12); without one it goes to the fallback, which opens the pause menu. A
+            // fallback that left Playing ends this step, as an accepted booster target does.
+            bool back = m_back != null && m_back.WasBackPressed();
+            if (back)
+            {
+                if (m_targeting != null && m_targeting.IsActive)
+                {
+                    m_targeting.Cancel();
+                }
+                else if (m_backFallback != null && m_backFallback.OnBack())
+                {
+                    return;
+                }
+            }
+
+            PointerSample sample = m_pointer.Read();
+            BoardSimulation simulation = attempt.Simulation;
+            switch (sample.Phase)
+            {
+                case PointerPhase.Down:
+                    Press(simulation, presenter, sample);
+                    break;
+                case PointerPhase.Held:
+                    if (m_inert)
+                    {
+                        break;
+                    }
+
+                    if (m_projector.TryScreenToBoard(sample.ScreenPosition, out BoardPoint point))
+                    {
+                        LastPointer = point;
+                    }
+
+                    if (simulation.Drag.Update(LastPointer, out GameCommand exit) == DragResult.ExitReady)
+                    {
+                        simulation.Commands.Execute(exit);
+                    }
+
+                    break;
+                case PointerPhase.Up:
+                case PointerPhase.Cancel:
+                    if (!m_inert)
+                    {
+                        // The move runs before the held mark clears, so the settle reads the committed origin.
+                        if (simulation.Drag.TryEnd(out GameCommand move))
+                        {
+                            simulation.Commands.Execute(move);
+                        }
+
+                        presenter.SetHeld(-1);
+                    }
+                    else if (m_targetPress && sample.Phase == PointerPhase.Up)
+                    {
+                        // A cancelled touch is no tap, so only a release resolves the target.
+                        ResolveTarget(attempt, presenter);
+                    }
+
+                    m_ownedUntilUp = false;
+                    m_inert = true;
+                    m_targetPress = false;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Drops the press for Suspend or Teardown without running anything and ends any targeting
+        /// mode; an interrupted move waits for the next command phase (DEC-113). A pointer still held
+        /// after Resume stays inert until Up.
+        /// </summary>
+        public void Reset(LevelAttempt attempt)
+        {
+            attempt.Simulation.Drag.Interrupt();
+            m_ownedUntilUp = false;
+            m_inert = true;
+            m_targetPress = false;
+            m_targeting?.Cancel();
+        }
+
+        private void Press(BoardSimulation simulation, IBoardPresenter presenter, PointerSample sample)
+        {
+            if (m_ownedUntilUp)
+            {
+                return;
+            }
+
+            m_ownedUntilUp = true;
+            m_inert = true;
+            m_targetPress = false;
+            if (m_ui.IsOverUi(sample.ScreenPosition))
+            {
+                return;
+            }
+
+            if (m_targeting != null && m_targeting.IsActive)
+            {
+                // No drag while targeting (B-12): the press is resolved on release.
+                m_targetPress = true;
+                m_targetPressPosition = sample.ScreenPosition;
+                return;
+            }
+
+            if (!m_projector.TryScreenToBoard(sample.ScreenPosition, out BoardPoint point))
+            {
+                return;
+            }
+
+            IBoardReader board = simulation.Board;
+            if (!InteractionArea.Contains(point, board.Width, board.Height))
+            {
+                return;
+            }
+
+            // One pick per press; the block and the grab offset stay until release (AC-3.20).
+            ScreenPoint press = new ScreenPoint(sample.ScreenPosition.x, sample.ScreenPosition.y);
+            int block = simulation.Picker.Pick(press, board, m_projector.Footprint);
+            if (block < 0)
+            {
+                return;
+            }
+            if (!simulation.Drag.TryBegin(block, point))
+            {
+                if (presenter is IBlockedDragFeedback feedback) feedback.ShowBlockedDrag(block);
+                return;
+            }
+
+            LastPointer = point;
+            m_inert = false;
+            presenter.SetHeld(block);
+        }
+
+        // A direct hit on the committed board only, never the nearest-footprint fallback (DEC-91): an
+        // empty floor cell, a wall, gate or border cell and any press outside the board cancel for free.
+        // An on-board block the booster cannot take keeps the mode and shakes (B-12).
+        private void ResolveTarget(LevelAttempt attempt, IBoardPresenter presenter)
+        {
+            if (m_targeting == null || !m_targeting.IsActive)
+            {
+                return;
+            }
+
+            IBoardReader board = attempt.Simulation.Board;
+            if (!m_projector.TryScreenToBoard(m_targetPressPosition, out BoardPoint point)
+                || !InteractionArea.Contains(point, board.Width, board.Height))
+            {
+                m_targeting.Cancel();
+                return;
+            }
+
+            Cell cell = new Cell(RoundToCell(point.X), RoundToCell(point.Y));
+            int block = board.GetOccupant(cell);
+            if (block < 0)
+            {
+                m_targeting.Cancel();
+                return;
+            }
+
+            // An accepted target suspends the session inside this call, which also ends the mode.
+            BoosterTargetResult result = m_targeting.TrySubmit(attempt, cell);
+            if (result == BoosterTargetResult.Empty)
+            {
+                m_targeting.Cancel();
+            }
+            else if (result == BoosterTargetResult.Rejected && presenter is IBlockedDragFeedback feedback)
+            {
+                feedback.ShowBlockedDrag(block);
+            }
+        }
+
+        // Cell (x, y) spans x - 0.5 to x + 0.5, so a point belongs to the nearest whole coordinate.
+        private static int RoundToCell(float value) => (int)Math.Floor(value + 0.5f);
+    }
+}

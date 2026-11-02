@@ -1,0 +1,20 @@
+{
+  "before": {
+    "utc": "2026-09-27T12:51:50.7255011Z",
+    "draft": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"\",\"m_EditorClassIdentifier\":\"\",\"m_level\":{\"m_id\":\"level-01\",\"m_name\":\"Level 1\",\"m_width\":4,\"m_height\":5,\"m_timerSeconds\":300,\"m_voidCells\":[],\"m_doors\":[{\"m_id\":\"d1\",\"m_side\":0,\"m_start\":1,\"m_length\":3,\"m_colorId\":\"LightBlue\",\"m_effects\":[]},{\"m_id\":\"d2\",\"m_side\":1,\"m_start\":0,\"m_length\":3,\"m_colorId\":\"Pink\",\"m_effects\":[]}],\"m_blocks\":[{\"m_id\":\"b1\",\"m_colorId\":\"LightBlue\",\"m_shapeId\":\"Square\",\"m_origin\":{\"x\":2,\"y\":2},\"m_cells\":[{\"x\":0,\"y\":0},{\"x\":0,\"y\":1},{\"x\":1,\"y\":0},{\"x\":1,\"y\":1}],\"m_effects\":[]},{\"m_id\":\"b2\",\"m_colorId\":\"Pink\",\"m_shapeId\":\"Square\",\"m_origin\":{\"x\":0,\"y\":1},\"m_cells\":[{\"x\":0,\"y\":0},{\"x\":0,\"y\":1},{\"x\":1,\"y\":0},{\"x\":1,\"y\":1}],\"m_effects\":[{\"m_type\":\"ice\",\"m_params\":[{\"m_key\":\"clearsToThaw\",\"m_value\":\"1\"}]}]}],\"m_cellObjects\":[]},\"m_templateEdits\":[],\"m_colorOrder\":[]}}",
+    "unsaved": true,
+    "preset": 28
+  },
+  "after": {
+    "utc": "2026-09-27T13:01:53.5316394Z",
+    "draft": "{\"MonoBehaviour\":{\"m_Enabled\":true,\"m_EditorHideFlags\":0,\"m_Name\":\"\",\"m_EditorClassIdentifier\":\"\",\"m_level\":{\"m_id\":\"level-01\",\"m_name\":\"Level 1\",\"m_width\":4,\"m_height\":5,\"m_timerSeconds\":300,\"m_voidCells\":[],\"m_doors\":[{\"m_id\":\"d1\",\"m_side\":0,\"m_start\":1,\"m_length\":3,\"m_colorId\":\"LightBlue\",\"m_effects\":[]},{\"m_id\":\"d2\",\"m_side\":1,\"m_start\":0,\"m_length\":3,\"m_colorId\":\"Pink\",\"m_effects\":[]}],\"m_blocks\":[{\"m_id\":\"b1\",\"m_colorId\":\"LightBlue\",\"m_shapeId\":\"Square\",\"m_origin\":{\"x\":2,\"y\":2},\"m_cells\":[{\"x\":0,\"y\":0},{\"x\":0,\"y\":1},{\"x\":1,\"y\":0},{\"x\":1,\"y\":1}],\"m_effects\":[]},{\"m_id\":\"b2\",\"m_colorId\":\"Pink\",\"m_shapeId\":\"Square\",\"m_origin\":{\"x\":0,\"y\":1},\"m_cells\":[{\"x\":0,\"y\":0},{\"x\":0,\"y\":1},{\"x\":1,\"y\":0},{\"x\":1,\"y\":1}],\"m_effects\":[{\"m_type\":\"ice\",\"m_params\":[{\"m_key\":\"clearsToThaw\",\"m_value\":\"1\"}]}]}],\"m_cellObjects\":[]},\"m_templateEdits\":[],\"m_colorOrder\":[]}}",
+    "unsaved": true,
+    "preset": 28,
+    "scene": "Assets/ColorBlockJam/Scenes/LevelEditor.unity",
+    "dirty": false,
+    "play": false,
+    "compile": false,
+    "db": 0
+  },
+  "draftUnchanged": true
+}

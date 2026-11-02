@@ -1,0 +1,101 @@
+{
+  "projectRoot": "C:/Users/e-fur/Documents/Repos/ColorBlockJamCase2026",
+  "unityVersion": "2022.3.62f2",
+  "focusedRun": {
+    "job_id": "e53ec33bb05f407a9583538860aebe67",
+    "status": "failed",
+    "mode": "EditMode",
+    "started_unix_ms": 1790723965360,
+    "finished_unix_ms": 1790723981952,
+    "last_update_unix_ms": 1790723981952,
+    "progress": {
+      "completed": 81,
+      "total": 81,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1790723981739,
+      "last_finished_test_full_name": "ColorBlockJam.Tests.EditMode.LevelEffectEditorTests.TitlesNameTheColourAndTheCanvasLabel",
+      "last_finished_unix_ms": 1790723981740,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [
+        {
+          "full_name": "ColorBlockJam.Tests.EditMode.EditorSolidBoundaryTests.GeneralColorWarningsTakePriorityOverRegisteredWarnings(\"Red\",\"no Red door is on the board.\")",
+          "message": "  Expected string length 37 but was 53. Strings differ at index 9.\r\n  Expected: \"Block b1 no Red door is on the board.\"\r\n  But was:  \"Block b1 can never exit: no Red door is on the board.\"\r\n  --------------------^\r\n"
+        },
+        {
+          "full_name": "ColorBlockJam.Tests.EditMode.LevelEffectEditorTests.TheColorBlockJamMenuKeepsOnlyTheLevelEditorAndItsSceneAtTheTop",
+          "message": "  Only the Art, Data and Levels submenus sit beside them.\r\n  Expected is <System.String[2]>, actual is <System.Collections.Generic.SortedSet`1[System.String]> with 3 elements\r\n  Values differ at index [2]\r\n  Extra:    < \"Color Block Jam/Play The Game\" >"
+        }
+      ],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": null
+  },
+  "correctedMethodRun": {
+    "job_id": "a1e69d24c9eb4240b8029d90416395b8",
+    "status": "succeeded",
+    "mode": "EditMode",
+    "started_unix_ms": 1790724161320,
+    "finished_unix_ms": 1790724169022,
+    "last_update_unix_ms": 1790724169022,
+    "progress": {
+      "completed": 2,
+      "total": 2,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1790724168806,
+      "last_finished_test_full_name": "ColorBlockJam.Tests.EditMode.EditorSolidBoundaryTests.GeneralColorWarningsTakePriorityOverRegisteredWarnings(\"Unrecognised\",\"uses 'Unrecognised', which is not a gate colour.\")",
+      "last_finished_unix_ms": 1790724168807,
+      "stuck_suspected": false,
+      "editor_is_focused": false,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": {
+      "mode": "EditMode",
+      "summary": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 0.7035569,
+        "resultState": "Passed"
+      },
+      "results": [
+        {
+          "name": "GeneralColorWarningsTakePriorityOverRegisteredWarnings(\"Red\",\"can never exit: no Red door is on the board.\")",
+          "fullName": "ColorBlockJam.Tests.EditMode.EditorSolidBoundaryTests.GeneralColorWarningsTakePriorityOverRegisteredWarnings(\"Red\",\"can never exit: no Red door is on the board.\")",
+          "state": "Passed",
+          "durationSeconds": 0.0204731,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "GeneralColorWarningsTakePriorityOverRegisteredWarnings(\"Unrecognised\",\"uses 'Unrecognised', which is not a gate colour.\")",
+          "fullName": "ColorBlockJam.Tests.EditMode.EditorSolidBoundaryTests.GeneralColorWarningsTakePriorityOverRegisteredWarnings(\"Unrecognised\",\"uses 'Unrecognised', which is not a gate colour.\")",
+          "state": "Passed",
+          "durationSeconds": 0.0003025,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        }
+      ]
+    }
+  },
+  "verification": {
+    "newRegressionCases": 13,
+    "newRegressionCasesPassed": 13,
+    "remainingFailure": "ColorBlockJam.Tests.EditMode.LevelEffectEditorTests.TheColorBlockJamMenuKeepsOnlyTheLevelEditorAndItsSceneAtTheTop",
+    "baseline": "Plastic cs:38 already contains the unchanged two-item expectation and PlayTheGameLauncher's third top-level menu item.",
+    "notes": [
+      "Failed-job payload does not retain a summary after reload; no overall skipped/pass total is asserted.",
+      "Only the corrected failed method was rerun; no production code changed after the focused run.",
+      "Exact parameterized test_names filter returned zero tests (job 7f437c359eb44a24944b3493453a4f8b); that result is excluded. The method group filter executed both cases.",
+      "Independent verifier found AC1-AC3 evidence sufficient and no scoped production defect."
+    ]
+  }
+}

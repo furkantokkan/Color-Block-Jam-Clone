@@ -1,0 +1,235 @@
+const string phase = "__PHASE__";
+const float W = __W__f, H = __H__f;
+string dir = "C:/Users/e-fur/Documents/Repos/ColorBlockJamCase2026/production/tasks/TASK-20260924-230915888-a8788bab-level-canvas-block-tools/";
+string jsonPath = "Assets/ColorBlockJam/Data/Levels/LevelDatabase.json";
+var all = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Static;
+var log = new System.Text.StringBuilder();
+var editorAsm = typeof(ColorBlockJam.Editor.Levels.LevelDatabaseWindow).Assembly;
+
+System.Func<string> sha = () => {
+  using (var s = System.Security.Cryptography.SHA256.Create()) {
+    var b = s.ComputeHash(System.IO.File.ReadAllBytes(jsonPath)); var sb = new System.Text.StringBuilder();
+    foreach (var x in b) sb.Append(x.ToString("x2")); return sb.ToString(); }
+};
+System.Func<object, string, object> P = (o, n) => {
+  var t = o as System.Type ?? o.GetType();
+  var p = t.GetProperty(n, all); if (p != null) return p.GetValue(o is System.Type ? null : o);
+  var f = t.GetField(n, all); return f.GetValue(o is System.Type ? null : o);
+};
+System.Func<object, string, object[], object> M = (o, n, a) => {
+  var t = o as System.Type ?? o.GetType();
+  foreach (var m in t.GetMethods(all)) if (m.Name == n && m.GetParameters().Length == a.Length) return m.Invoke(o is System.Type ? null : o, a);
+  throw new System.Exception("no method " + n);
+};
+
+if (phase == "open") {
+  var win = UnityEngine.ScriptableObject.CreateInstance<ColorBlockJam.Editor.Levels.LevelDatabaseWindow>();
+  win.titleContent = new UnityEngine.GUIContent("Level Editor (verifier)");
+  win.ShowUtility();
+  win.position = new UnityEngine.Rect(60f, 60f, W, H);
+  UnityEditor.SessionState.SetInt("vfy3.win", win.GetInstanceID());
+  UnityEditor.SessionState.SetString("vfy3.prevPublished", ColorBlockJam.Editor.Levels.LevelDatabaseWindow.LastPublishedLevel == null ? "" : UnityEngine.JsonUtility.ToJson(ColorBlockJam.Editor.Levels.LevelDatabaseWindow.LastPublishedLevel));
+  return "opened " + win.GetInstanceID() + " size=" + W + "x" + H + " sha=" + sha();
+}
+
+var w = UnityEditor.EditorUtility.InstanceIDToObject(UnityEditor.SessionState.GetInt("vfy3.win", 0)) as ColorBlockJam.Editor.Levels.LevelDatabaseWindow;
+if (w == null) return "no window";
+var root = w.rootVisualElement;
+M(root.panel, "ValidateLayout", new object[0]);
+UnityEngine.UIElements.VisualElement canvas = null;
+UnityEngine.UIElements.UQueryExtensions.Query<UnityEngine.UIElements.VisualElement>(root).ForEach(e => { if (canvas == null && e.GetType().Name == "LevelCanvasElement") canvas = e; });
+var status = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Label>(root, "status");
+System.Func<ColorBlockJam.Runtime.Levels.LevelData> draft = () => (ColorBlockJam.Runtime.Levels.LevelData)M(P(w, "m_draft"), "Snapshot", new object[0]);
+System.Func<object> model = () => P(canvas, "Model");
+System.Func<int> blockCount = () => (int)P(model(), "BlockCount");
+System.Func<UnityEngine.Vector2Int, UnityEngine.Vector2> centre = c => UnityEngine.UIElements.VisualElementExtensions.LocalToWorld(canvas, ((UnityEngine.Rect)M(P(canvas, "Geometry"), "GetCellRect", new object[] { c })).center);
+System.Action<UnityEngine.EventType, UnityEngine.Vector2, int, UnityEngine.EventModifiers> send = (type, pos, button, mods) => {
+  var e = new UnityEngine.Event { type = type, mousePosition = pos, button = button, clickCount = 1, modifiers = mods };
+  UnityEngine.UIElements.EventBase ev = type == UnityEngine.EventType.MouseDown ? (UnityEngine.UIElements.EventBase)UnityEngine.UIElements.PointerDownEvent.GetPooled(e)
+    : type == UnityEngine.EventType.MouseUp ? (UnityEngine.UIElements.EventBase)UnityEngine.UIElements.PointerUpEvent.GetPooled(e)
+    : (UnityEngine.UIElements.EventBase)UnityEngine.UIElements.PointerMoveEvent.GetPooled(e);
+  using (ev) root.SendEvent(ev);
+};
+System.Action<UnityEngine.Vector2, int> click = (pos, b) => { send(UnityEngine.EventType.MouseDown, pos, b, UnityEngine.EventModifiers.None); send(UnityEngine.EventType.MouseUp, pos, b, UnityEngine.EventModifiers.None); };
+System.Action<UnityEngine.UIElements.VisualElement, UnityEngine.KeyCode, UnityEngine.EventModifiers> key = (target, k, mods) => {
+  using (var d = UnityEngine.UIElements.KeyDownEvent.GetPooled('\0', k, mods)) { d.target = target; target.SendEvent(d); }
+};
+System.Action<string> capture = tag => {
+  w.Repaint();
+  object host = typeof(UnityEditor.EditorWindow).GetField("m_Parent", all).GetValue(w);
+  host.GetType().GetMethod("RepaintImmediately", all, null, System.Type.EmptyTypes, null)?.Invoke(host, null);
+  float ppp = UnityEditor.EditorGUIUtility.pixelsPerPoint;
+  int pw = UnityEngine.Mathf.RoundToInt(w.position.width * ppp), ph = UnityEngine.Mathf.RoundToInt(w.position.height * ppp);
+  var rt = new UnityEngine.RenderTexture(pw, ph, 24, UnityEngine.RenderTextureFormat.ARGB32);
+  System.Reflection.MethodInfo grab = null;
+  for (var t = host.GetType(); t != null && grab == null; t = t.BaseType) grab = t.GetMethod("GrabPixels", all | System.Reflection.BindingFlags.DeclaredOnly);
+  try {
+    grab.Invoke(host, new object[] { rt, new UnityEngine.Rect(0, 0, pw, ph) });
+    var prev = UnityEngine.RenderTexture.active; UnityEngine.RenderTexture.active = rt;
+    var tex = new UnityEngine.Texture2D(pw, ph, UnityEngine.TextureFormat.RGB24, false);
+    tex.ReadPixels(new UnityEngine.Rect(0, 0, pw, ph), 0, 0); tex.Apply(); UnityEngine.RenderTexture.active = prev;
+    var px = tex.GetPixels32(); var fl = new UnityEngine.Color32[px.Length];
+    for (int y = 0; y < ph; y++) System.Array.Copy(px, y * pw, fl, (ph - 1 - y) * pw, pw);
+    tex.SetPixels32(fl);
+    string file = "verifier-live-" + (int)w.position.width + "x" + (int)w.position.height + "-" + tag + ".png";
+    System.IO.File.WriteAllBytes(dir + file, tex.EncodeToPNG());
+    UnityEngine.Object.DestroyImmediate(tex);
+    log.AppendLine("  captured " + file + " (" + pw + "x" + ph + ")");
+  } catch (System.Exception ex) { log.AppendLine("  capture ERR " + ex.Message); }
+  rt.Release(); UnityEngine.Object.DestroyImmediate(rt);
+};
+var cmds = editorAsm.GetType("ColorBlockJam.Editor.Levels.LevelEditCommands");
+System.Func<ColorBlockJam.Runtime.Levels.LevelData, int, UnityEngine.Vector2Int, string> tryMove = (lvl, i, o) => {
+  var a = new object[] { lvl, i, o, null, null }; bool ok = (bool)M(cmds, "TryMoveBlock", a); return ok ? null : (string)a[4];
+};
+
+log.AppendLine("phase=" + phase + " size=" + w.position.size + " levelId=" + UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.TextField>(root, "level-id").value + " canvasValid=" + P(P(canvas, "Geometry"), "IsValid") + " blocks=" + blockCount() + " dirty=" + w.hasUnsavedChanges + " sha=" + sha());
+
+if (phase == "snap") {
+  capture("initial");
+  return log.ToString();
+}
+
+if (phase == "place") {
+  UnityEditor.Undo.IncrementCurrentGroup();
+  capture("initial");
+  UnityEngine.UIElements.VisualElement tile = UnityEngine.UIElements.UQueryExtensions.Q(root, "shape-Single");
+  log.AppendLine("  tile=" + (tile == null ? "null" : tile.name + " enabled=" + tile.enabledSelf));
+  var scroll = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.ScrollView>(root, "tools-pane");
+  scroll.ScrollTo(tile); M(root.panel, "ValidateLayout", new object[0]);
+  click(tile.worldBound.center, 0);
+  log.AppendLine("  after tile click tool=" + P(canvas, "Tool"));
+  UnityEngine.Vector2Int free = new UnityEngine.Vector2Int(-1, -1), taken = new UnityEngine.Vector2Int(-1, -1);
+  var lvl0 = draft();
+  for (int y = 0; y < lvl0.Height; y++) for (int x = 0; x < lvl0.Width; x++) {
+    var c = new UnityEngine.Vector2Int(x, y); int bi = (int)M(model(), "GetBlockIndexAt", new object[] { c });
+    if (bi < 0 && free.x < 0) free = c; if (bi >= 0 && taken.x < 0) taken = c; }
+  log.AppendLine("  free=" + free + " taken=" + taken);
+  // Count publishes across phases.
+  System.Action<ColorBlockJam.Runtime.Levels.LevelData> counter = l => UnityEditor.SessionState.SetInt("vfy3.pub", UnityEditor.SessionState.GetInt("vfy3.pub", 0) + 1);
+  System.AppDomain.CurrentDomain.SetData("vfy3.counter", counter);
+  send(UnityEngine.EventType.MouseMove, centre(free), 0, UnityEngine.EventModifiers.None);
+  capture("ghost-valid");
+  send(UnityEngine.EventType.MouseMove, centre(taken), 0, UnityEngine.EventModifiers.None);
+  capture("ghost-invalid");
+  int before = blockCount();
+  click(centre(taken), 0);
+  log.AppendLine("  AC-1 invalid click on " + taken + ": blocks " + before + "->" + blockCount() + " status='" + status.text + "' dirty=" + w.hasUnsavedChanges);
+  UnityEditor.SessionState.SetInt("vfy3.pub", 0);
+  ColorBlockJam.Editor.Levels.LevelDatabaseWindow.DraftLevelPublished += counter;
+  click(centre(free), 0);
+  var placed = draft().GetBlockAt(draft().BlockCount - 1);
+  log.AppendLine("  AC-1 valid click on " + free + ": blocks " + before + "->" + blockCount() + " new id=" + placed.Id + " origin=" + placed.Origin + " color=" + placed.ColorId + " shape=" + placed.ShapeId + " dirty=" + w.hasUnsavedChanges + " status='" + status.text + "'");
+  capture("placed");
+  return log.ToString();
+}
+
+if (phase == "pubsub") {
+  System.Action<ColorBlockJam.Runtime.Levels.LevelData> counter = l => { UnityEditor.SessionState.SetInt("vfy3.pub", UnityEditor.SessionState.GetInt("vfy3.pub", 0) + 1); UnityEditor.SessionState.SetInt("vfy3.pubBlocks", l == null ? -1 : l.BlockCount); };
+  System.AppDomain.CurrentDomain.SetData("vfy3.counter", counter);
+  UnityEditor.SessionState.SetInt("vfy3.pub", 0);
+  ColorBlockJam.Editor.Levels.LevelDatabaseWindow.DraftLevelPublished += counter;
+  UnityEngine.UIElements.VisualElement tile = UnityEngine.UIElements.UQueryExtensions.Q(root, "shape-Single");
+  UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.ScrollView>(root, "tools-pane").ScrollTo(tile); M(root.panel, "ValidateLayout", new object[0]);
+  click(tile.worldBound.center, 0);
+  int before = blockCount();
+  click(centre(new UnityEngine.Vector2Int(0, 0)), 0);
+  log.AppendLine("  placed at (0,0): blocks " + before + "->" + blockCount() + " scheduled=" + P(w, "m_publishScheduled") + " lastPublishedBlocks=" + ColorBlockJam.Editor.Levels.LevelDatabaseWindow.LastPublishedLevel?.BlockCount + " t=" + UnityEditor.EditorApplication.timeSinceStartup);
+  return log.ToString();
+}
+if (phase == "pubcheck") {
+  var counter = (System.Action<ColorBlockJam.Runtime.Levels.LevelData>)System.AppDomain.CurrentDomain.GetData("vfy3.counter");
+  ColorBlockJam.Editor.Levels.LevelDatabaseWindow.DraftLevelPublished -= counter;
+  log.AppendLine("  publish count=" + UnityEditor.SessionState.GetInt("vfy3.pub", 0) + " publishedBlocks=" + UnityEditor.SessionState.GetInt("vfy3.pubBlocks", -9) + " lastPublishedBlocks=" + ColorBlockJam.Editor.Levels.LevelDatabaseWindow.LastPublishedLevel?.BlockCount + " scheduled=" + P(w, "m_publishScheduled") + " t=" + UnityEditor.EditorApplication.timeSinceStartup);
+  key(canvas, UnityEngine.KeyCode.Escape, UnityEngine.EventModifiers.None);
+  key(canvas, UnityEngine.KeyCode.Z, UnityEngine.EventModifiers.Control);
+  log.AppendLine("  undo: blocks=" + blockCount() + " dirty=" + w.hasUnsavedChanges);
+  return log.ToString();
+}
+if (phase == "size") {
+  w.position = new UnityEngine.Rect(60f, 60f, W, H);
+  return "resized to " + w.position;
+}
+if (phase == "shots") {
+  UnityEditor.Undo.IncrementCurrentGroup();
+  capture("initial");
+  UnityEngine.UIElements.VisualElement tile = UnityEngine.UIElements.UQueryExtensions.Q(root, "shape-Single");
+  UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.ScrollView>(root, "tools-pane").ScrollTo(tile); M(root.panel, "ValidateLayout", new object[0]);
+  click(tile.worldBound.center, 0);
+  send(UnityEngine.EventType.MouseMove, centre(new UnityEngine.Vector2Int(0, 0)), 0, UnityEngine.EventModifiers.None);
+  capture("ghost-valid");
+  send(UnityEngine.EventType.MouseMove, centre(new UnityEngine.Vector2Int(0, 1)), 0, UnityEngine.EventModifiers.None);
+  capture("ghost-invalid");
+  click(centre(new UnityEngine.Vector2Int(0, 1)), 0);
+  log.AppendLine("  refused (0,1): blocks=" + blockCount() + " status='" + status.text + "'");
+  click(centre(new UnityEngine.Vector2Int(0, 0)), 0);
+  log.AppendLine("  placed (0,0): blocks=" + blockCount() + " dirty=" + w.hasUnsavedChanges);
+  capture("placed");
+  key(canvas, UnityEngine.KeyCode.Escape, UnityEngine.EventModifiers.None);
+  key(canvas, UnityEngine.KeyCode.Z, UnityEngine.EventModifiers.Control);
+  log.AppendLine("  Ctrl+Z: blocks=" + blockCount() + " dirty=" + w.hasUnsavedChanges + " status='" + status.text + "'");
+  capture("after-undo");
+  log.AppendLine("  sha after=" + sha());
+  return log.ToString();
+}
+if (phase == "close") {
+  w.DiscardChanges();
+  w.Close();
+  return log.ToString() + " closed";
+}
+if (phase == "rest") {
+  var counter = (System.Action<ColorBlockJam.Runtime.Levels.LevelData>)System.AppDomain.CurrentDomain.GetData("vfy3.counter");
+  ColorBlockJam.Editor.Levels.LevelDatabaseWindow.DraftLevelPublished -= counter;
+  log.AppendLine("  AC-1 DraftLevelPublished count after place (>=2 s later) = " + UnityEditor.SessionState.GetInt("vfy3.pub", 0) + " lastPublishedBlocks=" + ColorBlockJam.Editor.Levels.LevelDatabaseWindow.LastPublishedLevel?.BlockCount);
+  key(canvas, UnityEngine.KeyCode.Escape, UnityEngine.EventModifiers.None);
+  log.AppendLine("  Esc tool=" + P(canvas, "Tool"));
+  // AC-2: invalid drag then valid drag of block 0.
+  var lvl = draft(); var origin = lvl.GetBlockAt(0).Origin;
+  UnityEngine.Vector2Int valid = UnityEngine.Vector2Int.zero, invalid = UnityEngine.Vector2Int.zero; string invalidIssue = null;
+  for (int d = 1; d <= lvl.Width + lvl.Height && (valid == UnityEngine.Vector2Int.zero || invalid == UnityEngine.Vector2Int.zero); d++)
+    for (int dx = -d; dx <= d; dx++) foreach (int dy in new[] { d - System.Math.Abs(dx), -(d - System.Math.Abs(dx)) }) {
+      var off = new UnityEngine.Vector2Int(dx, dy); string iss = tryMove(lvl, 0, origin + off);
+      if (iss == null && valid == UnityEngine.Vector2Int.zero) valid = off; else if (iss != null && invalid == UnityEngine.Vector2Int.zero) { invalid = off; invalidIssue = iss; } }
+  System.Func<int, UnityEngine.Vector2Int> cell0 = i => (UnityEngine.Vector2Int)M(M(model(), "GetBlock", new object[] { i }), "GetCell", new object[] { 0 });
+  var start = cell0(0);
+  log.AppendLine("  block0 origin=" + origin + " cell0=" + start + " validOffset=" + valid + " invalidOffset=" + invalid + " expectedIssue='" + invalidIssue + "'");
+  System.Action<UnityEngine.Vector2Int, UnityEngine.Vector2Int> drag = (a, b) => { send(UnityEngine.EventType.MouseDown, centre(a), 0, UnityEngine.EventModifiers.None); send(UnityEngine.EventType.MouseDrag, centre(b), 0, UnityEngine.EventModifiers.None); send(UnityEngine.EventType.MouseUp, centre(b), 0, UnityEngine.EventModifiers.None); };
+  bool dirtyBefore = w.hasUnsavedChanges;
+  drag(start, start + invalid);
+  log.AppendLine("  AC-2 invalid drag by " + invalid + ": origin=" + draft().GetBlockAt(0).Origin + " (was " + origin + ") cell0=" + cell0(0) + " status='" + status.text + "' dirty=" + w.hasUnsavedChanges + " (was " + dirtyBefore + ")");
+  send(UnityEngine.EventType.MouseDown, centre(start), 0, UnityEngine.EventModifiers.None);
+  send(UnityEngine.EventType.MouseDrag, centre(start + valid), 0, UnityEngine.EventModifiers.None);
+  log.AppendLine("  mid-drag dragging=" + P(canvas, "IsDragging") + " offset=" + P(canvas, "DragOffset"));
+  capture("drag-ghost");
+  send(UnityEngine.EventType.MouseUp, centre(start + valid), 0, UnityEngine.EventModifiers.None);
+  log.AppendLine("  AC-2 valid drop by " + valid + ": origin=" + draft().GetBlockAt(0).Origin + " cell0=" + cell0(0) + " dirty=" + w.hasUnsavedChanges + " undoName='" + UnityEditor.Undo.GetCurrentGroupName() + "'");
+  capture("moved");
+  key(canvas, UnityEngine.KeyCode.Z, UnityEngine.EventModifiers.Control);
+  log.AppendLine("  AC-2 Ctrl+Z: origin=" + draft().GetBlockAt(0).Origin + " cell0=" + cell0(0) + " dirty=" + w.hasUnsavedChanges + " (expected " + dirtyBefore + ") blocks=" + blockCount());
+  // AC-4: right click removes the last block, one undo restores it.
+  int count = blockCount(); string lastId = draft().GetBlockAt(count - 1).Id;
+  var label = (UnityEngine.Vector2Int)P(M(model(), "GetBlock", new object[] { count - 1 }), "LabelCell");
+  click(centre(label), 1);
+  log.AppendLine("  AC-4 right click on " + lastId + " at " + label + ": blocks " + count + "->" + blockCount() + " dirty=" + w.hasUnsavedChanges);
+  capture("right-click-removed");
+  key(canvas, UnityEngine.KeyCode.Z, UnityEngine.EventModifiers.Control);
+  log.AppendLine("  AC-4 one Ctrl+Z: blocks=" + blockCount() + " last id=" + draft().GetBlockAt(blockCount() - 1).Id + " dirty=" + w.hasUnsavedChanges);
+  var eraser = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Button>(root, "tool-eraser");
+  using (var submit = UnityEngine.UIElements.NavigationSubmitEvent.GetPooled()) { submit.target = eraser; eraser.SendEvent(submit); }
+  log.AppendLine("  Eraser pressed tool=" + P(canvas, "Tool"));
+  var label0 = (UnityEngine.Vector2Int)P(M(model(), "GetBlock", new object[] { 0 }), "LabelCell");
+  string id0 = draft().GetBlockAt(0).Id;
+  click(centre(label0), 0);
+  log.AppendLine("  AC-4 eraser left click on " + id0 + ": blocks " + count + "->" + blockCount() + " first id now=" + draft().GetBlockAt(0).Id);
+  key(canvas, UnityEngine.KeyCode.Z, UnityEngine.EventModifiers.Control);
+  log.AppendLine("  AC-4 one Ctrl+Z: blocks=" + blockCount() + " first id=" + draft().GetBlockAt(0).Id + " dirty=" + w.hasUnsavedChanges);
+  key(canvas, UnityEngine.KeyCode.Escape, UnityEngine.EventModifiers.None);
+  // Undo the place from the previous phase, back to the saved level.
+  key(canvas, UnityEngine.KeyCode.Z, UnityEngine.EventModifiers.Control);
+  log.AppendLine("  undo place: blocks=" + blockCount() + " dirty=" + w.hasUnsavedChanges + " status='" + status.text + "'");
+  capture("after-undo");
+  log.AppendLine("  sha after=" + sha());
+return log.ToString();
+  return log.ToString();
+}
+return log.ToString();

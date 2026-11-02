@@ -1,0 +1,125 @@
+{
+  "Hammer": {
+    "LOD0": {
+      "triangles": 1900,
+      "vertices": 960,
+      "materials": 1,
+      "non_manifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_triangles": 0,
+      "dimensions_m": [
+        2.0,
+        1.3046927452087402,
+        2.2570245265960693
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "LOD1": {
+      "triangles": 940,
+      "vertices": 480,
+      "materials": 1,
+      "non_manifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_triangles": 0,
+      "dimensions_m": [
+        2.0,
+        1.3046927452087402,
+        2.2570245265960693
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "fbx_bytes": 91708
+  },
+  "RocketPurple": {
+    "LOD0": {
+      "triangles": 2972,
+      "vertices": 1504,
+      "materials": 1,
+      "non_manifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_triangles": 0,
+      "dimensions_m": [
+        1.176633358001709,
+        1.176633358001709,
+        2.214996337890625
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "LOD1": {
+      "triangles": 1228,
+      "vertices": 632,
+      "materials": 1,
+      "non_manifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_triangles": 0,
+      "dimensions_m": [
+        1.1609582901000977,
+        1.1609584093093872,
+        2.2093474864959717
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "fbx_bytes": 123596
+  },
+  "Vacuum": {
+    "LOD0": {
+      "triangles": 5872,
+      "vertices": 2978,
+      "materials": 1,
+      "non_manifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_triangles": 0,
+      "dimensions_m": [
+        2.2330000400543213,
+        1.3832000494003296,
+        2.7899999618530273
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "LOD1": {
+      "triangles": 2936,
+      "vertices": 1510,
+      "materials": 1,
+      "non_manifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_triangles": 0,
+      "dimensions_m": [
+        2.2330000400543213,
+        1.3832000494003296,
+        2.7899999618530273
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "fbx_bytes": 252972
+  },
+  "palette": {
+    "width": 128,
+    "height": 16,
+    "bytes": 395,
+    "intentional_uv_overlap": "Each face samples the center of a padded solid-color swatch."
+  }
+}

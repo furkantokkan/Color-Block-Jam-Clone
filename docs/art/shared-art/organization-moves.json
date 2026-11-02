@@ -1,0 +1,59 @@
+{
+  "success": true,
+  "message": "Code executed successfully.",
+  "data": {
+    "result": [
+      {
+        "from": "Assets/ColorBlockJam/Art/Materials/Board/MAT_Board.mat",
+        "to": "Assets/ColorBlockJam/Art/Materials/Shared/MAT_Gameplay.mat",
+        "guid": "8f9ef702417920b42b63b81b2782124a"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/T_BoosterPalette_BC.png",
+        "to": "Assets/ColorBlockJam/Art/Textures/Atlases/T_GameplayPalette.png",
+        "guid": "a5e29bcb602a69b4891d12c1c4a9f92f"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Hammer.prefab",
+        "to": "Assets/ColorBlockJam/Prefabs/Boosters/Models/Hammer.prefab",
+        "guid": "dd1f0235ebd270e478652b25adda8f16"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/RocketPurple.prefab",
+        "to": "Assets/ColorBlockJam/Prefabs/Boosters/Models/RocketPurple.prefab",
+        "guid": "96b48467e7f57424daf6cee134fcdb10"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Vacuum.prefab",
+        "to": "Assets/ColorBlockJam/Prefabs/Boosters/Models/Vacuum.prefab",
+        "guid": "ce5c3a4bf2389354aa323303e9defdce"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Effects/HammerEffect.prefab",
+        "to": "Assets/ColorBlockJam/Prefabs/Boosters/Effects/HammerEffect.prefab",
+        "guid": "c90939859f03c2b4f9ced8b66e41ca49"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Effects/RocketPurpleEffect.prefab",
+        "to": "Assets/ColorBlockJam/Prefabs/Boosters/Effects/RocketPurpleEffect.prefab",
+        "guid": "433299897f5eb974dbf32428f52d0bfe"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Effects/VacuumEffect.prefab",
+        "to": "Assets/ColorBlockJam/Prefabs/Boosters/Effects/VacuumEffect.prefab",
+        "guid": "472b8660c1f7f1340832017200d5cf6e"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Effects/VacuumSuctionAtlas.png",
+        "to": "Assets/ColorBlockJam/Art/Textures/Atlases/VacuumSuctionAtlas.png",
+        "guid": "cf02aebc233a6b6418080f07aedf7c74"
+      },
+      {
+        "from": "Assets/ColorBlockJam/Art/Models/Boosters/Effects/MAT_VacuumSprite.mat",
+        "to": "Assets/ColorBlockJam/Art/Materials/Effects/MAT_VacuumSprite.mat",
+        "guid": "93aa866c0b6d73741beb5be6d87ef47c"
+      }
+    ],
+    "compiler": "roslyn"
+  }
+}

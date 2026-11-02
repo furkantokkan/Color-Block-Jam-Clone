@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.9334455">
+  <test-suite type="TestSuite" id="1000" name="ColorBlockJamCase2026" fullname="ColorBlockJamCase2026" runstate="Runnable" testcasecount="428" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.933446" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1169" name="ColorBlockJam.Editor.EditModeTests.dll" fullname="C:/Users/e-fur/AppData/Local/Temp/CBJcanvasVerify-9e41c7/Library/ScriptAssemblies/ColorBlockJam.Editor.EditModeTests.dll" runstate="Runnable" testcasecount="144" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.913028" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="61548" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1170" name="ColorBlockJam" fullname="ColorBlockJam" runstate="Runnable" testcasecount="144" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.906873" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1171" name="Tests" fullname="ColorBlockJam.Tests" runstate="Runnable" testcasecount="144" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.901505" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1172" name="EditMode" fullname="ColorBlockJam.Tests.EditMode" runstate="Runnable" testcasecount="144" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.895501" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1165" name="ZzCanvasResizeProbe" fullname="ColorBlockJam.Tests.EditMode.ZzCanvasResizeProbe" classname="ColorBlockJam.Tests.EditMode.ZzCanvasResizeProbe" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.885014" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1166" name="ResizeOneWindowInPlace" fullname="ColorBlockJam.Tests.EditMode.ZzCanvasResizeProbe.ResizeOneWindowInPlace" methodname="ResizeOneWindowInPlace" classname="ColorBlockJam.Tests.EditMode.ZzCanvasResizeProbe" runstate="Runnable" seed="734606997" result="Passed" start-time="2026-09-25 07:28:48Z" end-time="2026-09-25 07:28:50Z" duration="1.863803" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[
+IgnoreFailingMessages:true
+Saving results to: C:/Users/e-fur/AppData/LocalLow/Furkan Tokkan/ColorBlockJamCase2026\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

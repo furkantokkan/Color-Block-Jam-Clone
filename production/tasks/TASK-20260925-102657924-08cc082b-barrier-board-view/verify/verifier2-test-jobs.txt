@@ -1,0 +1,4 @@
+c9aaa073307c49a999f4d97158ad6bcf EditMode full suite: 801 run, 800 passed, 1 failed (ShapePrefabTests.UnrelatedUndoAfterCacheReloadCannotRestoreAnOldLibrarySnapshot: System.IO.IOException "Unable to remove the file to be replaced"; piece-editor area, not this task)
+6ff29f6aa4244fe38442cd7caf4a8781 EditMode rerun of that one test: 1/1 passed (transient file lock)
+dabb817ad22e4bcd81ede7fbe07a406d PlayMode full suite: 44/44 passed
+44a0782842574122ade3136b7743c7c6 PlayMode ColorBlockJam.Environment.PlayModeTests: 13/13 passed (6 EnvironmentBarrierViewTests + 7 EnvironmentViewLifecycleTests)

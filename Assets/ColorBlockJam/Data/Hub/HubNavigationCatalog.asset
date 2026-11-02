@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9b75c0398efc347ae1cf389b488d15, type: 3}
+  m_Name: HubNavigationCatalog
+  m_EditorClassIdentifier: 
+  m_tabs:
+  - m_id: leaderboard
+    m_label: 
+    m_icon: {fileID: 21300000, guid: 1cd23353d55c2ea46ae97c25bc12c737, type: 3}
+    m_availability: 1
+    m_unlockLevel: 1
+    m_lockedLook: 1
+    m_showLabelWhileLocked: 0
+    m_menuId: 
+  - m_id: shop
+    m_label: 
+    m_icon: {fileID: 21300000, guid: 049152c9b9a3fac4f88c8f666c0bf3b8, type: 3}
+    m_availability: 1
+    m_unlockLevel: 1
+    m_lockedLook: 0
+    m_showLabelWhileLocked: 0
+    m_menuId: 
+  - m_id: home
+    m_label: Home
+    m_icon: {fileID: 21300000, guid: efc9c1ff96029f64eb32f44d83596a42, type: 3}
+    m_availability: 0
+    m_unlockLevel: 1
+    m_lockedLook: 0
+    m_showLabelWhileLocked: 0
+    m_menuId: 
+  - m_id: collection
+    m_label: 
+    m_icon: {fileID: 21300000, guid: 0a2a7091b0928c6418a3eab257418d82, type: 3}
+    m_availability: 1
+    m_unlockLevel: 1
+    m_lockedLook: 0
+    m_showLabelWhileLocked: 0
+    m_menuId: 
+  - m_id: support
+    m_label: 
+    m_icon: {fileID: 21300000, guid: 7cff53470981d494e8750f1fb40c7f7e, type: 3}
+    m_availability: 2
+    m_unlockLevel: 50
+    m_lockedLook: 1
+    m_showLabelWhileLocked: 1
+    m_menuId: 

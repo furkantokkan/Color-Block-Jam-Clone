@@ -1,0 +1,19 @@
+{
+  "name": "ColorBlockJam.Editor.LevelPreview.Tests",
+  "rootNamespace": "ColorBlockJam.Tests.LevelPreview",
+  "references": [
+    "ColorBlockJam.Editor.LevelPreview",
+    "ColorBlockJam.Editor",
+    "ColorBlockJam.Runtime",
+    "ColorBlockJam.Presentation",
+    "ColorBlockJam.Environment",
+    "Onity.Factory",
+    "Onity.Pooling",
+    "UnityEditor.TestRunner",
+    "UnityEngine.TestRunner"
+  ],
+  "includePlatforms": ["Editor"],
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false
+}

@@ -1,0 +1,230 @@
+{
+  "success": true,
+  "message": "Retrieved 32 log entries.",
+  "data": [
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs",
+      "line": 63,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnEnable () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:29)\nUnityEngine.Object:Instantiate(BoardPieceView, Transform)\nOnity.Pooling.PrefabComponentPool`1:CreateInstance() (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:120)\nUnityEngine.Pool.ObjectPool`1:Get()\nOnity.Pooling.PrefabComponentPool`1:Get() (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:63)\nColorBlockJam.Presentation.Board.ModularBlockView:Prepare(Int32) (at Assets/ColorBlockJam/Presentation/Board/ModularBlockView.cs:48)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:RefreshPreview() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:225)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:CreateGUI() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:108)\nUnityEditor.RetainedMode:UpdateSchedulers()\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs",
+      "line": 63,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnEnable () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:29)\nUnityEngine.GameObject:SetActive(GameObject, Boolean)\nOnity.Pooling.PrefabComponentPool`1:OnGet(BoardPieceView) (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:127)\nUnityEngine.Pool.ObjectPool`1:Get()\nOnity.Pooling.PrefabComponentPool`1:Get() (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:63)\nColorBlockJam.Presentation.Board.ModularBlockView:Prepare(Int32) (at Assets/ColorBlockJam/Presentation/Board/ModularBlockView.cs:48)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:RefreshPreview() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:225)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:CreateGUI() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:108)\nUnityEditor.RetainedMode:UpdateSchedulers()\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "Assets/ColorBlockJam/Runtime/Art/GamePalette.cs",
+      "line": 38,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnValidate () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:33)\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs",
+      "line": 63,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnEnable () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:29)\nUnityEngine.Object:Instantiate(BoardPieceView, Transform)\nOnity.Pooling.PrefabComponentPool`1:CreateInstance() (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:120)\nUnityEngine.Pool.ObjectPool`1:Get()\nOnity.Pooling.PrefabComponentPool`1:Get() (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:63)\nColorBlockJam.Presentation.Board.ModularBlockView:Prepare(Int32) (at Assets/ColorBlockJam/Presentation/Board/ModularBlockView.cs:48)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:RefreshPreview() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:225)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:CreateGUI() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:108)\nUnityEditor.RetainedMode:UpdateSchedulers()\n"
+    },
+    {
+      "type": "Exception",
+      "message": "ArgumentException: Unknown palette color.\nParameter name: type",
+      "file": "./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs",
+      "line": 63,
+      "stackTrace": "ColorBlockJam.Runtime.Art.GamePalette.GetColor (ColorBlockJam.Runtime.Art.PaletteColor type) (at Assets/ColorBlockJam/Runtime/Art/GamePalette.cs:38)\nColorBlockJam.Presentation.Board.BoardPieceView.ResetState () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:51)\nColorBlockJam.Presentation.Board.BoardPieceView.OnEnable () (at Assets/ColorBlockJam/Presentation/Board/BoardPieceView.cs:29)\nUnityEngine.GameObject:SetActive(GameObject, Boolean)\nOnity.Pooling.PrefabComponentPool`1:OnGet(BoardPieceView) (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:127)\nUnityEngine.Pool.ObjectPool`1:Get()\nOnity.Pooling.PrefabComponentPool`1:Get() (at ./Library/PackageCache/com.onity.framework@ad0bfd5dca/Runtime/Pooling/Scripts/PrefabComponentPool.cs:63)\nColorBlockJam.Presentation.Board.ModularBlockView:Prepare(Int32) (at Assets/ColorBlockJam/Presentation/Board/ModularBlockView.cs:48)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:RefreshPreview() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:225)\nColorBlockJam.Editor.BoardKit.PieceEditorWindow:CreateGUI() (at Assets/ColorBlockJam/Editor/BoardKit/PieceEditorWindow.cs:108)\nUnityEditor.RetainedMode:UpdateSchedulers()\n"
+    }
+  ]
+}

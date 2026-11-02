@@ -1,0 +1,74 @@
+# Unity generated folders
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+.utmp/
+*_BurstDebugInformation_DoNotShip/
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+
+# Addressables build output
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/StreamingAssets/aa.meta
+/[Aa]ssets/StreamingAssets/aa/*
+
+# IDE and generated project files
+.vs/
+.vscode/
+.idea/
+.gradle/
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+crashlytics-build.properties
+
+# Builds (the APK is published as a GitHub release asset)
+*.apk
+*.aab
+*.app
+*.unitypackage
+
+# Unity Version Control (Plastic SCM) workspace files
+.plastic/
+ignore.conf
+*.private
+*.private.meta
+
+# Local working folders and generated deliverables
+/output/
+/tmp/
+/test-results/
+/InterviewPrep/
+/2026-09-20
+production/tasks/*/*/staging*/
+*.claim
+
+# The case brief supplied by the publisher is not redistributed
+/docs/Game-Developer-Case-2026.md
+
+# OS files
+.DS_Store*
+Thumbs.db
+Desktop.ini

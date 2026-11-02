@@ -1,0 +1,120 @@
+import json, copy
+def base():
+    return {"id":"vf","name":"Verify","board":{"width":5,"height":5,"voidCells":[]},"timerSeconds":120,
+      "doors":[{"id":"d1","side":"Top","start":1,"length":2,"colorId":"Red","effects":[]},
+               {"id":"d2","side":"Bottom","start":3,"length":1,"colorId":"Blue","effects":[]}],
+      "blocks":[{"id":"b1","colorId":"Red","shapeId":"DoubleVertical","origin":{"x":0,"y":0},"cells":[{"x":0,"y":0},{"x":0,"y":1}],"effects":[]},
+                {"id":"b2","colorId":"Blue","shapeId":"DoubleVertical","origin":{"x":3,"y":0},"cells":[{"x":0,"y":0},{"x":0,"y":1}],"effects":[]}],
+      "cellObjects":[]}
+def eff(t, *kv): return {"type":t,"params":[{"key":k,"value":v} for k,v in kv]}
+def obj(i, cells, e): return {"id":i,"cells":[{"x":x,"y":y} for x,y in cells],"effect":e}
+V={}
+def add(name, mut, version=2):
+    l=base(); mut(l); V[name]={"formatVersion":version,"levels":[l]}
+add("valid_plain", lambda l: None)
+add("valid_arrow", lambda l: l["blocks"][0]["effects"].append(eff("arrow",("axis","Vertical"))))
+add("valid_barrier_open", lambda l: l["cellObjects"].append(obj("o1",[(0,0),(0,1)],eff("barrier",("startsOpen","true")))))
+add("valid_barrier_closed", lambda l: l["cellObjects"].append(obj("o1",[(4,3),(4,4)],eff("barrier",("startsOpen","false")))))
+add("valid_barrier_default", lambda l: l["cellObjects"].append(obj("o1",[(4,3),(4,4)],eff("barrier"))))
+add("valid_void", lambda l: l["board"].__setitem__("voidCells",[{"x":4,"y":0}]))
+add("inv_unknown_type", lambda l: l["blocks"][0]["effects"].append(eff("teleport")))
+add("inv_wrong_target", lambda l: l["doors"][0]["effects"].append(eff("arrow",("axis","Vertical"))))
+add("inv_same_type_twice", lambda l: l["blocks"][0]["effects"].extend([eff("arrow",("axis","Vertical")),eff("arrow",("axis","Vertical"))]))
+add("inv_unknown_key", lambda l: l["blocks"][0]["effects"].append(eff("arrow",("axis","Vertical"),("speed","2"))))
+add("inv_duplicate_key", lambda l: l["blocks"][0]["effects"].append(eff("arrow",("axis","Vertical"),("axis","Horizontal"))))
+add("inv_missing_key", lambda l: l["blocks"][0]["effects"].append(eff("arrow")))
+add("inv_enum_value", lambda l: l["blocks"][0]["effects"].append(eff("arrow",("axis","Diagonal"))))
+add("inv_int_range", lambda l: l["blocks"][0]["effects"].append(eff("ice",("clearsToThaw","99"))))
+add("inv_missing_reference", lambda l: l["blocks"][0]["effects"].append(eff("combined",("partner","b9"))))
+add("inv_exclusive_set", lambda l: l["blocks"][0]["effects"].extend([eff("moving-obstacle"),eff("star")]))
+add("inv_non_string_value", lambda l: l["blocks"][0]["effects"].append({"type":"arrow","params":[{"key":"axis","value":1}]}))
+add("inv_void_outside", lambda l: l["board"].__setitem__("voidCells",[{"x":5,"y":0}]))
+add("inv_void_duplicate", lambda l: l["board"].__setitem__("voidCells",[{"x":4,"y":0},{"x":4,"y":0}]))
+def disc(l):
+    l["board"]["voidCells"]=[{"x":2,"y":y} for y in range(5)]; l["doors"]=[{"id":"d2","side":"Bottom","start":3,"length":1,"colorId":"Blue","effects":[]}]
+add("inv_void_disconnected", disc)
+def nofloor(l):
+    l["board"]["voidCells"]=[{"x":x,"y":y} for x in range(5) for y in range(5)]; l["doors"]=[]; l["blocks"]=[]
+add("inv_void_no_floor", nofloor)
+add("inv_block_on_void", lambda l: l["board"].__setitem__("voidCells",[{"x":0,"y":0}]))
+add("inv_door_onto_void", lambda l: l["board"].__setitem__("voidCells",[{"x":1,"y":4}]))
+add("inv_door_colour", lambda l: l["doors"][0].__setitem__("colorId","Wall"))
+def longdoor(l): l["doors"][0]["start"]=0; l["doors"][0]["length"]=4
+add("inv_door_length_4", longdoor)
+add("inv_obj_duplicate_id", lambda l: l["cellObjects"].extend([obj("o1",[(4,4)],eff("barrier")),obj("o1",[(4,3)],eff("barrier"))]))
+add("inv_obj_no_cells", lambda l: l["cellObjects"].append(obj("o1",[],eff("barrier"))))
+add("inv_obj_outside", lambda l: l["cellObjects"].append(obj("o1",[(5,4)],eff("barrier"))))
+def objvoid(l): l["board"]["voidCells"]=[{"x":4,"y":0}]; l["cellObjects"].append(obj("o1",[(4,0)],eff("barrier")))
+add("inv_obj_on_void", objvoid)
+add("inv_obj_shared_cell", lambda l: l["cellObjects"].extend([obj("o1",[(4,4)],eff("barrier")),obj("o2",[(4,4),(4,3)],eff("barrier"))]))
+add("inv_obj_cell_twice", lambda l: l["cellObjects"].append(obj("o1",[(4,4),(4,4)],eff("barrier"))))
+add("inv_barrier_closed_on_block", lambda l: l["cellObjects"].append(obj("o1",[(0,0),(0,1)],eff("barrier",("startsOpen","false")))))
+add("inv_barrier_default_on_block", lambda l: l["cellObjects"].append(obj("o1",[(0,0),(1,0)],eff("barrier"))))
+add("inv_barrier_not_connected", lambda l: l["cellObjects"].append(obj("o1",[(4,4),(4,2)],eff("barrier"))))
+add("inv_barrier_bad_bool", lambda l: l["cellObjects"].append(obj("o1",[(4,4)],eff("barrier",("startsOpen","yes")))))
+add("inv_block_effect_on_object", lambda l: l["cellObjects"].append(obj("o1",[(4,4)],eff("arrow",("axis","Vertical")))))
+add("inv_v1_with_void", lambda l: l["board"].__setitem__("voidCells",[{"x":4,"y":0}]), version=1)
+add("inv_v1_with_object", lambda l: l["cellObjects"].append(obj("o1",[(4,4)],eff("barrier"))), version=1)
+json.dump([{"name":k,"json":json.dumps(v)} for k,v in V.items()], open("vfy_json/variants.json","w"))
+print(len(V))
+
+# ---- final verifier: the seven list/cell types (Expected 6a), written independently ----
+def b1fx(*e):
+    return lambda l: l["blocks"][0]["effects"].extend(list(e))
+def d1fx(*e):
+    return lambda l: l["doors"][0]["effects"].extend(list(e))
+add("s7_valid_layer", b1fx(eff("layer",("layerColors","Blue,Yellow"))))
+add("s7_valid_layer_one", b1fx(eff("layer",("layerColors","Blue"))))
+add("s7_inv_layer_space", b1fx(eff("layer",("layerColors","Blue, Yellow"))))
+add("s7_inv_layer_empty_item", b1fx(eff("layer",("layerColors","Blue,,Yellow"))))
+add("s7_inv_layer_four", b1fx(eff("layer",("layerColors","Blue,Yellow,Pink,Purple"))))
+add("s7_inv_layer_empty", b1fx(eff("layer",("layerColors",""))))
+add("s7_inv_layer_wall", b1fx(eff("layer",("layerColors","Blue,Wall"))))
+add("s7_inv_layer_trailing", b1fx(eff("layer",("layerColors","Blue,"))))
+def ropes_ok(l):
+    l["blocks"][0]["effects"].append(eff("ropes",("ropeColors","Blue,Blue")))
+    l["blocks"][1]["effects"].append(eff("scissors",("colorId","Blue")))
+    l["blocks"].append({"id":"b3","colorId":"Blue","shapeId":"Single","origin":{"x":4,"y":4},"cells":[{"x":0,"y":0}],"effects":[eff("scissors",("colorId","Blue"))]})
+add("s7_valid_ropes", ropes_ok)
+def ropes_short(l):
+    l["blocks"][0]["effects"].append(eff("ropes",("ropeColors","Blue,Blue")))
+    l["blocks"][1]["effects"].append(eff("scissors",("colorId","Blue")))
+add("s7_inv_ropes_scissors", ropes_short)
+add("s7_inv_ropes_none", b1fx(eff("ropes",("ropeColors","Pink"))))
+add("s7_valid_colorful_door", d1fx(eff("colorful-door",("colorSequence","Red,Blue,Red"))))
+add("s7_inv_colorful_door_first", d1fx(eff("colorful-door",("colorSequence","Blue,Red"))))
+add("s7_inv_colorful_door_empty", d1fx(eff("colorful-door",("colorSequence",""))))
+add("s7_valid_size_changing", d1fx(eff("size-changing-door",("anchor","Center"),("spanSequence","1,2"))))
+add("s7_inv_size_wide", d1fx(eff("size-changing-door",("spanSequence","1,3"),("anchor","Start"))))
+add("s7_inv_size_zero", d1fx(eff("size-changing-door",("spanSequence","0,1"),("anchor","Start"))))
+add("s7_inv_size_anchor_lower", d1fx(eff("size-changing-door",("spanSequence","1"),("anchor","center"))))
+add("s7_inv_size_leading_zero", d1fx(eff("size-changing-door",("spanSequence","01"),("anchor","End"))))
+add("s7_inv_size_missing_anchor", d1fx(eff("size-changing-door",("spanSequence","1"))))
+add("s7_valid_jumping", d1fx(eff("colorful-jumping-door",("tokenColorId","Red"),("route","d1,d2"))))
+add("s7_inv_jumping_start", d1fx(eff("colorful-jumping-door",("tokenColorId","Red"),("route","d2,d1"))))
+add("s7_inv_jumping_short", d1fx(eff("colorful-jumping-door",("tokenColorId","Red"),("route","d1"))))
+add("s7_inv_jumping_missing", d1fx(eff("colorful-jumping-door",("tokenColorId","Red"),("route","d1,d9"))))
+add("s7_valid_button", d1fx(eff("button-door",("buttonColorId","Blue"),("buttonCell","2:3"))))
+add("s7_inv_button_outside", d1fx(eff("button-door",("buttonColorId","Blue"),("buttonCell","5:2"))))
+add("s7_inv_button_space", d1fx(eff("button-door",("buttonColorId","Blue"),("buttonCell","2: 3"))))
+add("s7_inv_button_leading_zero", d1fx(eff("button-door",("buttonColorId","Blue"),("buttonCell","02:3"))))
+add("s7_inv_button_list", d1fx(eff("button-door",("buttonColorId","Blue"),("buttonCell","2:3;3:3"))))
+add("s7_inv_button_negative", d1fx(eff("button-door",("buttonColorId","Blue"),("buttonCell","-1:3"))))
+def button_void(l):
+    l["board"]["voidCells"]=[{"x":4,"y":4}]
+    l["doors"][0]["effects"].append(eff("button-door",("buttonColorId","Blue"),("buttonCell","4:4")))
+add("s7_inv_button_void", button_void)
+add("s7_valid_flower", lambda l: l["cellObjects"].append(obj("o1",[(2,2),(2,3)],eff("flower-crate",("leaves","b1,b2")))))
+add("s7_inv_flower_twice", lambda l: l["cellObjects"].append(obj("o1",[(2,2)],eff("flower-crate",("leaves","b1,b1")))))
+add("s7_inv_flower_missing", lambda l: l["cellObjects"].append(obj("o1",[(2,2)],eff("flower-crate",("leaves","b9")))))
+add("s7_inv_flower_empty", lambda l: l["cellObjects"].append(obj("o1",[(2,2)],eff("flower-crate",("leaves","")))))
+def flower_inside(l):
+    l["cellObjects"].append(obj("o1",[(3,0),(3,1)],eff("flower-crate",("leaves","b1,b2"))))
+    l["blocks"][1]["effects"].append(eff("contained",("container","o1")))
+add("s7_inv_flower_leaf_inside", flower_inside)
+def flower_contents_outside(l):
+    l["cellObjects"].append(obj("o1",[(2,2)],eff("flower-crate",("leaves","b1"))))
+    l["blocks"][1]["effects"].append(eff("contained",("container","o1")))
+add("s7_inv_flower_content_outside", flower_contents_outside)
+json.dump([{"name":k,"json":json.dumps(v)} for k,v in V.items()], open("vfy_final/variants.json","w"))
+print(len(V))
