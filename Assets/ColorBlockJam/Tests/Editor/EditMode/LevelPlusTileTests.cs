@@ -97,9 +97,34 @@ namespace ColorBlockJam.Tests.EditMode
             Assert.That(m_levelRequests[0].PieceId, Is.EqualTo(piece.Token), "Its session token (DEC-193).");
             Assert.That(JsonUtility.ToJson(GetDraft()), Is.EqualTo(before), "Creating a piece changes no level.");
 
+            // The first click's status line can wrap and move the tile, so the tile and its position are read again.
+            plus = root.Q<LevelShapePalette>().PlusTile;
+            yield return ScrollTo(root, plus);
             Click(root, plus.worldBound.center);
+            Assert.That(m_levelRequests, Has.Count.EqualTo(2), "The second click reached the tile.");
             Assert.That(GetPieceSession().DrawingPiece.DisplayName, Is.EqualTo("Plus fixture Piece 2"),
                 "Each click, a new piece.");
+        }
+
+        [Test]
+        public void SavingTheDrawnPieceAsATemplateEndsFreehandDrawing()
+        {
+            // "+", a drawn piece, then Save as template in the Piece Editor: the commit takes the piece out of the
+            // session, so the tile must not stay armed and ask for + New piece at every click.
+            VisualElement root = OpenWindow();
+            RequireLevel(root);
+            UseLibrary(Shape("Single", s_single));
+            LoadFixture(root, CreateFixture(6, 6, new LevelBlockData("b1", "Red", new Vector2Int(5, 5), s_single)));
+            Invoke("CreateNamedPiece");
+            Draw(s_fPentomino);
+            Assume.That(GetToolState().IsFreehandArmed, Is.True, "+ New piece draws freehand.");
+
+            ChangeLibrary(Shape("Single", s_single), Shape("Plus fixture Piece 1", s_fPentomino));
+
+            Assert.That(GetPieceSession().DrawingPiece, Is.Null, "The commit made the drawn piece a template.");
+            Assert.That(GetToolState().IsFreehandArmed, Is.False, "Freehand drawing ends with it.");
+            Assert.That(GetToolState().Tool, Is.EqualTo(LevelEditorTool.Pen), "The plain Pen stays.");
+            Assert.That(root.Q<LevelCanvasElement>().IsFreehand, Is.False);
         }
 
         [Test]
@@ -421,8 +446,10 @@ namespace ColorBlockJam.Tests.EditMode
         {
             VisualElement root = OpenWindow();
             RequireLevel(root);
+            // A fixed library, not the project's, which can hold any shape (it now has a line of four, Level 6 Piece 1).
+            UseLibrary(Shape("Single", s_single), Shape("DoubleHorizontal", s_domino));
             ShapeKey fKey = LevelTestShapes.Key(s_fPentomino);
-            // A line of four: no base library piece has it.
+            // A line of four: this library has no such piece.
             Vector2Int[] line = { Vector2Int.zero, Vector2Int.right, new Vector2Int(2, 0), new Vector2Int(3, 0) };
             LoadFixture(root, CreateFixture(6, 6,
                 new LevelBlockData("b1", "Red", Vector2Int.zero, s_fPentomino),
@@ -431,7 +458,7 @@ namespace ColorBlockJam.Tests.EditMode
             LevelShapePalette palette = root.Q<LevelShapePalette>();
             VisualElement library = palette.TileCount > 0 ? palette.GetTile(0) : null;
 
-            Assume.That(library, Is.Not.Null, "The project piece library has a template.");
+            Assume.That(library, Is.Not.Null, "The library has a template.");
             VisualElement custom = FindCustomTile(palette, fKey);
             Assert.That(custom, Is.Not.Null, "The database's level pieces are listed.");
             Assert.That(FindCustomTile(palette, LevelTestShapes.Key(line)), Is.Not.Null);
@@ -465,8 +492,10 @@ namespace ColorBlockJam.Tests.EditMode
             yield return ShowWindowBuiltByUnity();
             VisualElement root = m_window.rootVisualElement;
             RequireLevel(root);
+            // A fixed library, not the project's, which can hold any shape (it now has a line of four, Level 6 Piece 1).
+            UseLibrary(Shape("Single", s_single), Shape("DoubleHorizontal", s_domino));
             ShapeKey fKey = LevelTestShapes.Key(s_fPentomino);
-            // A vertical line of four: no base library piece has it.
+            // A vertical line of four: this library has no such piece.
             Vector2Int[] line = { Vector2Int.zero, Vector2Int.up, new Vector2Int(0, 2), new Vector2Int(0, 3) };
             ShapeKey otherKey = LevelTestShapes.Key(line);
             LoadFixture(root, CreateFixture(6, 6,

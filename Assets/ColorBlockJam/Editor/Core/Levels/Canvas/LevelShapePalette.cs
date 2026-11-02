@@ -265,8 +265,8 @@ namespace ColorBlockJam.Editor.Levels
             VisualElement tile = new VisualElement
             {
                 name = "custom-" + choice.Key,
-                tooltip = $"{choice.DisplayName} (key {choice.Key}): a level piece. Click, then click free cells with " +
-                          "Select to place it; while the Piece Editor is open it also shows there. R / Shift+R rotates, " +
+                tooltip = $"{choice.DisplayName} (key {choice.Key}): a level piece. Click, then click a free cell to " +
+                          "place it once; while the Piece Editor is open it also shows there. R / Shift+R rotates, " +
                           "F / Shift+F mirrors the ghost."
             };
             tile.AddToClassList(k_customTileClass);
@@ -399,8 +399,8 @@ namespace ColorBlockJam.Editor.Levels
             VisualElement tile = new VisualElement
             {
                 name = "shape-" + choice.TemplateKey,
-                tooltip = $"{choice.DisplayName} (key {choice.Key}): click, then click free cells with Select to place " +
-                          "it. R / Shift+R rotates, F / Shift+F mirrors the ghost."
+                tooltip = $"{choice.DisplayName} (key {choice.Key}): click, then click a free cell to place it once. " +
+                          "R / Shift+R rotates, F / Shift+F mirrors the ghost."
             };
             tile.AddToClassList(k_tileClass);
             StyleTile(tile);

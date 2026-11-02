@@ -156,18 +156,31 @@ namespace ColorBlockJam.Editor.Levels
         {
             return m_job == null
                 ? null
-                : FormatProgress(m_job.IsListing, m_job.Positions, GetMaxPositions(m_job.IsListing), m_job.ElapsedSeconds);
+                : FormatProgress(m_job.IsListing, m_job.Positions, GetMaxPositions(m_job.IsListing),
+                    m_job.ElapsedSeconds, GetMaxSeconds(m_job.IsListing));
         }
 
         /// <summary>
         /// The text Validate Level shows while it runs in the background, refreshed about ten times a second: listing is
         /// false while the check searches and true while it lists a Solvable level's solutions; positions counts that
-        /// phase's stored positions up to maxPositions, its budget; seconds counts from the run's start.
+        /// phase's stored positions up to maxPositions, its budget (int.MaxValue for none); seconds counts from the
+        /// run's start up to maxSeconds. One line, so it fits the panel summary and the status line:
+        /// "Checked 338,036 positions in 1.2 of 15 s. Cancel stops the check."
         /// </summary>
-        internal static string FormatProgress(bool listing, int positions, int maxPositions, double seconds)
+        internal static string FormatProgress(bool listing, int positions, int maxPositions, double seconds,
+            double maxSeconds)
         {
-            // TODO(user, DEC-175): the designer-facing progress line. The panel summary shows two lines at most.
-            return positions.ToString("N0", CultureInfo.InvariantCulture);
+            string count = positions.ToString("N0", CultureInfo.InvariantCulture);
+            if (maxPositions < int.MaxValue)
+            {
+                count += " of " + maxPositions.ToString("N0", CultureInfo.InvariantCulture);
+            }
+
+            string time = seconds.ToString("0.0", CultureInfo.InvariantCulture) + " of "
+                + maxSeconds.ToString("0.#", CultureInfo.InvariantCulture) + " s";
+            return listing
+                ? k_listingProgressPrefix + count + " positions in " + time + ". Cancel stops the listing."
+                : "Checked " + count + " positions in " + time + ". Cancel stops the check.";
         }
 
         /// <summary>
@@ -365,7 +378,10 @@ namespace ColorBlockJam.Editor.Levels
                     }
 
                     lastShown = elapsed;
-                    float fraction = Mathf.Clamp01(job.Positions / (float)Math.Max(1, GetMaxPositions(job.IsListing)));
+                    // Whichever budget runs out first fills the bar, as in the check on the main thread.
+                    float fraction = Mathf.Clamp01(Mathf.Max(
+                        job.Positions / (float)Math.Max(1, GetMaxPositions(job.IsListing)),
+                        (float)(elapsed / Math.Max(0.001, GetMaxSeconds(job.IsListing)))));
                     if (ShowProgress(GetRunProgressText(), fraction))
                     {
                         job.Cancel();
@@ -437,6 +453,15 @@ namespace ColorBlockJam.Editor.Levels
             return listing
                 ? options != null ? options.MaxListPositions : LevelCheckOptions.DefaultMaxListPositions
                 : options != null ? options.MaxPositions : LevelCheckOptions.DefaultMaxPositions;
+        }
+
+        // The phase's time budget in seconds: the listing's or the check's, from Options or the defaults.
+        private double GetMaxSeconds(bool listing)
+        {
+            LevelCheckOptions options = Options;
+            return listing
+                ? options != null ? options.MaxListSeconds : LevelCheckOptions.DefaultMaxListSeconds
+                : options != null ? options.MaxSeconds : LevelCheckOptions.DefaultMaxSeconds;
         }
 
         // A Solvable verdict that has no solution list yet.

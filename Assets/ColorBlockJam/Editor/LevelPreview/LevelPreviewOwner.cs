@@ -61,6 +61,13 @@ namespace ColorBlockJam.Editor.LevelPreview
             LevelDatabaseWindow.Open();
         }
 
+        // OpenScene throws in Play Mode, so the menu item is greyed out there, as the Level Editor launcher refuses it.
+        [MenuItem("Color Block Jam/Open Level Editor Scene", true)]
+        private static bool CanOpenScene()
+        {
+            return !EditorApplication.isPlayingOrWillChangePlaymode;
+        }
+
         private static void OnSceneOpened(Scene scene, OpenSceneMode mode)
         {
             if (scene.path == ScenePath)

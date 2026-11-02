@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using ColorBlockJam.Editor.BoardKit;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -63,6 +64,12 @@ namespace ColorBlockJam.Editor.Levels
             /// <summary>Loads a window layout file; false when it is missing or Unity does not load it.</summary>
             public Func<string, bool> LoadLayout { get; set; } = LoadLayoutFile;
 
+            /// <summary>
+            /// Clears the state the layout file restored in the Level Editor and the Piece Editor: level pieces and a
+            /// draft from the windows the layout was saved from.
+            /// </summary>
+            public Action ForgetLayoutState { get; set; } = ForgetLayoutWindowState;
+
             public Action<string> ShowMessage { get; set; } = ShowOnFocusedWindow;
 
             /// <summary>Opens or focuses the Level Editor; the layout's own Level Editor when the layout loaded.</summary>
@@ -94,6 +101,12 @@ namespace ColorBlockJam.Editor.Levels
             }
 
             bool laidOut = steps.LoadLayout(k_layoutPath);
+            if (laidOut)
+            {
+                // The windows' unsaved work was settled above, so whatever state the layout brought is stale.
+                steps.ForgetLayoutState();
+            }
+
             steps.OpenLevelEditor();
             if (!laidOut)
             {
@@ -198,6 +211,19 @@ namespace ColorBlockJam.Editor.Levels
         {
             string fullPath = Path.GetFullPath(path);
             return File.Exists(fullPath) && EditorUtility.LoadWindowLayout(fullPath);
+        }
+
+        private static void ForgetLayoutWindowState()
+        {
+            foreach (LevelDatabaseWindow window in Resources.FindObjectsOfTypeAll<LevelDatabaseWindow>())
+            {
+                window.ForgetLayoutSession();
+            }
+
+            foreach (PieceEditorWindow window in Resources.FindObjectsOfTypeAll<PieceEditorWindow>())
+            {
+                window.ForgetLayoutPiece();
+            }
         }
 
         private static void ShowOnFocusedWindow(string message)

@@ -606,6 +606,23 @@ namespace ColorBlockJam.Editor.BoardKit
             SendLevelPiece();
         }
 
+        /// <summary>
+        /// Starts on a new piece in a window a layout file restored (Color Block Jam/Level Editor loads one): the layout
+        /// holds the level piece or draft of the window it was saved from, never the current work. Before the window
+        /// has built its GUI, the first database load shows the new piece.
+        /// </summary>
+        internal void ForgetLayoutPiece()
+        {
+            m_levelPieceMode = false;
+            m_levelPiece = null;
+            m_pendingLibraryKey = 0;
+            m_dirty = false;
+            if (m_libraryField != null)
+            {
+                LoadPiece(-1);
+            }
+        }
+
         // A level piece's valid edits have already reached its level, so leaving it never asks.
         private bool CanDiscardDraft() => m_levelPieceMode || !m_dirty ||
             EditorUtility.DisplayDialog("Unsaved piece", "Discard the current grid changes?", "Discard", "Keep editing");

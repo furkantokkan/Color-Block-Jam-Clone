@@ -116,7 +116,11 @@ namespace ColorBlockJam.Tests.EditMode
             Assert.That(column.IndexOf(tools), Is.Zero);
             Assert.That(column.IndexOf(panel), Is.EqualTo(1));
             Assert.That(panel.GetFirstAncestorOfType<ScrollView>(), Is.Null, "The panel never scrolls with the groups.");
-            Assert.That(panel.Q<ScrollView>(), Is.Null);
+            // Its one scroll view is its own solution list, which scrolls once the divider makes the panel shorter
+            // than its five rows (user request of 2026-09-28).
+            List<ScrollView> scrollViews = panel.Query<ScrollView>().ToList();
+            Assert.That(scrollViews.Count, Is.EqualTo(1));
+            Assert.That(scrollViews[0].name, Is.EqualTo(LevelValidationPanel.k_solutionsName));
             Assert.That(ChildNames(panel), Is.EqualTo(new[]
             {
                 LevelValidationPanel.k_summaryName, LevelValidationPanel.k_solutionsName, LevelValidationPanel.k_pagerName,
@@ -142,9 +146,12 @@ namespace ColorBlockJam.Tests.EditMode
             Assert.That(ChildNames(bottomBar), Is.EqualTo(new[] { "status" }), "The bottom bar keeps only the status line.");
             Assert.That(panel.Q<Label>(LevelValidationPanel.k_summaryName).text, Is.EqualTo(LevelValidationPanel.k_listHint));
 
-            // In view between the groups and the bottom bar, and still there when the groups scroll.
+            // In view between the groups and the bottom bar, and still there when the groups scroll. Unity's vertical
+            // TwoPaneSplitView puts its 1-pixel drag line between the panes without shrinking either, so the fixed panel
+            // ends one pixel below the split, under the bottom bar's top border (measured: groups 0-356, panel 357-617,
+            // bar from 616 in a 640-pixel window).
             Assert.That(panel.worldBound.yMin, Is.GreaterThanOrEqualTo(tools.worldBound.yMax - 0.5f));
-            Assert.That(panel.worldBound.yMax, Is.LessThanOrEqualTo(bottomBar.worldBound.yMin + 0.5f));
+            Assert.That(panel.worldBound.yMax, Is.LessThanOrEqualTo(bottomBar.worldBound.yMin + 1.5f));
             Rect before = panel.worldBound;
             tools.scrollOffset = new Vector2(0f, 200f);
             ValidateLayout(root);
@@ -301,7 +308,7 @@ namespace ColorBlockJam.Tests.EditMode
             Assert.That(Ellipsis(Row(0)), Is.False, "Three chips fit a row.");
 
             // Entry #1 is the check's own solution, and no two entries share an exit order.
-            LevelCheckResult listed = LevelEditorTestAccess.Get<LevelCheckResult>(m_window, "m_listedResult");
+            LevelCheckResult listed = LevelEditorTestAccess.Get<LevelListedAnswer>(m_window, "m_listedAnswer").Result;
             Assert.That(listed.Solutions[0].Steps, Is.EqualTo(LevelSolvabilityCheck.Run(ThreeSingles()).Steps));
             HashSet<string> tooltips = new HashSet<string>();
             for (int entry = 0; entry < listed.Solutions.Count; entry++)

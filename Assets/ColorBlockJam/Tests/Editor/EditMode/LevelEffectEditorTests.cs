@@ -113,8 +113,9 @@ namespace ColorBlockJam.Tests.EditMode
             Assert.That(calls, Is.EqualTo(new[]
             {
                 "save", "windows", "scene " + LevelEditorWorkspace.k_scenePath, "layout " + LevelEditorWorkspace.k_layoutPath,
-                "level"
-            }), "The layout brings every window; the Level Editor opens through Open last, so it keeps the focus.");
+                "forget", "level"
+            }), "The layout brings every window, then the state it restored is dropped; the Level Editor opens through " +
+                "Open last, so it keeps the focus.");
         }
 
         [Test]
@@ -125,8 +126,10 @@ namespace ColorBlockJam.Tests.EditMode
                 LevelEditorWorkspace.k_scenePath, false, true));
 
             Assert.That(outcome, Is.EqualTo(LevelEditorWorkspace.SceneOutcome.AlreadyActive));
-            Assert.That(calls, Is.EqualTo(new[] { "windows", "layout " + LevelEditorWorkspace.k_layoutPath, "level" }),
-                "No scene save prompt either.");
+            Assert.That(calls, Is.EqualTo(new[]
+            {
+                "windows", "layout " + LevelEditorWorkspace.k_layoutPath, "forget", "level"
+            }), "No scene save prompt either.");
         }
 
         [Test]
@@ -139,7 +142,7 @@ namespace ColorBlockJam.Tests.EditMode
             Assert.That(outcome, Is.EqualTo(LevelEditorWorkspace.SceneOutcome.RefusedInPlayMode));
             Assert.That(calls, Is.EqualTo(new[]
             {
-                "windows", "layout " + LevelEditorWorkspace.k_layoutPath, "level",
+                "windows", "layout " + LevelEditorWorkspace.k_layoutPath, "forget", "level",
                 "message " + LevelEditorWorkspace.k_playModeMessage
             }));
         }
@@ -156,7 +159,7 @@ namespace ColorBlockJam.Tests.EditMode
             {
                 "windows", "layout " + LevelEditorWorkspace.k_layoutPath, "level",
                 "message " + LevelEditorWorkspace.k_missingLayoutMessage
-            }));
+            }), "No layout loaded, so no restored state is dropped.");
         }
 
         [Test]
@@ -219,9 +222,10 @@ namespace ColorBlockJam.Tests.EditMode
         }
 
         [Test]
-        public void TheColorBlockJamMenuKeepsOnlyTheLevelEditorAndItsSceneAtTheTop()
+        public void TheColorBlockJamMenuKeepsOnlyTheLevelEditorItsSceneAndPlayTheGameAtTheTop()
         {
             // User request of 2026-09-28: the saved layout brings the Piece and Effect Editors, so they are no menu items.
+            // Play The Game (PlayTheGameLauncher) joined them later as the README's way to run the game.
             SortedSet<string> topItems = new SortedSet<string>(StringComparer.Ordinal);
             foreach (MethodInfo method in TypeCache.GetMethodsWithAttribute<MenuItem>())
             {
@@ -238,7 +242,7 @@ namespace ColorBlockJam.Tests.EditMode
 
             Assert.That(topItems, Is.EqualTo(new[]
             {
-                "Color Block Jam/Level Editor", "Color Block Jam/Open Level Editor Scene"
+                "Color Block Jam/Level Editor", "Color Block Jam/Open Level Editor Scene", "Color Block Jam/Play The Game"
             }), "Only the Art, Data and Levels submenus sit beside them.");
         }
 
@@ -606,6 +610,7 @@ namespace ColorBlockJam.Tests.EditMode
                     calls.Add("layout " + path);
                     return layoutLoads;
                 },
+                ForgetLayoutState = () => calls.Add("forget"),
                 ShowMessage = message => calls.Add("message " + message),
                 OpenLevelEditor = () => calls.Add("level")
             };

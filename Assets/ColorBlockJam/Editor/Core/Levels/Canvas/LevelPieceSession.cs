@@ -208,6 +208,37 @@ namespace ColorBlockJam.Editor.Levels
             FindTemplate(databaseGuid, templateKey)?.Forget();
         }
 
+        /// <summary>
+        /// Forgets everything this session keeps for a deleted level database: its template footprints and the level
+        /// pieces of its levels, so neither keeps the window unsaved nor blocks a template delete.
+        /// </summary>
+        public void ForgetDatabase(string databaseGuid)
+        {
+            m_templates.RemoveAll(state => string.Equals(state.DatabaseGuid, databaseGuid, StringComparison.Ordinal));
+            for (int index = m_namedPieces.Count - 1; index >= 0; index--)
+            {
+                if (TrySplitLevelScope(m_namedPieces[index].Scope, out string pieceDatabase, out _)
+                    && string.Equals(pieceDatabase, databaseGuid, StringComparison.Ordinal))
+                {
+                    RemoveNamedPiece(m_namedPieces[index]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Starts over as a new session: no level pieces, template footprints or remembered footprint changes. A
+        /// window layout file restores the state of the window it was saved from, which is never the current work.
+        /// </summary>
+        public void Clear()
+        {
+            m_footprintChanges.Clear();
+            m_namedPieces.Clear();
+            m_templates.Clear();
+            m_sessionTag = null;
+            m_lastPieceNumber = 0;
+            m_drawingToken = null;
+        }
+
         /// <summary>The template footprints of every level database that the piece library still lacks.</summary>
         public int CountPendingTemplates()
         {

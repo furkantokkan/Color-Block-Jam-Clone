@@ -22,7 +22,7 @@ namespace ColorBlockJam.Editor.Levels
     /// Level Editor window: a tools column beside the level selection bar and level canvas, with edits kept in a
     /// private undoable draft until Save Level writes the canonical JSON (layout: docs/Level-Editor-Design.md).
     /// </summary>
-    public sealed class LevelDatabaseWindow : EditorWindow
+    public sealed class LevelDatabaseWindow : EditorWindow, ILevelEditorShortcutTarget
     {
         internal const string k_splitViewDataKey = "cbj-level-editor-split";
         // View data alone did not restore the splitter after a close and reopen in 2022.3, so the width is kept here too.
@@ -207,14 +207,10 @@ namespace ColorBlockJam.Editor.Levels
         // The panel under the tool groups: Validate Level's summary and listed solutions, and the three main buttons
         // (TASK-20260928-091128541-cb48c84a).
         private LevelValidationPanel m_validationPanel;
-        // Validate Level's answer in the panel and what it was made for: the level, its content, the level JSON source
-        // and the level index. A change of any of them shows the hint again (ClearValidationAnswerIfChanged); the kept
-        // verdict follows the flow's own revision rule (DEC-144). Not kept across a domain reload or a GUI rebuild.
-        private LevelData m_listedLevel;
-        private string m_listedJson;
-        private string m_listedGuid;
-        private int m_listedIndex = -1;
-        private LevelCheckResult m_listedResult;
+        private LevelEditorShortcuts m_shortcuts;
+        // Validate Level's answer in the panel. A change of what it was made for shows the hint again
+        // (ClearValidationAnswerIfChanged); the kept verdict follows the flow's own revision rule (DEC-144).
+        private readonly LevelListedAnswer m_listedAnswer = new LevelListedAnswer();
         // Plays a listed solution on the canvas and, through SolutionFramePublished, in the scene preview. Created in
         // OnEnable; every stop point goes through StopSolutionPlayback.
         private LevelSolutionPlayback m_solutionPlayback;
@@ -382,6 +378,27 @@ namespace ColorBlockJam.Editor.Levels
                 "Discard") == 2;
 
         /// <summary>
+        /// Asks what happens to the draft's unsaved changes before the window leaves the level: another level or
+        /// database, a new or deleted level or database, or Reload. Enter picks Save, and Esc and the close box pick
+        /// Cancel, so only an explicit Discard click drops the changes. Tests replace it so no modal dialog opens.
+        /// </summary>
+        internal Func<LevelLeaveChoice> ChooseLeaveDraft { get; set; } = AskLeaveDraft;
+
+        private static LevelLeaveChoice AskLeaveDraft()
+        {
+            switch (EditorUtility.DisplayDialogComplex("Unsaved Level", "Save this level before leaving it?", "Save",
+                        "Cancel", "Discard"))
+            {
+                case 0:
+                    return LevelLeaveChoice.Save;
+                case 2:
+                    return LevelLeaveChoice.Discard;
+                default:
+                    return LevelLeaveChoice.Cancel;
+            }
+        }
+
+        /// <summary>
         /// Starts Test Level's Play Mode in the Game scene and returns null, or returns why nothing started (DEC-127).
         /// Tests replace it so no Play Mode begins.
         /// </summary>
@@ -527,6 +544,22 @@ namespace ColorBlockJam.Editor.Levels
             m_checksSolvabilityOnSave = EditorPrefs.GetBool(k_validateBeforeSavePrefKey, true);
             m_validationPanel?.SetAutoPlay(m_autoPlaysSolutions);
             m_validationPanel?.SetValidateBeforeSave(m_checksSolvabilityOnSave);
+        }
+
+        /// <summary>
+        /// Starts a new piece session in a window a layout file restored (Color Block Jam/Level Editor loads one). The
+        /// layout holds the state of the window it was saved from, never the current work, which the launcher settled
+        /// before the layout replaced the windows; kept, its level pieces would show as tiles and reserve their names.
+        /// </summary>
+        internal void ForgetLayoutSession()
+        {
+            m_pieceSession.Clear();
+            LevelData level = HasGui ? m_draftController.Snapshot() : null;
+            if (level != null)
+            {
+                RefreshCustomPieces(level);
+                UpdateUnsavedChanges();
+            }
         }
 
         /// <summary>A copy of the draft level, or null when no level is open.</summary>
@@ -826,7 +859,8 @@ namespace ColorBlockJam.Editor.Levels
                 () => CreateDatabasePopup().Show(m_createDatabaseButton));
             m_deleteDatabaseButton = databaseField.AddDeleteButton(
                 "delete-database",
-                "Delete the selected Level Database JSON. The default database is protected.", DeleteDatabase);
+                "Delete the selected Level Database folder and every level in it. The default database is protected.",
+                DeleteDatabase);
 
             VisualElement sourceRow = MakeRow("database-row");
             AddStretched(sourceRow, databaseField, 1f, k_topLabelWidth);
@@ -859,6 +893,12 @@ namespace ColorBlockJam.Editor.Levels
 
                 m_selectedIndex = nextIndex;
                 LoadSelectedDraft();
+                // A save on the way out rebuilt the choices inside this callback while the old level was still
+                // selected (OnSaveProgress), so the field is set again to the level that opened.
+                if (m_selectedIndex < m_targetField.choices.Count)
+                {
+                    m_targetField.SetValueWithoutNotify(m_targetField.choices[m_selectedIndex]);
+                }
             });
             m_targetStepper = new ChoiceStepper(m_targetField, "Previous level", "Next level");
             m_createLevelButton = m_targetStepper.AddCreateButton("create-level", "New level", CreateLevel);
@@ -1420,23 +1460,23 @@ namespace ColorBlockJam.Editor.Levels
             group.Add(divider);
 
             // The keys stay immediate: R / F act on the armed piece's ghost when a piece is armed, else the selected block.
-            // A button acts on an armed piece at once and keeps the Pen; otherwise it picks up its tool.
+            // A button acts on an armed piece at once and keeps it armed; otherwise it picks up its tool.
             VisualElement transforms = MakeToolRow("block-actions");
             m_rotateCounterClockwiseButton = CreateToolButton("rotate-block-ccw", LevelEditorIcons.k_rotateLeft, "↺",
-                "Rotate counter-clockwise: click a block to turn it. With a piece armed, turns that piece and keeps the Pen. "
-                + "Shift+R turns the armed piece, else the selected block.",
+                "Rotate counter-clockwise: click a block to turn it. With a piece armed, turns that piece and keeps it "
+                + "armed. Shift+R turns the armed piece, else the selected block.",
                 () => SetTool(LevelEditorTool.RotateCounterClockwise));
             m_rotateClockwiseButton = CreateToolButton("rotate-block-cw", LevelEditorIcons.k_rotateRight, "↻",
-                "Rotate clockwise: click a block to turn it. With a piece armed, turns that piece and keeps the Pen. "
+                "Rotate clockwise: click a block to turn it. With a piece armed, turns that piece and keeps it armed. "
                 + "R turns the armed piece, else the selected block.",
                 () => SetTool(LevelEditorTool.RotateClockwise));
             m_flipBlockButton = CreateToolButton("flip-block-h", LevelEditorIcons.k_reflectHorizontal, "H",
-                "Mirror horizontally: click a block to mirror it. With a piece armed, mirrors that piece and keeps the Pen. "
-                + "F mirrors the armed piece, else the selected block.",
+                "Mirror horizontally: click a block to mirror it. With a piece armed, mirrors that piece and keeps it "
+                + "armed. F mirrors the armed piece, else the selected block.",
                 () => SetTool(LevelEditorTool.MirrorHorizontal));
             m_flipVerticalButton = CreateToolButton("flip-block-v", LevelEditorIcons.k_reflectVertical, "V",
-                "Mirror vertically: click a block to mirror it. With a piece armed, mirrors that piece and keeps the Pen. "
-                + "Shift+F mirrors the armed piece, else the selected block.",
+                "Mirror vertically: click a block to mirror it. With a piece armed, mirrors that piece and keeps it "
+                + "armed. Shift+F mirrors the armed piece, else the selected block.",
                 () => SetTool(LevelEditorTool.MirrorVertical));
             transforms.Add(m_rotateCounterClockwiseButton);
             transforms.Add(m_rotateClockwiseButton);
@@ -2120,6 +2160,9 @@ namespace ColorBlockJam.Editor.Levels
             {
                 ApplyCommand("Resize Level Board", true, result, null);
             }
+
+            // The Apply button took the focus; the canvas gets it back so the shortcuts keep working, as after Cancel.
+            m_canvas?.Focus();
         }
 
         // Cancel keeps the board.
@@ -2561,9 +2604,9 @@ namespace ColorBlockJam.Editor.Levels
         }
 
         // Select with an armed piece: a click on a free cell adds the piece in the tool colour with the next free b{n} id
-        // and selects nothing, so a swatch next changes the tool colour of the piece about to be placed instead of
-        // recolouring the placed one; the piece stays armed (user orders of 2026-09-26 and 2026-09-29). The ghost sits
-        // at the hovered cell minus the armed anchor, the cell the pointer holds. A Pen click here has no block to draw on, so it says what to do.
+        // and selects nothing, then disarms it and returns to plain Select (user orders of 2026-09-26 and 2026-09-29;
+        // place-once since 2026-09-30); a refused placement keeps the piece armed. The ghost sits at the hovered cell
+        // minus the armed anchor, the cell the pointer holds. A Pen click here has no block to draw on, so it says what to do.
         private void PlaceBlock(Vector2Int hoveredCell)
         {
             if (m_toolState.Tool == LevelEditorTool.Pen)
@@ -3550,6 +3593,13 @@ namespace ColorBlockJam.Editor.Levels
             if (m_pieceEditController.DropNamedPiecesInLibrary(previous))
             {
                 RefreshCustomPieces(m_draftController.Snapshot());
+                // A "+" piece the commit made a template leaves nothing to draw, so freehand drawing ends on the plain
+                // Pen instead of asking for + New piece at every click.
+                if (m_toolState.IsFreehandArmed && m_pieceSession.DrawingPiece == null)
+                {
+                    m_toolState.SelectPen();
+                }
+
                 SyncTool();
                 RefreshBlockTools();
                 UpdateUnsavedChanges();
@@ -4114,147 +4164,69 @@ namespace ColorBlockJam.Editor.Levels
             Undo.PerformRedo();
         }
 
-        // Window shortcuts (design section 2); text and number fields keep their own keys. While a solution shows
-        // (contract Revision 2), ← and → step through its frames first; any other key outside the validation panel stops
-        // it and then does its normal work on the restored draft.
+        // Window shortcuts (design section 2) through LevelEditorShortcuts; a key it runs goes no further.
         private void OnKeyDown(KeyDownEvent evt)
         {
-            if (IsShowingSolution)
+            m_shortcuts ??= new LevelEditorShortcuts(this);
+            if (m_shortcuts.Handle(evt))
             {
-                if (StepSolutionByKey(evt))
-                {
-                    evt.StopImmediatePropagation();
-                    evt.PreventDefault();
-                    return;
-                }
-
-                if (!IsWithin(evt.target as VisualElement, m_validationPanel))
-                {
-                    StopSolutionPlayback();
-                }
+                evt.StopImmediatePropagation();
+                evt.PreventDefault();
             }
-
-            if (evt.keyCode == KeyCode.None || IsInTextField(evt.target as VisualElement))
-            {
-                return;
-            }
-
-            bool command = evt.ctrlKey || evt.commandKey;
-            if (command && !evt.altKey && (evt.keyCode == KeyCode.Z || evt.keyCode == KeyCode.Y))
-            {
-                Undo.FlushUndoRecordObjects();
-                if (evt.keyCode == KeyCode.Y || evt.shiftKey)
-                    RedoEdit();
-                else
-                    UndoEdit();
-            }
-            else if (command || evt.altKey || !RunShortcut(evt.keyCode, evt.shiftKey))
-            {
-                return;
-            }
-
-            evt.StopImmediatePropagation();
-            evt.PreventDefault();
         }
 
-        // ← and → while a solution shows, outside a text field and without Ctrl, Cmd or Alt, the keys that would nudge a
-        // block otherwise: → shows the next frame and ← the previous one. True consumes the key, so it neither nudges a
-        // block nor runs another shortcut, and it never stops or ends the playback: unlike the Step control, → does
-        // nothing on the cleared board, so a held → can never run on into nudging a block.
-        private bool StepSolutionByKey(KeyDownEvent evt)
+        bool ILevelEditorShortcutTarget.IsShowingSolution => IsShowingSolution;
+
+        bool ILevelEditorShortcutTarget.IsPenActive => m_toolState.Tool == LevelEditorTool.Pen;
+
+        bool ILevelEditorShortcutTarget.IsInValidationPanel(VisualElement element) =>
+            IsWithin(element, m_validationPanel);
+
+        void ILevelEditorShortcutTarget.StepSolution(bool forward)
         {
-            if (evt.ctrlKey || evt.commandKey || evt.altKey || IsInTextField(evt.target as VisualElement))
-            {
-                return false;
-            }
-
-            switch (evt.keyCode)
-            {
-                case KeyCode.RightArrow:
-                    StepSolutionForward();
-                    return true;
-                case KeyCode.LeftArrow:
-                    StepSolutionBack();
-                    return true;
-                default:
-                    return false;
-            }
+            if (forward)
+                StepSolutionForward();
+            else
+                StepSolutionBack();
         }
 
-        private bool RunShortcut(KeyCode key, bool shift)
+        void ILevelEditorShortcutTarget.StopSolutionPlayback() => StopSolutionPlayback();
+
+        void ILevelEditorShortcutTarget.UndoEdit()
         {
-            // With the Pen, 1-9, 0 and - pick colours before 1, 2 and 3 can pick tools (user answer of 2026-09-26).
-            if (m_toolState.Tool == LevelEditorTool.Pen && LevelColorKeys.TryGetPosition(key, out int colorPosition))
-            {
-                PickColorAtPosition(colorPosition);
-                return true;
-            }
-
-            switch (key)
-            {
-                case KeyCode.LeftArrow:
-                    NudgeSelectedBlock(Vector2Int.left);
-                    return true;
-                case KeyCode.RightArrow:
-                    NudgeSelectedBlock(Vector2Int.right);
-                    return true;
-                case KeyCode.UpArrow:
-                    NudgeSelectedBlock(Vector2Int.up);
-                    return true;
-                case KeyCode.DownArrow:
-                    NudgeSelectedBlock(Vector2Int.down);
-                    return true;
-                case KeyCode.Delete:
-                    DeleteSelection();
-                    return true;
-                case KeyCode.R:
-                    RotateSelection(!shift);
-                    return true;
-                case KeyCode.F:
-                    FlipSelection(shift);
-                    return true;
-                case KeyCode.Alpha1:
-                case KeyCode.Keypad1:
-                    SetTool(LevelEditorTool.Select);
-                    return true;
-                case KeyCode.Alpha2:
-                case KeyCode.Keypad2:
-                    SetTool(LevelEditorTool.Pen);
-                    return true;
-                case KeyCode.Alpha3:
-                case KeyCode.Keypad3:
-                    SetTool(LevelEditorTool.Eraser);
-                    return true;
-                case KeyCode.Escape:
-                    if (m_pendingResize != null)
-                        CancelResize();
-                    else if (m_canvas == null || !m_canvas.CancelDrag())
-                        SetTool(LevelEditorTool.Select);
-                    return true;
-                case KeyCode.Home:
-                    m_canvas?.ResetView();
-                    return true;
-                case KeyCode.LeftBracket:
-                    CycleColor(-1);
-                    return true;
-                case KeyCode.RightBracket:
-                    CycleColor(1);
-                    return true;
-                default:
-                    return false;
-            }
+            Undo.FlushUndoRecordObjects();
+            UndoEdit();
         }
 
-        private static bool IsInTextField(VisualElement element)
+        void ILevelEditorShortcutTarget.RedoEdit()
         {
-            for (; element != null; element = element.parent)
-            {
-                if (element is TextField || element is IntegerField)
-                    return true;
-            }
-
-            return false;
+            Undo.FlushUndoRecordObjects();
+            RedoEdit();
         }
+
+        void ILevelEditorShortcutTarget.PickColorAtPosition(int position) => PickColorAtPosition(position);
+
+        void ILevelEditorShortcutTarget.NudgeSelection(Vector2Int step) => NudgeSelectedBlock(step);
+
+        void ILevelEditorShortcutTarget.DeleteSelection() => DeleteSelection();
+
+        void ILevelEditorShortcutTarget.RotateSelection(bool clockwise) => RotateSelection(clockwise);
+
+        void ILevelEditorShortcutTarget.FlipSelection(bool vertical) => FlipSelection(vertical);
+
+        void ILevelEditorShortcutTarget.SetTool(LevelEditorTool tool) => SetTool(tool);
+
+        void ILevelEditorShortcutTarget.CancelCurrentAction()
+        {
+            if (m_pendingResize != null)
+                CancelResize();
+            else if (m_canvas == null || !m_canvas.CancelDrag())
+                SetTool(LevelEditorTool.Select);
+        }
+
+        void ILevelEditorShortcutTarget.ResetView() => m_canvas?.ResetView();
+
+        void ILevelEditorShortcutTarget.CycleColor(int step) => CycleColor(step);
 
         private bool HasDraftChanges()
         {
@@ -4286,13 +4258,15 @@ namespace ColorBlockJam.Editor.Levels
                 return true;
             }
 
-            int choice = EditorUtility.DisplayDialogComplex(
-                "Unsaved Level",
-                "Save this level before leaving it?",
-                "Save",
-                "Discard",
-                "Cancel");
-            return choice == 1 || (choice == 0 && SaveLevel());
+            switch (ChooseLeaveDraft())
+            {
+                case LevelLeaveChoice.Save:
+                    return SaveLevel();
+                case LevelLeaveChoice.Discard:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -4327,6 +4301,8 @@ namespace ColorBlockJam.Editor.Levels
 
             if (!LevelDatabaseAddressables.TrySetActive(m_projectScope, entry.Guid, out error))
             {
+                // The database exists now, so the dropdown lists it although the active one stays.
+                RefreshLevelSelection();
                 ShowError(error);
                 return;
             }
@@ -4354,13 +4330,16 @@ namespace ColorBlockJam.Editor.Levels
                 return;
             }
 
-            if (!LevelDatabaseAddressables.TryDelete(m_projectScope, ActiveGuid, out string error))
+            string deletedGuid = ActiveGuid;
+            if (!LevelDatabaseAddressables.TryDelete(m_projectScope, deletedGuid, out string error))
             {
                 RefreshLevelSelection();
                 ShowError(error);
                 return;
             }
 
+            // Footprints waiting for a deleted database's Save Level could never be written now.
+            m_pieceSession.ForgetDatabase(deletedGuid);
             m_selectedIndex = -1;
             RefreshLevelSelection();
             SetStatus($"Deleted {name}. {fallback} is now the active game database.");
@@ -4612,19 +4591,15 @@ namespace ColorBlockJam.Editor.Levels
         // other answer's sentence with an empty list. It stays while the draft keeps this content, level and JSON.
         private void ShowValidationAnswer(LevelData level, LevelValidationOutcome outcome)
         {
-            m_listedLevel = level;
-            m_listedJson = JsonUtility.ToJson(level);
-            m_listedGuid = m_saveController.LoadedGuid;
-            m_listedIndex = m_selectedIndex;
-            m_listedResult = outcome.Result;
+            m_listedAnswer.Set(level, m_saveController.LoadedGuid, m_selectedIndex, outcome.Result);
             if (m_validationPanel == null)
             {
                 return;
             }
 
-            if (m_listedResult != null && m_listedResult.Solutions.Count > 0)
+            if (outcome.Result != null && outcome.Result.Solutions.Count > 0)
             {
-                m_validationPanel.ShowSolutions(outcome.SummaryText, level, m_listedResult.Solutions);
+                m_validationPanel.ShowSolutions(outcome.SummaryText, level, outcome.Result.Solutions);
             }
             else
             {
@@ -4636,15 +4611,7 @@ namespace ColorBlockJam.Editor.Levels
         // that reloads the same content keeps it; any other draft change shows the hint again.
         private void ClearValidationAnswerIfChanged(LevelData level)
         {
-            if (m_listedJson == null)
-            {
-                return;
-            }
-
-            bool sameLevel = level != null && m_listedIndex == m_selectedIndex
-                             && string.Equals(m_listedGuid, m_saveController.LoadedGuid, StringComparison.Ordinal)
-                             && string.Equals(m_listedJson, JsonUtility.ToJson(level), StringComparison.Ordinal);
-            if (!sameLevel)
+            if (!m_listedAnswer.IsEmpty && !m_listedAnswer.IsFor(level, m_saveController.LoadedGuid, m_selectedIndex))
             {
                 ForgetValidationAnswer();
             }
@@ -4652,11 +4619,7 @@ namespace ColorBlockJam.Editor.Levels
 
         private void ForgetValidationAnswer()
         {
-            m_listedLevel = null;
-            m_listedJson = null;
-            m_listedGuid = null;
-            m_listedIndex = -1;
-            m_listedResult = null;
+            m_listedAnswer.Clear();
             m_validationPanel?.ShowHint();
         }
 
@@ -4675,8 +4638,8 @@ namespace ColorBlockJam.Editor.Levels
             }
 
             // A click that cannot play stops what shows, as every other stop point does.
-            if (m_validationFlow.IsPlaying() || m_listedResult == null || entry < 0
-                || entry >= m_listedResult.Solutions.Count)
+            LevelCheckResult listed = m_listedAnswer.Result;
+            if (m_validationFlow.IsPlaying() || listed == null || entry < 0 || entry >= listed.Solutions.Count)
             {
                 StopSolutionPlayback();
                 return;
@@ -4684,7 +4647,7 @@ namespace ColorBlockJam.Editor.Levels
 
             // Play replaces a playing or paused entry itself, so the canvas and the preview go from its frame straight
             // to the new start board: no draft restore and no draft publish land between the two entries.
-            m_solutionPlayback.Play(entry, m_listedLevel, m_listedResult.Solutions[entry].Steps,
+            m_solutionPlayback.Play(entry, m_listedAnswer.Level, listed.Solutions[entry].Steps,
                 paused: !m_autoPlaysSolutions);
             // The frames show neither the selection outline nor a Pen edit's outline and green cells.
             m_canvas?.SetSelection(LevelCanvasSelection.None);
@@ -5256,152 +5219,5 @@ namespace ColorBlockJam.Editor.Levels
             return LevelDatabaseAddressables.GetDatabaseName(LevelDatabaseAddressables.GetActivePath(m_projectScope));
         }
 
-    }
-
-    /// <summary>
-    /// Rotates and mirrors block footprints on the y-up board; each result is shifted back to start at cell (0, 0).
-    /// </summary>
-    internal static class LevelPieceTools
-    {
-        internal static Vector2Int[] RotateClockwise(IReadOnlyList<Vector2Int> cells)
-        {
-            return Transform(cells, Operation.RotateClockwise);
-        }
-
-        internal static Vector2Int[] RotateCounterClockwise(IReadOnlyList<Vector2Int> cells)
-        {
-            return Transform(cells, Operation.RotateCounterClockwise);
-        }
-
-        /// <summary>
-        /// How far a quarter turn in place moves the origin: add it to the origin of the turned cells that
-        /// RotateClockwise or RotateCounterClockwise return. The footprint turns around its bounding-box centre when
-        /// that centre is a cell centre or a grid corner, else around the cell nearest it (ties go to the first listed
-        /// cell). So every turn is a visible quarter turn, even for a symmetric piece such as a domino, and four turns
-        /// the same way restore the footprint (user request of 2026-09-26).
-        /// </summary>
-        internal static Vector2Int GetTurnOriginShift(IReadOnlyList<Vector2Int> cells, bool clockwise)
-        {
-            if (cells == null || cells.Count == 0)
-                throw new ArgumentException("A block needs occupied cells.", nameof(cells));
-
-            int minX = int.MaxValue;
-            int minY = int.MaxValue;
-            int maxX = int.MinValue;
-            int maxY = int.MinValue;
-            for (int index = 0; index < cells.Count; index++)
-            {
-                minX = Mathf.Min(minX, cells[index].x);
-                minY = Mathf.Min(minY, cells[index].y);
-                maxX = Mathf.Max(maxX, cells[index].x);
-                maxY = Mathf.Max(maxY, cells[index].y);
-            }
-
-            // Doubled coordinates keep a half-cell pivot in integers.
-            Vector2Int centre = new Vector2Int(minX + maxX, minY + maxY);
-            Vector2Int pivot = centre;
-            if ((maxX - minX - (maxY - minY)) % 2 != 0)
-            {
-                // A centre between two cells on one axis only: a turn around it would leave the grid.
-                int nearest = int.MaxValue;
-                for (int index = 0; index < cells.Count; index++)
-                {
-                    Vector2Int offset = cells[index] * 2 - centre;
-                    int distance = offset.x * offset.x + offset.y * offset.y;
-                    if (distance < nearest)
-                    {
-                        nearest = distance;
-                        pivot = cells[index] * 2;
-                    }
-                }
-            }
-
-            int shiftX = int.MaxValue;
-            int shiftY = int.MaxValue;
-            for (int index = 0; index < cells.Count; index++)
-            {
-                Vector2Int offset = cells[index] * 2 - pivot;
-                Vector2Int turned = pivot + (clockwise ? new Vector2Int(offset.y, -offset.x) : new Vector2Int(-offset.y, offset.x));
-                shiftX = Mathf.Min(shiftX, turned.x / 2);
-                shiftY = Mathf.Min(shiftY, turned.y / 2);
-            }
-
-            return new Vector2Int(shiftX, shiftY);
-        }
-
-        /// <summary>
-        /// The smallest shift that brings <paramref name="cells"/> placed at <paramref name="origin"/> inside a
-        /// width x height board, per axis; zero when they already fit. A footprint wider than the board is aligned
-        /// to its left or bottom edge and the placement check then refuses it.
-        /// </summary>
-        internal static Vector2Int GetBoardKick(IReadOnlyList<Vector2Int> cells, Vector2Int origin, int width, int height)
-        {
-            if (cells == null || cells.Count == 0)
-                throw new ArgumentException("A block needs occupied cells.", nameof(cells));
-
-            int minX = int.MaxValue;
-            int minY = int.MaxValue;
-            int maxX = int.MinValue;
-            int maxY = int.MinValue;
-            for (int index = 0; index < cells.Count; index++)
-            {
-                Vector2Int cell = origin + cells[index];
-                minX = Mathf.Min(minX, cell.x);
-                minY = Mathf.Min(minY, cell.y);
-                maxX = Mathf.Max(maxX, cell.x);
-                maxY = Mathf.Max(maxY, cell.y);
-            }
-
-            return new Vector2Int(GetAxisKick(minX, maxX, width), GetAxisKick(minY, maxY, height));
-        }
-
-        private static int GetAxisKick(int min, int max, int size)
-        {
-            if (min < 0)
-                return -min;
-            return max >= size ? Mathf.Max(size - 1 - max, -min) : 0;
-        }
-
-        internal static Vector2Int[] FlipHorizontal(IReadOnlyList<Vector2Int> cells)
-        {
-            return Transform(cells, Operation.FlipHorizontal);
-        }
-
-        internal static Vector2Int[] FlipVertical(IReadOnlyList<Vector2Int> cells)
-        {
-            return Transform(cells, Operation.FlipVertical);
-        }
-
-        private enum Operation
-        {
-            RotateClockwise,
-            RotateCounterClockwise,
-            FlipHorizontal,
-            FlipVertical
-        }
-
-        private static Vector2Int[] Transform(IReadOnlyList<Vector2Int> cells, Operation operation)
-        {
-            if (cells == null || cells.Count == 0)
-                throw new ArgumentException("A block needs occupied cells.", nameof(cells));
-
-            var rotated = new Vector2Int[cells.Count];
-            int minX = int.MaxValue;
-            int minY = int.MaxValue;
-            for (int index = 0; index < cells.Count; index++)
-            {
-                Vector2Int cell = cells[index];
-                rotated[index] = operation == Operation.FlipHorizontal ? new Vector2Int(-cell.x, cell.y)
-                    : operation == Operation.FlipVertical ? new Vector2Int(cell.x, -cell.y)
-                    : operation == Operation.RotateClockwise ? new Vector2Int(cell.y, -cell.x)
-                    : new Vector2Int(-cell.y, cell.x);
-                minX = Mathf.Min(minX, rotated[index].x);
-                minY = Mathf.Min(minY, rotated[index].y);
-            }
-
-            for (int index = 0; index < rotated.Length; index++)
-                rotated[index] -= new Vector2Int(minX, minY);
-            return rotated;
-        }
     }
 }
